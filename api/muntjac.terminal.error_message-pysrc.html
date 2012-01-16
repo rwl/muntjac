@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -62,102 +62,98 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="muntjac.terminal.error_message-module.html">Module muntjac.terminal.error_message</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">"""Interface for rendering error messages to terminal."""</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">"""Interface for rendering error messages to terminal."""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
 muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
 muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-1', 'terminal', 'link-1');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module muntjac.terminal.paintable=muntjac.terminal.paintable-module.html"><a title="muntjac.terminal.paintable" class="py-name" href="#" onclick="return doclink('link-2', 'paintable', 'link-2');">paintable</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class muntjac.terminal.paintable.IPaintable=muntjac.terminal.paintable.IPaintable-class.html"><a title="muntjac.terminal.paintable.IPaintable" class="py-name" href="#" onclick="return doclink('link-3', 'IPaintable', 'link-3');">IPaintable</a></tt> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage"></a><div id="IErrorMessage-def"><a name="L25"></a><tt class="py-lineno">25</tt> <a class="py-toggle" href="#" id="IErrorMessage-toggle" onclick="return toggle('IErrorMessage');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html">IErrorMessage</a><tt class="py-op">(</tt><tt class="py-base-class">IPaintable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="IErrorMessage-expanded"><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">    <tt class="py-docstring">"""Interface for rendering error messages to terminal. All the</tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    visible errors shown to user must implement this interface.</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.2</tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for system errors and bugs.</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt id="link-4" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.SYSTEMERROR=muntjac.terminal.error_message.IErrorMessage-class.html#SYSTEMERROR"><a title="muntjac.terminal.error_message.IErrorMessage.SYSTEMERROR" class="py-name" href="#" onclick="return doclink('link-4', 'SYSTEMERROR', 'link-4');">SYSTEMERROR</a></tt> <tt class="py-op">=</tt> <tt class="py-number">5000</tt> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for critical error messages.</tt> </tt>
-<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt id="link-5" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.CRITICAL=muntjac.terminal.error_message.IErrorMessage-class.html#CRITICAL"><a title="muntjac.terminal.error_message.IErrorMessage.CRITICAL" class="py-name" href="#" onclick="return doclink('link-5', 'CRITICAL', 'link-5');">CRITICAL</a></tt> <tt class="py-op">=</tt> <tt class="py-number">4000</tt> </tt>
-<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"> </tt>
-<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for regular error messages.</tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt id="link-6" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.ERROR=muntjac.terminal.error_message.IErrorMessage-class.html#ERROR"><a title="muntjac.terminal.error_message.IErrorMessage.ERROR" class="py-name" href="#" onclick="return doclink('link-6', 'ERROR', 'link-6');">ERROR</a></tt> <tt class="py-op">=</tt> <tt class="py-number">3000</tt> </tt>
-<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"> </tt>
-<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for warning messages.</tt> </tt>
-<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">    <tt id="link-7" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.WARNING=muntjac.terminal.error_message.IErrorMessage-class.html#WARNING"><a title="muntjac.terminal.error_message.IErrorMessage.WARNING" class="py-name" href="#" onclick="return doclink('link-7', 'WARNING', 'link-7');">WARNING</a></tt> <tt class="py-op">=</tt> <tt class="py-number">2000</tt> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
-<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for informational messages.</tt> </tt>
-<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.INFORMATION=muntjac.terminal.error_message.IErrorMessage-class.html#INFORMATION"><a title="muntjac.terminal.error_message.IErrorMessage.INFORMATION" class="py-name" href="#" onclick="return doclink('link-8', 'INFORMATION', 'link-8');">INFORMATION</a></tt> <tt class="py-op">=</tt> <tt class="py-number">1000</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.getErrorLevel"></a><div id="IErrorMessage.getErrorLevel-def"><a name="L49"></a><tt class="py-lineno">49</tt> <a class="py-toggle" href="#" id="IErrorMessage.getErrorLevel-toggle" onclick="return toggle('IErrorMessage.getErrorLevel');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#getErrorLevel">getErrorLevel</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.getErrorLevel-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.getErrorLevel-expanded"><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the errors level.</tt> </tt>
-<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the level of error as an integer.</tt> </tt>
-<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
-</div><a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"> </tt>
-<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.addListener"></a><div id="IErrorMessage.addListener-def"><a name="L57"></a><tt class="py-lineno">57</tt> <a class="py-toggle" href="#" id="IErrorMessage.addListener-toggle" onclick="return toggle('IErrorMessage.addListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#addListener">addListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.addListener-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.addListener-expanded"><a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are unmodifiable and thus listeners are not needed.</tt> </tt>
-<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
-<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-docstring">        @param listener:</tt> </tt>
-<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"><tt class="py-docstring">                   the listener to be added.</tt> </tt>
-<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.addListener}</tt> </tt>
-<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="IErrorMessage"></a><div id="IErrorMessage-def"><a name="L21"></a><tt class="py-lineno">21</tt> <a class="py-toggle" href="#" id="IErrorMessage-toggle" onclick="return toggle('IErrorMessage');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html">IErrorMessage</a><tt class="py-op">(</tt><tt class="py-base-class">IPaintable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="IErrorMessage-expanded"><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-docstring">"""Interface for rendering error messages to terminal. All the</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    visible errors shown to user must implement this interface.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.1.0</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for system errors and bugs.</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt id="link-4" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.SYSTEMERROR=muntjac.terminal.error_message.IErrorMessage-class.html#SYSTEMERROR"><a title="muntjac.terminal.error_message.IErrorMessage.SYSTEMERROR" class="py-name" href="#" onclick="return doclink('link-4', 'SYSTEMERROR', 'link-4');">SYSTEMERROR</a></tt> <tt class="py-op">=</tt> <tt class="py-number">5000</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for critical error messages.</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt id="link-5" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.CRITICAL=muntjac.terminal.error_message.IErrorMessage-class.html#CRITICAL"><a title="muntjac.terminal.error_message.IErrorMessage.CRITICAL" class="py-name" href="#" onclick="return doclink('link-5', 'CRITICAL', 'link-5');">CRITICAL</a></tt> <tt class="py-op">=</tt> <tt class="py-number">4000</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for regular error messages.</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt id="link-6" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.ERROR=muntjac.terminal.error_message.IErrorMessage-class.html#ERROR"><a title="muntjac.terminal.error_message.IErrorMessage.ERROR" class="py-name" href="#" onclick="return doclink('link-6', 'ERROR', 'link-6');">ERROR</a></tt> <tt class="py-op">=</tt> <tt class="py-number">3000</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for warning messages.</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt id="link-7" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.WARNING=muntjac.terminal.error_message.IErrorMessage-class.html#WARNING"><a title="muntjac.terminal.error_message.IErrorMessage.WARNING" class="py-name" href="#" onclick="return doclink('link-7', 'WARNING', 'link-7');">WARNING</a></tt> <tt class="py-op">=</tt> <tt class="py-number">2000</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">    <tt class="py-comment">#: Error code for informational messages.</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Variable muntjac.terminal.error_message.IErrorMessage.INFORMATION=muntjac.terminal.error_message.IErrorMessage-class.html#INFORMATION"><a title="muntjac.terminal.error_message.IErrorMessage.INFORMATION" class="py-name" href="#" onclick="return doclink('link-8', 'INFORMATION', 'link-8');">INFORMATION</a></tt> <tt class="py-op">=</tt> <tt class="py-number">1000</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="IErrorMessage.getErrorLevel"></a><div id="IErrorMessage.getErrorLevel-def"><a name="L45"></a><tt class="py-lineno">45</tt> <a class="py-toggle" href="#" id="IErrorMessage.getErrorLevel-toggle" onclick="return toggle('IErrorMessage.getErrorLevel');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#getErrorLevel">getErrorLevel</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.getErrorLevel-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.getErrorLevel-expanded"><a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets the errors level.</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the level of error as an integer.</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"> </tt>
+<a name="IErrorMessage.addListener"></a><div id="IErrorMessage.addListener-def"><a name="L53"></a><tt class="py-lineno">53</tt> <a class="py-toggle" href="#" id="IErrorMessage.addListener-toggle" onclick="return toggle('IErrorMessage.addListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#addListener">addListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.addListener-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.addListener-expanded"><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are unmodifiable and thus listeners are not needed.</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">        @param listener:</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-docstring">                   the listener to be added.</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.addListener}</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"> </tt>
+<a name="IErrorMessage.addCallback"></a><div id="IErrorMessage.addCallback-def"><a name="L64"></a><tt class="py-lineno">64</tt> <a class="py-toggle" href="#" id="IErrorMessage.addCallback-toggle" onclick="return toggle('IErrorMessage.addCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#addCallback">addCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.addCallback-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.addCallback-expanded"><a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
 </div><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"> </tt>
 <a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.addCallback"></a><div id="IErrorMessage.addCallback-def"><a name="L68"></a><tt class="py-lineno">68</tt> <a class="py-toggle" href="#" id="IErrorMessage.addCallback-toggle" onclick="return toggle('IErrorMessage.addCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#addCallback">addCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.addCallback-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.addCallback-expanded"><a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
-</div><a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"> </tt>
-<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.removeListener"></a><div id="IErrorMessage.removeListener-def"><a name="L72"></a><tt class="py-lineno">72</tt> <a class="py-toggle" href="#" id="IErrorMessage.removeListener-toggle" onclick="return toggle('IErrorMessage.removeListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#removeListener">removeListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.removeListener-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.removeListener-expanded"><a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are inmodifiable and thus listeners are not needed.</tt> </tt>
-<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
-<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"><tt class="py-docstring">        @param listener:</tt> </tt>
-<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"><tt class="py-docstring">                   the listener to be removed.</tt> </tt>
-<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.removeListener}</tt> </tt>
-<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+<a name="IErrorMessage.removeListener"></a><div id="IErrorMessage.removeListener-def"><a name="L68"></a><tt class="py-lineno">68</tt> <a class="py-toggle" href="#" id="IErrorMessage.removeListener-toggle" onclick="return toggle('IErrorMessage.removeListener');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#removeListener">removeListener</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">listener</tt><tt class="py-op">,</tt> <tt class="py-param">iface</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.removeListener-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.removeListener-expanded"><a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are inmodifiable and thus listeners are not needed.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-docstring">        @param listener:</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-docstring">                   the listener to be removed.</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.removeListener}</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div><a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"> </tt>
+<a name="IErrorMessage.removeCallback"></a><div id="IErrorMessage.removeCallback-def"><a name="L79"></a><tt class="py-lineno">79</tt> <a class="py-toggle" href="#" id="IErrorMessage.removeCallback-toggle" onclick="return toggle('IErrorMessage.removeCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#removeCallback">removeCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.removeCallback-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.removeCallback-expanded"><a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
 </div><a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt>
 <a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.removeCallback"></a><div id="IErrorMessage.removeCallback-def"><a name="L83"></a><tt class="py-lineno">83</tt> <a class="py-toggle" href="#" id="IErrorMessage.removeCallback-toggle" onclick="return toggle('IErrorMessage.removeCallback');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#removeCallback">removeCallback</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">callback</tt><tt class="py-op">,</tt> <tt class="py-param">eventType</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.removeCallback-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.removeCallback-expanded"><a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
-</div><a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"> </tt>
-<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line"> </tt>
-<a name="IErrorMessage.requestRepaint"></a><div id="IErrorMessage.requestRepaint-def"><a name="L87"></a><tt class="py-lineno">87</tt> <a class="py-toggle" href="#" id="IErrorMessage.requestRepaint-toggle" onclick="return toggle('IErrorMessage.requestRepaint');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#requestRepaint">requestRepaint</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="IErrorMessage.requestRepaint-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.requestRepaint-expanded"><a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are inmodifiable and thus listeners are not needed.</tt> </tt>
-<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
-<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.requestRepaint}</tt> </tt>
-<a name="L92"></a><tt class="py-lineno">92</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L93"></a><tt class="py-lineno">93</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
-</div></div><a name="L94"></a><tt class="py-lineno">94</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="IErrorMessage.requestRepaint"></a><div id="IErrorMessage.requestRepaint-def"><a name="L83"></a><tt class="py-lineno">83</tt> <a class="py-toggle" href="#" id="IErrorMessage.requestRepaint-toggle" onclick="return toggle('IErrorMessage.requestRepaint');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.error_message.IErrorMessage-class.html#requestRepaint">requestRepaint</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="IErrorMessage.requestRepaint-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="IErrorMessage.requestRepaint-expanded"><a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt class="py-docstring">"""Error messages are inmodifiable and thus listeners are not needed.</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be implemented as empty.</tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line"><tt class="py-docstring">        @see: L{IPaintable.requestRepaint}</tt> </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -188,14 +184,14 @@ expandto(location.href);
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:38 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:12 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

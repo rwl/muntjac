@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -62,35 +62,32 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="muntjac.ui.html5_file-module.html">Module muntjac.ui.html5_file</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
-<a name="Html5File"></a><div id="Html5File-def"><a name="L21"></a><tt class="py-lineno">21</tt> <a class="py-toggle" href="#" id="Html5File-toggle" onclick="return toggle('Html5File');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html">Html5File</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Html5File-expanded"><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-docstring">"""L{DragAndDropWrapper} can receive also files from client computer</tt> </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    if appropriate HTML 5 features are supported on client side. This class</tt> </tt>
-<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    wraps information about dragged file on server side.</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.__init__"></a><div id="Html5File.__init__-def"><a name="L27"></a><tt class="py-lineno">27</tt> <a class="py-toggle" href="#" id="Html5File.__init__-toggle" onclick="return toggle('Html5File.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">name</tt><tt class="py-op">,</tt> <tt class="py-param">size</tt><tt class="py-op">,</tt> <tt class="py-param">mimeType</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.__init__-expanded"><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_name</tt> <tt class="py-op">=</tt> <tt class="py-name">name</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_size</tt> <tt class="py-op">=</tt> <tt id="link-0" class="py-name" targets="Method muntjac.data.container.IContainer.size()=muntjac.data.container.IContainer-class.html#size,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.size()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#size,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.size()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#size,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.size()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#size,Method muntjac.ui.abstract_select.AbstractSelect.size()=muntjac.ui.abstract_select.AbstractSelect-class.html#size,Method muntjac.ui.tree_table.CollapsibleStrategy.size()=muntjac.ui.tree_table.CollapsibleStrategy-class.html#size,Method muntjac.ui.tree_table.HierarchicalStrategy.size()=muntjac.ui.tree_table.HierarchicalStrategy-class.html#size,Method muntjac.ui.tree_table.IContainerStrategy.size()=muntjac.ui.tree_table.IContainerStrategy-class.html#size,Method muntjac.ui.tree_table.TreeTable.size()=muntjac.ui.tree_table.TreeTable-class.html#size"><a title="muntjac.data.container.IContainer.size
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="Html5File"></a><div id="Html5File-def"><a name="L17"></a><tt class="py-lineno">17</tt> <a class="py-toggle" href="#" id="Html5File-toggle" onclick="return toggle('Html5File');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html">Html5File</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Html5File-expanded"><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-docstring">"""L{DragAndDropWrapper} can receive also files from client computer</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    if appropriate HTML 5 features are supported on client side. This class</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    wraps information about dragged file on server side.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="Html5File.__init__"></a><div id="Html5File.__init__-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="Html5File.__init__-toggle" onclick="return toggle('Html5File.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">name</tt><tt class="py-op">,</tt> <tt class="py-param">size</tt><tt class="py-op">,</tt> <tt class="py-param">mimeType</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.__init__-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_name</tt> <tt class="py-op">=</tt> <tt class="py-name">name</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_size</tt> <tt class="py-op">=</tt> <tt id="link-0" class="py-name" targets="Method muntjac.addon.weelayout.wee_layout.WeeLayout.size()=muntjac.addon.weelayout.wee_layout.WeeLayout-class.html#size,Method muntjac.data.container.IContainer.size()=muntjac.data.container.IContainer-class.html#size,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.size()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#size,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.size()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#size,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.size()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#size,Method muntjac.ui.abstract_select.AbstractSelect.size()=muntjac.ui.abstract_select.AbstractSelect-class.html#size,Method muntjac.ui.tree_table.CollapsibleStrategy.size()=muntjac.ui.tree_table.CollapsibleStrategy-class.html#size,Method muntjac.ui.tree_table.HierarchicalStrategy.size()=muntjac.ui.tree_table.HierarchicalStrategy-class.html#size,Method muntjac.ui.tree_table.IContainerStrategy.size()=muntjac.ui.tree_table.IContainerStrategy-class.html#size,Method muntjac.ui.tree_table.TreeTable.size()=muntjac.ui.tree_table.TreeTable-class.html#size"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.size
+muntjac.data.container.IContainer.size
 muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.size
 muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.size
 muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.size
@@ -99,45 +96,45 @@ muntjac.ui.tree_table.CollapsibleStrategy.size
 muntjac.ui.tree_table.HierarchicalStrategy.size
 muntjac.ui.tree_table.IContainerStrategy.size
 muntjac.ui.tree_table.TreeTable.size" class="py-name" href="#" onclick="return doclink('link-0', 'size', 'link-0');">size</a></tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_type</tt> <tt class="py-op">=</tt> <tt class="py-name">mimeType</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_type</tt> <tt class="py-op">=</tt> <tt class="py-name">mimeType</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="Html5File.getFileName"></a><div id="Html5File.getFileName-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="Html5File.getFileName-toggle" onclick="return toggle('Html5File.getFileName');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getFileName">getFileName</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.getFileName-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getFileName-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_name</tt> </tt>
 </div><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
 <a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.getFileName"></a><div id="Html5File.getFileName-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="Html5File.getFileName-toggle" onclick="return toggle('Html5File.getFileName');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getFileName">getFileName</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.getFileName-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getFileName-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_name</tt> </tt>
+<a name="Html5File.getFileSize"></a><div id="Html5File.getFileSize-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="Html5File.getFileSize-toggle" onclick="return toggle('Html5File.getFileSize');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getFileSize">getFileSize</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.getFileSize-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getFileSize-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_size</tt> </tt>
 </div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
 <a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.getFileSize"></a><div id="Html5File.getFileSize-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="Html5File.getFileSize-toggle" onclick="return toggle('Html5File.getFileSize');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getFileSize">getFileSize</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.getFileSize-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getFileSize-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_size</tt> </tt>
+<a name="Html5File.getType"></a><div id="Html5File.getType-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="Html5File.getType-toggle" onclick="return toggle('Html5File.getType');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getType">getType</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.getType-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getType-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_type</tt> </tt>
 </div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
 <a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.getType"></a><div id="Html5File.getType-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="Html5File.getType-toggle" onclick="return toggle('Html5File.getType');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getType">getType</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.getType-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getType-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_type</tt> </tt>
-</div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.setStreamVariable"></a><div id="Html5File.setStreamVariable-def"><a name="L46"></a><tt class="py-lineno">46</tt> <a class="py-toggle" href="#" id="Html5File.setStreamVariable-toggle" onclick="return toggle('Html5File.setStreamVariable');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#setStreamVariable">setStreamVariable</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">streamVariable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.setStreamVariable-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.setStreamVariable-expanded"><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the L{StreamVariable} that into which the file contents</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">        will be written. Usage of StreamVariable is similar to L{Upload}</tt> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">        component.</tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring">        If the L{StreamVariable} is not set in the L{DropHandler}</tt> </tt>
-<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">        the file contents will not be sent to server.</tt> </tt>
-<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring">        I{Note!} receiving file contents is experimental feature</tt> </tt>
-<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">        depending on HTML 5 API's. It is supported only by modern web browsers</tt> </tt>
-<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">        like Firefox 3.6 and above and recent webkit based browsers (Safari 5,</tt> </tt>
-<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">        Chrome 6) at this time.</tt> </tt>
-<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-docstring">        @param streamVariable:</tt> </tt>
-<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-docstring">                   the callback that returns stream where the implementation</tt> </tt>
-<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-docstring">                   writes the file contents as it arrives.</tt> </tt>
-<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> <tt class="py-op">=</tt> <tt class="py-name">streamVariable</tt> </tt>
-</div><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt>
-<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt>
-<a name="Html5File.getStreamVariable"></a><div id="Html5File.getStreamVariable-def"><a name="L66"></a><tt class="py-lineno">66</tt> <a class="py-toggle" href="#" id="Html5File.getStreamVariable-toggle" onclick="return toggle('Html5File.getStreamVariable');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getStreamVariable">getStreamVariable</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="Html5File.getStreamVariable-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getStreamVariable-expanded"><a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> </tt>
-</div></div><a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="Html5File.setStreamVariable"></a><div id="Html5File.setStreamVariable-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="Html5File.setStreamVariable-toggle" onclick="return toggle('Html5File.setStreamVariable');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#setStreamVariable">setStreamVariable</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">streamVariable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.setStreamVariable-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.setStreamVariable-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-docstring">"""Sets the L{StreamVariable} that into which the file contents</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">        will be written. Usage of StreamVariable is similar to L{Upload}</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring">        component.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">        If the L{StreamVariable} is not set in the L{DropHandler}</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">        the file contents will not be sent to server.</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring">        I{Note!} receiving file contents is experimental feature</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring">        depending on HTML 5 API's. It is supported only by modern web browsers</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">        like Firefox 3.6 and above and recent webkit based browsers (Safari 5,</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">        Chrome 6) at this time.</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-docstring">        @param streamVariable:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">                   the callback that returns stream where the implementation</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">                   writes the file contents as it arrives.</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> <tt class="py-op">=</tt> <tt class="py-name">streamVariable</tt> </tt>
+</div><a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt>
+<a name="Html5File.getStreamVariable"></a><div id="Html5File.getStreamVariable-def"><a name="L62"></a><tt class="py-lineno">62</tt> <a class="py-toggle" href="#" id="Html5File.getStreamVariable-toggle" onclick="return toggle('Html5File.getStreamVariable');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.ui.html5_file.Html5File-class.html#getStreamVariable">getStreamVariable</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Html5File.getStreamVariable-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Html5File.getStreamVariable-expanded"><a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_streamVariable</tt> </tt>
+</div></div><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -168,14 +165,14 @@ expandto(location.href);
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:34 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:14 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

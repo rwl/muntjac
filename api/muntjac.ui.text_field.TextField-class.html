@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -161,6 +161,12 @@
                                                             <strong class="uidshort">TextField</strong>
 </pre>
 
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.addon.codemirror.code_mirror.CodeMirror-class.html">addon.codemirror.code_mirror.CodeMirror</a></li>  </ul>
+</dd></dl>
+
 <hr />
 <p>A text editor component that can be bound to any bindable IProperty. 
   The text editor supports both multiline and single line modes, default is
@@ -180,7 +186,7 @@
         </dd>
       </dl>
       <p><strong>Version:</strong>
-        1.0.2
+        1.1.0
       </p>
 </div><!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -224,6 +230,23 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#getRows" class="summary-sig-name">getRows</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the number of rows in the editor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.getRows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#isSecret" class="summary-sig-name">isSecret</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Gets the secret property.</td>
           <td align="right" valign="top">
@@ -241,11 +264,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#setSecret" class="summary-sig-name">setSecret</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">secret</span>)</span><br />
-      Sets the secret property on and off.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#isWordwrap" class="summary-sig-name">isWordwrap</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the editor is in word-wrap mode.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setSecret">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.isWordwrap">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -277,10 +299,14 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#getRows" class="summary-sig-name">getRows</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the number of rows in the editor.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#setHeight" class="summary-sig-name">setHeight</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">height</span>,
+        <span class="summary-sig-arg">unit</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets the height of the <a 
+      href="muntjac.ui.text_field.TextField-class.html" 
+      class="link">TextField</a> instance.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.getRows">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setHeight">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -312,10 +338,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#isWordwrap" class="summary-sig-name">isWordwrap</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Tests if the editor is in word-wrap mode.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#setSecret" class="summary-sig-name">setSecret</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">secret</span>)</span><br />
+      Sets the secret property on and off.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.isWordwrap">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setSecret">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -334,27 +361,6 @@
       Sets the editor's word-wrap mode on or off.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setWordwrap">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.text_field.TextField-class.html#setHeight" class="summary-sig-name">setHeight</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">height</span>,
-        <span class="summary-sig-arg">unit</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Sets the height of the <a 
-      href="muntjac.ui.text_field.TextField-class.html" 
-      class="link">TextField</a> instance.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setHeight">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -616,16 +622,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_secret"></a><span class="summary-name">_secret</span><br />
-      Tells if input is used to enter sensitive information that is not
+        <a href="muntjac.ui.text_field.TextField-class.html#_rows" class="summary-name" onclick="show_private();">_rows</a><br />
+      Number of visible rows in a multiline TextField.
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.text_field.TextField-class.html#_rows" class="summary-name" onclick="show_private();">_rows</a><br />
-      Number of visible rows in a multiline TextField.
+        <a name="_secret"></a><span class="summary-name">_secret</span><br />
+      Tells if input is used to enter sensitive information that is not
     </td>
   </tr>
 <tr class="private">
@@ -806,6 +812,33 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="getRows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRows</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.getRows">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the number of rows in the editor. If the number of rows is set to
+  0, the actual number of displayed rows is determined implicitly by the 
+  adapter.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>number of explicitly set rows.</dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.
+      </p>
+</div></td></tr></table>
+</div>
 <a name="isSecret"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -833,33 +866,29 @@
       </p>
 </div></td></tr></table>
 </div>
-<a name="setSecret"></a>
+<a name="isWordwrap"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSecret</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">secret</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isWordwrap</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setSecret">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.isWordwrap">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Sets the secret property on and off. If a field is used to enter 
-  secret information the information is not echoed to display.</p>
+  <p>Tests if the editor is in word-wrap mode.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>secret</code></strong> - the value specifying if the field is used to enter secret 
-          information.</li>
-    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><code>True</code> if the component is in the word-wrap mode, 
+          <code>False</code> if not.</dd>
   </dl>
 <div class="fields">      <p><strong>Deprecated:</strong>
-        Use <a href="muntjac.ui.password_field.PasswordField-class.html" 
-    class="link">PasswordField</a> instead for secret text input.
+        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.
       </p>
 </div></td></tr></table>
 </div>
@@ -899,116 +928,6 @@
     </dt>
   </dl>
 </td></tr></table>
-</div>
-<a name="getRows"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRows</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.getRows">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the number of rows in the editor. If the number of rows is set to
-  0, the actual number of displayed rows is determined implicitly by the 
-  adapter.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>number of explicitly set rows.</dd>
-  </dl>
-<div class="fields">      <p><strong>Deprecated:</strong>
-        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
-    class="link">TextArea</a> for a multi-line text input.
-      </p>
-</div></td></tr></table>
-</div>
-<a name="setRows"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRows</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">rows</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setRows">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the number of rows in the editor.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>rows</code></strong> - the number of rows for this editor.</li>
-    </ul></dd>
-  </dl>
-<div class="fields">      <p><strong>Deprecated:</strong>
-        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
-    class="link">TextArea</a> for a multi-line text input.
-      </p>
-</div></td></tr></table>
-</div>
-<a name="isWordwrap"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">isWordwrap</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.isWordwrap">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Tests if the editor is in word-wrap mode.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd><code>True</code> if the component is in the word-wrap mode, 
-          <code>False</code> if not.</dd>
-  </dl>
-<div class="fields">      <p><strong>Deprecated:</strong>
-        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
-    class="link">TextArea</a> for a multi-line text input.
-      </p>
-</div></td></tr></table>
-</div>
-<a name="setWordwrap"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setWordwrap</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">wordwrap</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setWordwrap">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the editor's word-wrap mode on or off.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>wordwrap</code></strong> - the boolean value specifying if the editor should be in word-wrap
-          mode after the call or not.</li>
-    </ul></dd>
-  </dl>
-<div class="fields">      <p><strong>Deprecated:</strong>
-        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
-    class="link">TextArea</a> for a multi-line text input.
-      </p>
-</div></td></tr></table>
 </div>
 <a name="setHeight"></a>
 <div>
@@ -1103,6 +1022,93 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="setRows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRows</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rows</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setRows">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the number of rows in the editor.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rows</code></strong> - the number of rows for this editor.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setSecret"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSecret</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">secret</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setSecret">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the secret property on and off. If a field is used to enter 
+  secret information the information is not echoed to display.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>secret</code></strong> - the value specifying if the field is used to enter secret 
+          information.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.password_field.PasswordField-class.html" 
+    class="link">PasswordField</a> instead for secret text input.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="setWordwrap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setWordwrap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">wordwrap</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.text_field-pysrc.html#TextField.setWordwrap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the editor's word-wrap mode on or off.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>wordwrap</code></strong> - the boolean value specifying if the editor should be in word-wrap
+          mode after the call or not.</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        Use <a href="muntjac.ui.text_area.TextArea-class.html" 
+    class="link">TextArea</a> for a multi-line text input.
+      </p>
+</div></td></tr></table>
+</div>
 <br />
 <!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
 <a name="section-InstanceVariableDetails"></a>
@@ -1158,14 +1164,14 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:29 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:08 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

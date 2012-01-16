@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -163,6 +163,12 @@
                                                              <strong class="uidshort">Window</strong>
 </pre>
 
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.addon.csstools.render_info_fetcher.RenderInfoFetcher-class.html">addon.csstools.render_info_fetcher.RenderInfoFetcher</a></li><li>, <a href="muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup-class.html">addon.colorpicker.color_picker_popup.ColorPickerPopup</a></li>  </ul>
+</dd></dl>
+
 <hr />
 <p>A component that represents an application (browser native) window or 
   a sub window.</p>
@@ -204,7 +210,7 @@
         </dd>
       </dl>
       <p><strong>Version:</strong>
-        1.0.2
+        1.1.0
       </p>
 </div><!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -248,6 +254,25 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addComponent" class="summary-sig-name">addComponent</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">c</span>)</span><br />
       Adds the component into this container.</td>
@@ -266,10 +291,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getTerminal" class="summary-sig-name">getTerminal</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      <b>Application window only</b>.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a close/resize/focus/blur listener to the window.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTerminal">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addListener">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -283,99 +310,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getWindow" class="summary-sig-name">getWindow</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the parent window of the component.</td>
+          <td><span class="summary-sig"><a name="addNotification"></a><span class="summary-sig-name">addNotification</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">notification</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getApplication" class="summary-sig-name">getApplication</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the application object to which the component is attached.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getApplication">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the parent component of the window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getParent">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addURIHandler" class="summary-sig-name">addURIHandler</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">handler</span>)</span><br />
-      <b>Application window only</b>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addURIHandler">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeURIHandler" class="summary-sig-name">removeURIHandler</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">handler</span>)</span><br />
-      <b>Application window only</b>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeURIHandler">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">context</span>,
-        <span class="summary-sig-arg">relativeUri</span>)</span><br />
-      <b>Application window only</b>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleURI">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addNotification">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -407,11 +345,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeParameterHandler" class="summary-sig-name">removeParameterHandler</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addURIHandler" class="summary-sig-name">addURIHandler</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">handler</span>)</span><br />
       <b>Application window only</b>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeParameterHandler">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addURIHandler">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -425,11 +363,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#handleParameters" class="summary-sig-name">handleParameters</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">parameters</span>)</span><br />
-      <b>Application window only</b>.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addWindow" class="summary-sig-name">addWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Adds a window inside another window.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleParameters">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addWindow">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -443,10 +381,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getTheme" class="summary-sig-name">getTheme</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      <b>Application window only</b>.</td>
+          <td><span class="summary-sig"><a name="attachWindow"></a><span class="summary-sig-name">attachWindow</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">w</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTheme">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.attachWindow">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -460,11 +398,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setTheme" class="summary-sig-name">setTheme</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">theme</span>)</span><br />
-      <b>Application window only</b>.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#bringToFront" class="summary-sig-name">bringToFront</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      If there are currently several sub windows visible, calling this 
+      method makes this window topmost.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTheme">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.bringToFront">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -478,176 +416,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">target</span>)</span><br />
-      Paints any needed component-specific things to the given UIDL stream.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#center" class="summary-sig-name">center</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Request to center this window on the screen.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.paintContent">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#scrollIntoView" class="summary-sig-name">scrollIntoView</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">component</span>)</span><br />
-      Scrolls any component between the component and window to a suitable 
-      position so the component is visible to the user.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.scrollIntoView">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#open" class="summary-sig-name">open</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resource</span>,
-        <span class="summary-sig-arg">windowName</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default">-1</span>,
-        <span class="summary-sig-arg">height</span>=<span class="summary-sig-default">-1</span>,
-        <span class="summary-sig-arg">border</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Opens the given resource in a window with the given size, border and 
-      name.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.open">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getURL" class="summary-sig-name">getURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the full URL of the window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getURL">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getName" class="summary-sig-name">getName</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      <b>Application window only</b>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getName">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getBorder" class="summary-sig-name">getBorder</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the border style of the window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getBorder">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setBorder" class="summary-sig-name">setBorder</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">border</span>)</span><br />
-      Sets the border style for this window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setBorder">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setApplication" class="summary-sig-name">setApplication</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">application</span>)</span><br />
-      Sets the application this window is attached to.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setApplication">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setName" class="summary-sig-name">setName</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">name</span>)</span><br />
-      <b>Application window only</b>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setName">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setTerminal" class="summary-sig-name">setTerminal</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">typ</span>)</span><br />
-      Sets the user terminal.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTerminal">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.center">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -698,144 +470,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getPositionX" class="summary-sig-name">getPositionX</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the distance of Window left border in pixels from left border of
-      the containing (main window).</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#executeJavaScript" class="summary-sig-name">executeJavaScript</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">script</span>)</span><br />
+      Executes JavaScript in this window.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getPositionX">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setPositionX" class="summary-sig-name">setPositionX</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">positionX</span>,
-        <span class="summary-sig-arg">repaintRequired</span>=<span class="summary-sig-default">True</span>)</span><br />
-      Sets the distance of Window left border in pixels from left border of
-      the containing (main window).</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionX">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getPositionY" class="summary-sig-name">getPositionY</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the distance of Window top border in pixels from top border of 
-      the containing (main window).</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getPositionY">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setPositionY" class="summary-sig-name">setPositionY</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">positionY</span>,
-        <span class="summary-sig-arg">repaintRequired</span>=<span class="summary-sig-default">True</span>)</span><br />
-      Sets the distance of Window top border in pixels from top border of 
-      the containing (main window).</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionY">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">listener</span>,
-        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Adds a close/resize/focus/blur listener to the window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addListener">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addCallback" class="summary-sig-name">addCallback</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">callback</span>,
-        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">*args</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addCallback">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">listener</span>,
-        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Removes the close/resize from the window.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeListener">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">callback</span>,
-        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCallback">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.executeJavaScript">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -882,10 +521,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="attachWindow"></a><span class="summary-sig-name">attachWindow</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">w</span>)</span></td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      If the window is a sub-window focusing will cause the sub-window to 
+      be brought on top of other sub-windows on gain keyboard focus.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.attachWindow">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.focus">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -899,11 +539,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#addWindow" class="summary-sig-name">addWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">window</span>)</span><br />
-      Adds a window inside another window.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getApplication" class="summary-sig-name">getApplication</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the application object to which the component is attached.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addWindow">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getApplication">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -917,29 +556,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeWindow" class="summary-sig-name">removeWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">window</span>)</span><br />
-      Remove the given subwindow from this window.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getBorder" class="summary-sig-name">getBorder</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the border style of the window.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#bringToFront" class="summary-sig-name">bringToFront</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      If there are currently several sub windows visible, calling this 
-      method makes this window topmost.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.bringToFront">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getBorder">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -970,11 +590,202 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setModal" class="summary-sig-name">setModal</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">modality</span>)</span><br />
-      Sets sub-window modal, so that widgets behind it cannot be accessed.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getName" class="summary-sig-name">getName</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      <b>Application window only</b>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setModal">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getParent" class="summary-sig-name">getParent</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the parent component of the window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getParent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getPositionX" class="summary-sig-name">getPositionX</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the distance of Window left border in pixels from left border of
+      the containing (main window).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getPositionX">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getPositionY" class="summary-sig-name">getPositionY</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the distance of Window top border in pixels from top border of 
+      the containing (main window).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getPositionY">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getTerminal" class="summary-sig-name">getTerminal</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTerminal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getTheme" class="summary-sig-name">getTheme</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getURL" class="summary-sig-name">getURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the full URL of the window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#getWindow" class="summary-sig-name">getWindow</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the parent window of the component.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#handleParameters" class="summary-sig-name">handleParameters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">parameters</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">context</span>,
+        <span class="summary-sig-arg">relativeUri</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleURI">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#isClosable" class="summary-sig-name">isClosable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the closable status of the sub window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isClosable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#isDraggable" class="summary-sig-name">isDraggable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Indicates whether a sub window can be dragged or not.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isDraggable">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -993,24 +804,6 @@
       true if this window is modal.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isModal">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setResizable" class="summary-sig-name">setResizable</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resizable</span>)</span><br />
-      Sets sub-window resizable.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizable">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1061,11 +854,16 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setResizeLazy" class="summary-sig-name">setResizeLazy</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resizeLazy</span>)</span><br />
-      Should resize operations be lazy, i.e.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#open" class="summary-sig-name">open</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resource</span>,
+        <span class="summary-sig-arg">windowName</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">height</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">border</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Opens the given resource in a window with the given size, border and 
+      name.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizeLazy">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.open">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1079,10 +877,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#center" class="summary-sig-name">center</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Request to center this window on the screen.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#paintContent" class="summary-sig-name">paintContent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">target</span>)</span><br />
+      Paints any needed component-specific things to the given UIDL stream.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.center">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.paintContent">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1096,11 +895,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#showNotification" class="summary-sig-name">showNotification</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">*args</span>)</span><br />
-      Shows a notification message the window.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeCallback" class="summary-sig-name">removeCallback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.showNotification">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCallback">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1114,10 +913,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="addNotification"></a><span class="summary-sig-name">addNotification</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">notification</span>)</span></td>
+          <td><span class="summary-sig"><a name="removeCloseShortcut"></a><span class="summary-sig-name">removeCloseShortcut</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes the keyboard shortcut previously set with <a 
+      href="muntjac.ui.window.Window-class.html#setCloseShortcut" 
+      class="link">setCloseShortcut</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addNotification">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCloseShortcut">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1131,12 +932,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setFocusedComponent" class="summary-sig-name">setFocusedComponent</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">focusable</span>)</span><br />
-      This method is used by Component.Focusable objects to request focus 
-      to themselves.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the close/resize from the window.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setFocusedComponent">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeListener">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1150,11 +951,11 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#executeJavaScript" class="summary-sig-name">executeJavaScript</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">script</span>)</span><br />
-      Executes JavaScript in this window.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeParameterHandler" class="summary-sig-name">removeParameterHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">handler</span>)</span><br />
+      <b>Application window only</b>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.executeJavaScript">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeParameterHandler">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1168,10 +969,84 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#isClosable" class="summary-sig-name">isClosable</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the closable status of the sub window.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeURIHandler" class="summary-sig-name">removeURIHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">handler</span>)</span><br />
+      <b>Application window only</b>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isClosable">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeURIHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#removeWindow" class="summary-sig-name">removeWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Remove the given subwindow from this window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#scrollIntoView" class="summary-sig-name">scrollIntoView</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">component</span>)</span><br />
+      Scrolls any component between the component and window to a suitable 
+      position so the component is visible to the user.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.scrollIntoView">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setApplication" class="summary-sig-name">setApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">application</span>)</span><br />
+      Sets the application this window is attached to.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setBorder" class="summary-sig-name">setBorder</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">border</span>)</span><br />
+      Sets the border style for this window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setBorder">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1190,42 +1065,6 @@
       Sets the closable status for the sub window.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setClosable">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#isDraggable" class="summary-sig-name">isDraggable</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Indicates whether a sub window can be dragged or not.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isDraggable">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setDraggable" class="summary-sig-name">setDraggable</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">draggable</span>)</span><br />
-      Enables or disables that a sub window can be dragged (moved) by the 
-      user.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setDraggable">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1262,12 +1101,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="removeCloseShortcut"></a><span class="summary-sig-name">removeCloseShortcut</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Removes the keyboard shortcut previously set with <a 
-      href="muntjac.ui.window.Window-class.html#setCloseShortcut" 
-      class="link">setCloseShortcut</a>.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setDraggable" class="summary-sig-name">setDraggable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">draggable</span>)</span><br />
+      Enables or disables that a sub window can be dragged (moved) by the 
+      user.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCloseShortcut">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setDraggable">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1281,11 +1120,178 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#focus" class="summary-sig-name">focus</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      If the window is a sub-window focusing will cause the sub-window to 
-      be brought on top of other sub-windows on gain keyboard focus.</td>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setFocusedComponent" class="summary-sig-name">setFocusedComponent</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">focusable</span>)</span><br />
+      This method is used by Component.Focusable objects to request focus 
+      to themselves.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.focus">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setFocusedComponent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setModal" class="summary-sig-name">setModal</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">modality</span>)</span><br />
+      Sets sub-window modal, so that widgets behind it cannot be accessed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setModal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setName" class="summary-sig-name">setName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setPositionX" class="summary-sig-name">setPositionX</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">positionX</span>,
+        <span class="summary-sig-arg">repaintRequired</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Sets the distance of Window left border in pixels from left border of
+      the containing (main window).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionX">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setPositionY" class="summary-sig-name">setPositionY</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">positionY</span>,
+        <span class="summary-sig-arg">repaintRequired</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Sets the distance of Window top border in pixels from top border of 
+      the containing (main window).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionY">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setResizable" class="summary-sig-name">setResizable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resizable</span>)</span><br />
+      Sets sub-window resizable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setResizeLazy" class="summary-sig-name">setResizeLazy</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resizeLazy</span>)</span><br />
+      Should resize operations be lazy, i.e.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizeLazy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setTerminal" class="summary-sig-name">setTerminal</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">typ</span>)</span><br />
+      Sets the user terminal.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTerminal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#setTheme" class="summary-sig-name">setTheme</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">theme</span>)</span><br />
+      <b>Application window only</b>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.ui.window.Window-class.html#showNotification" class="summary-sig-name">showNotification</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Shows a notification message the window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.showNotification">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1440,15 +1446,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
-      hash(x)
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#BORDER_NONE" class="summary-name">BORDER_NONE</a> = <code title="0">0</code><br />
+        <a href="muntjac.ui.window.Window-class.html#BORDER_DEFAULT" class="summary-name">BORDER_DEFAULT</a> = <code title="2">2</code><br />
       <b>Application window only</b>.
     </td>
   </tr>
@@ -1464,8 +1462,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#BORDER_DEFAULT" class="summary-name">BORDER_DEFAULT</a> = <code title="2">2</code><br />
+        <a href="muntjac.ui.window.Window-class.html#BORDER_NONE" class="summary-name">BORDER_NONE</a> = <code title="0">0</code><br />
       <b>Application window only</b>.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CLIENT_WIDGET"></a><span class="summary-name">CLIENT_WIDGET</span> = <code title="None">None</code><br />
+      hash(x)
     </td>
   </tr>
   <tr>
@@ -1516,63 +1522,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_terminal" class="summary-name" onclick="show_private();">_terminal</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
         <a href="muntjac.ui.window.Window-class.html#_application" class="summary-name" onclick="show_private();">_application</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_uriHandlerList" class="summary-name" onclick="show_private();">_uriHandlerList</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_parameterHandlerList" class="summary-name" onclick="show_private();">_parameterHandlerList</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_subwindows" class="summary-name" onclick="show_private();">_subwindows</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_theme" class="summary-name" onclick="show_private();">_theme</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_openList" class="summary-name" onclick="show_private();">_openList</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_name" class="summary-name" onclick="show_private();">_name</a><br />
       <b>Application window only</b>.
     </td>
   </tr>
@@ -1588,39 +1538,7 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_positionY" class="summary-name" onclick="show_private();">_positionY</a><br />
-      <b>Sub window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_positionX" class="summary-name" onclick="show_private();">_positionX</a><br />
-      <b>Sub window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_notifications" class="summary-name" onclick="show_private();">_notifications</a><br />
-      <b>Application window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_modal" class="summary-name" onclick="show_private();">_modal</a><br />
-      <b>Sub window only</b>.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_resizable" class="summary-name" onclick="show_private();">_resizable</a><br />
+        <a href="muntjac.ui.window.Window-class.html#_centerRequested" class="summary-name" onclick="show_private();">_centerRequested</a><br />
       <b>Sub window only</b>.
     </td>
   </tr>
@@ -1636,7 +1554,79 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_centerRequested" class="summary-name" onclick="show_private();">_centerRequested</a><br />
+        <a href="muntjac.ui.window.Window-class.html#_jsExecQueue" class="summary-name" onclick="show_private();">_jsExecQueue</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_modal" class="summary-name" onclick="show_private();">_modal</a><br />
+      <b>Sub window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_name" class="summary-name" onclick="show_private();">_name</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_notifications" class="summary-name" onclick="show_private();">_notifications</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_openList" class="summary-name" onclick="show_private();">_openList</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_parameterHandlerList" class="summary-name" onclick="show_private();">_parameterHandlerList</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_pendingFocus" class="summary-name" onclick="show_private();">_pendingFocus</a><br />
+      Component that should be focused after the next repaint.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_positionX" class="summary-name" onclick="show_private();">_positionX</a><br />
+      <b>Sub window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_positionY" class="summary-name" onclick="show_private();">_positionY</a><br />
+      <b>Sub window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_resizable" class="summary-name" onclick="show_private();">_resizable</a><br />
       <b>Sub window only</b>.
     </td>
   </tr>
@@ -1652,15 +1642,15 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_pendingFocus" class="summary-name" onclick="show_private();">_pendingFocus</a><br />
-      Component that should be focused after the next repaint.
+        <a name="_scrollIntoView"></a><span class="summary-name">_scrollIntoView</span><br />
+      The component that should be scrolled into view after the next
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.ui.window.Window-class.html#_jsExecQueue" class="summary-name" onclick="show_private();">_jsExecQueue</a><br />
+        <a href="muntjac.ui.window.Window-class.html#_subwindows" class="summary-name" onclick="show_private();">_subwindows</a><br />
       <b>Application window only</b>.
     </td>
   </tr>
@@ -1668,8 +1658,24 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_scrollIntoView"></a><span class="summary-name">_scrollIntoView</span><br />
-      The component that should be scrolled into view after the next
+        <a href="muntjac.ui.window.Window-class.html#_terminal" class="summary-name" onclick="show_private();">_terminal</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_theme" class="summary-name" onclick="show_private();">_theme</a><br />
+      <b>Application window only</b>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="muntjac.ui.window.Window-class.html#_uriHandlerList" class="summary-name" onclick="show_private();">_uriHandlerList</a><br />
+      <b>Application window only</b>.
     </td>
   </tr>
   <tr>
@@ -1779,6 +1785,31 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="addCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IBlurNotifier-class.html#addCallback">event.field_events.IBlurNotifier.addCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="addComponent"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -1807,212 +1838,55 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="getTerminal"></a>
+<a name="addListener"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTerminal</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTerminal">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addListener">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p><b>Application window only</b>. Gets the user terminal.</p>
+  <p>Adds a close/resize/focus/blur listener to the window.</p>
+  <p>For a sub window the ICloseListener is fired when the user closes it 
+  (clicks on the close button).</p>
+  <p>For a browser level window the ICloseListener is fired when the 
+  browser level window is closed. Note that closing a browser level window 
+  does not mean it will be destroyed.</p>
+  <p>Note, that focus/blur listeners in Window class are only supported by 
+  sub windows. Also note that Window is not considered focused if its 
+  contained component currently has focus.</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the user terminal</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getWindow</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the parent window of the component.</p>
-  <p>This is always the window itself.</p>
-  <p><b>This method is not meant to be overridden.</b></p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the window itself</dd>
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to add.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
+    </ul></dd>
     <dt>Overrides:
-        <a href="muntjac.ui.component.IComponent-class.html#getWindow">component.IComponent.getWindow</a>
+        <a href="muntjac.event.field_events.IBlurNotifier-class.html#addListener">event.field_events.IBlurNotifier.addListener</a>
     </dt>
   </dl>
-<div class="fields">      <p><strong>See Also:</strong>
-        <a href="muntjac.ui.component.IComponent-class.html#getWindow" 
-        class="link">IComponent.getWindow</a>
-      </p>
+<div class="fields">      <dl><dt>See Also:</dt>
+        <dd>
+          <a 
+          href="muntjac.event.field_events.IFocusNotifier-class.html#addListener"
+          class="link">IFocusNotifier.addListener</a>,
+          <a 
+          href="muntjac.event.field_events.IBlurNotifier-class.html#addListener"
+          class="link">IBlurNotifier.addListener</a>
+        </dd>
+      </dl>
 </div></td></tr></table>
-</div>
-<a name="getApplication"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplication</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getApplication">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the application object to which the component is attached.</p>
-  <p>The method will return <code>None</code> if the component is not 
-  currently attached to an application. This is often a problem in 
-  constructors of regular components and in the initializers of custom 
-  composite components. A standard workaround is to move the problematic 
-  initialization to <a 
-  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
-  class="link">attach</a>, as described in the documentation of the 
-  method.</p>
-  <p><b>This method is not meant to be overridden.</b></p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the parent application of the component or <code>None</code>.</dd>
-    <dt>Overrides:
-        <a href="muntjac.ui.component.IComponent-class.html#getApplication">component.IComponent.getApplication</a>
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getParent"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getParent">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the parent component of the window.</p>
-  <p>The parent of an application window is always null. The parent of a 
-  sub window is the application window the sub window is attached to.</p>
-  <p><b>This method is not meant to be overridden.</b></p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the parent window</dd>
-    <dt>Overrides:
-        <a href="muntjac.ui.component.IComponent-class.html#getParent">component.IComponent.getParent</a>
-    </dt>
-  </dl>
-<div class="fields">      <p><strong>See Also:</strong>
-        <a href="muntjac.ui.component.IComponent-class.html#getParent" 
-        class="link">IComponent.getParent</a>
-      </p>
-</div></td></tr></table>
-</div>
-<a name="addURIHandler"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addURIHandler</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">handler</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addURIHandler">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Adds a new URI handler to this window.
-  If this is a sub window the URI handler is attached to the parent 
-  application window.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>handler</code></strong> - the URI handler to add.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="removeURIHandler"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeURIHandler</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">handler</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeURIHandler">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Removes the URI handler from this 
-  window. If this is a sub window the URI handler is removed from the 
-  parent application window.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>handler</code></strong> - the URI handler to remove.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="handleURI"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleURI</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">context</span>,
-        <span class="sig-arg">relativeUri</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleURI">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Handles an URI by passing the URI to 
-  all URI handlers defined using <a 
-  href="muntjac.ui.window.Window-class.html#addURIHandler" 
-  class="link">addURIHandler</a>. All URI handlers are called for each URI 
-  but no more than one handler may return a <a 
-  href="muntjac.terminal.download_stream.DownloadStream-class.html" 
-  class="link">DownloadStream</a>. If more than one stream is returned a 
-  <code>RuntimeException</code> is thrown.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>context</code></strong> - The URL of the application</li>
-        <li><strong class="pname"><code>relativeUri</code></strong> - The URI relative to <code>context</code></li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>A <code>DownloadStream</code> that one of the URI handlers 
-          returned, null if no <code>DownloadStream</code> was returned.</dd>
-    <dt>Overrides:
-        <a href="muntjac.terminal.uri_handler.IUriHandler-class.html#handleURI">terminal.uri_handler.IUriHandler.handleURI</a>
-    </dt>
-  </dl>
-</td></tr></table>
 </div>
 <a name="addParameterHandler"></a>
 <div>
@@ -2040,447 +1914,105 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="removeParameterHandler"></a>
+<a name="addURIHandler"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeParameterHandler</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addURIHandler</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">handler</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeParameterHandler">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addURIHandler">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p><b>Application window only</b>. Removes the parameter handler from 
-  this window. If this is a sub window the parameter handler is removed 
-  from the parent application window.</p>
+  <p><b>Application window only</b>. Adds a new URI handler to this window.
+  If this is a sub window the URI handler is attached to the parent 
+  application window.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>handler</code></strong> - the parameter handler to remove.</li>
+        <li><strong class="pname"><code>handler</code></strong> - the URI handler to add.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="handleParameters"></a>
+<a name="addWindow"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleParameters</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">parameters</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleParameters">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addWindow">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p><b>Application window only</b>. Handles parameters by passing the 
-  parameters to all <code>IParameterHandler</code>s defined using <a 
-  href="muntjac.ui.window.Window-class.html#addParameterHandler" 
-  class="link">addParameterHandler</a>. All <code>IParameterHandler</code>s
-  are called for each set of parameters.</p>
+  <p>Adds a window inside another window.</p>
+  <p>Adding windows inside another window creates &quot;subwindows&quot;. 
+  These windows should not be added to application directly and are not 
+  accessible directly with any url. Addding windows implicitly sets their 
+  parents.</p>
+  <p>Only one level of subwindows are supported. Thus you can add windows 
+  inside such windows whose parent is <code>None</code>.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>parameters</code></strong> - a map containing the parameter names and values</li>
-    </ul></dd>
-    <dt>Overrides:
-        <a href="muntjac.terminal.parameter_handler.IParameterHandler-class.html#handleParameters">terminal.parameter_handler.IParameterHandler.handleParameters</a>
-    </dt>
-  </dl>
-<div class="fields">      <p><strong>See Also:</strong>
-        <a 
-        href="muntjac.terminal.parameter_handler.IParameterHandler-class.html#handleParameters"
-        class="link">IParameterHandler.handleParameters</a>
-      </p>
-</div></td></tr></table>
-</div>
-<a name="getTheme"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTheme</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTheme">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Gets the theme for this window.</p>
-  <p>If the theme for this window is not explicitly set, the application 
-  theme name is returned. If the window is not attached to an application, 
-  the terminal default theme name is returned. If the theme name cannot be 
-  determined, null is returned</p>
-  <p>Subwindows do not support themes and return the theme used by the 
-  parent window</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the name of the theme used for the window</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setTheme"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTheme</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">theme</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTheme">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Sets the name of the theme to use for 
-  this window. Changing the theme will cause the page to be reloaded.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>theme</code></strong> - the name of the new theme for this window or null to use the 
-          application theme.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="paintContent"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">target</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.paintContent">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Paints any needed component-specific things to the given UIDL stream. 
-  The more general <a 
-  href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint" 
-  class="link">paint</a> method handles all general attributes common to 
-  all components, and it calls this method to paint any component-specific 
-  attributes to the UIDL stream.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>target</code></strong> - the target UIDL stream where the component should paint itself to</li>
-    </ul></dd>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
-    </ul></dd>
-    <dt>Overrides:
-        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="scrollIntoView"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">scrollIntoView</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">component</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.scrollIntoView">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Scrolls any component between the component and window to a suitable 
-  position so the component is visible to the user. The given component 
-  must be inside this window.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>component</code></strong> - the component to be scrolled into view</li>
-    </ul></dd>
-    <dt>Raises:</dt>
-    <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - if <code>component</code> is not inside this window</li>
+        <li><code><strong class='fraise'>ValueError</strong></code> - if a window is added inside non-application level window.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="open"></a>
+<a name="bringToFront"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">open</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">resource</span>,
-        <span class="sig-arg">windowName</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">width</span>=<span class="sig-default">-1</span>,
-        <span class="sig-arg">height</span>=<span class="sig-default">-1</span>,
-        <span class="sig-arg">border</span>=<span class="sig-default">None</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bringToFront</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.open">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.bringToFront">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Opens the given resource in a window with the given size, border and 
-  name.</p>
-  <p>The supplied <code>windowName</code> is used as the target name in a 
-  window.open call in the client. This means that special values such as 
-  &quot;_blank&quot;, &quot;_self&quot;, &quot;_top&quot;, 
-  &quot;_parent&quot; have special meaning. An empty or <code>None</code> 
-  window name is also a special case.</p>
-  <p>&quot;&quot;, null and &quot;_self&quot; as <code>windowName</code> 
-  all causes the resource to be opened in the current window, replacing any
-  old contents. For downloadable content you should avoid &quot;_self&quot;
-  as &quot;_self&quot; causes the client to skip rendering of any other 
-  changes as it considers them irrelevant (the page will be replaced by the
-  resource). This can speed up the opening of a resource, but it might also
-  put the client side into an inconsistent state if the window content is 
-  not completely replaced e.g., if the resource is downloaded instead of 
-  displayed in the browser.</p>
-  <p>&quot;_blank&quot; as <code>windowName</code> causes the resource to 
-  always be opened in a new window or tab (depends on the browser and 
-  browser settings).</p>
-  <p>&quot;_top&quot; and &quot;_parent&quot; as <code>windowName</code> 
-  works as specified by the HTML standard.</p>
-  <p>Any other <code>windowName</code> will open the resource in a window 
-  with that name, either by opening a new window/tab in the browser or by 
-  replacing the contents of an existing window with that name.</p>
+  <p>If there are currently several sub windows visible, calling this 
+  method makes this window topmost.</p>
+  <p>This method can only be called if this window is a sub window and 
+  connected a top level window. Else an illegal state exception is thrown. 
+  Also if there are modal windows and this window is not modal, and illegal
+  state exception is thrown.</p>
+  <p><b>Note, this API works on sub windows only. Browsers can't reorder OS
+  windows.</b></p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>resource</code></strong> - the resource.</li>
-        <li><strong class="pname"><code>windowName</code></strong> - the name of the window.</li>
-        <li><strong class="pname"><code>width</code></strong> - the width of the window in pixels</li>
-        <li><strong class="pname"><code>height</code></strong> - the height of the window in pixels</li>
-        <li><strong class="pname"><code>border</code></strong> - the border style of the window. See <a 
-          href="muntjac.ui.window.Window-class.html#BORDER_NONE" 
-          class="link">Window.BORDER_* constants</a></li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="getURL"></a>
+<a name="center"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getURL</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">center</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getURL">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.center">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Gets the full URL of the window. The returned URL is window specific 
-  and can be used to directly refer to the window.</p>
-  <p>Note! This method can not be used for portlets.</p>
+  <p>Request to center this window on the screen. <b>Note:</b> affects 
+  sub-windows only.</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the URL of the window or null if the window is not attached to an
-          application</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getName"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getName</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getName">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Gets the unique name of the window. 
-  The name of the window is used to uniquely identify it.</p>
-  <p>The name also determines the URL that can be used for direct access to
-  a window. All windows can be accessed through 
-  <code>http://host:port/app/win</code> where 
-  <code>http://host:port/app</code> is the application URL (as returned by 
-  <code class="link">Application.getURL</code> and <code>win</code> is the 
-  window name.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the name of the Window.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getBorder"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBorder</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getBorder">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Returns the border style of the window.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the border style for the window</dd>
-  </dl>
-<div class="fields">      <p><strong>See Also:</strong>
-        <a href="muntjac.ui.window.Window-class.html#setBorder" 
-        class="link">setBorder</a>
-      </p>
-</div></td></tr></table>
-</div>
-<a name="setBorder"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setBorder</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">border</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setBorder">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the border style for this window. Valid values are <a 
-  href="muntjac.ui.window.Window-class.html#BORDER_NONE" 
-  class="link">Window.BORDER_NONE</a>, <a 
-  href="muntjac.ui.window.Window-class.html#BORDER_MINIMAL" 
-  class="link">Window.BORDER_MINIMAL</a>, <a 
-  href="muntjac.ui.window.Window-class.html#BORDER_DEFAULT" 
-  class="link">Window.BORDER_DEFAULT</a>.</p>
-  <p><b>Note!</b> Setting this seems to currently have no effect whatsoever
-  on the window.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>border</code></strong> - the border style to set</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setApplication"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setApplication</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">application</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setApplication">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the application this window is attached to.</p>
-  <p>This method is called by the framework and should not be called 
-  directly from application code. <code 
-  class="link">Application.addWindow</code> should be used to add the 
-  window to an application and <code 
-  class="link">Application.removeWindow</code> to remove the window from 
-  the application.</p>
-  <p>This method invokes <code class="link">IComponent.attach</code> and 
-  <code class="link">IComponent.detach</code> methods when necessary.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>application</code></strong> - the application the window is attached to</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setName"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setName</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">name</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setName">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p><b>Application window only</b>. Sets the unique name of the window. 
-  The name of the window is used to uniquely identify it inside the 
-  application.</p>
-  <p>The name also determines the URL that can be used for direct access to
-  a window. All windows can be accessed through 
-  <code>http://host:port/app/win</code> where 
-  <code>http://host:port/app</code> is the application URL (as returned by 
-  <code class="link">Application.getURL</code> and <code>win</code> is the 
-  window name.</p>
-  <p>This method can only be called before the window is added to an 
-  application.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>name</code></strong> - the new name for the window or null if the application should 
-          automatically assign a name to it</li>
-    </ul></dd>
-    <dt>Raises:</dt>
-    <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - if the window is attached to an application</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setTerminal"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTerminal</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">typ</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTerminal">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the user terminal. Used by the terminal adapter, should never be 
-  called from application code.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>typ</code></strong> - the terminal to set.</li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -2545,6 +2077,199 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="executeJavaScript"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">executeJavaScript</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">script</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.executeJavaScript">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Executes JavaScript in this window.</p>
+  <p>This method allows one to inject javascript from the server to client.
+  A client implementation is not required to implement this functionality, 
+  but currently all web-based clients do implement this.</p>
+  <p>Executing javascript this way often leads to cross-browser 
+  compatibility issues and regressions that are hard to resolve. Use of 
+  this method should be avoided and instead it is recommended to create new
+  widgets with GWT.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>script</code></strong> - JavaScript snippet that will be executed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="focus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.focus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If the window is a sub-window focusing will cause the sub-window to be
+  brought on top of other sub-windows on gain keyboard focus.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IFocusable-class.html#focus">component.IFocusable.focus</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplication</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application object to which the component is attached.</p>
+  <p>The method will return <code>None</code> if the component is not 
+  currently attached to an application. This is often a problem in 
+  constructors of regular components and in the initializers of custom 
+  composite components. A standard workaround is to move the problematic 
+  initialization to <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#attach" 
+  class="link">attach</a>, as described in the documentation of the 
+  method.</p>
+  <p><b>This method is not meant to be overridden.</b></p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the parent application of the component or <code>None</code>.</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#getApplication">component.IComponent.getApplication</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBorder"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBorder</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getBorder">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the border style of the window.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the border style for the window</dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.window.Window-class.html#setBorder" 
+        class="link">setBorder</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getChildWindows"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getChildWindows</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getChildWindows">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the set of all child windows.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Set of child windows.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getName</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Application window only</b>. Gets the unique name of the window. 
+  The name of the window is used to uniquely identify it.</p>
+  <p>The name also determines the URL that can be used for direct access to
+  a window. All windows can be accessed through 
+  <code>http://host:port/app/win</code> where 
+  <code>http://host:port/app</code> is the application URL (as returned by 
+  <code class="link">Application.getURL</code> and <code>win</code> is the 
+  window name.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the name of the Window.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getParent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getParent</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getParent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the parent component of the window.</p>
+  <p>The parent of an application window is always null. The parent of a 
+  sub window is the application window the sub window is attached to.</p>
+  <p><b>This method is not meant to be overridden.</b></p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the parent window</dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#getParent">component.IComponent.getParent</a>
+    </dt>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#getParent" 
+        class="link">IComponent.getParent</a>
+      </p>
+</div></td></tr></table>
+</div>
 <a name="getPositionX"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -2565,34 +2290,6 @@
     <dt>Returns:</dt>
         <dd>the Distance of Window left border in pixels from left border of 
           the containing (main window). or -1 if unspecified.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setPositionX"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPositionX</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">positionX</span>,
-        <span class="sig-arg">repaintRequired</span>=<span class="sig-default">True</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionX">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the distance of Window left border in pixels from left border of 
-  the containing (main window).</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>positionX</code></strong> - the distance of window left border in pixels from left border of 
-          the containing (main window). or -1 if unspecified.</li>
-        <li><strong class="pname"><code>repaintRequired</code></strong> - true if the window needs to be repainted, false otherwise</li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -2619,293 +2316,232 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="setPositionY"></a>
+<a name="getTerminal"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPositionY</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">positionY</span>,
-        <span class="sig-arg">repaintRequired</span>=<span class="sig-default">True</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTerminal</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionY">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTerminal">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Sets the distance of Window top border in pixels from top border of 
-  the containing (main window).</p>
+  <p><b>Application window only</b>. Gets the user terminal.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>positionY</code></strong> - the distance of window top border in pixels from top border of 
-          the containing (main window). or -1 if unspecified</li>
-        <li><strong class="pname"><code>repaintRequired</code></strong> - true if the window needs to be repainted, false otherwise</li>
-    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the user terminal</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="addListener"></a>
+<a name="getTheme"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">listener</span>,
-        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTheme</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addListener">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getTheme">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Adds a close/resize/focus/blur listener to the window.</p>
-  <p>For a sub window the ICloseListener is fired when the user closes it 
-  (clicks on the close button).</p>
-  <p>For a browser level window the ICloseListener is fired when the 
-  browser level window is closed. Note that closing a browser level window 
-  does not mean it will be destroyed.</p>
-  <p>Note, that focus/blur listeners in Window class are only supported by 
-  sub windows. Also note that Window is not considered focused if its 
-  contained component currently has focus.</p>
+  <p><b>Application window only</b>. Gets the theme for this window.</p>
+  <p>If the theme for this window is not explicitly set, the application 
+  theme name is returned. If the window is not attached to an application, 
+  the terminal default theme name is returned. If the theme name cannot be 
+  determined, null is returned</p>
+  <p>Subwindows do not support themes and return the theme used by the 
+  parent window</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>listener</code></strong> - the listener to add.</li>
-    </ul></dd>
-    <dt>Raises:</dt>
-    <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - unless <code>method</code> has a match in <code>object</code></li>
-    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the name of the theme used for the window</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the full URL of the window. The returned URL is window specific 
+  and can be used to directly refer to the window.</p>
+  <p>Note! This method can not be used for portlets.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the URL of the window or null if the window is not attached to an
+          application</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getWindow</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the parent window of the component.</p>
+  <p>This is always the window itself.</p>
+  <p><b>This method is not meant to be overridden.</b></p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the window itself</dd>
     <dt>Overrides:
-        <a href="muntjac.event.field_events.IBlurNotifier-class.html#addListener">event.field_events.IBlurNotifier.addListener</a>
+        <a href="muntjac.ui.component.IComponent-class.html#getWindow">component.IComponent.getWindow</a>
     </dt>
   </dl>
-<div class="fields">      <dl><dt>See Also:</dt>
-        <dd>
-          <a 
-          href="muntjac.event.field_events.IFocusNotifier-class.html#addListener"
-          class="link">IFocusNotifier.addListener</a>,
-          <a 
-          href="muntjac.event.field_events.IBlurNotifier-class.html#addListener"
-          class="link">IBlurNotifier.addListener</a>
-        </dd>
-      </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a href="muntjac.ui.component.IComponent-class.html#getWindow" 
+        class="link">IComponent.getWindow</a>
+      </p>
 </div></td></tr></table>
 </div>
-<a name="addCallback"></a>
+<a name="handleParameters"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCallback</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">callback</span>,
-        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">*args</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleParameters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">parameters</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addCallback">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleParameters">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  
-  <dl class="fields">
-    <dt>Overrides:
-        <a href="muntjac.event.field_events.IBlurNotifier-class.html#addCallback">event.field_events.IBlurNotifier.addCallback</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="removeListener"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">listener</span>,
-        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeListener">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Removes the close/resize from the window.</p>
-  <p>For more information on CloseListeners see <a 
-  href="muntjac.ui.window.ICloseListener-class.html" 
-  class="link">ICloseListener</a>.</p>
+  <p><b>Application window only</b>. Handles parameters by passing the 
+  parameters to all <code>IParameterHandler</code>s defined using <a 
+  href="muntjac.ui.window.Window-class.html#addParameterHandler" 
+  class="link">addParameterHandler</a>. All <code>IParameterHandler</code>s
+  are called for each set of parameters.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>listener</code></strong> - the listener to remove.</li>
+        <li><strong class="pname"><code>parameters</code></strong> - a map containing the parameter names and values</li>
     </ul></dd>
     <dt>Overrides:
-        <a href="muntjac.event.field_events.IBlurNotifier-class.html#removeListener">event.field_events.IBlurNotifier.removeListener</a>
+        <a href="muntjac.terminal.parameter_handler.IParameterHandler-class.html#handleParameters">terminal.parameter_handler.IParameterHandler.handleParameters</a>
     </dt>
   </dl>
-</td></tr></table>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a 
+        href="muntjac.terminal.parameter_handler.IParameterHandler-class.html#handleParameters"
+        class="link">IParameterHandler.handleParameters</a>
+      </p>
+</div></td></tr></table>
 </div>
-<a name="removeCallback"></a>
+<a name="handleURI"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">callback</span>,
-        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleURI</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">context</span>,
+        <span class="sig-arg">relativeUri</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCallback">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.handleURI">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  
-  <dl class="fields">
-    <dt>Overrides:
-        <a href="muntjac.event.field_events.IBlurNotifier-class.html#removeCallback">event.field_events.IBlurNotifier.removeCallback</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="addWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addWindow</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">window</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.addWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Adds a window inside another window.</p>
-  <p>Adding windows inside another window creates &quot;subwindows&quot;. 
-  These windows should not be added to application directly and are not 
-  accessible directly with any url. Addding windows implicitly sets their 
-  parents.</p>
-  <p>Only one level of subwindows are supported. Thus you can add windows 
-  inside such windows whose parent is <code>None</code>.</p>
-  <dl class="fields">
-    <dt>Raises:</dt>
-    <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - if a window is added inside non-application level window.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="removeWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeWindow</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">window</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Remove the given subwindow from this window.</p>
-  <p><a href="muntjac.ui.window.ICloseListener-class.html" 
-  class="link">ICloseListener</a>s are called also when explicitly removing
-  a window by calling this method.</p>
-  <p>Returns a boolean indicating if the window was removed or not.</p>
+  <p><b>Application window only</b>. Handles an URI by passing the URI to 
+  all URI handlers defined using <a 
+  href="muntjac.ui.window.Window-class.html#addURIHandler" 
+  class="link">addURIHandler</a>. All URI handlers are called for each URI 
+  but no more than one handler may return a <a 
+  href="muntjac.terminal.download_stream.DownloadStream-class.html" 
+  class="link">DownloadStream</a>. If more than one stream is returned a 
+  <code>RuntimeException</code> is thrown.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>window</code></strong> - Window to be removed.</li>
+        <li><strong class="pname"><code>context</code></strong> - The URL of the application</li>
+        <li><strong class="pname"><code>relativeUri</code></strong> - The URI relative to <code>context</code></li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>true if the subwindow was removed, false otherwise</dd>
+        <dd>A <code>DownloadStream</code> that one of the URI handlers 
+          returned, null if no <code>DownloadStream</code> was returned.</dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.uri_handler.IUriHandler-class.html#handleURI">terminal.uri_handler.IUriHandler.handleURI</a>
+    </dt>
   </dl>
 </td></tr></table>
 </div>
-<a name="bringToFront"></a>
+<a name="isClosable"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">bringToFront</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isClosable</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.bringToFront">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isClosable">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>If there are currently several sub windows visible, calling this 
-  method makes this window topmost.</p>
-  <p>This method can only be called if this window is a sub window and 
-  connected a top level window. Else an illegal state exception is thrown. 
-  Also if there are modal windows and this window is not modal, and illegal
-  state exception is thrown.</p>
-  <p><b>Note, this API works on sub windows only. Browsers can't reorder OS
-  windows.</b></p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="getChildWindows"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getChildWindows</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.getChildWindows">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Get the set of all child windows.</p>
+  <p>Returns the closable status of the sub window. If a sub window is 
+  closable it typically shows an X in the upper right corner. Clicking on 
+  the X sends a close event to the server. Setting closable to false will 
+  remove the X from the sub window and prevent the user from closing the 
+  window.</p>
+  <p>Note! For historical reasons readonly controls the closability of the 
+  sub window and therefore readonly and closable affect each other. Setting
+  readonly to true will set closable to false and vice versa.</p>
+  <p>Closable only applies to sub windows, not to browser level 
+  windows.</p>
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>Set of child windows.</dd>
+        <dd>true if the sub window can be closed by the user.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="setModal"></a>
+<a name="isDraggable"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setModal</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">modality</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isDraggable</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setModal">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isDraggable">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Sets sub-window modal, so that widgets behind it cannot be accessed. 
-  <b>Note:</b> affects sub-windows only.</p>
+  <p>Indicates whether a sub window can be dragged or not. By default a sub
+  window is draggable.</p>
+  <p>Draggable only applies to sub windows, not to browser level 
+  windows.</p>
   <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>modality</code></strong> - true if modality is to be turned on</li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -2927,30 +2563,6 @@
   <dl class="fields">
     <dt>Returns:</dt>
         <dd>true if this window is modal.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setResizable"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setResizable</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">resizable</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizable">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets sub-window resizable. <b>Note:</b> affects sub-windows only.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>resizable</code></strong> - true if resizability is to be turned on</li>
-    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -2997,6 +2609,600 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="open"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">open</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resource</span>,
+        <span class="sig-arg">windowName</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">width</span>=<span class="sig-default">-1</span>,
+        <span class="sig-arg">height</span>=<span class="sig-default">-1</span>,
+        <span class="sig-arg">border</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.open">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Opens the given resource in a window with the given size, border and 
+  name.</p>
+  <p>The supplied <code>windowName</code> is used as the target name in a 
+  window.open call in the client. This means that special values such as 
+  &quot;_blank&quot;, &quot;_self&quot;, &quot;_top&quot;, 
+  &quot;_parent&quot; have special meaning. An empty or <code>None</code> 
+  window name is also a special case.</p>
+  <p>&quot;&quot;, null and &quot;_self&quot; as <code>windowName</code> 
+  all causes the resource to be opened in the current window, replacing any
+  old contents. For downloadable content you should avoid &quot;_self&quot;
+  as &quot;_self&quot; causes the client to skip rendering of any other 
+  changes as it considers them irrelevant (the page will be replaced by the
+  resource). This can speed up the opening of a resource, but it might also
+  put the client side into an inconsistent state if the window content is 
+  not completely replaced e.g., if the resource is downloaded instead of 
+  displayed in the browser.</p>
+  <p>&quot;_blank&quot; as <code>windowName</code> causes the resource to 
+  always be opened in a new window or tab (depends on the browser and 
+  browser settings).</p>
+  <p>&quot;_top&quot; and &quot;_parent&quot; as <code>windowName</code> 
+  works as specified by the HTML standard.</p>
+  <p>Any other <code>windowName</code> will open the resource in a window 
+  with that name, either by opening a new window/tab in the browser or by 
+  replacing the contents of an existing window with that name.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resource</code></strong> - the resource.</li>
+        <li><strong class="pname"><code>windowName</code></strong> - the name of the window.</li>
+        <li><strong class="pname"><code>width</code></strong> - the width of the window in pixels</li>
+        <li><strong class="pname"><code>height</code></strong> - the height of the window in pixels</li>
+        <li><strong class="pname"><code>border</code></strong> - the border style of the window. See <a 
+          href="muntjac.ui.window.Window-class.html#BORDER_NONE" 
+          class="link">Window.BORDER_* constants</a></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="paintContent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">paintContent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">target</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.paintContent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Paints any needed component-specific things to the given UIDL stream. 
+  The more general <a 
+  href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint" 
+  class="link">paint</a> method handles all general attributes common to 
+  all components, and it calls this method to paint any component-specific 
+  attributes to the UIDL stream.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>target</code></strong> - the target UIDL stream where the component should paint itself to</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code> - if the paint operation failed.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paintContent">abstract_component.AbstractComponent.paintContent</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeCallback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeCallback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>,
+        <span class="sig-arg">eventType</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeCallback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IBlurNotifier-class.html#removeCallback">event.field_events.IBlurNotifier.removeCallback</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the close/resize from the window.</p>
+  <p>For more information on CloseListeners see <a 
+  href="muntjac.ui.window.ICloseListener-class.html" 
+  class="link">ICloseListener</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>listener</code></strong> - the listener to remove.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.event.field_events.IBlurNotifier-class.html#removeListener">event.field_events.IBlurNotifier.removeListener</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeParameterHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeParameterHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">handler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeParameterHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Application window only</b>. Removes the parameter handler from 
+  this window. If this is a sub window the parameter handler is removed 
+  from the parent application window.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>handler</code></strong> - the parameter handler to remove.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeURIHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeURIHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">handler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeURIHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Application window only</b>. Removes the URI handler from this 
+  window. If this is a sub window the URI handler is removed from the 
+  parent application window.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>handler</code></strong> - the URI handler to remove.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.removeWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove the given subwindow from this window.</p>
+  <p><a href="muntjac.ui.window.ICloseListener-class.html" 
+  class="link">ICloseListener</a>s are called also when explicitly removing
+  a window by calling this method.</p>
+  <p>Returns a boolean indicating if the window was removed or not.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>window</code></strong> - Window to be removed.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>true if the subwindow was removed, false otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="scrollIntoView"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">scrollIntoView</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">component</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.scrollIntoView">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Scrolls any component between the component and window to a suitable 
+  position so the component is visible to the user. The given component 
+  must be inside this window.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>component</code></strong> - the component to be scrolled into view</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if <code>component</code> is not inside this window</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">application</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the application this window is attached to.</p>
+  <p>This method is called by the framework and should not be called 
+  directly from application code. <code 
+  class="link">Application.addWindow</code> should be used to add the 
+  window to an application and <code 
+  class="link">Application.removeWindow</code> to remove the window from 
+  the application.</p>
+  <p>This method invokes <code class="link">IComponent.attach</code> and 
+  <code class="link">IComponent.detach</code> methods when necessary.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>application</code></strong> - the application the window is attached to</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setBorder"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setBorder</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">border</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setBorder">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the border style for this window. Valid values are <a 
+  href="muntjac.ui.window.Window-class.html#BORDER_NONE" 
+  class="link">Window.BORDER_NONE</a>, <a 
+  href="muntjac.ui.window.Window-class.html#BORDER_MINIMAL" 
+  class="link">Window.BORDER_MINIMAL</a>, <a 
+  href="muntjac.ui.window.Window-class.html#BORDER_DEFAULT" 
+  class="link">Window.BORDER_DEFAULT</a>.</p>
+  <p><b>Note!</b> Setting this seems to currently have no effect whatsoever
+  on the window.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>border</code></strong> - the border style to set</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setClosable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setClosable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">closable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setClosable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the closable status for the sub window. If a sub window is 
+  closable it typically shows an X in the upper right corner. Clicking on 
+  the X sends a close event to the server. Setting closable to false will 
+  remove the X from the sub window and prevent the user from closing the 
+  window.</p>
+  <p>Note! For historical reasons readonly controls the closability of the 
+  sub window and therefore readonly and closable affect each other. Setting
+  readonly to true will set closable to false and vice versa.</p>
+  <p>Closable only applies to sub windows, not to browser level 
+  windows.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>closable</code></strong> - determines if the sub window can be closed by the user.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCloseShortcut"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCloseShortcut</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">keyCode</span>,
+        <span class="sig-arg">*modifiers</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setCloseShortcut">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes is possible to close the window by pressing the given <a 
+  href="muntjac.event.shortcut_action.KeyCode-class.html" 
+  class="link">KeyCode</a> and (optional) <a 
+  href="muntjac.event.shortcut_action.ModifierKey-class.html" 
+  class="link">ModifierKey</a>s.</p>
+  <p>Note that this shortcut only reacts while the window has focus, 
+  closing itself - if you want to close a subwindow from a parent window, 
+  use <a href="muntjac.ui.panel.Panel-class.html#addAction" 
+  class="link">addAction</a> of the parent window instead.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>keyCode</code></strong> - the keycode for invoking the shortcut</li>
+        <li><strong class="pname"><code>modifiers</code></strong> - the (optional) modifiers for invoking the shortcut, null for none</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDraggable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDraggable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">draggable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setDraggable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Enables or disables that a sub window can be dragged (moved) by the 
+  user. By default a sub window is draggable.</p>
+  <p>Draggable only applies to sub windows, not to browser level 
+  windows.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>draggable</code></strong> - true if the sub window can be dragged by the user</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFocusedComponent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFocusedComponent</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">focusable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setFocusedComponent">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used by Component.Focusable objects to request focus to
+  themselves. Focus renders must be handled at window level (instead of 
+  IFocusable) due we want the last focused component to be focused in 
+  client too. Not the one that is rendered last (the case we'd get if 
+  implemented in Focusable only).</p>
+  <p>To focus component from Muntjac application, use IFocusable.focus(). 
+  See <a href="muntjac.ui.component.IFocusable-class.html" 
+  class="link">IFocusable</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>focusable</code></strong> - to be focused on next paint</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setModal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setModal</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">modality</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setModal">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets sub-window modal, so that widgets behind it cannot be accessed. 
+  <b>Note:</b> affects sub-windows only.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>modality</code></strong> - true if modality is to be turned on</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Application window only</b>. Sets the unique name of the window. 
+  The name of the window is used to uniquely identify it inside the 
+  application.</p>
+  <p>The name also determines the URL that can be used for direct access to
+  a window. All windows can be accessed through 
+  <code>http://host:port/app/win</code> where 
+  <code>http://host:port/app</code> is the application URL (as returned by 
+  <code class="link">Application.getURL</code> and <code>win</code> is the 
+  window name.</p>
+  <p>This method can only be called before the window is added to an 
+  application.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> - the new name for the window or null if the application should 
+          automatically assign a name to it</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if the window is attached to an application</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setPositionX"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPositionX</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">positionX</span>,
+        <span class="sig-arg">repaintRequired</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionX">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the distance of Window left border in pixels from left border of 
+  the containing (main window).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>positionX</code></strong> - the distance of window left border in pixels from left border of 
+          the containing (main window). or -1 if unspecified.</li>
+        <li><strong class="pname"><code>repaintRequired</code></strong> - true if the window needs to be repainted, false otherwise</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setPositionY"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setPositionY</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">positionY</span>,
+        <span class="sig-arg">repaintRequired</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setPositionY">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the distance of Window top border in pixels from top border of 
+  the containing (main window).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>positionY</code></strong> - the distance of window top border in pixels from top border of 
+          the containing (main window). or -1 if unspecified</li>
+        <li><strong class="pname"><code>repaintRequired</code></strong> - true if the window needs to be repainted, false otherwise</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setResizable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setResizable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resizable</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setResizable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets sub-window resizable. <b>Note:</b> affects sub-windows only.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resizable</code></strong> - true if resizability is to be turned on</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="setResizeLazy"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -3026,23 +3232,54 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="center"></a>
+<a name="setTerminal"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">center</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTerminal</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">typ</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.center">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTerminal">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Request to center this window on the screen. <b>Note:</b> affects 
-  sub-windows only.</p>
+  <p>Sets the user terminal. Used by the terminal adapter, should never be 
+  called from application code.</p>
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>typ</code></strong> - the terminal to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTheme"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTheme</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">theme</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setTheme">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p><b>Application window only</b>. Sets the name of the theme to use for 
+  this window. Changing the theme will cause the page to be reloaded.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>theme</code></strong> - the name of the new theme for this window or null to use the 
+          application theme.</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -3150,237 +3387,6 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="setFocusedComponent"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFocusedComponent</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">focusable</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setFocusedComponent">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>This method is used by Component.Focusable objects to request focus to
-  themselves. Focus renders must be handled at window level (instead of 
-  IFocusable) due we want the last focused component to be focused in 
-  client too. Not the one that is rendered last (the case we'd get if 
-  implemented in Focusable only).</p>
-  <p>To focus component from Muntjac application, use IFocusable.focus(). 
-  See <a href="muntjac.ui.component.IFocusable-class.html" 
-  class="link">IFocusable</a>.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>focusable</code></strong> - to be focused on next paint</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="executeJavaScript"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">executeJavaScript</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">script</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.executeJavaScript">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Executes JavaScript in this window.</p>
-  <p>This method allows one to inject javascript from the server to client.
-  A client implementation is not required to implement this functionality, 
-  but currently all web-based clients do implement this.</p>
-  <p>Executing javascript this way often leads to cross-browser 
-  compatibility issues and regressions that are hard to resolve. Use of 
-  this method should be avoided and instead it is recommended to create new
-  widgets with GWT.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>script</code></strong> - JavaScript snippet that will be executed.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="isClosable"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">isClosable</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isClosable">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Returns the closable status of the sub window. If a sub window is 
-  closable it typically shows an X in the upper right corner. Clicking on 
-  the X sends a close event to the server. Setting closable to false will 
-  remove the X from the sub window and prevent the user from closing the 
-  window.</p>
-  <p>Note! For historical reasons readonly controls the closability of the 
-  sub window and therefore readonly and closable affect each other. Setting
-  readonly to true will set closable to false and vice versa.</p>
-  <p>Closable only applies to sub windows, not to browser level 
-  windows.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>true if the sub window can be closed by the user.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setClosable"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setClosable</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">closable</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setClosable">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the closable status for the sub window. If a sub window is 
-  closable it typically shows an X in the upper right corner. Clicking on 
-  the X sends a close event to the server. Setting closable to false will 
-  remove the X from the sub window and prevent the user from closing the 
-  window.</p>
-  <p>Note! For historical reasons readonly controls the closability of the 
-  sub window and therefore readonly and closable affect each other. Setting
-  readonly to true will set closable to false and vice versa.</p>
-  <p>Closable only applies to sub windows, not to browser level 
-  windows.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>closable</code></strong> - determines if the sub window can be closed by the user.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="isDraggable"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">isDraggable</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.isDraggable">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Indicates whether a sub window can be dragged or not. By default a sub
-  window is draggable.</p>
-  <p>Draggable only applies to sub windows, not to browser level 
-  windows.</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="setDraggable"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDraggable</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">draggable</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setDraggable">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Enables or disables that a sub window can be dragged (moved) by the 
-  user. By default a sub window is draggable.</p>
-  <p>Draggable only applies to sub windows, not to browser level 
-  windows.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>draggable</code></strong> - true if the sub window can be dragged by the user</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setCloseShortcut"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCloseShortcut</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">keyCode</span>,
-        <span class="sig-arg">*modifiers</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.setCloseShortcut">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Makes is possible to close the window by pressing the given <a 
-  href="muntjac.event.shortcut_action.KeyCode-class.html" 
-  class="link">KeyCode</a> and (optional) <a 
-  href="muntjac.event.shortcut_action.ModifierKey-class.html" 
-  class="link">ModifierKey</a>s.</p>
-  <p>Note that this shortcut only reacts while the window has focus, 
-  closing itself - if you want to close a subwindow from a parent window, 
-  use <a href="muntjac.ui.panel.Panel-class.html#addAction" 
-  class="link">addAction</a> of the parent window instead.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>keyCode</code></strong> - the keycode for invoking the shortcut</li>
-        <li><strong class="pname"><code>modifiers</code></strong> - the (optional) modifiers for invoking the shortcut, null for none</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="focus"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.ui.window-pysrc.html#Window.focus">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>If the window is a sub-window focusing will cause the sub-window to be
-  brought on top of other sub-windows on gain keyboard focus.</p>
-  <dl class="fields">
-    <dt>Overrides:
-        <a href="muntjac.ui.component.IFocusable-class.html#focus">component.IFocusable.focus</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
 <br />
 <!-- ==================== CLASS VARIABLE DETAILS ==================== -->
 <a name="section-ClassVariableDetails"></a>
@@ -3400,19 +3406,19 @@
   </td>
 </tr>
 </table>
-<a name="BORDER_NONE"></a>
+<a name="BORDER_DEFAULT"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">BORDER_NONE</h3>
-  <p><b>Application window only</b>. A border style used for opening</p>
+  <h3 class="epydoc">BORDER_DEFAULT</h3>
+  <p><b>Application window only</b>. A border style that indicates that</p>
   <dl class="fields">
   </dl>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-0
+2
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -3436,19 +3442,19 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="BORDER_DEFAULT"></a>
+<a name="BORDER_NONE"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">BORDER_DEFAULT</h3>
-  <p><b>Application window only</b>. A border style that indicates that</p>
+  <h3 class="epydoc">BORDER_NONE</h3>
+  <p><b>Application window only</b>. A border style used for opening</p>
   <dl class="fields">
   </dl>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-2
+0
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -3473,17 +3479,6 @@
   </td>
 </tr>
 </table>
-<a name="_terminal"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_terminal</h3>
-  <p><b>Application window only</b>. The user terminal for this window.</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
 <a name="_application"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
@@ -3495,47 +3490,68 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="_uriHandlerList"></a>
+<a name="_centerRequested"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_uriHandlerList</h3>
-  <p><b>Application window only</b>. List of URI handlers for this</p>
+  <h3 class="epydoc">_centerRequested</h3>
+  <p><b>Sub window only</b>. Flag which is true if the window is</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="_parameterHandlerList"></a>
+<a name="_draggable"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_parameterHandlerList</h3>
-  <p><b>Application window only</b>. List of parameter handlers for</p>
+  <h3 class="epydoc">_draggable</h3>
+  <p><b>Sub window only</b>. Controls if the end user can move the</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="_subwindows"></a>
+<a name="_jsExecQueue"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_subwindows</h3>
-  <p><b>Application window only</b>. List of sub windows in this 
-  window.</p>
+  <h3 class="epydoc">_jsExecQueue</h3>
+  <p><b>Application window only</b>. A list of javascript commands that</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="_theme"></a>
+<a name="_modal"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_theme</h3>
-  <p><b>Application window only</b>. Explicitly specified theme of this</p>
+  <h3 class="epydoc">_modal</h3>
+  <p><b>Sub window only</b>. Modality flag for sub window.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_name"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_name</h3>
+  <p><b>Application window only</b>. Unique name of the window used to</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_notifications"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_notifications</h3>
+  <p><b>Application window only</b>. A list of notifications that are</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -3552,90 +3568,13 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="_name"></a>
+<a name="_parameterHandlerList"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_name</h3>
-  <p><b>Application window only</b>. Unique name of the window used to</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_positionY"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_positionY</h3>
-  <p><b>Sub window only</b>. Top offset in pixels for the sub window</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_positionX"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_positionX</h3>
-  <p><b>Sub window only</b>. Left offset in pixels for the sub window</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_notifications"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_notifications</h3>
-  <p><b>Application window only</b>. A list of notifications that are</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_modal"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_modal</h3>
-  <p><b>Sub window only</b>. Modality flag for sub window.</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_resizable"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_resizable</h3>
-  <p><b>Sub window only</b>. Controls if the end user can resize the</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_draggable"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_draggable</h3>
-  <p><b>Sub window only</b>. Controls if the end user can move the</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="_centerRequested"></a>
-<div class="private">
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">_centerRequested</h3>
-  <p><b>Sub window only</b>. Flag which is true if the window is</p>
+  <h3 class="epydoc">_parameterHandlerList</h3>
+  <p><b>Application window only</b>. List of parameter handlers for</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -3652,13 +3591,80 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="_jsExecQueue"></a>
+<a name="_positionX"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
-  <h3 class="epydoc">_jsExecQueue</h3>
-  <p><b>Application window only</b>. A list of javascript commands that</p>
+  <h3 class="epydoc">_positionX</h3>
+  <p><b>Sub window only</b>. Left offset in pixels for the sub window</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_positionY"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_positionY</h3>
+  <p><b>Sub window only</b>. Top offset in pixels for the sub window</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_resizable"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_resizable</h3>
+  <p><b>Sub window only</b>. Controls if the end user can resize the</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_subwindows"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_subwindows</h3>
+  <p><b>Application window only</b>. List of sub windows in this 
+  window.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_terminal"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_terminal</h3>
+  <p><b>Application window only</b>. The user terminal for this window.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_theme"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_theme</h3>
+  <p><b>Application window only</b>. Explicitly specified theme of this</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_uriHandlerList"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_uriHandlerList</h3>
+  <p><b>Application window only</b>. List of URI handlers for this</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -3688,14 +3694,14 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:30 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:09 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

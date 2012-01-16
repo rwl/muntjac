@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.google_maps.google_map_app</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.google_maps-module.html">Package&nbsp;google_maps</a> ::
+        Module&nbsp;google_map_app
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.google_maps.google_map_app-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.addon.google_maps.google_map_app-module.html">Module muntjac.addon.google_maps.google_map_app</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">random</tt> \ </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt class="py-name">random</tt><tt class="py-op">,</tt> <tt class="py-name">randint</tt><tt class="py-op">,</tt> <tt class="py-name">getrandbits</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module muntjac.api=muntjac.api-module.html"><a title="muntjac.api" class="py-name" href="#" onclick="return doclink('link-1', 'api', 'link-1');">api</a></tt> \ </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Class muntjac.application.Application=muntjac.application.Application-class.html"><a title="muntjac.application.Application" class="py-name" href="#" onclick="return doclink('link-2', 'Application', 'link-2');">Application</a></tt><tt class="py-op">,</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.window.Window=muntjac.ui.window.Window-class.html"><a title="muntjac.ui.window.Window" class="py-name" href="#" onclick="return doclink('link-3', 'Window', 'link-3');">Window</a></tt><tt class="py-op">,</tt> <tt id="link-4" class="py-name" targets="Class muntjac.ui.label.Label=muntjac.ui.label.Label-class.html"><a title="muntjac.ui.label.Label" class="py-name" href="#" onclick="return doclink('link-4', 'Label', 'link-4');">Label</a></tt><tt class="py-op">,</tt> <tt id="link-5" class="py-name" targets="Class muntjac.ui.grid_layout.GridLayout=muntjac.ui.grid_layout.GridLayout-class.html"><a title="muntjac.ui.grid_layout.GridLayout" class="py-name" href="#" onclick="return doclink('link-5', 'GridLayout', 'link-5');">GridLayout</a></tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name" targets="Class muntjac.ui.button.Button=muntjac.ui.button.Button-class.html"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-6', 'Button', 'link-6');">Button</a></tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-7" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-7', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Package muntjac.terminal.gwt.client.ui=muntjac.terminal.gwt.client.ui-module.html,Package muntjac.ui=muntjac.ui-module.html"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-8', 'ui', 'link-8');">ui</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Module muntjac.ui.button=muntjac.ui.button-module.html"><a title="muntjac.ui.button" class="py-name" href="#" onclick="return doclink('link-9', 'button', 'link-9');">button</a></tt> \ </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-10" class="py-name" targets="Class muntjac.event.mouse_events.IClickListener=muntjac.event.mouse_events.IClickListener-class.html,Class muntjac.ui.button.IClickListener=muntjac.ui.button.IClickListener-class.html"><a title="muntjac.event.mouse_events.IClickListener
+muntjac.ui.button.IClickListener" class="py-name" href="#" onclick="return doclink('link-10', 'IClickListener', 'link-10');">IClickListener</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-11" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-11', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="muntjac.terminal.gwt.client.ui
+muntjac.ui" class="py-name" href="#" onclick="return doclink('link-12', 'ui', 'link-8');">ui</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Module muntjac.ui.window=muntjac.ui.window-module.html"><a title="muntjac.ui.window" class="py-name" href="#" onclick="return doclink('link-13', 'window', 'link-13');">window</a></tt> \ </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Class muntjac.ui.window.Notification=muntjac.ui.window.Notification-class.html"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-14', 'Notification', 'link-14');">Notification</a></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-15" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-15', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Package muntjac.addon=muntjac.addon-module.html"><a title="muntjac.addon" class="py-name" href="#" onclick="return doclink('link-16', 'addon', 'link-16');">addon</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Package muntjac.addon.google_maps=muntjac.addon.google_maps-module.html"><a title="muntjac.addon.google_maps" class="py-name" href="#" onclick="return doclink('link-17', 'google_maps', 'link-17');">google_maps</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Module muntjac.addon.google_maps.google_map=muntjac.addon.google_maps.google_map-module.html"><a title="muntjac.addon.google_maps.google_map" class="py-name" href="#" onclick="return doclink('link-18', 'google_map', 'link-18');">google_map</a></tt> \ </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-19" class="py-name" targets="Class muntjac.addon.google_maps.google_map.GoogleMap=muntjac.addon.google_maps.google_map.GoogleMap-class.html"><a title="muntjac.addon.google_maps.google_map.GoogleMap" class="py-name" href="#" onclick="return doclink('link-19', 'GoogleMap', 'link-19');">GoogleMap</a></tt><tt class="py-op">,</tt> <tt id="link-20" class="py-name" targets="Class muntjac.addon.google_maps.google_map.MapControl=muntjac.addon.google_maps.google_map.MapControl-class.html"><a title="muntjac.addon.google_maps.google_map.MapControl" class="py-name" href="#" onclick="return doclink('link-20', 'MapControl', 'link-20');">MapControl</a></tt><tt class="py-op">,</tt> <tt id="link-21" class="py-name" targets="Class muntjac.addon.google_maps.google_map.IMarkerClickListener=muntjac.addon.google_maps.google_map.IMarkerClickListener-class.html"><a title="muntjac.addon.google_maps.google_map.IMarkerClickListener" class="py-name" href="#" onclick="return doclink('link-21', 'IMarkerClickListener', 'link-21');">IMarkerClickListener</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">    <tt id="link-22" class="py-name" targets="Class muntjac.addon.google_maps.google_map.IMarkerMovedListener=muntjac.addon.google_maps.google_map.IMarkerMovedListener-class.html"><a title="muntjac.addon.google_maps.google_map.IMarkerMovedListener" class="py-name" href="#" onclick="return doclink('link-22', 'IMarkerMovedListener', 'link-22');">IMarkerMovedListener</a></tt><tt class="py-op">,</tt> <tt id="link-23" class="py-name" targets="Class muntjac.addon.google_maps.google_map.IMapMoveListener=muntjac.addon.google_maps.google_map.IMapMoveListener-class.html"><a title="muntjac.addon.google_maps.google_map.IMapMoveListener" class="py-name" href="#" onclick="return doclink('link-23', 'IMapMoveListener', 'link-23');">IMapMoveListener</a></tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-24" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-24', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="muntjac.addon" class="py-name" href="#" onclick="return doclink('link-25', 'addon', 'link-16');">addon</a></tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="muntjac.addon.google_maps" class="py-name" href="#" onclick="return doclink('link-26', 'google_maps', 'link-17');">google_maps</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Package muntjac.addon.google_maps.overlay=muntjac.addon.google_maps.overlay-module.html"><a title="muntjac.addon.google_maps.overlay" class="py-name" href="#" onclick="return doclink('link-27', 'overlay', 'link-27');">overlay</a></tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Module muntjac.addon.google_maps.overlay.basic_marker=muntjac.addon.google_maps.overlay.basic_marker-module.html"><a title="muntjac.addon.google_maps.overlay.basic_marker" class="py-name" href="#" onclick="return doclink('link-28', 'basic_marker', 'link-28');">basic_marker</a></tt> \ </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-29" class="py-name" targets="Class muntjac.addon.google_maps.overlay.basic_marker.BasicMarker=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-29', 'BasicMarker', 'link-29');">BasicMarker</a></tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-30" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-30', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="muntjac.addon" class="py-name" href="#" onclick="return doclink('link-31', 'addon', 'link-16');">addon</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="muntjac.addon.google_maps" class="py-name" href="#" onclick="return doclink('link-32', 'google_maps', 'link-17');">google_maps</a></tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="muntjac.addon.google_maps.overlay" class="py-name" href="#" onclick="return doclink('link-33', 'overlay', 'link-27');">overlay</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Module muntjac.addon.google_maps.overlay.polygon=muntjac.addon.google_maps.overlay.polygon-module.html"><a title="muntjac.addon.google_maps.overlay.polygon" class="py-name" href="#" onclick="return doclink('link-34', 'polygon', 'link-34');">polygon</a></tt> \ </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">    <tt class="py-keyword">import</tt> <tt id="link-35" class="py-name" targets="Class muntjac.addon.google_maps.overlay.polygon.Polygon=muntjac.addon.google_maps.overlay.polygon.Polygon-class.html"><a title="muntjac.addon.google_maps.overlay.polygon.Polygon" class="py-name" href="#" onclick="return doclink('link-35', 'Polygon', 'link-35');">Polygon</a></tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"> </tt>
+<a name="GoogleMapWidgetApp"></a><div id="GoogleMapWidgetApp-def"><a name="L39"></a><tt class="py-lineno"> 39</tt> <a class="py-toggle" href="#" id="GoogleMapWidgetApp-toggle" onclick="return toggle('GoogleMapWidgetApp');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html">GoogleMapWidgetApp</a><tt class="py-op">(</tt><tt class="py-base-class">Application</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GoogleMapWidgetApp-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="GoogleMapWidgetApp-expanded"><a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="GoogleMapWidgetApp.init"></a><div id="GoogleMapWidgetApp.init-def"><a name="L41"></a><tt class="py-lineno"> 41</tt> <a class="py-toggle" href="#" id="GoogleMapWidgetApp.init-toggle" onclick="return toggle('GoogleMapWidgetApp.init');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html#init">init</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GoogleMapWidgetApp.init-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="GoogleMapWidgetApp.init-expanded"><a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-comment">#        super(GoogleMapWidgetApp, self).__init__()</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method muntjac.application.Application.setMainWindow()=muntjac.application.Application-class.html#setMainWindow"><a title="muntjac.application.Application.setMainWindow" class="py-name" href="#" onclick="return doclink('link-36', 'setMainWindow', 'link-36');">setMainWindow</a></tt><tt class="py-op">(</tt><tt id="link-37" class="py-name"><a title="muntjac.ui.window.Window" class="py-name" href="#" onclick="return doclink('link-37', 'Window', 'link-3');">Window</a></tt><tt class="py-op">(</tt><tt class="py-string">'Google Map add-on demo'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-comment"># Create a new map instance centered on the IT Mill offices</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt> <tt class="py-op">=</tt> <tt id="link-38" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap" class="py-name" href="#" onclick="return doclink('link-38', 'GoogleMap', 'link-19');">GoogleMap</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.3</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-number">8</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-39" class="py-name" targets="Method muntjac.terminal.sizeable.ISizeable.setWidth()=muntjac.terminal.sizeable.ISizeable-class.html#setWidth,Method muntjac.ui.abstract_component.AbstractComponent.setWidth()=muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setWidth,Method muntjac.ui.login_form.LoginForm.setWidth()=muntjac.ui.login_form.LoginForm-class.html#setWidth"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-39', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'640px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Method muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight()=muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory-class.html#setHeight,Method muntjac.terminal.sizeable.ISizeable.setHeight()=muntjac.terminal.sizeable.ISizeable-class.html#setHeight,Method muntjac.ui.abstract_component.AbstractComponent.setHeight()=muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setHeight,Method muntjac.ui.login_form.LoginForm.setHeight()=muntjac.ui.login_form.LoginForm-class.html#setHeight,Method muntjac.ui.text_field.TextField.setHeight()=muntjac.ui.text_field.TextField-class.html#setHeight"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-40', 'setHeight', 'link-40');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'480px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-comment"># Create a marker at the IT Mill offices</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt> <tt class="py-op">=</tt> <tt id="link-41" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-41', 'BasicMarker', 'link-29');">BasicMarker</a></tt><tt class="py-op">(</tt><tt class="py-number">1L</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.3</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">'Test marker 1'</tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark2</tt> <tt class="py-op">=</tt> <tt id="link-42" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-42', 'BasicMarker', 'link-29');">BasicMarker</a></tt><tt class="py-op">(</tt><tt class="py-number">2L</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.4</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">'Test marker 2'</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark3</tt> <tt class="py-op">=</tt> <tt id="link-43" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-43', 'BasicMarker', 'link-29');">BasicMarker</a></tt><tt class="py-op">(</tt><tt class="py-number">4L</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.6</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">'Test marker 3'</tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark4</tt> <tt class="py-op">=</tt> <tt id="link-44" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-44', 'BasicMarker', 'link-29');">BasicMarker</a></tt><tt class="py-op">(</tt><tt class="py-number">5L</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.7</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">'Test marker 4'</tt><tt class="py-op">)</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-45" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.MarkerClickListener=muntjac.addon.google_maps.google_map_app.MarkerClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.MarkerClickListener" class="py-name" href="#" onclick="return doclink('link-45', 'MarkerClickListener', 'link-45');">MarkerClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.addListener()=muntjac.addon.canvas.canvas.Canvas-class.html#addListener,Method muntjac.addon.colorpicker.color_picker.ColorPicker.addListener()=muntjac.addon.colorpicker.color_picker.ColorPicker-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient.addListener()=muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid.addListener()=muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.addListener()=muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup.addListener()=muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview.addListener()=muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview-class.html#addListener,Method muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect.addListener()=muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect-class.html#addListener,Method muntjac.addon.google_maps.google_map.GoogleMap.addListener()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#addListener,Method muntjac.addon.weelayout.wee_layout.WeeLayout.addListener()=muntjac.addon.weelayout.wee_layout.WeeLayout-class.html#addListener,Method muntjac.application.Application.addListener()=muntjac.application.Application-class.html#addListener,Method muntjac.data.buffered.SourceException.addListener()=muntjac.data.buffered.SourceException-class.html#addListener,Method muntjac.data.container.IItemSetChangeNotifier.addListener()=muntjac.data.container.IItemSetChangeNotifier-class.html#addListener,Method muntjac.data.container.IPropertySetChangeNotifier.addListener()=muntjac.data.container.IPropertySetChangeNotifier-class.html#addListener,Method muntjac.data.item.IPropertySetChangeNotifier.addListener()=muntjac.data.item.IPropertySetChangeNotifier-class.html#addListener,Method muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener()=muntjac.data.property.IReadOnlyStatusChangeNotifier-class.html#addListener,Method muntjac.data.property.IValueChangeNotifier.addListener()=muntjac.data.property.IValueChangeNotifier-class.html#addListener,Method muntjac.data.util.abstract_container.AbstractContainer.addListener()=muntjac.data.util.abstract_container.AbstractContainer-class.html#addListener,Method muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener()=muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer-class.html#addListener,Method muntjac.data.util.abstract_property.AbstractProperty.addListener()=muntjac.data.util.abstract_property.AbstractProperty-class.html#addListener,Method muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener()=muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper-class.html#addListener,Method muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener()=muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper-class.html#addListener,Method muntjac.data.util.indexed_container.IndexedContainer.addListener()=muntjac.data.util.indexed_container.IndexedContainer-class.html#addListener,Method muntjac.data.util.indexed_container.IndexedContainerProperty.addListener()=muntjac.data.util.indexed_container.IndexedContainerProperty-class.html#addListener,Method muntjac.data.util.propertyset_item.PropertysetItem.addListener()=muntjac.data.util.propertyset_item.PropertysetItem-class.html#addListener,Method muntjac.data.validator.InvalidValueException.addListener()=muntjac.data.validator.InvalidValueException-class.html#addListener,Method muntjac.event.event_router.EventRouter.addListener()=muntjac.event.event_router.EventRouter-class.html#addListener,Method muntjac.event.field_events.IBlurNotifier.addListener()=muntjac.event.field_events.IBlurNotifier-class.html#addListener,Method muntjac.event.field_events.IFocusNotifier.addListener()=muntjac.event.field_events.IFocusNotifier-class.html#addListener,Method muntjac.event.field_events.ITextChangeNotifier.addListener()=muntjac.event.field_events.ITextChangeNotifier-class.html#addListener,Method muntjac.event.item_click_event.IItemClickNotifier.addListener()=muntjac.event.item_click_event.IItemClickNotifier-class.html#addListener,Method muntjac.event.layout_events.ILayoutClickNotifier.addListener()=muntjac.event.layout_events.ILayoutClickNotifier-class.html#addListener,Method muntjac.event.method_event_source.IMethodEventSource.addListener()=muntjac.event.method_event_source.IMethodEventSource-class.html#addListener,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#addListener,Method muntjac.terminal.error_message.IErrorMessage.addListener()=muntjac.terminal.error_message.IErrorMessage-class.html#addListener,Method muntjac.terminal.paintable.IPaintable.addListener()=muntjac.terminal.paintable.IPaintable-class.html#addListener,Method muntjac.terminal.sys_error.SysError.addListener()=muntjac.terminal.sys_error.SysError-class.html#addListener,Method muntjac.terminal.user_error.UserError.addListener()=muntjac.terminal.user_error.UserError-class.html#addListener,Method muntjac.ui.absolute_layout.AbsoluteLayout.addListener()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#addListener,Method muntjac.ui.abstract_component.AbstractComponent.addListener()=muntjac.ui.abstract_component.AbstractComponent-class.html#addListener,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addListener,Method muntjac.ui.abstract_field.AbstractField.addListener()=muntjac.ui.abstract_field.AbstractField-class.html#addListener,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#addListener,Method muntjac.ui.abstract_select.AbstractSelect.addListener()=muntjac.ui.abstract_select.AbstractSelect-class.html#addListener,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#addListener,Method muntjac.ui.abstract_text_field.AbstractTextField.addListener()=muntjac.ui.abstract_text_field.AbstractTextField-class.html#addListener,Method muntjac.ui.button.Button.addListener()=muntjac.ui.button.Button-class.html#addListener,Method muntjac.ui.component.IComponent.addListener()=muntjac.ui.component.IComponent-class.html#addListener,Method muntjac.ui.component_container.IComponentContainer.addListener()=muntjac.ui.component_container.IComponentContainer-class.html#addListener,Method muntjac.ui.css_layout.CssLayout.addListener()=muntjac.ui.css_layout.CssLayout-class.html#addListener,Method muntjac.ui.date_field.DateField.addListener()=muntjac.ui.date_field.DateField-class.html#addListener,Method muntjac.ui.embedded.Embedded.addListener()=muntjac.ui.embedded.Embedded-class.html#addListener,Method muntjac.ui.grid_layout.GridLayout.addListener()=muntjac.ui.grid_layout.GridLayout-class.html#addListener,Method muntjac.ui.label.Label.addListener()=muntjac.ui.label.Label-class.html#addListener,Method muntjac.ui.login_form.LoginForm.addListener()=muntjac.ui.login_form.LoginForm-class.html#addListener,Method muntjac.ui.option_group.OptionGroup.addListener()=muntjac.ui.option_group.OptionGroup-class.html#addListener,Method muntjac.ui.panel.Panel.addListener()=muntjac.ui.panel.Panel-class.html#addListener,Method muntjac.ui.popup_view.PopupView.addListener()=muntjac.ui.popup_view.PopupView-class.html#addListener,Method muntjac.ui.select.Select.addListener()=muntjac.ui.select.Select-class.html#addListener,Method muntjac.ui.tab_sheet.TabSheet.addListener()=muntjac.ui.tab_sheet.TabSheet-class.html#addListener,Method muntjac.ui.table.Table.addListener()=muntjac.ui.table.Table-class.html#addListener,Method muntjac.ui.tree.Tree.addListener()=muntjac.ui.tree.Tree-class.html#addListener,Method muntjac.ui.tree_table.TreeTable.addListener()=muntjac.ui.tree_table.TreeTable-class.html#addListener,Method muntjac.ui.upload.Upload.addListener()=muntjac.ui.upload.Upload-class.html#addListener,Method muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener()=muntjac.ui.uri_fragment_utility.UriFragmentUtility-class.html#addListener,Method muntjac.ui.window.Window.addListener()=muntjac.ui.window.Window-class.html#addListener"><a title="muntjac.addon.canvas.canvas.Canvas.addListener
+muntjac.addon.colorpicker.color_picker.ColorPicker.addListener
+muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient.addListener
+muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid.addListener
+muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.addListener
+muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup.addListener
+muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview.addListener
+muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect.addListener
+muntjac.addon.google_maps.google_map.GoogleMap.addListener
+muntjac.addon.weelayout.wee_layout.WeeLayout.addListener
+muntjac.application.Application.addListener
+muntjac.data.buffered.SourceException.addListener
+muntjac.data.container.IItemSetChangeNotifier.addListener
+muntjac.data.container.IPropertySetChangeNotifier.addListener
+muntjac.data.item.IPropertySetChangeNotifier.addListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener
+muntjac.data.property.IValueChangeNotifier.addListener
+muntjac.data.util.abstract_container.AbstractContainer.addListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener
+muntjac.data.util.abstract_property.AbstractProperty.addListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener
+muntjac.data.util.indexed_container.IndexedContainer.addListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.addListener
+muntjac.data.util.propertyset_item.PropertysetItem.addListener
+muntjac.data.validator.InvalidValueException.addListener
+muntjac.event.event_router.EventRouter.addListener
+muntjac.event.field_events.IBlurNotifier.addListener
+muntjac.event.field_events.IFocusNotifier.addListener
+muntjac.event.field_events.ITextChangeNotifier.addListener
+muntjac.event.item_click_event.IItemClickNotifier.addListener
+muntjac.event.layout_events.ILayoutClickNotifier.addListener
+muntjac.event.method_event_source.IMethodEventSource.addListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener
+muntjac.terminal.error_message.IErrorMessage.addListener
+muntjac.terminal.paintable.IPaintable.addListener
+muntjac.terminal.sys_error.SysError.addListener
+muntjac.terminal.user_error.UserError.addListener
+muntjac.ui.absolute_layout.AbsoluteLayout.addListener
+muntjac.ui.abstract_component.AbstractComponent.addListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener
+muntjac.ui.abstract_field.AbstractField.addListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener
+muntjac.ui.abstract_select.AbstractSelect.addListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener
+muntjac.ui.abstract_text_field.AbstractTextField.addListener
+muntjac.ui.button.Button.addListener
+muntjac.ui.component.IComponent.addListener
+muntjac.ui.component_container.IComponentContainer.addListener
+muntjac.ui.css_layout.CssLayout.addListener
+muntjac.ui.date_field.DateField.addListener
+muntjac.ui.embedded.Embedded.addListener
+muntjac.ui.grid_layout.GridLayout.addListener
+muntjac.ui.label.Label.addListener
+muntjac.ui.login_form.LoginForm.addListener
+muntjac.ui.option_group.OptionGroup.addListener
+muntjac.ui.panel.Panel.addListener
+muntjac.ui.popup_view.PopupView.addListener
+muntjac.ui.select.Select.addListener
+muntjac.ui.tab_sheet.TabSheet.addListener
+muntjac.ui.table.Table.addListener
+muntjac.ui.tree.Tree.addListener
+muntjac.ui.tree_table.TreeTable.addListener
+muntjac.ui.upload.Upload.addListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener
+muntjac.ui.window.Window.addListener" class="py-name" href="#" onclick="return doclink('link-46', 'addListener', 'link-46');">addListener</a></tt><tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt id="link-47" class="py-name"><a title="muntjac.addon.google_maps.google_map.IMarkerClickListener" class="py-name" href="#" onclick="return doclink('link-47', 'IMarkerClickListener', 'link-21');">IMarkerClickListener</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-comment"># Marker with information window pupup</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt> <tt class="py-op">=</tt> <tt id="link-48" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker" class="py-name" href="#" onclick="return doclink('link-48', 'BasicMarker', 'link-29');">BasicMarker</a></tt><tt class="py-op">(</tt><tt class="py-number">6L</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.8</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-string">'Marker 5'</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setInfoWindowContent()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setInfoWindowContent"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setInfoWindowContent" class="py-name" href="#" onclick="return doclink('link-49', 'setInfoWindowContent', 'link-49');">setInfoWindowContent</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">,</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">                <tt id="link-50" class="py-name"><a title="muntjac.ui.label.Label" class="py-name" href="#" onclick="return doclink('link-50', 'Label', 'link-4');">Label</a></tt><tt class="py-op">(</tt><tt class="py-string">'Hello Marker 5!'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-name">content</tt> <tt class="py-op">=</tt> <tt id="link-51" class="py-name"><a title="muntjac.ui.label.Label" class="py-name" href="#" onclick="return doclink('link-51', 'Label', 'link-4');">Label</a></tt><tt class="py-op">(</tt><tt class="py-string">'Hello Marker 2!'</tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">        <tt class="py-name">content</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-52', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'60px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark2</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setInfoWindowContent" class="py-name" href="#" onclick="return doclink('link-53', 'setInfoWindowContent', 'link-49');">setInfoWindowContent</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">,</tt> <tt class="py-name">content</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.addMarker()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#addMarker,Method muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker()=muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource-class.html#addMarker,Method muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker()=muntjac.addon.google_maps.overlay.marker_source.IMarkerSource-class.html#addMarker"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-54', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">)</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-55', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark2</tt><tt class="py-op">)</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-56', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark3</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-57', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark4</tt><tt class="py-op">)</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-58', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt><tt class="py-op">)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name" targets="Method muntjac.application.Application.getMainWindow()=muntjac.application.Application-class.html#getMainWindow"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-59', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-60" class="py-name" targets="Method muntjac.addon.google_maps.overlay.info_window_tab.InfoWindowTab.getContent()=muntjac.addon.google_maps.overlay.info_window_tab.InfoWindowTab-class.html#getContent,Method muntjac.ui.panel.Panel.getContent()=muntjac.ui.panel.Panel-class.html#getContent,Method muntjac.ui.popup_view.PopupView.getContent()=muntjac.ui.popup_view.PopupView-class.html#getContent"><a title="muntjac.addon.google_maps.overlay.info_window_tab.InfoWindowTab.getContent
+muntjac.ui.panel.Panel.getContent
+muntjac.ui.popup_view.PopupView.getContent" class="py-name" href="#" onclick="return doclink('link-60', 'getContent', 'link-60');">getContent</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-61" class="py-name" targets="Method muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent()=muntjac.addon.weelayout.wee_layout.WeeLayout-class.html#addComponent,Method muntjac.ui.absolute_layout.AbsoluteLayout.addComponent()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#addComponent,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addComponent,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#addComponent,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#addComponent,Method muntjac.ui.component_container.IComponentContainer.addComponent()=muntjac.ui.component_container.IComponentContainer-class.html#addComponent,Method muntjac.ui.css_layout.CssLayout.addComponent()=muntjac.ui.css_layout.CssLayout-class.html#addComponent,Method muntjac.ui.custom_component.CustomComponent.addComponent()=muntjac.ui.custom_component.CustomComponent-class.html#addComponent,Method muntjac.ui.custom_layout.CustomLayout.addComponent()=muntjac.ui.custom_layout.CustomLayout-class.html#addComponent,Method muntjac.ui.expand_layout.ExpandLayout.addComponent()=muntjac.ui.expand_layout.ExpandLayout-class.html#addComponent,Method muntjac.ui.grid_layout.GridLayout.addComponent()=muntjac.ui.grid_layout.GridLayout-class.html#addComponent,Method muntjac.ui.panel.Panel.addComponent()=muntjac.ui.panel.Panel-class.html#addComponent,Method muntjac.ui.popup_view.PopupView.addComponent()=muntjac.ui.popup_view.PopupView-class.html#addComponent,Method muntjac.ui.tab_sheet.TabSheet.addComponent()=muntjac.ui.tab_sheet.TabSheet-class.html#addComponent,Method muntjac.ui.window.Window.addComponent()=muntjac.ui.window.Window-class.html#addComponent"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-61', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">)</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-comment"># Add a Marker click listener to catch marker click events.</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-comment"># Note, works only if marker has information window content</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-62" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.MarkerClickListener2=muntjac.addon.google_maps.google_map_app.MarkerClickListener2-class.html"><a title="muntjac.addon.google_maps.google_map_app.MarkerClickListener2" class="py-name" href="#" onclick="return doclink('link-62', 'MarkerClickListener2', 'link-62');">MarkerClickListener2</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.addListener
+muntjac.addon.colorpicker.color_picker.ColorPicker.addListener
+muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient.addListener
+muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid.addListener
+muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.addListener
+muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup.addListener
+muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview.addListener
+muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect.addListener
+muntjac.addon.google_maps.google_map.GoogleMap.addListener
+muntjac.addon.weelayout.wee_layout.WeeLayout.addListener
+muntjac.application.Application.addListener
+muntjac.data.buffered.SourceException.addListener
+muntjac.data.container.IItemSetChangeNotifier.addListener
+muntjac.data.container.IPropertySetChangeNotifier.addListener
+muntjac.data.item.IPropertySetChangeNotifier.addListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener
+muntjac.data.property.IValueChangeNotifier.addListener
+muntjac.data.util.abstract_container.AbstractContainer.addListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener
+muntjac.data.util.abstract_property.AbstractProperty.addListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener
+muntjac.data.util.indexed_container.IndexedContainer.addListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.addListener
+muntjac.data.util.propertyset_item.PropertysetItem.addListener
+muntjac.data.validator.InvalidValueException.addListener
+muntjac.event.event_router.EventRouter.addListener
+muntjac.event.field_events.IBlurNotifier.addListener
+muntjac.event.field_events.IFocusNotifier.addListener
+muntjac.event.field_events.ITextChangeNotifier.addListener
+muntjac.event.item_click_event.IItemClickNotifier.addListener
+muntjac.event.layout_events.ILayoutClickNotifier.addListener
+muntjac.event.method_event_source.IMethodEventSource.addListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener
+muntjac.terminal.error_message.IErrorMessage.addListener
+muntjac.terminal.paintable.IPaintable.addListener
+muntjac.terminal.sys_error.SysError.addListener
+muntjac.terminal.user_error.UserError.addListener
+muntjac.ui.absolute_layout.AbsoluteLayout.addListener
+muntjac.ui.abstract_component.AbstractComponent.addListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener
+muntjac.ui.abstract_field.AbstractField.addListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener
+muntjac.ui.abstract_select.AbstractSelect.addListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener
+muntjac.ui.abstract_text_field.AbstractTextField.addListener
+muntjac.ui.button.Button.addListener
+muntjac.ui.component.IComponent.addListener
+muntjac.ui.component_container.IComponentContainer.addListener
+muntjac.ui.css_layout.CssLayout.addListener
+muntjac.ui.date_field.DateField.addListener
+muntjac.ui.embedded.Embedded.addListener
+muntjac.ui.grid_layout.GridLayout.addListener
+muntjac.ui.label.Label.addListener
+muntjac.ui.login_form.LoginForm.addListener
+muntjac.ui.option_group.OptionGroup.addListener
+muntjac.ui.panel.Panel.addListener
+muntjac.ui.popup_view.PopupView.addListener
+muntjac.ui.select.Select.addListener
+muntjac.ui.tab_sheet.TabSheet.addListener
+muntjac.ui.table.Table.addListener
+muntjac.ui.tree.Tree.addListener
+muntjac.ui.tree_table.TreeTable.addListener
+muntjac.ui.upload.Upload.addListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener
+muntjac.ui.window.Window.addListener" class="py-name" href="#" onclick="return doclink('link-63', 'addListener', 'link-46');">addListener</a></tt><tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt id="link-64" class="py-name"><a title="muntjac.addon.google_maps.google_map.IMarkerClickListener" class="py-name" href="#" onclick="return doclink('link-64', 'IMarkerClickListener', 'link-21');">IMarkerClickListener</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-comment"># Add a MarkerMovedListener to catch events when a marker is dragged to</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-comment"># a new location</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-65" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.MarkerMovedListener=muntjac.addon.google_maps.google_map_app.MarkerMovedListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.MarkerMovedListener" class="py-name" href="#" onclick="return doclink('link-65', 'MarkerMovedListener', 'link-65');">MarkerMovedListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-66" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.addListener
+muntjac.addon.colorpicker.color_picker.ColorPicker.addListener
+muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient.addListener
+muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid.addListener
+muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.addListener
+muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup.addListener
+muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview.addListener
+muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect.addListener
+muntjac.addon.google_maps.google_map.GoogleMap.addListener
+muntjac.addon.weelayout.wee_layout.WeeLayout.addListener
+muntjac.application.Application.addListener
+muntjac.data.buffered.SourceException.addListener
+muntjac.data.container.IItemSetChangeNotifier.addListener
+muntjac.data.container.IPropertySetChangeNotifier.addListener
+muntjac.data.item.IPropertySetChangeNotifier.addListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener
+muntjac.data.property.IValueChangeNotifier.addListener
+muntjac.data.util.abstract_container.AbstractContainer.addListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener
+muntjac.data.util.abstract_property.AbstractProperty.addListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener
+muntjac.data.util.indexed_container.IndexedContainer.addListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.addListener
+muntjac.data.util.propertyset_item.PropertysetItem.addListener
+muntjac.data.validator.InvalidValueException.addListener
+muntjac.event.event_router.EventRouter.addListener
+muntjac.event.field_events.IBlurNotifier.addListener
+muntjac.event.field_events.IFocusNotifier.addListener
+muntjac.event.field_events.ITextChangeNotifier.addListener
+muntjac.event.item_click_event.IItemClickNotifier.addListener
+muntjac.event.layout_events.ILayoutClickNotifier.addListener
+muntjac.event.method_event_source.IMethodEventSource.addListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener
+muntjac.terminal.error_message.IErrorMessage.addListener
+muntjac.terminal.paintable.IPaintable.addListener
+muntjac.terminal.sys_error.SysError.addListener
+muntjac.terminal.user_error.UserError.addListener
+muntjac.ui.absolute_layout.AbsoluteLayout.addListener
+muntjac.ui.abstract_component.AbstractComponent.addListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener
+muntjac.ui.abstract_field.AbstractField.addListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener
+muntjac.ui.abstract_select.AbstractSelect.addListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener
+muntjac.ui.abstract_text_field.AbstractTextField.addListener
+muntjac.ui.button.Button.addListener
+muntjac.ui.component.IComponent.addListener
+muntjac.ui.component_container.IComponentContainer.addListener
+muntjac.ui.css_layout.CssLayout.addListener
+muntjac.ui.date_field.DateField.addListener
+muntjac.ui.embedded.Embedded.addListener
+muntjac.ui.grid_layout.GridLayout.addListener
+muntjac.ui.label.Label.addListener
+muntjac.ui.login_form.LoginForm.addListener
+muntjac.ui.option_group.OptionGroup.addListener
+muntjac.ui.panel.Panel.addListener
+muntjac.ui.popup_view.PopupView.addListener
+muntjac.ui.select.Select.addListener
+muntjac.ui.tab_sheet.TabSheet.addListener
+muntjac.ui.table.Table.addListener
+muntjac.ui.tree.Tree.addListener
+muntjac.ui.tree_table.TreeTable.addListener
+muntjac.ui.upload.Upload.addListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener
+muntjac.ui.window.Window.addListener" class="py-name" href="#" onclick="return doclink('link-66', 'addListener', 'link-46');">addListener</a></tt><tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt id="link-67" class="py-name"><a title="muntjac.addon.google_maps.google_map.IMarkerMovedListener" class="py-name" href="#" onclick="return doclink('link-67', 'IMarkerMovedListener', 'link-22');">IMarkerMovedListener</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-68" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.MapMoveListener=muntjac.addon.google_maps.google_map_app.MapMoveListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.MapMoveListener" class="py-name" href="#" onclick="return doclink('link-68', 'MapMoveListener', 'link-68');">MapMoveListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-69" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.addListener
+muntjac.addon.colorpicker.color_picker.ColorPicker.addListener
+muntjac.addon.colorpicker.color_picker_gradient.ColorPickerGradient.addListener
+muntjac.addon.colorpicker.color_picker_grid.ColorPickerGrid.addListener
+muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.addListener
+muntjac.addon.colorpicker.color_picker_popup.ColorPickerPopup.addListener
+muntjac.addon.colorpicker.color_picker_preview.ColorPickerPreview.addListener
+muntjac.addon.colorpicker.color_picker_select.ColorPickerSelect.addListener
+muntjac.addon.google_maps.google_map.GoogleMap.addListener
+muntjac.addon.weelayout.wee_layout.WeeLayout.addListener
+muntjac.application.Application.addListener
+muntjac.data.buffered.SourceException.addListener
+muntjac.data.container.IItemSetChangeNotifier.addListener
+muntjac.data.container.IPropertySetChangeNotifier.addListener
+muntjac.data.item.IPropertySetChangeNotifier.addListener
+muntjac.data.property.IReadOnlyStatusChangeNotifier.addListener
+muntjac.data.property.IValueChangeNotifier.addListener
+muntjac.data.util.abstract_container.AbstractContainer.addListener
+muntjac.data.util.abstract_in_memory_container.AbstractInMemoryContainer.addListener
+muntjac.data.util.abstract_property.AbstractProperty.addListener
+muntjac.data.util.container_hierarchical_wrapper.ContainerHierarchicalWrapper.addListener
+muntjac.data.util.container_ordered_wrapper.ContainerOrderedWrapper.addListener
+muntjac.data.util.indexed_container.IndexedContainer.addListener
+muntjac.data.util.indexed_container.IndexedContainerProperty.addListener
+muntjac.data.util.propertyset_item.PropertysetItem.addListener
+muntjac.data.validator.InvalidValueException.addListener
+muntjac.event.event_router.EventRouter.addListener
+muntjac.event.field_events.IBlurNotifier.addListener
+muntjac.event.field_events.IFocusNotifier.addListener
+muntjac.event.field_events.ITextChangeNotifier.addListener
+muntjac.event.item_click_event.IItemClickNotifier.addListener
+muntjac.event.layout_events.ILayoutClickNotifier.addListener
+muntjac.event.method_event_source.IMethodEventSource.addListener
+muntjac.terminal.composite_error_message.CompositeErrorMessage.addListener
+muntjac.terminal.error_message.IErrorMessage.addListener
+muntjac.terminal.paintable.IPaintable.addListener
+muntjac.terminal.sys_error.SysError.addListener
+muntjac.terminal.user_error.UserError.addListener
+muntjac.ui.absolute_layout.AbsoluteLayout.addListener
+muntjac.ui.abstract_component.AbstractComponent.addListener
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addListener
+muntjac.ui.abstract_field.AbstractField.addListener
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addListener
+muntjac.ui.abstract_select.AbstractSelect.addListener
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addListener
+muntjac.ui.abstract_text_field.AbstractTextField.addListener
+muntjac.ui.button.Button.addListener
+muntjac.ui.component.IComponent.addListener
+muntjac.ui.component_container.IComponentContainer.addListener
+muntjac.ui.css_layout.CssLayout.addListener
+muntjac.ui.date_field.DateField.addListener
+muntjac.ui.embedded.Embedded.addListener
+muntjac.ui.grid_layout.GridLayout.addListener
+muntjac.ui.label.Label.addListener
+muntjac.ui.login_form.LoginForm.addListener
+muntjac.ui.option_group.OptionGroup.addListener
+muntjac.ui.panel.Panel.addListener
+muntjac.ui.popup_view.PopupView.addListener
+muntjac.ui.select.Select.addListener
+muntjac.ui.tab_sheet.TabSheet.addListener
+muntjac.ui.table.Table.addListener
+muntjac.ui.tree.Tree.addListener
+muntjac.ui.tree_table.TreeTable.addListener
+muntjac.ui.upload.Upload.addListener
+muntjac.ui.uri_fragment_utility.UriFragmentUtility.addListener
+muntjac.ui.window.Window.addListener" class="py-name" href="#" onclick="return doclink('link-69', 'addListener', 'link-46');">addListener</a></tt><tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt id="link-70" class="py-name"><a title="muntjac.addon.google_maps.google_map.IMapMoveListener" class="py-name" href="#" onclick="return doclink('link-70', 'IMapMoveListener', 'link-23');">IMapMoveListener</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-71" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.addControl()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#addControl"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addControl" class="py-name" href="#" onclick="return doclink('link-71', 'addControl', 'link-71');">addControl</a></tt><tt class="py-op">(</tt><tt id="link-72" class="py-name"><a title="muntjac.addon.google_maps.google_map.MapControl" class="py-name" href="#" onclick="return doclink('link-72', 'MapControl', 'link-20');">MapControl</a></tt><tt class="py-op">.</tt><tt id="link-73" class="py-name" targets="Variable muntjac.addon.google_maps.google_map.MapControl.MapTypeControl=muntjac.addon.google_maps.google_map.MapControl-class.html#MapTypeControl"><a title="muntjac.addon.google_maps.google_map.MapControl.MapTypeControl" class="py-name" href="#" onclick="return doclink('link-73', 'MapTypeControl', 'link-73');">MapTypeControl</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-74" class="py-name" targets="Method muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp.addTestButtons()=muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html#addTestButtons"><a title="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp.addTestButtons" class="py-name" href="#" onclick="return doclink('link-74', 'addTestButtons', 'link-74');">addTestButtons</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt>  <tt class="py-comment"># Add buttons that trigger tests map features</tt> </tt>
+</div><a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="GoogleMapWidgetApp.addTestButtons"></a><div id="GoogleMapWidgetApp.addTestButtons-def"><a name="L95"></a><tt class="py-lineno"> 95</tt> <a class="py-toggle" href="#" id="GoogleMapWidgetApp.addTestButtons-toggle" onclick="return toggle('GoogleMapWidgetApp.addTestButtons');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html#addTestButtons">addTestButtons</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GoogleMapWidgetApp.addTestButtons-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="GoogleMapWidgetApp.addTestButtons-expanded"><a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-name">grid</tt> <tt class="py-op">=</tt> <tt id="link-75" class="py-name"><a title="muntjac.ui.grid_layout.GridLayout" class="py-name" href="#" onclick="return doclink('link-75', 'GridLayout', 'link-5');">GridLayout</a></tt><tt class="py-op">(</tt><tt class="py-number">4</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-76" class="py-name" targets="Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.setSpacing()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#setSpacing,Method muntjac.ui.grid_layout.GridLayout.setSpacing()=muntjac.ui.grid_layout.GridLayout-class.html#setSpacing,Method muntjac.ui.layout.ISpacingHandler.setSpacing()=muntjac.ui.layout.ISpacingHandler-class.html#setSpacing"><a title="muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.setSpacing
+muntjac.ui.grid_layout.GridLayout.setSpacing
+muntjac.ui.layout.ISpacingHandler.setSpacing" class="py-name" href="#" onclick="return doclink('link-76', 'setSpacing', 'link-76');">setSpacing</a></tt><tt class="py-op">(</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-77" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-77', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-78" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-78', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt class="py-name">grid</tt><tt class="py-op">)</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-79" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.DraggabilityClickListener=muntjac.addon.google_maps.google_map_app.DraggabilityClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.DraggabilityClickListener" class="py-name" href="#" onclick="return doclink('link-79', 'DraggabilityClickListener', 'link-79');">DraggabilityClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-80" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-80', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-81" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-81', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Toggle marker 3 draggability'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-82" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.VisibilityClickListener=muntjac.addon.google_maps.google_map_app.VisibilityClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.VisibilityClickListener" class="py-name" href="#" onclick="return doclink('link-82', 'VisibilityClickListener', 'link-82');">VisibilityClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-83" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-83', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-84" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-84', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Toggle marker 4 visibility'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-85" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.RandomizeClickListener=muntjac.addon.google_maps.google_map_app.RandomizeClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.RandomizeClickListener" class="py-name" href="#" onclick="return doclink('link-85', 'RandomizeClickListener', 'link-85');">RandomizeClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-86" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-86', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-87" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-87', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Randomize Marker 5 location'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-88" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.UpdateClickListener=muntjac.addon.google_maps.google_map_app.UpdateClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.UpdateClickListener" class="py-name" href="#" onclick="return doclink('link-88', 'UpdateClickListener', 'link-88');">UpdateClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-89" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-89', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-90" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-90', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Update marker 5 title'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-91" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.RemoveClickListener=muntjac.addon.google_maps.google_map_app.RemoveClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.RemoveClickListener" class="py-name" href="#" onclick="return doclink('link-91', 'RemoveClickListener', 'link-91');">RemoveClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-92" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-92', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-93" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-93', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Remove \"Test marker2\"'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-94" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.AddClickListener=muntjac.addon.google_maps.google_map_app.AddClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.AddClickListener" class="py-name" href="#" onclick="return doclink('link-94', 'AddClickListener', 'link-94');">AddClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-95" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-95', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-96" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-96', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Add \"Test marker2\"'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-97" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.ToggleMarkerClickListener=muntjac.addon.google_maps.google_map_app.ToggleMarkerClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.ToggleMarkerClickListener" class="py-name" href="#" onclick="return doclink('link-97', 'ToggleMarkerClickListener', 'link-97');">ToggleMarkerClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-98" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-98', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-99" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-99', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Toggle marker 1 icon'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-100" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.ToggleLoggingClickListener=muntjac.addon.google_maps.google_map_app.ToggleLoggingClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.ToggleLoggingClickListener" class="py-name" href="#" onclick="return doclink('link-100', 'ToggleLoggingClickListener', 'link-100');">ToggleLoggingClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-101" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-101', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-102" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-102', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Toggle client logging'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">        <tt class="py-comment"># Popup test</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-103" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.PopupClickListener=muntjac.addon.google_maps.google_map_app.PopupClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.PopupClickListener" class="py-name" href="#" onclick="return doclink('link-103', 'PopupClickListener', 'link-103');">PopupClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-104" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-104', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-105" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-105', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Open a map in a popup'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-106" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.ResizeClickListener=muntjac.addon.google_maps.google_map_app.ResizeClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.ResizeClickListener" class="py-name" href="#" onclick="return doclink('link-106', 'ResizeClickListener', 'link-106');">ResizeClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-107" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-107', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-108" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-108', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Resize map'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-109" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.DrawClickListener=muntjac.addon.google_maps.google_map_app.DrawClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.DrawClickListener" class="py-name" href="#" onclick="return doclink('link-109', 'DrawClickListener', 'link-109');">DrawClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-110" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-110', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-111" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-111', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Draw polygon'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">        <tt class="py-name">l</tt> <tt class="py-op">=</tt> <tt id="link-112" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.RemovePolygonClickListener=muntjac.addon.google_maps.google_map_app.RemovePolygonClickListener-class.html"><a title="muntjac.addon.google_maps.google_map_app.RemovePolygonClickListener" class="py-name" href="#" onclick="return doclink('link-112', 'RemovePolygonClickListener', 'link-112');">RemovePolygonClickListener</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-name">grid</tt><tt class="py-op">.</tt><tt id="link-113" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-113', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-114" class="py-name"><a title="muntjac.ui.button.Button" class="py-name" href="#" onclick="return doclink('link-114', 'Button', 'link-6');">Button</a></tt><tt class="py-op">(</tt><tt class="py-string">'Remove first polygon'</tt><tt class="py-op">,</tt> <tt class="py-name">l</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="_MapListener"></a><div id="_MapListener-def"><a name="L138"></a><tt class="py-lineno">138</tt> <a class="py-toggle" href="#" id="_MapListener-toggle" onclick="return toggle('_MapListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app._MapListener-class.html">_MapListener</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="_MapListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="_MapListener-expanded"><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="_MapListener.__init__"></a><div id="_MapListener.__init__-def"><a name="L140"></a><tt class="py-lineno">140</tt> <a class="py-toggle" href="#" id="_MapListener.__init__-toggle" onclick="return toggle('_MapListener.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app._MapListener-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">app</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="_MapListener.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="_MapListener.__init__-expanded"><a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt> <tt class="py-op">=</tt> <tt id="link-115" class="py-name" targets="Class muntjac.terminal.gwt.server.paste_deploy_application_servlet.app=muntjac.terminal.gwt.server.paste_deploy_application_servlet.app-class.html"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-115', 'app', 'link-115');">app</a></tt> </tt>
+</div></div><a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="MarkerClickListener"></a><div id="MarkerClickListener-def"><a name="L144"></a><tt class="py-lineno">144</tt> <a class="py-toggle" href="#" id="MarkerClickListener-toggle" onclick="return toggle('MarkerClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerClickListener-class.html">MarkerClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IMarkerClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="MarkerClickListener-expanded"><a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"> </tt>
+<a name="MarkerClickListener.markerClicked"></a><div id="MarkerClickListener.markerClicked-def"><a name="L146"></a><tt class="py-lineno">146</tt> <a class="py-toggle" href="#" id="MarkerClickListener.markerClicked-toggle" onclick="return toggle('MarkerClickListener.markerClicked');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerClickListener-class.html#markerClicked">markerClicked</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">clickedMarker</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerClickListener.markerClicked-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MarkerClickListener.markerClicked-expanded"><a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">clickedMarker</tt><tt class="py-op">.</tt><tt id="link-116" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconUrl()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#getIconUrl,Method muntjac.addon.google_maps.overlay.marker.IMarker.getIconUrl()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#getIconUrl"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconUrl
+muntjac.addon.google_maps.overlay.marker.IMarker.getIconUrl" class="py-name" href="#" onclick="return doclink('link-116', 'getIconUrl', 'link-116');">getIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">                <tt class="py-keyword">and</tt> <tt class="py-string">'green'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">clickedMarker</tt><tt class="py-op">.</tt><tt id="link-117" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconUrl
+muntjac.addon.google_maps.overlay.marker.IMarker.getIconUrl" class="py-name" href="#" onclick="return doclink('link-117', 'getIconUrl', 'link-116');">getIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">            <tt class="py-name">clickedMarker</tt><tt class="py-op">.</tt><tt id="link-118" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconUrl()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setIconUrl"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconUrl" class="py-name" href="#" onclick="return doclink('link-118', 'setIconUrl', 'link-118');">setIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-string">'VAADIN/themes/reindeer/icon/red.png'</tt><tt class="py-op">)</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">            <tt class="py-name">clickedMarker</tt><tt class="py-op">.</tt><tt id="link-119" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconUrl" class="py-name" href="#" onclick="return doclink('link-119', 'setIconUrl', 'link-118');">setIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-string">'VAADIN/themes/reindeer/icon/green.png'</tt><tt class="py-op">)</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-120" class="py-name" targets="Method muntjac.data.buffered.SourceException.requestRepaint()=muntjac.data.buffered.SourceException-class.html#requestRepaint,Method muntjac.data.validator.InvalidValueException.requestRepaint()=muntjac.data.validator.InvalidValueException-class.html#requestRepaint,Method muntjac.event.action_manager.ActionManager.requestRepaint()=muntjac.event.action_manager.ActionManager-class.html#requestRepaint,Method muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint()=muntjac.terminal.composite_error_message.CompositeErrorMessage-class.html#requestRepaint,Method muntjac.terminal.error_message.IErrorMessage.requestRepaint()=muntjac.terminal.error_message.IErrorMessage-class.html#requestRepaint,Method muntjac.terminal.paintable.IPaintable.requestRepaint()=muntjac.terminal.paintable.IPaintable-class.html#requestRepaint,Method muntjac.terminal.sys_error.SysError.requestRepaint()=muntjac.terminal.sys_error.SysError-class.html#requestRepaint,Method muntjac.terminal.user_error.UserError.requestRepaint()=muntjac.terminal.user_error.UserError-class.html#requestRepaint,Method muntjac.ui.abstract_component.AbstractComponent.requestRepaint()=muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint,Method muntjac.ui.select.Select.requestRepaint()=muntjac.ui.select.Select-class.html#requestRepaint,Method muntjac.ui.table.Table.requestRepaint()=muntjac.ui.table.Table-class.html#requestRepaint,Method muntjac.ui.tree.Tree.requestRepaint()=muntjac.ui.tree.Tree-class.html#requestRepaint,Method muntjac.ui.upload.Upload.requestRepaint()=muntjac.ui.upload.Upload-class.html#requestRepaint"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-120', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="MarkerClickListener2"></a><div id="MarkerClickListener2-def"><a name="L155"></a><tt class="py-lineno">155</tt> <a class="py-toggle" href="#" id="MarkerClickListener2-toggle" onclick="return toggle('MarkerClickListener2');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerClickListener2-class.html">MarkerClickListener2</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IMarkerClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerClickListener2-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="MarkerClickListener2-expanded"><a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt>
+<a name="MarkerClickListener2.markerClicked"></a><div id="MarkerClickListener2.markerClicked-def"><a name="L157"></a><tt class="py-lineno">157</tt> <a class="py-toggle" href="#" id="MarkerClickListener2.markerClicked-toggle" onclick="return toggle('MarkerClickListener2.markerClicked');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerClickListener2-class.html#markerClicked">markerClicked</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">clickedMarker</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerClickListener2.markerClicked-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MarkerClickListener2.markerClicked-expanded"><a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-121" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-121', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-122" class="py-name" targets="Method muntjac.ui.window.Window.showNotification()=muntjac.ui.window.Window-class.html#showNotification"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-122', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt><tt class="py-string">'Marker '</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-name">clickedMarker</tt><tt class="py-op">.</tt><tt id="link-123" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getTitle()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#getTitle,Method muntjac.addon.google_maps.overlay.marker.IMarker.getTitle()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#getTitle"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getTitle
+muntjac.addon.google_maps.overlay.marker.IMarker.getTitle" class="py-name" href="#" onclick="return doclink('link-123', 'getTitle', 'link-123');">getTitle</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">' clicked'</tt><tt class="py-op">,</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">                <tt id="link-124" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-124', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-125" class="py-name" targets="Variable muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION=muntjac.ui.window.Notification-class.html#TYPE_TRAY_NOTIFICATION"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-125', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"> </tt>
+<a name="MarkerMovedListener"></a><div id="MarkerMovedListener-def"><a name="L163"></a><tt class="py-lineno">163</tt> <a class="py-toggle" href="#" id="MarkerMovedListener-toggle" onclick="return toggle('MarkerMovedListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerMovedListener-class.html">MarkerMovedListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IMarkerMovedListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerMovedListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="MarkerMovedListener-expanded"><a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"> </tt>
+<a name="MarkerMovedListener.markerMoved"></a><div id="MarkerMovedListener.markerMoved-def"><a name="L165"></a><tt class="py-lineno">165</tt> <a class="py-toggle" href="#" id="MarkerMovedListener.markerMoved-toggle" onclick="return toggle('MarkerMovedListener.markerMoved');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MarkerMovedListener-class.html#markerMoved">markerMoved</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">movedMarker</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MarkerMovedListener.markerMoved-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MarkerMovedListener.markerMoved-expanded"><a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-126" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-126', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-127" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-127', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt><tt class="py-string">'Marker '</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-name">movedMarker</tt><tt class="py-op">.</tt><tt id="link-128" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getTitle
+muntjac.addon.google_maps.overlay.marker.IMarker.getTitle" class="py-name" href="#" onclick="return doclink('link-128', 'getTitle', 'link-123');">getTitle</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">' moved to '</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">movedMarker</tt><tt class="py-op">.</tt><tt id="link-129" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getLatLng()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#getLatLng,Method muntjac.addon.google_maps.overlay.marker.IMarker.getLatLng()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#getLatLng"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getLatLng
+muntjac.addon.google_maps.overlay.marker.IMarker.getLatLng" class="py-name" href="#" onclick="return doclink('link-129', 'getLatLng', 'link-129');">getLatLng</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">                <tt id="link-130" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-130', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-131" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-131', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"> </tt>
+<a name="MapMoveListener"></a><div id="MapMoveListener-def"><a name="L172"></a><tt class="py-lineno">172</tt> <a class="py-toggle" href="#" id="MapMoveListener-toggle" onclick="return toggle('MapMoveListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MapMoveListener-class.html">MapMoveListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IMapMoveListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MapMoveListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="MapMoveListener-expanded"><a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="MapMoveListener.mapMoved"></a><div id="MapMoveListener.mapMoved-def"><a name="L174"></a><tt class="py-lineno">174</tt> <a class="py-toggle" href="#" id="MapMoveListener.mapMoved-toggle" onclick="return toggle('MapMoveListener.mapMoved');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.MapMoveListener-class.html#mapMoved">mapMoved</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">newZoomLevel</tt><tt class="py-op">,</tt> <tt class="py-param">newCenter</tt><tt class="py-op">,</tt> <tt class="py-param">boundsNE</tt><tt class="py-op">,</tt> <tt class="py-param">boundsSW</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MapMoveListener.mapMoved-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MapMoveListener.mapMoved-expanded"><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-132" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-132', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-133" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-133', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt><tt class="py-string">'Zoom '</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">newZoomLevel</tt><tt class="py-op">)</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-string">' center '</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">newCenter</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">' bounds '</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">boundsNE</tt><tt class="py-op">)</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-string">'/'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">boundsSW</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-134" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-134', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-135" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-135', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"> </tt>
+<a name="DraggabilityClickListener"></a><div id="DraggabilityClickListener-def"><a name="L180"></a><tt class="py-lineno">180</tt> <a class="py-toggle" href="#" id="DraggabilityClickListener-toggle" onclick="return toggle('DraggabilityClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.DraggabilityClickListener-class.html">DraggabilityClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DraggabilityClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="DraggabilityClickListener-expanded"><a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"> </tt>
+<a name="DraggabilityClickListener.buttonClick"></a><div id="DraggabilityClickListener.buttonClick-def"><a name="L182"></a><tt class="py-lineno">182</tt> <a class="py-toggle" href="#" id="DraggabilityClickListener.buttonClick-toggle" onclick="return toggle('DraggabilityClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.DraggabilityClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DraggabilityClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="DraggabilityClickListener.buttonClick-expanded"><a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark3</tt><tt class="py-op">.</tt><tt id="link-136" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setDraggable()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setDraggable,Method muntjac.ui.window.Window.setDraggable()=muntjac.ui.window.Window-class.html#setDraggable"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setDraggable
+muntjac.ui.window.Window.setDraggable" class="py-name" href="#" onclick="return doclink('link-136', 'setDraggable', 'link-136');">setDraggable</a></tt><tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark3</tt><tt class="py-op">.</tt><tt id="link-137" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.isDraggable()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#isDraggable,Method muntjac.addon.google_maps.overlay.marker.IMarker.isDraggable()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#isDraggable,Method muntjac.ui.window.Window.isDraggable()=muntjac.ui.window.Window-class.html#isDraggable"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.isDraggable
+muntjac.addon.google_maps.overlay.marker.IMarker.isDraggable
+muntjac.ui.window.Window.isDraggable" class="py-name" href="#" onclick="return doclink('link-137', 'isDraggable', 'link-137');">isDraggable</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-138" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-138', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"> </tt>
+<a name="VisibilityClickListener"></a><div id="VisibilityClickListener-def"><a name="L187"></a><tt class="py-lineno">187</tt> <a class="py-toggle" href="#" id="VisibilityClickListener-toggle" onclick="return toggle('VisibilityClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.VisibilityClickListener-class.html">VisibilityClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="VisibilityClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="VisibilityClickListener-expanded"><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"> </tt>
+<a name="VisibilityClickListener.buttonClick"></a><div id="VisibilityClickListener.buttonClick-def"><a name="L189"></a><tt class="py-lineno">189</tt> <a class="py-toggle" href="#" id="VisibilityClickListener.buttonClick-toggle" onclick="return toggle('VisibilityClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.VisibilityClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="VisibilityClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="VisibilityClickListener.buttonClick-expanded"><a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark4</tt><tt class="py-op">.</tt><tt id="link-139" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setVisible()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setVisible,Method muntjac.ui.abstract_component.AbstractComponent.setVisible()=muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible,Method muntjac.ui.component.IComponent.setVisible()=muntjac.ui.component.IComponent-class.html#setVisible,Method muntjac.ui.menu_bar.MenuItem.setVisible()=muntjac.ui.menu_bar.MenuItem-class.html#setVisible,Method muntjac.ui.tab_sheet.ITab.setVisible()=muntjac.ui.tab_sheet.ITab-class.html#setVisible,Method muntjac.ui.tab_sheet.TabSheetTabImpl.setVisible()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#setVisible"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setVisible
+muntjac.ui.abstract_component.AbstractComponent.setVisible
+muntjac.ui.component.IComponent.setVisible
+muntjac.ui.menu_bar.MenuItem.setVisible
+muntjac.ui.tab_sheet.ITab.setVisible
+muntjac.ui.tab_sheet.TabSheetTabImpl.setVisible" class="py-name" href="#" onclick="return doclink('link-139', 'setVisible', 'link-139');">setVisible</a></tt><tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark4</tt><tt class="py-op">.</tt><tt id="link-140" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.isVisible()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#isVisible,Method muntjac.addon.google_maps.overlay.marker.IMarker.isVisible()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#isVisible,Method muntjac.ui.abstract_component.AbstractComponent.isVisible()=muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible,Method muntjac.ui.component.IComponent.isVisible()=muntjac.ui.component.IComponent-class.html#isVisible,Method muntjac.ui.menu_bar.MenuItem.isVisible()=muntjac.ui.menu_bar.MenuItem-class.html#isVisible,Method muntjac.ui.tab_sheet.ITab.isVisible()=muntjac.ui.tab_sheet.ITab-class.html#isVisible,Method muntjac.ui.tab_sheet.TabSheetTabImpl.isVisible()=muntjac.ui.tab_sheet.TabSheetTabImpl-class.html#isVisible"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.isVisible
+muntjac.addon.google_maps.overlay.marker.IMarker.isVisible
+muntjac.ui.abstract_component.AbstractComponent.isVisible
+muntjac.ui.component.IComponent.isVisible
+muntjac.ui.menu_bar.MenuItem.isVisible
+muntjac.ui.tab_sheet.ITab.isVisible
+muntjac.ui.tab_sheet.TabSheetTabImpl.isVisible" class="py-name" href="#" onclick="return doclink('link-140', 'isVisible', 'link-140');">isVisible</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-141" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-141', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"> </tt>
+<a name="RandomizeClickListener"></a><div id="RandomizeClickListener-def"><a name="L194"></a><tt class="py-lineno">194</tt> <a class="py-toggle" href="#" id="RandomizeClickListener-toggle" onclick="return toggle('RandomizeClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RandomizeClickListener-class.html">RandomizeClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RandomizeClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RandomizeClickListener-expanded"><a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"> </tt>
+<a name="RandomizeClickListener.buttonClick"></a><div id="RandomizeClickListener.buttonClick-def"><a name="L196"></a><tt class="py-lineno">196</tt> <a class="py-toggle" href="#" id="RandomizeClickListener.buttonClick-toggle" onclick="return toggle('RandomizeClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RandomizeClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RandomizeClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RandomizeClickListener.buttonClick-expanded"><a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt><tt class="py-op">.</tt><tt id="link-142" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setLatLng()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setLatLng"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setLatLng" class="py-name" href="#" onclick="return doclink('link-142', 'setLatLng', 'link-142');">setLatLng</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-number">22.8</tt> <tt class="py-op">+</tt> <tt class="py-op">(</tt><tt class="py-name">random</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">10</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">                <tt class="py-number">60.4522</tt> <tt class="py-op">+</tt> <tt class="py-op">(</tt><tt class="py-name">random</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">10</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-143" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-143', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"> </tt>
+<a name="UpdateClickListener"></a><div id="UpdateClickListener-def"><a name="L202"></a><tt class="py-lineno">202</tt> <a class="py-toggle" href="#" id="UpdateClickListener-toggle" onclick="return toggle('UpdateClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.UpdateClickListener-class.html">UpdateClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UpdateClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="UpdateClickListener-expanded"><a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"> </tt>
+<a name="UpdateClickListener.buttonClick"></a><div id="UpdateClickListener.buttonClick-def"><a name="L204"></a><tt class="py-lineno">204</tt> <a class="py-toggle" href="#" id="UpdateClickListener.buttonClick-toggle" onclick="return toggle('UpdateClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.UpdateClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UpdateClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UpdateClickListener.buttonClick-expanded"><a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">        <tt class="py-name">chars</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-string">'.*^"\''</tt><tt class="py-op">)</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt><tt class="py-op">.</tt><tt id="link-144" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setTitle()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setTitle"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setTitle" class="py-name" href="#" onclick="return doclink('link-144', 'setTitle', 'link-144');">setTitle</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark5</tt><tt class="py-op">.</tt><tt id="link-145" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getTitle
+muntjac.addon.google_maps.overlay.marker.IMarker.getTitle" class="py-name" href="#" onclick="return doclink('link-145', 'getTitle', 'link-123');">getTitle</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">                <tt class="py-op">+</tt> <tt class="py-name">chars</tt><tt class="py-op">[</tt><tt class="py-name">randint</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">chars</tt><tt class="py-op">)</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-146" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-146', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"> </tt>
+<a name="RemoveClickListener"></a><div id="RemoveClickListener-def"><a name="L211"></a><tt class="py-lineno">211</tt> <a class="py-toggle" href="#" id="RemoveClickListener-toggle" onclick="return toggle('RemoveClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RemoveClickListener-class.html">RemoveClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RemoveClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RemoveClickListener-expanded"><a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line"> </tt>
+<a name="RemoveClickListener.buttonClick"></a><div id="RemoveClickListener.buttonClick-def"><a name="L213"></a><tt class="py-lineno">213</tt> <a class="py-toggle" href="#" id="RemoveClickListener.buttonClick-toggle" onclick="return toggle('RemoveClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RemoveClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RemoveClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RemoveClickListener.buttonClick-expanded"><a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-147" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.removeMarker()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#removeMarker"><a title="muntjac.addon.google_maps.google_map.GoogleMap.removeMarker" class="py-name" href="#" onclick="return doclink('link-147', 'removeMarker', 'link-147');">removeMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark2</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line"> </tt>
+<a name="AddClickListener"></a><div id="AddClickListener-def"><a name="L217"></a><tt class="py-lineno">217</tt> <a class="py-toggle" href="#" id="AddClickListener-toggle" onclick="return toggle('AddClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.AddClickListener-class.html">AddClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AddClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="AddClickListener-expanded"><a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"> </tt>
+<a name="AddClickListener.buttonClick"></a><div id="AddClickListener.buttonClick-def"><a name="L219"></a><tt class="py-lineno">219</tt> <a class="py-toggle" href="#" id="AddClickListener.buttonClick-toggle" onclick="return toggle('AddClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.AddClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AddClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AddClickListener.buttonClick-expanded"><a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-148" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addMarker
+muntjac.addon.google_maps.overlay.basic_marker_source.BasicMarkerSource.addMarker
+muntjac.addon.google_maps.overlay.marker_source.IMarkerSource.addMarker" class="py-name" href="#" onclick="return doclink('link-148', 'addMarker', 'link-54');">addMarker</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark2</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line"> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line"> </tt>
+<a name="ToggleMarkerClickListener"></a><div id="ToggleMarkerClickListener-def"><a name="L223"></a><tt class="py-lineno">223</tt> <a class="py-toggle" href="#" id="ToggleMarkerClickListener-toggle" onclick="return toggle('ToggleMarkerClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ToggleMarkerClickListener-class.html">ToggleMarkerClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ToggleMarkerClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ToggleMarkerClickListener-expanded"><a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"> </tt>
+<a name="ToggleMarkerClickListener.buttonClick"></a><div id="ToggleMarkerClickListener.buttonClick-def"><a name="L225"></a><tt class="py-lineno">225</tt> <a class="py-toggle" href="#" id="ToggleMarkerClickListener.buttonClick-toggle" onclick="return toggle('ToggleMarkerClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ToggleMarkerClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ToggleMarkerClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ToggleMarkerClickListener.buttonClick-expanded"><a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-149" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconUrl
+muntjac.addon.google_maps.overlay.marker.IMarker.getIconUrl" class="py-name" href="#" onclick="return doclink('link-149', 'getIconUrl', 'link-116');">getIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-150" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconUrl" class="py-name" href="#" onclick="return doclink('link-150', 'setIconUrl', 'link-118');">setIconUrl</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">                    <tt class="py-string">'http://bits.ohloh.net/attachments/18966/v_med.gif'</tt><tt class="py-op">)</tt> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-151" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconAnchor()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#setIconAnchor"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconAnchor" class="py-name" href="#" onclick="return doclink('link-151', 'setIconAnchor', 'link-151');">setIconAnchor</a></tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-152" class="py-name" targets="Method muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconAnchor()=muntjac.addon.google_maps.overlay.basic_marker.BasicMarker-class.html#getIconAnchor,Method muntjac.addon.google_maps.overlay.marker.IMarker.getIconAnchor()=muntjac.addon.google_maps.overlay.marker.IMarker-class.html#getIconAnchor"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.getIconAnchor
+muntjac.addon.google_maps.overlay.marker.IMarker.getIconAnchor" class="py-name" href="#" onclick="return doclink('link-152', 'getIconAnchor', 'link-152');">getIconAnchor</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-153" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconAnchor" class="py-name" href="#" onclick="return doclink('link-153', 'setIconAnchor', 'link-151');">setIconAnchor</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-op">-</tt><tt class="py-number">20</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">20</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-154" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconUrl" class="py-name" href="#" onclick="return doclink('link-154', 'setIconUrl', 'link-118');">setIconUrl</a></tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_mark1</tt><tt class="py-op">.</tt><tt id="link-155" class="py-name"><a title="muntjac.addon.google_maps.overlay.basic_marker.BasicMarker.setIconAnchor" class="py-name" href="#" onclick="return doclink('link-155', 'setIconAnchor', 'link-151');">setIconAnchor</a></tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-156" class="py-name"><a title="muntjac.data.buffered.SourceException.requestRepaint
+muntjac.data.validator.InvalidValueException.requestRepaint
+muntjac.event.action_manager.ActionManager.requestRepaint
+muntjac.terminal.composite_error_message.CompositeErrorMessage.requestRepaint
+muntjac.terminal.error_message.IErrorMessage.requestRepaint
+muntjac.terminal.paintable.IPaintable.requestRepaint
+muntjac.terminal.sys_error.SysError.requestRepaint
+muntjac.terminal.user_error.UserError.requestRepaint
+muntjac.ui.abstract_component.AbstractComponent.requestRepaint
+muntjac.ui.select.Select.requestRepaint
+muntjac.ui.table.Table.requestRepaint
+muntjac.ui.tree.Tree.requestRepaint
+muntjac.ui.upload.Upload.requestRepaint" class="py-name" href="#" onclick="return doclink('link-156', 'requestRepaint', 'link-120');">requestRepaint</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line"> </tt>
+<a name="ToggleLoggingClickListener"></a><div id="ToggleLoggingClickListener-def"><a name="L238"></a><tt class="py-lineno">238</tt> <a class="py-toggle" href="#" id="ToggleLoggingClickListener-toggle" onclick="return toggle('ToggleLoggingClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ToggleLoggingClickListener-class.html">ToggleLoggingClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ToggleLoggingClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ToggleLoggingClickListener-expanded"><a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"> </tt>
+<a name="ToggleLoggingClickListener.buttonClick"></a><div id="ToggleLoggingClickListener.buttonClick-def"><a name="L240"></a><tt class="py-lineno">240</tt> <a class="py-toggle" href="#" id="ToggleLoggingClickListener.buttonClick-toggle" onclick="return toggle('ToggleLoggingClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ToggleLoggingClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ToggleLoggingClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ToggleLoggingClickListener.buttonClick-expanded"><a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-157" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.getClientLogLevel()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#getClientLogLevel"><a title="muntjac.addon.google_maps.google_map.GoogleMap.getClientLogLevel" class="py-name" href="#" onclick="return doclink('link-157', 'getClientLogLevel', 'link-157');">getClientLogLevel</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-158" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.setClientLogLevel()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#setClientLogLevel"><a title="muntjac.addon.google_maps.google_map.GoogleMap.setClientLogLevel" class="py-name" href="#" onclick="return doclink('link-158', 'setClientLogLevel', 'link-158');">setClientLogLevel</a></tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-159" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-159', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-160" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-160', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line">                    <tt class="py-string">'Client logging enabled'</tt><tt class="py-op">,</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line">                    <tt id="link-161" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-161', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-162" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-162', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-163" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap.setClientLogLevel" class="py-name" href="#" onclick="return doclink('link-163', 'setClientLogLevel', 'link-158');">setClientLogLevel</a></tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-164" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-164', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-165" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-165', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line">                    <tt class="py-string">'Client logging disabled'</tt><tt class="py-op">,</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line">                    <tt id="link-166" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-166', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-167" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-167', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"> </tt>
+<a name="PopupClickListener"></a><div id="PopupClickListener-def"><a name="L253"></a><tt class="py-lineno">253</tt> <a class="py-toggle" href="#" id="PopupClickListener-toggle" onclick="return toggle('PopupClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.PopupClickListener-class.html">PopupClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PopupClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="PopupClickListener-expanded"><a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"> </tt>
+<a name="PopupClickListener.buttonClick"></a><div id="PopupClickListener.buttonClick-def"><a name="L255"></a><tt class="py-lineno">255</tt> <a class="py-toggle" href="#" id="PopupClickListener.buttonClick-toggle" onclick="return toggle('PopupClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.PopupClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PopupClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="PopupClickListener.buttonClick-expanded"><a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line">        <tt id="link-168" class="py-name"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-168', 'app', 'link-115');">app</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-comment">#event.getButton().getApplication()</tt> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line"> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line">        <tt class="py-name">map2</tt> <tt class="py-op">=</tt> <tt id="link-169" class="py-name"><a title="muntjac.addon.google_maps.google_map.GoogleMap" class="py-name" href="#" onclick="return doclink('link-169', 'GoogleMap', 'link-19');">GoogleMap</a></tt><tt class="py-op">(</tt><tt id="link-170" class="py-name"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-170', 'app', 'link-115');">app</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">22.3</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-number">8</tt><tt class="py-op">)</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line">        <tt class="py-name">map2</tt><tt class="py-op">.</tt><tt id="link-171" class="py-name"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-171', 'setHeight', 'link-40');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'240px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line">        <tt class="py-name">map2</tt><tt class="py-op">.</tt><tt id="link-172" class="py-name"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-172', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'240px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line"> </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line">        <tt class="py-name">w</tt> <tt class="py-op">=</tt> <tt id="link-173" class="py-name"><a title="muntjac.ui.window.Window" class="py-name" href="#" onclick="return doclink('link-173', 'Window', 'link-3');">Window</a></tt><tt class="py-op">(</tt><tt class="py-string">'popup'</tt><tt class="py-op">)</tt> </tt>
+<a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line">        <tt class="py-name">w</tt><tt class="py-op">.</tt><tt id="link-174" class="py-name"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-174', 'addComponent', 'link-61');">addComponent</a></tt><tt class="py-op">(</tt><tt class="py-name">map2</tt><tt class="py-op">)</tt> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line">        <tt class="py-name">w</tt><tt class="py-op">.</tt><tt id="link-175" class="py-name"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-175', 'setHeight', 'link-40');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'300px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line">        <tt class="py-name">w</tt><tt class="py-op">.</tt><tt id="link-176" class="py-name"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-176', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'300px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line">        <tt id="link-177" class="py-name"><a title="muntjac.terminal.gwt.server.paste_deploy_application_servlet.app" class="py-name" href="#" onclick="return doclink('link-177', 'app', 'link-115');">app</a></tt><tt class="py-op">.</tt><tt id="link-178" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-178', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-179" class="py-name" targets="Method muntjac.application.Application.addWindow()=muntjac.application.Application-class.html#addWindow,Method muntjac.ui.window.Window.addWindow()=muntjac.ui.window.Window-class.html#addWindow"><a title="muntjac.application.Application.addWindow
+muntjac.ui.window.Window.addWindow" class="py-name" href="#" onclick="return doclink('link-179', 'addWindow', 'link-179');">addWindow</a></tt><tt class="py-op">(</tt><tt class="py-name">w</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line"> </tt>
+<a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line"> </tt>
+<a name="ResizeClickListener"></a><div id="ResizeClickListener-def"><a name="L269"></a><tt class="py-lineno">269</tt> <a class="py-toggle" href="#" id="ResizeClickListener-toggle" onclick="return toggle('ResizeClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ResizeClickListener-class.html">ResizeClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ResizeClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ResizeClickListener-expanded"><a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line"> </tt>
+<a name="ResizeClickListener.buttonClick"></a><div id="ResizeClickListener.buttonClick-def"><a name="L271"></a><tt class="py-lineno">271</tt> <a class="py-toggle" href="#" id="ResizeClickListener.buttonClick-toggle" onclick="return toggle('ResizeClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.ResizeClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ResizeClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ResizeClickListener.buttonClick-expanded"><a name="L272"></a><tt class="py-lineno">272</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-180" class="py-name" targets="Method muntjac.terminal.sizeable.ISizeable.getHeight()=muntjac.terminal.sizeable.ISizeable-class.html#getHeight,Method muntjac.ui.abstract_component.AbstractComponent.getHeight()=muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight"><a title="muntjac.terminal.sizeable.ISizeable.getHeight
+muntjac.ui.abstract_component.AbstractComponent.getHeight" class="py-name" href="#" onclick="return doclink('link-180', 'getHeight', 'link-180');">getHeight</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">200</tt><tt class="py-op">:</tt> </tt>
+<a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-181" class="py-name"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-181', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'640px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-182" class="py-name"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-182', 'setHeight', 'link-40');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'480px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L276"></a><tt class="py-lineno">276</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-183" class="py-name"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-183', 'setHeight', 'link-40');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'200px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-184" class="py-name"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-184', 'setWidth', 'link-39');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'200px'</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line"> </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line"> </tt>
+<a name="DrawClickListener"></a><div id="DrawClickListener-def"><a name="L280"></a><tt class="py-lineno">280</tt> <a class="py-toggle" href="#" id="DrawClickListener-toggle" onclick="return toggle('DrawClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.DrawClickListener-class.html">DrawClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DrawClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="DrawClickListener-expanded"><a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line"> </tt>
+<a name="DrawClickListener.buttonClick"></a><div id="DrawClickListener.buttonClick-def"><a name="L282"></a><tt class="py-lineno">282</tt> <a class="py-toggle" href="#" id="DrawClickListener.buttonClick-toggle" onclick="return toggle('DrawClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.DrawClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DrawClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="DrawClickListener.buttonClick-expanded"><a name="L283"></a><tt class="py-lineno">283</tt>  <tt class="py-line">        <tt class="py-comment"># Location of Vaadin Ltd offices</tt> </tt>
+<a name="L284"></a><tt class="py-lineno">284</tt>  <tt class="py-line">        <tt id="link-185" class="py-name" targets="Method muntjac.ui.tree_table.CollapsibleStrategy.c()=muntjac.ui.tree_table.CollapsibleStrategy-class.html#c"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-185', 'c', 'link-185');">c</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">22.3</tt><tt class="py-op">,</tt> <tt class="py-number">60.4522</tt><tt class="py-op">)</tt> </tt>
+<a name="L285"></a><tt class="py-lineno">285</tt>  <tt class="py-line">        <tt class="py-name">delta</tt> <tt class="py-op">=</tt> <tt class="py-number">0.75</tt> </tt>
+<a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line">        <tt class="py-name">corners</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">(</tt><tt id="link-186" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-186', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">-</tt> <tt class="py-name">delta</tt><tt class="py-op">,</tt> <tt id="link-187" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-187', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">delta</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt id="link-188" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-188', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">delta</tt><tt class="py-op">,</tt> <tt id="link-189" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-189', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">delta</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line">                   <tt class="py-op">(</tt><tt id="link-190" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-190', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">delta</tt><tt class="py-op">,</tt> <tt id="link-191" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-191', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">-</tt> <tt class="py-name">delta</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt id="link-192" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-192', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">-</tt> <tt class="py-name">delta</tt><tt class="py-op">,</tt> <tt id="link-193" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-193', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">-</tt> <tt class="py-name">delta</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L288"></a><tt class="py-lineno">288</tt>  <tt class="py-line">                   <tt class="py-op">(</tt><tt id="link-194" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-194', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">-</tt> <tt class="py-name">delta</tt><tt class="py-op">,</tt> <tt id="link-195" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-195', 'c', 'link-185');">c</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">delta</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line">        <tt class="py-name">poly</tt> <tt class="py-op">=</tt> <tt id="link-196" class="py-name"><a title="muntjac.addon.google_maps.overlay.polygon.Polygon" class="py-name" href="#" onclick="return doclink('link-196', 'Polygon', 'link-35');">Polygon</a></tt><tt class="py-op">(</tt><tt class="py-name">getrandbits</tt><tt class="py-op">(</tt><tt class="py-number">48</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">corners</tt><tt class="py-op">,</tt> <tt class="py-string">'#f04040'</tt><tt class="py-op">,</tt> <tt class="py-number">5</tt><tt class="py-op">,</tt> <tt class="py-number">0.8</tt><tt class="py-op">,</tt> </tt>
+<a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line">                <tt class="py-string">'#1010ff'</tt><tt class="py-op">,</tt> <tt class="py-number">0.2</tt><tt class="py-op">,</tt> <tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-197" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.addPolyOverlay()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#addPolyOverlay"><a title="muntjac.addon.google_maps.google_map.GoogleMap.addPolyOverlay" class="py-name" href="#" onclick="return doclink('link-197', 'addPolyOverlay', 'link-197');">addPolyOverlay</a></tt><tt class="py-op">(</tt><tt class="py-name">poly</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line"> </tt>
+<a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line"> </tt>
+<a name="RemovePolygonClickListener"></a><div id="RemovePolygonClickListener-def"><a name="L294"></a><tt class="py-lineno">294</tt> <a class="py-toggle" href="#" id="RemovePolygonClickListener-toggle" onclick="return toggle('RemovePolygonClickListener');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RemovePolygonClickListener-class.html">RemovePolygonClickListener</a><tt class="py-op">(</tt><tt class="py-base-class">_MapListener</tt><tt class="py-op">,</tt> <tt class="py-base-class">IClickListener</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RemovePolygonClickListener-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RemovePolygonClickListener-expanded"><a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line"> </tt>
+<a name="RemovePolygonClickListener.buttonClick"></a><div id="RemovePolygonClickListener.buttonClick-def"><a name="L296"></a><tt class="py-lineno">296</tt> <a class="py-toggle" href="#" id="RemovePolygonClickListener.buttonClick-toggle" onclick="return toggle('RemovePolygonClickListener.buttonClick');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.google_maps.google_map_app.RemovePolygonClickListener-class.html#buttonClick">buttonClick</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">event</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RemovePolygonClickListener.buttonClick-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RemovePolygonClickListener.buttonClick-expanded"><a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line">        <tt class="py-name">overlays</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-198" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.getOverlays()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#getOverlays"><a title="muntjac.addon.google_maps.google_map.GoogleMap.getOverlays" class="py-name" href="#" onclick="return doclink('link-198', 'getOverlays', 'link-198');">getOverlays</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">overlays</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt class="py-name">_googleMap</tt><tt class="py-op">.</tt><tt id="link-199" class="py-name" targets="Method muntjac.addon.google_maps.google_map.GoogleMap.removeOverlay()=muntjac.addon.google_maps.google_map.GoogleMap-class.html#removeOverlay"><a title="muntjac.addon.google_maps.google_map.GoogleMap.removeOverlay" class="py-name" href="#" onclick="return doclink('link-199', 'removeOverlay', 'link-199');">removeOverlay</a></tt><tt class="py-op">(</tt><tt class="py-name">overlays</tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-200" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-200', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-201" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-201', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt><tt class="py-string">'Overlay removed'</tt><tt class="py-op">,</tt> </tt>
+<a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line">                    <tt id="link-202" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-202', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-203" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-203', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L302"></a><tt class="py-lineno">302</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L303"></a><tt class="py-lineno">303</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_app</tt><tt class="py-op">.</tt><tt id="link-204" class="py-name"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-204', 'getMainWindow', 'link-59');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-205" class="py-name"><a title="muntjac.ui.window.Window.showNotification" class="py-name" href="#" onclick="return doclink('link-205', 'showNotification', 'link-122');">showNotification</a></tt><tt class="py-op">(</tt><tt class="py-string">'No overlays to remove'</tt><tt class="py-op">,</tt> </tt>
+<a name="L304"></a><tt class="py-lineno">304</tt>  <tt class="py-line">                    <tt id="link-206" class="py-name"><a title="muntjac.ui.window.Notification" class="py-name" href="#" onclick="return doclink('link-206', 'Notification', 'link-14');">Notification</a></tt><tt class="py-op">.</tt><tt id="link-207" class="py-name"><a title="muntjac.ui.window.Notification.TYPE_TRAY_NOTIFICATION" class="py-name" href="#" onclick="return doclink('link-207', 'TYPE_TRAY_NOTIFICATION', 'link-125');">TYPE_TRAY_NOTIFICATION</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L305"></a><tt class="py-lineno">305</tt>  <tt class="py-line"> </tt>
+<a name="L306"></a><tt class="py-lineno">306</tt>  <tt class="py-line"> </tt>
+<a name="L307"></a><tt class="py-lineno">307</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L308"></a><tt class="py-lineno">308</tt>  <tt class="py-line">    <tt class="py-keyword">from</tt> <tt id="link-208" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-208', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-209" class="py-name" targets="Module muntjac.main=muntjac.main-module.html,Function muntjac.main.main()=muntjac.main-module.html#main"><a title="muntjac.main
+muntjac.main.main" class="py-name" href="#" onclick="return doclink('link-209', 'main', 'link-209');">main</a></tt> <tt class="py-keyword">import</tt> <tt id="link-210" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-210', 'muntjac', 'link-0');">muntjac</a></tt> </tt>
+<a name="L309"></a><tt class="py-lineno">309</tt>  <tt class="py-line">    <tt id="link-211" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-211', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">(</tt><tt id="link-212" class="py-name" targets="Class muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp=muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html"><a title="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp" class="py-name" href="#" onclick="return doclink('link-212', 'GoogleMapWidgetApp', 'link-212');">GoogleMapWidgetApp</a></tt><tt class="py-op">,</tt> <tt class="py-name">nogui</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">forever</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">debug</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L310"></a><tt class="py-lineno">310</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:11 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

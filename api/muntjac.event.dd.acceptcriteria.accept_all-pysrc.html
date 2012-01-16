@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -64,58 +64,57 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="muntjac.event.dd.acceptcriteria.accept_all-module.html">Module muntjac.event.dd.acceptcriteria.accept_all</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">"""Criterion that accepts all drops anywhere on the component."""</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">"""Criterion that accepts all drops anywhere on the component."""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
 muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.event=muntjac.event-module.html"><a title="muntjac.event" class="py-name" href="#" onclick="return doclink('link-1', 'event', 'link-1');">event</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package muntjac.event.dd=muntjac.event.dd-module.html,Package muntjac.terminal.gwt.client.ui.dd=muntjac.terminal.gwt.client.ui.dd-module.html"><a title="muntjac.event.dd
 muntjac.terminal.gwt.client.ui.dd" class="py-name" href="#" onclick="return doclink('link-2', 'dd', 'link-2');">dd</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package muntjac.event.dd.acceptcriteria=muntjac.event.dd.acceptcriteria-module.html"><a title="muntjac.event.dd.acceptcriteria" class="py-name" href="#" onclick="return doclink('link-3', 'acceptcriteria', 'link-3');">acceptcriteria</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Module muntjac.event.dd.acceptcriteria.client_side_criterion=muntjac.event.dd.acceptcriteria.client_side_criterion-module.html"><a title="muntjac.event.dd.acceptcriteria.client_side_criterion" class="py-name" href="#" onclick="return doclink('link-4', 'client_side_criterion', 'link-4');">client_side_criterion</a></tt> <tt class="py-keyword">import</tt> \ </tt>
-<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt id="link-5" class="py-name" targets="Class muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion=muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion-class.html"><a title="muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion" class="py-name" href="#" onclick="return doclink('link-5', 'ClientSideCriterion', 'link-5');">ClientSideCriterion</a></tt> </tt>
-<a name="AcceptAll"></a><div id="AcceptAll-def"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="AcceptAll-toggle" onclick="return toggle('AcceptAll');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html">AcceptAll</a><tt class="py-op">(</tt><tt class="py-base-class">ClientSideCriterion</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="AcceptAll-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="AcceptAll-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt class="py-docstring">"""Criterion that accepts all drops anywhere on the component.</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    Note! Class is singleton, use L{get} method to get the instance.</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt id="link-6" class="py-name" targets="Variable muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#_singleton"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-6', '_singleton', 'link-6');">_singleton</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
-<a name="AcceptAll.__init__"></a><div id="AcceptAll.__init__-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="AcceptAll.__init__-toggle" onclick="return toggle('AcceptAll.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="AcceptAll.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.__init__-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt id="link-5" class="py-name" targets="Class muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion=muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion-class.html"><a title="muntjac.event.dd.acceptcriteria.client_side_criterion.ClientSideCriterion" class="py-name" href="#" onclick="return doclink('link-5', 'ClientSideCriterion', 'link-5');">ClientSideCriterion</a></tt> </tt>
+<a name="AcceptAll"></a><div id="AcceptAll-def"><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt> <a class="py-toggle" href="#" id="AcceptAll-toggle" onclick="return toggle('AcceptAll');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html">AcceptAll</a><tt class="py-op">(</tt><tt class="py-base-class">ClientSideCriterion</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AcceptAll-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="AcceptAll-expanded"><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-docstring">"""Criterion that accepts all drops anywhere on the component.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    Note! Class is singleton, use L{get} method to get the instance.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt id="link-6" class="py-name" targets="Variable muntjac.application.SingletonApplication._singleton=muntjac.application.SingletonApplication-class.html#_singleton,Variable muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#_singleton"><a title="muntjac.application.SingletonApplication._singleton
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-6', '_singleton', 'link-6');">_singleton</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="AcceptAll.__init__"></a><div id="AcceptAll.__init__-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="AcceptAll.__init__-toggle" onclick="return toggle('AcceptAll.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AcceptAll.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.__init__-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="AcceptAll.get"></a><div id="AcceptAll.get-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="AcceptAll.get-toggle" onclick="return toggle('AcceptAll.get');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get">get</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AcceptAll.get-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.get-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">cls</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="muntjac.application.SingletonApplication._singleton
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-7', '_singleton', 'link-6');">_singleton</a></tt> </tt>
 </div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
-<a name="AcceptAll.get"></a><div id="AcceptAll.get-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="AcceptAll.get-toggle" onclick="return toggle('AcceptAll.get');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get">get</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="AcceptAll.get-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.get-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">cls</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-7', '_singleton', 'link-6');">_singleton</a></tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="AcceptAll.accept"></a><div id="AcceptAll.accept-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="AcceptAll.accept-toggle" onclick="return toggle('AcceptAll.accept');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#accept">accept</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">dragEvent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AcceptAll.accept-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.accept-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">True</tt> </tt>
 </div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
 <a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
-<a name="AcceptAll.accept"></a><div id="AcceptAll.accept-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="AcceptAll.accept-toggle" onclick="return toggle('AcceptAll.accept');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#accept">accept</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">dragEvent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="AcceptAll.accept-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.accept-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">True</tt> </tt>
-</div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
-<a name="AcceptAll.getIdentifier"></a><div id="AcceptAll.getIdentifier-def"><a name="L46"></a><tt class="py-lineno">46</tt> <a class="py-toggle" href="#" id="AcceptAll.getIdentifier-toggle" onclick="return toggle('AcceptAll.getIdentifier');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#getIdentifier">getIdentifier</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="AcceptAll.getIdentifier-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.getIdentifier-expanded"><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">'com.vaadin.event.dd.acceptcriteria.AcceptAll'</tt> </tt>
-</div></div><a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Class muntjac.event.dd.acceptcriteria.accept_all.AcceptAll=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll" class="py-name" href="#" onclick="return doclink('link-8', 'AcceptAll', 'link-8');">AcceptAll</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-9', '_singleton', 'link-6');">_singleton</a></tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll" class="py-name" href="#" onclick="return doclink('link-10', 'AcceptAll', 'link-8');">AcceptAll</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<a name="AcceptAll.getIdentifier"></a><div id="AcceptAll.getIdentifier-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="AcceptAll.getIdentifier-toggle" onclick="return toggle('AcceptAll.getIdentifier');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#getIdentifier">getIdentifier</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AcceptAll.getIdentifier-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="AcceptAll.getIdentifier-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">'com.vaadin.event.dd.acceptcriteria.AcceptAll'</tt> </tt>
+</div></div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Class muntjac.event.dd.acceptcriteria.accept_all.AcceptAll=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll" class="py-name" href="#" onclick="return doclink('link-8', 'AcceptAll', 'link-8');">AcceptAll</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="muntjac.application.SingletonApplication._singleton
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll._singleton" class="py-name" href="#" onclick="return doclink('link-9', '_singleton', 'link-6');">_singleton</a></tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll" class="py-name" href="#" onclick="return doclink('link-10', 'AcceptAll', 'link-8');">AcceptAll</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -146,14 +145,14 @@ expandto(location.href);
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:37 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:18 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

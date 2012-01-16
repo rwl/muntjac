@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -77,6 +77,12 @@
                                    |
                                   <strong class="uidshort">Application</strong>
 </pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="muntjac.application.SingletonApplication-class.html">SingletonApplication</a></li><li>, <a href="muntjac.addon.codemirror.code_mirror_application.CodeMirrorApplication-class.html">addon.codemirror.code_mirror_application.CodeMirrorApplication</a></li><li>, <a href="muntjac.addon.csstools.test_application.CssToolsTestApplication-class.html">addon.csstools.test_application.CssToolsTestApplication</a></li><li>, <a href="muntjac.addon.colorpicker.color_picker_application.ColorPickerApplication-class.html">addon.colorpicker.color_picker_application.ColorPickerApplication</a></li><li>, <a href="muntjac.addon.colorpicker.color_picker_demo.ColorPickerDemo-class.html">addon.colorpicker.color_picker_demo.ColorPickerDemo</a></li><li>, <a href="muntjac.addon.google_maps.google_map_app.GoogleMapWidgetApp-class.html">addon.google_maps.google_map_app.GoogleMapWidgetApp</a></li><li>, <a href="muntjac.addon.weelayout.wee_layout_application.WeelayoutApplication-class.html">addon.weelayout.wee_layout_application.WeelayoutApplication</a></li><li>, <a href="muntjac.addon.canvas.canvas_app.CanvasApp-class.html">addon.canvas.canvas_app.CanvasApp</a></li>  </ul>
+</dd></dl>
 
 <hr />
 <p>Base class required for all Muntjac applications. This class provides 
@@ -121,7 +127,7 @@
         </dd>
       </dl>
       <p><strong>Version:</strong>
-        1.0.2
+        1.1.0
       </p>
 </div><!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -157,42 +163,6 @@
       
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getWindow" class="summary-sig-name">getWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">name</span>)</span><br />
-      Gets a window by name.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addWindow" class="summary-sig-name">addWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">window</span>)</span><br />
-      Adds a new window to the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -205,24 +175,6 @@
       this application.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="muntjac.application-pysrc.html#Application._fireWindowAttachEvent">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeWindow" class="summary-sig-name">removeWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">window</span>)</span><br />
-      Removes the specified window from the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeWindow">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -253,10 +205,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getUser" class="summary-sig-name">getUser</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the user of the application.</td>
+          <td><span class="summary-sig"><a name="addCallback"></a><span class="summary-sig-name">addCallback</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getUser">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addCallback">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -270,11 +224,221 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setUser" class="summary-sig-name">setUser</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">user</span>)</span><br />
-      Sets the user of the application instance.</td>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds the user change/window attach/window detach listener.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setUser">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addResource" class="summary-sig-name">addResource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resource</span>)</span><br />
+      Adds new resource to the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addResource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addWindow" class="summary-sig-name">addWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Adds a new window to the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#close" class="summary-sig-name">close</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Ends the Application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.close">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getContext" class="summary-sig-name">getContext</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the application context.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getContext">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getErrorHandler" class="summary-sig-name">getErrorHandler</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the application error handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getErrorHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getLocale" class="summary-sig-name">getLocale</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the default locale for this application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLocale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getLogoutURL" class="summary-sig-name">getLogoutURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the URL user is redirected to on application close.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLogoutURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getMainWindow" class="summary-sig-name">getMainWindow</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the mainWindow of the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getMainWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getProperty" class="summary-sig-name">getProperty</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Searches for the property with the specified name in this 
+      application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getProperty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getPropertyNames" class="summary-sig-name">getPropertyNames</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns an enumeration of all the names in this application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getPropertyNames">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getRelativeLocation" class="summary-sig-name">getRelativeLocation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resource</span>)</span><br />
+      Gets the relative uri of the resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getRelativeLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getTheme" class="summary-sig-name">getTheme</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the application's theme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getTheme">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -305,10 +469,297 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#close" class="summary-sig-name">close</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Ends the Application.</td>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getUser" class="summary-sig-name">getUser</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the user of the application.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.close">source&nbsp;code</a></span>
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getUser">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getVersion" class="summary-sig-name">getVersion</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Override this method to return correct version number of your 
+      Application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getVersion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getWindow" class="summary-sig-name">getWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Gets a window by name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getWindows" class="summary-sig-name">getWindows</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets the set of windows contained by the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getWindows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">context</span>,
+        <span class="summary-sig-arg">relativeUri</span>)</span><br />
+      Application URI handling hub.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.handleURI">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#init" class="summary-sig-name">init</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Main initializer of the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.init">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#isRunning" class="summary-sig-name">isRunning</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Tests if the application is running or if it has been finished.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.isRunning">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeCallback"></a><span class="summary-sig-name">removeCallback</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>,
+        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeCallback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">listener</span>,
+        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes the user change/window attach/window detach listener.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeListener">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeResource" class="summary-sig-name">removeResource</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resource</span>)</span><br />
+      Removes the resource from the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeResource">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeWindow" class="summary-sig-name">removeWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">window</span>)</span><br />
+      Removes the specified window from the application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setErrorHandler" class="summary-sig-name">setErrorHandler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">errorHandler</span>)</span><br />
+      Sets the application error handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setErrorHandler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setLocale" class="summary-sig-name">setLocale</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">locale</span>)</span><br />
+      Sets the default locale for this application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLocale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setLogoutURL" class="summary-sig-name">setLogoutURL</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">logoutURL</span>)</span><br />
+      Sets the URL user is redirected to on application close.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLogoutURL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setMainWindow" class="summary-sig-name">setMainWindow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mainWindow</span>)</span><br />
+      Sets the mainWindow.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setMainWindow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setTheme" class="summary-sig-name">setTheme</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">theme</span>)</span><br />
+      Sets the application's theme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setTheme">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setUser" class="summary-sig-name">setUser</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user</span>)</span><br />
+      Sets the user of the application instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setUser">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -342,457 +793,12 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#isRunning" class="summary-sig-name">isRunning</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Tests if the application is running or if it has been finished.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.isRunning">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getWindows" class="summary-sig-name">getWindows</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the set of windows contained by the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getWindows">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#init" class="summary-sig-name">init</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Main initializer of the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.init">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getTheme" class="summary-sig-name">getTheme</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the application's theme.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getTheme">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setTheme" class="summary-sig-name">setTheme</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">theme</span>)</span><br />
-      Sets the application's theme.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setTheme">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getMainWindow" class="summary-sig-name">getMainWindow</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the mainWindow of the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getMainWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setMainWindow" class="summary-sig-name">setMainWindow</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">mainWindow</span>)</span><br />
-      Sets the mainWindow.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setMainWindow">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getPropertyNames" class="summary-sig-name">getPropertyNames</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns an enumeration of all the names in this application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getPropertyNames">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getProperty" class="summary-sig-name">getProperty</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">name</span>)</span><br />
-      Searches for the property with the specified name in this 
-      application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getProperty">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addResource" class="summary-sig-name">addResource</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resource</span>)</span><br />
-      Adds new resource to the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addResource">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeResource" class="summary-sig-name">removeResource</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resource</span>)</span><br />
-      Removes the resource from the application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeResource">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getRelativeLocation" class="summary-sig-name">getRelativeLocation</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">resource</span>)</span><br />
-      Gets the relative uri of the resource.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getRelativeLocation">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#handleURI" class="summary-sig-name">handleURI</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">context</span>,
-        <span class="summary-sig-arg">relativeUri</span>)</span><br />
-      Application URI handling hub.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.handleURI">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getLocale" class="summary-sig-name">getLocale</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the default locale for this application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLocale">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setLocale" class="summary-sig-name">setLocale</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">locale</span>)</span><br />
-      Sets the default locale for this application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLocale">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#addListener" class="summary-sig-name">addListener</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">listener</span>,
-        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Adds the user change/window attach/window detach listener.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addListener">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="addCallback"></a><span class="summary-sig-name">addCallback</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">callback</span>,
-        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">*args</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.addCallback">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#removeListener" class="summary-sig-name">removeListener</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">listener</span>,
-        <span class="summary-sig-arg">iface</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Removes the user change/window attach/window detach listener.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeListener">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="removeCallback"></a><span class="summary-sig-name">removeCallback</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">callback</span>,
-        <span class="summary-sig-arg">eventType</span>=<span class="summary-sig-default">None</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeCallback">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getLogoutURL" class="summary-sig-name">getLogoutURL</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Returns the URL user is redirected to on application close.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLogoutURL">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setLogoutURL" class="summary-sig-name">setLogoutURL</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">logoutURL</span>)</span><br />
-      Sets the URL user is redirected to on application close.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLogoutURL">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#terminalError" class="summary-sig-name">terminalError</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">event</span>)</span><br />
       Invoked by the terminal on any exception that occurs in application 
       and is thrown by the <code>setVariable</code> to the terminal.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="muntjac.application-pysrc.html#Application.terminalError">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getContext" class="summary-sig-name">getContext</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the application context.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getContext">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getVersion" class="summary-sig-name">getVersion</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Override this method to return correct version number of your 
-      Application.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getVersion">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#getErrorHandler" class="summary-sig-name">getErrorHandler</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Gets the application error handler.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.getErrorHandler">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="muntjac.application.Application-class.html#setErrorHandler" class="summary-sig-name">setErrorHandler</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">errorHandler</span>)</span><br />
-      Sets the application error handler.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="muntjac.application-pysrc.html#Application.setErrorHandler">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -906,8 +912,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="muntjac.application.Application-class.html#_nextWindowId" class="summary-name" onclick="show_private();">_nextWindowId</a><br />
-      Id use for the next window that is opened.
+        <a name="_applicationIsRunning"></a><span class="summary-name">_applicationIsRunning</span><br />
+      Application status.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_applicationUrl"></a><span class="summary-name">_applicationUrl</span><br />
+      The application's URL.
     </td>
   </tr>
 <tr class="private">
@@ -922,16 +936,24 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_user"></a><span class="summary-name">_user</span><br />
-      The current user or <code>None</code> if no user has logged in.
+        <a name="_errorHandler"></a><span class="summary-name">_errorHandler</span><br />
+      Application wide error handler which is used by default if an error
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_windows"></a><span class="summary-name">_windows</span><br />
-      Mapping from window name to window instance.
+        <a name="_locale"></a><span class="summary-name">_locale</span><br />
+      Default locale of the application.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_logoutURL"></a><span class="summary-name">_logoutURL</span><br />
+      URL where the user is redirected to on application close, or null if
     </td>
   </tr>
 <tr class="private">
@@ -946,24 +968,8 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_applicationUrl"></a><span class="summary-name">_applicationUrl</span><br />
-      The application's URL.
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="theme"></a><span class="summary-name">theme</span><br />
-      Name of the theme currently used by the application.
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="_applicationIsRunning"></a><span class="summary-name">_applicationIsRunning</span><br />
-      Application status.
+        <a href="muntjac.application.Application-class.html#_nextWindowId" class="summary-name" onclick="show_private();">_nextWindowId</a><br />
+      Id use for the next window that is opened.
     </td>
   </tr>
 <tr class="private">
@@ -978,8 +984,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_locale"></a><span class="summary-name">_locale</span><br />
-      Default locale of the application.
+        <a name="_resourceKeyMap"></a><span class="summary-name">_resourceKeyMap</span><br />
+      Application resource mapping: key &lt;-&gt; resource.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_user"></a><span class="summary-name">_user</span><br />
+      The current user or <code>None</code> if no user has logged in.
     </td>
   </tr>
 <tr class="private">
@@ -1010,24 +1024,16 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_resourceKeyMap"></a><span class="summary-name">_resourceKeyMap</span><br />
-      Application resource mapping: key &lt;-&gt; resource.
+        <a name="_windows"></a><span class="summary-name">_windows</span><br />
+      Mapping from window name to window instance.
     </td>
   </tr>
-<tr class="private">
+<tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="_logoutURL"></a><span class="summary-name">_logoutURL</span><br />
-      URL where the user is redirected to on application close, or null if
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="_errorHandler"></a><span class="summary-name">_errorHandler</span><br />
-      Application wide error handler which is used by default if an error
+        <a name="theme"></a><span class="summary-name">theme</span><br />
+      Name of the theme currently used by the application.
     </td>
   </tr>
 </table>
@@ -1095,6 +1101,480 @@
         object.__init__
         <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addListener"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">listener</span>,
+        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addListener">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds the user change/window attach/window detach listener.</p>
+  <p>The user change listener allows one to get notification each time <a 
+  href="muntjac.application.Application-class.html#setUser" 
+  class="link">setUser</a> is called.  The window attach listener is used 
+  to get notifications each time a window is attached to the application 
+  with <a href="muntjac.application.Application-class.html#addWindow" 
+  class="link">addWindow</a>.  The window detach listener is used to get 
+  notifications each time a window is remove from the application with <a 
+  href="muntjac.application.Application-class.html#removeWindow" 
+  class="link">removeWindow</a>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addResource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addResource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resource</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addResource">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds new resource to the application. The resource can be accessed by 
+  the user of the application.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resource</code></strong> - the resource to add.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new window to the application.</p>
+  <p>This implicitly invokes the <a 
+  href="muntjac.ui.window.Window-class.html#setApplication" 
+  class="link">Window.setApplication</a> method.</p>
+  <p>Note that all application-level windows can be accessed by their names
+  in url <code>http://host:port/foo/bar/</code> where 
+  <code>http://host:port/foo/</code> is the application url as returned by 
+  getURL() and <code>bar</code> is the name of the window. Also note that 
+  not all windows should be added to application - one can also add windows
+  inside other windows - these windows show as smaller windows inside those
+  windows.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>window</code></strong> - the new <code>Window</code> to add. If the name of the window is 
+          <code>None</code>, an unique name is automatically given for the 
+          window.</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if a window with the same name as the new window already exists in 
+        the application.</li>
+        <li><code><strong class='fraise'>ValueError</strong></code> - if the given <code>Window</code> is <code>None</code>.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="close"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">close</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.close">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Ends the Application.</p>
+  <p>In effect this will cause the application stop returning any windows 
+  when asked. When the application is closed, its state is removed from the
+  session and the browser window is redirected to the application logout 
+  url set with <a 
+  href="muntjac.application.Application-class.html#setLogoutURL" 
+  class="link">setLogoutURL</a>. If the logout url has not been set, the 
+  browser window is reloaded and the application is restarted.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContext"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContext</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getContext">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application context.</p>
+  <p>The application context is the environment where the application is 
+  running in. The actual implementation class of may contains quite a lot 
+  more functionality than defined in the <code 
+  class="link">ApplicationContext</code> interface.</p>
+  <p>By default, when you are deploying your application to a servlet 
+  container, the implementation class is <a 
+  href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html"
+  class="link">WebApplicationContext</a> - you can safely cast to this 
+  class and use the methods from there.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the application context.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getErrorHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getErrorHandler</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getErrorHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application error handler.</p>
+  <p>The default error handler is the application itself.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Application error handler</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLocale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLocale</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLocale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the default locale for this application.</p>
+  <p>By default this is the preferred locale of the user using the 
+  application. In most cases it is read from the browser defaults.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the locale of this application.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLogoutURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLogoutURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLogoutURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the URL user is redirected to on application close. If the URL
+  is <code>None</code>, the application is closed normally as defined by 
+  the application running environment.</p>
+  <p>Desktop application just closes the application window and 
+  web-application redirects the browser to application main URL.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the URL.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMainWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMainWindow</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getMainWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the mainWindow of the application.</p>
+  <p>The main window is the window attached to the application URL (<a 
+  href="muntjac.application.Application-class.html#getURL" 
+  class="link">getURL</a>) and thus which is show by default to the 
+  user.</p>
+  <p>Note that each application must have at least one main window.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the main window.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getProperty</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getProperty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Searches for the property with the specified name in this application.
+  This method returns <code>None</code> if the property is not found.</p>
+  <p>See <a href="muntjac.application.Application-class.html#start" 
+  class="link">start</a> how properties are defined.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> - the name of the property.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the value in this property list with the specified key value.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPropertyNames"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPropertyNames</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getPropertyNames">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an enumeration of all the names in this application.</p>
+  <p>See <a href="muntjac.application.Application-class.html#start" 
+  class="link">start</a> how properties are defined.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>an enumeration of all the keys in this property list, including 
+          the keys in the default property list.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRelativeLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRelativeLocation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resource</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getRelativeLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the relative uri of the resource. This method is intended to be 
+  called only be the terminal implementation.</p>
+  <p>This method can only be called from within the processing of a UIDL 
+  request, not from a background thread.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resource</code></strong> - the resource to get relative location.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the relative uri of the resource or null if called in a 
+          background thread</dd>
+  </dl>
+<div class="fields">      <p><strong>Deprecated:</strong>
+        this method is intended to be used by the terminal only. It may be 
+    removed or moved in the future.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="getSystemMessages"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSystemMessages</span>(<span class="sig-arg">cls</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getSystemMessages">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the SystemMessages for this application. SystemMessages are used 
+  to notify the user of various critical situations that can occur, such as
+  session expiration, client/server out of sync, and internal server 
+  error.</p>
+  <p>You can customize the messages by &quot;overriding&quot; this method 
+  and returning <a 
+  href="muntjac.messages.CustomizedSystemMessages-class.html" 
+  class="link">CustomizedSystemMessages</a>. To &quot;override&quot; this 
+  method, re-implement this method in your application (the class that 
+  extends <a href="muntjac.application.Application-class.html" 
+  class="link">Application</a>). Even though overriding class methods is 
+  not possible in Python, Muntjac selects to call the static method from 
+  the subclass instead of the original <a 
+  href="muntjac.application.Application-class.html#getSystemMessages" 
+  class="link">getSystemMessages</a> if such a method exists.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the SystemMessages for this application</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTheme"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTheme</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getTheme">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the application's theme. The application's theme is the default 
+  theme used by all the windows in it that do not explicitly specify a 
+  theme. If the application theme is not explicitly set, the 
+  <code>None</code> is returned.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the name of the application's theme.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getURL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getURL</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getURL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the URL of the application.</p>
+  <p>This is the URL what can be entered to a browser window to start the 
+  application. Navigating to the application URL shows the main window ( <a
+  href="muntjac.application.Application-class.html#getMainWindow" 
+  class="link">getMainWindow</a>) of the application. Note that the main 
+  window can also be shown by navigating to the window url (<a 
+  href="muntjac.ui.window.Window-class.html#getURL" 
+  class="link">Window.getURL</a>).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the application's URL.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getUser"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getUser</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getUser">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the user of the application.</p>
+  <p>Muntjac doesn't define of use user object in any way - it only 
+  provides this getter and setter methods for convenience. The user is any 
+  object that has been stored to the application with <a 
+  href="muntjac.application.Application-class.html#setUser" 
+  class="link">setUser</a>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the user of the application.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVersion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getVersion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Override this method to return correct version number of your 
+  Application. Version information is delivered for example to Testing 
+  Tools test results. By default this returns a string 
+  &quot;NONVERSIONED&quot;.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>version string</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1166,251 +1646,6 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="addWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addWindow</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">window</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Adds a new window to the application.</p>
-  <p>This implicitly invokes the <code 
-  class="link">Window.setApplication</code> method.</p>
-  <p>Note that all application-level windows can be accessed by their names
-  in url <code>http://host:port/foo/bar/</code> where 
-  <code>http://host:port/foo/</code> is the application url as returned by 
-  getURL() and <code>bar</code> is the name of the window. Also note that 
-  not all windows should be added to application - one can also add windows
-  inside other windows - these windows show as smaller windows inside those
-  windows.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>window</code></strong> - the new <code>Window</code> to add. If the name of the window is 
-          <code>None</code>, an unique name is automatically given for the 
-          window.</li>
-    </ul></dd>
-    <dt>Raises:</dt>
-    <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - if a window with the same name as the new window already exists in 
-        the application.</li>
-        <li><code><strong class='fraise'>ValueError</strong></code> - if the given <code>Window</code> is <code>None</code>.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="removeWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeWindow</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">window</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Removes the specified window from the application.</p>
-  <p>Removing the main window of the Application also sets the main window 
-  to null. One must another window to be the main window after this with <a
-  href="muntjac.application.Application-class.html#setMainWindow" 
-  class="link">setMainWindow</a>.</p>
-  <p>Note that removing window from the application does not close the 
-  browser window - the window is only removed from the server-side.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>window</code></strong> - the window to be removed.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getUser"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getUser</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getUser">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the user of the application.</p>
-  <p>Muntjac doesn't define of use user object in any way - it only 
-  provides this getter and setter methods for convenience. The user is any 
-  object that has been stored to the application with <a 
-  href="muntjac.application.Application-class.html#setUser" 
-  class="link">setUser</a>.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the user of the application.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setUser"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setUser</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">user</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setUser">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the user of the application instance. An application instance may
-  have a user associated to it. This can be set in login procedure or 
-  application initialization.</p>
-  <p>A component performing the user login procedure can assign the user 
-  property of the application and make the user object available to other 
-  components of the application.</p>
-  <p>Muntjac doesn't define of use user object in any way - it only 
-  provides getter and setter methods for convenience. The user reference 
-  stored to the application can be read with <a 
-  href="muntjac.application.Application-class.html#getUser" 
-  class="link">getUser</a>.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>user</code></strong> - the new user.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getURL"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getURL</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getURL">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the URL of the application.</p>
-  <p>This is the URL what can be entered to a browser window to start the 
-  application. Navigating to the application URL shows the main window ( <a
-  href="muntjac.application.Application-class.html#getMainWindow" 
-  class="link">getMainWindow</a>) of the application. Note that the main 
-  window can also be shown by navigating to the window url (<code 
-  class="link">Window.getURL</code>).</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the application's URL.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="close"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">close</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.close">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Ends the Application.</p>
-  <p>In effect this will cause the application stop returning any windows 
-  when asked. When the application is closed, its state is removed from the
-  session and the browser window is redirected to the application logout 
-  url set with <a 
-  href="muntjac.application.Application-class.html#setLogoutURL" 
-  class="link">setLogoutURL</a>. If the logout url has not been set, the 
-  browser window is reloaded and the application is restarted.</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="start"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">start</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">applicationUrl</span>,
-        <span class="sig-arg">applicationProperties</span>,
-        <span class="sig-arg">context</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.start">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Starts the application on the given URL.</p>
-  <p>This method is called by Muntjac framework when a user navigates to 
-  the application. After this call the application corresponds to the given
-  URL and it will return windows when asked for them. There is no need to 
-  call this method directly.</p>
-  <p>Application properties are defined by servlet configuration.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>applicationUrl</code></strong> - the URL the application should respond to.</li>
-        <li><strong class="pname"><code>applicationProperties</code></strong> - the Application properties as specified by the servlet 
-          configuration.</li>
-        <li><strong class="pname"><code>context</code></strong> - the context application will be running in.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="isRunning"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">isRunning</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.isRunning">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Tests if the application is running or if it has been finished.</p>
-  <p>Application starts running when its <a 
-  href="muntjac.application.Application-class.html#start" 
-  class="link">start</a> method has been called and stops when the <a 
-  href="muntjac.application.Application-class.html#close" 
-  class="link">close</a> is called.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd><code>True</code> if the application is running, 
-          <code>False</code> if not.</dd>
-  </dl>
-</td></tr></table>
-</div>
 <a name="getWindows"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -1432,268 +1667,6 @@
         <dd>the collection of windows.</dd>
   </dl>
 </td></tr></table>
-</div>
-<a name="init"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">init</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.init">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Main initializer of the application. The <code>init</code> method is 
-  called by the framework when the application is started, and it should 
-  perform whatever initialization operations the application needs, such as
-  creating windows and adding components to them.</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="getTheme"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTheme</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getTheme">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the application's theme. The application's theme is the default 
-  theme used by all the windows in it that do not explicitly specify a 
-  theme. If the application theme is not explicitly set, the 
-  <code>None</code> is returned.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the name of the application's theme.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setTheme"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTheme</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">theme</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setTheme">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the application's theme.</p>
-  <p>Note that this theme can be overridden in the the application level 
-  windows with <code class="link">Window.setTheme</code>. Setting theme to 
-  be <code>None</code> selects the default theme. For the available theme 
-  names, see the contents of the VAADIN/themes directory.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>theme</code></strong> - the new theme for this application.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getMainWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMainWindow</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getMainWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the mainWindow of the application.</p>
-  <p>The main window is the window attached to the application URL (<a 
-  href="muntjac.application.Application-class.html#getURL" 
-  class="link">getURL</a>) and thus which is show by default to the 
-  user.</p>
-  <p>Note that each application must have at least one main window.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the main window.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setMainWindow"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMainWindow</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">mainWindow</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setMainWindow">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the mainWindow. If the main window is not explicitly set, the 
-  main window defaults to first created window. Setting window as a main 
-  window of this application also adds the window to this application.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>mainWindow</code></strong> - the mainWindow to set.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getPropertyNames"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPropertyNames</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getPropertyNames">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Returns an enumeration of all the names in this application.</p>
-  <p>See <a href="muntjac.application.Application-class.html#start" 
-  class="link">start</a> how properties are defined.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>an enumeration of all the keys in this property list, including 
-          the keys in the default property list.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getProperty"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getProperty</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">name</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getProperty">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Searches for the property with the specified name in this application.
-  This method returns <code>None</code> if the property is not found.</p>
-  <p>See <a href="muntjac.application.Application-class.html#start" 
-  class="link">start</a> how properties are defined.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>name</code></strong> - the name of the property.</li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>the value in this property list with the specified key value.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="addResource"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addResource</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">resource</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addResource">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Adds new resource to the application. The resource can be accessed by 
-  the user of the application.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>resource</code></strong> - the resource to add.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="removeResource"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeResource</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">resource</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeResource">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Removes the resource from the application.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>resource</code></strong> - the resource to remove.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getRelativeLocation"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRelativeLocation</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">resource</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getRelativeLocation">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the relative uri of the resource. This method is intended to be 
-  called only be the terminal implementation.</p>
-  <p>This method can only be called from within the processing of a UIDL 
-  request, not from a background thread.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>resource</code></strong> - the resource to get relative location.</li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>the relative uri of the resource or null if called in a 
-          background thread</dd>
-  </dl>
-<div class="fields">      <p><strong>Deprecated:</strong>
-        this method is intended to be used by the terminal only. It may be 
-    removed or moved in the future.
-      </p>
-</div></td></tr></table>
 </div>
 <a name="handleURI"></a>
 <div>
@@ -1738,82 +1711,52 @@
       </p>
 </div></td></tr></table>
 </div>
-<a name="getLocale"></a>
+<a name="init"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLocale</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">init</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLocale">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.init">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Gets the default locale for this application.</p>
-  <p>By default this is the preferred locale of the user using the 
-  application. In most cases it is read from the browser defaults.</p>
+  <p>Main initializer of the application. The <code>init</code> method is 
+  called by the framework when the application is started, and it should 
+  perform whatever initialization operations the application needs, such as
+  creating windows and adding components to them.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="isRunning"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isRunning</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.isRunning">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if the application is running or if it has been finished.</p>
+  <p>Application starts running when its <a 
+  href="muntjac.application.Application-class.html#start" 
+  class="link">start</a> method has been called and stops when the <a 
+  href="muntjac.application.Application-class.html#close" 
+  class="link">close</a> is called.</p>
   <dl class="fields">
     <dt>Returns:</dt>
-        <dd>the locale of this application.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setLocale"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLocale</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">locale</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLocale">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the default locale for this application.</p>
-  <p>By default this is the preferred locale of the user using the 
-  application. In most cases it is read from the browser defaults.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>locale</code></strong> - the Locale object.</li>
-    </ul></dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="addListener"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">addListener</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">listener</span>,
-        <span class="sig-arg">iface</span>=<span class="sig-default">None</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.addListener">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Adds the user change/window attach/window detach listener.</p>
-  <p>The user change listener allows one to get notification each time <a 
-  href="muntjac.application.Application-class.html#setUser" 
-  class="link">setUser</a> is called.  The window attach listener is used 
-  to get notifications each time a window is attached to the application 
-  with <a href="muntjac.application.Application-class.html#addWindow" 
-  class="link">addWindow</a>.  The window detach listener is used to get 
-  notifications each time a window is remove from the application with <a 
-  href="muntjac.application.Application-class.html#removeWindow" 
-  class="link">removeWindow</a>.</p>
-  <dl class="fields">
+        <dd><code>True</code> if the application is running, 
+          <code>False</code> if not.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1842,28 +1785,106 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="getLogoutURL"></a>
+<a name="removeResource"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLogoutURL</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeResource</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resource</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getLogoutURL">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeResource">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Returns the URL user is redirected to on application close. If the URL
-  is <code>None</code>, the application is closed normally as defined by 
-  the application running environment.</p>
-  <p>Desktop application just closes the application window and 
-  web-application redirects the browser to application main URL.</p>
+  <p>Removes the resource from the application.</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the URL.</dd>
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>resource</code></strong> - the resource to remove.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeWindow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">window</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.removeWindow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes the specified window from the application.</p>
+  <p>Removing the main window of the Application also sets the main window 
+  to null. One must another window to be the main window after this with <a
+  href="muntjac.application.Application-class.html#setMainWindow" 
+  class="link">setMainWindow</a>.</p>
+  <p>Note that removing window from the application does not close the 
+  browser window - the window is only removed from the server-side.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>window</code></strong> - the window to be removed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setErrorHandler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setErrorHandler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">errorHandler</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setErrorHandler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the application error handler.</p>
+  <p>The default error handler is the application itself. By overriding 
+  this, you can redirect the error messages to your selected target (log 
+  for example).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setLocale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setLocale</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">locale</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setLocale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the default locale for this application.</p>
+  <p>By default this is the preferred locale of the user using the 
+  application. In most cases it is read from the browser defaults.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>locale</code></strong> - the Locale object.</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1895,39 +1916,126 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="getSystemMessages"></a>
+<a name="setMainWindow"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSystemMessages</span>(<span class="sig-arg">cls</span>)</span>
-    <br /><em class="fname">Class Method</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMainWindow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mainWindow</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getSystemMessages">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setMainWindow">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Gets the SystemMessages for this application. SystemMessages are used 
-  to notify the user of various critical situations that can occur, such as
-  session expiration, client/server out of sync, and internal server 
-  error.</p>
-  <p>You can customize the messages by &quot;overriding&quot; this method 
-  and returning <a 
-  href="muntjac.messages.CustomizedSystemMessages-class.html" 
-  class="link">CustomizedSystemMessages</a>. To &quot;override&quot; this 
-  method, re-implement this method in your application (the class that 
-  extends <a href="muntjac.application.Application-class.html" 
-  class="link">Application</a>). Even though overriding class methods is 
-  not possible in Python, Muntjac selects to call the static method from 
-  the subclass instead of the original <a 
-  href="muntjac.application.Application-class.html#getSystemMessages" 
-  class="link">getSystemMessages</a> if such a method exists.</p>
+  <p>Sets the mainWindow. If the main window is not explicitly set, the 
+  main window defaults to first created window. Setting window as a main 
+  window of this application also adds the window to this application.</p>
   <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the SystemMessages for this application</dd>
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>mainWindow</code></strong> - the mainWindow to set.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTheme"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTheme</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">theme</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setTheme">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the application's theme.</p>
+  <p>Note that this theme can be overridden in the the application level 
+  windows with <a href="muntjac.ui.window.Window-class.html#setTheme" 
+  class="link">Window.setTheme</a>. Setting theme to be <code>None</code> 
+  selects the default theme. For the available theme names, see the 
+  contents of the VAADIN/themes directory.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>theme</code></strong> - the new theme for this application.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setUser"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setUser</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setUser">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the user of the application instance. An application instance may
+  have a user associated to it. This can be set in login procedure or 
+  application initialization.</p>
+  <p>A component performing the user login procedure can assign the user 
+  property of the application and make the user object available to other 
+  components of the application.</p>
+  <p>Muntjac doesn't define of use user object in any way - it only 
+  provides getter and setter methods for convenience. The user reference 
+  stored to the application can be read with <a 
+  href="muntjac.application.Application-class.html#getUser" 
+  class="link">getUser</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user</code></strong> - the new user.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="start"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">start</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">applicationUrl</span>,
+        <span class="sig-arg">applicationProperties</span>,
+        <span class="sig-arg">context</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.start">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Starts the application on the given URL.</p>
+  <p>This method is called by Muntjac framework when a user navigates to 
+  the application. After this call the application corresponds to the given
+  URL and it will return windows when asked for them. There is no need to 
+  call this method directly.</p>
+  <p>Application properties are defined by servlet configuration.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>applicationUrl</code></strong> - the URL the application should respond to.</li>
+        <li><strong class="pname"><code>applicationProperties</code></strong> - the Application properties as specified by the servlet 
+          configuration.</li>
+        <li><strong class="pname"><code>context</code></strong> - the context application will be running in.</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1968,105 +2076,6 @@
         class="link">IErrorListener.terminalError</a>
       </p>
 </div></td></tr></table>
-</div>
-<a name="getContext"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContext</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getContext">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the application context.</p>
-  <p>The application context is the environment where the application is 
-  running in. The actual implementation class of may contains quite a lot 
-  more functionality than defined in the <code 
-  class="link">ApplicationContext</code> interface.</p>
-  <p>By default, when you are deploying your application to a servlet 
-  container, the implementation class is <a 
-  href="muntjac.terminal.gwt.server.web_application_context.WebApplicationContext-class.html"
-  class="link">WebApplicationContext</a> - you can safely cast to this 
-  class and use the methods from there.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>the application context.</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getVersion"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getVersion</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getVersion">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Override this method to return correct version number of your 
-  Application. Version information is delivered for example to Testing 
-  Tools test results. By default this returns a string 
-  &quot;NONVERSIONED&quot;.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>version string</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="getErrorHandler"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">getErrorHandler</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.getErrorHandler">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Gets the application error handler.</p>
-  <p>The default error handler is the application itself.</p>
-  <dl class="fields">
-    <dt>Returns:</dt>
-        <dd>Application error handler</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="setErrorHandler"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setErrorHandler</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">errorHandler</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="muntjac.application-pysrc.html#Application.setErrorHandler">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Sets the application error handler.</p>
-  <p>The default error handler is the application itself. By overriding 
-  this, you can redirect the error messages to your selected target (log 
-  for example).</p>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
 </div>
 <br />
 <!-- ==================== CLASS VARIABLE DETAILS ==================== -->
@@ -2160,14 +2169,14 @@ SystemMessages()
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:23 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:01 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

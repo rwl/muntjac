@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.canvas.canvas_app</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.canvas-module.html">Package&nbsp;canvas</a> ::
+        Module&nbsp;canvas_app
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.canvas.canvas_app-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.addon.canvas.canvas_app-module.html">Module muntjac.addon.canvas.canvas_app</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">math</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module muntjac.api=muntjac.api-module.html"><a title="muntjac.api" class="py-name" href="#" onclick="return doclink('link-1', 'api', 'link-1');">api</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Class muntjac.application.Application=muntjac.application.Application-class.html"><a title="muntjac.application.Application" class="py-name" href="#" onclick="return doclink('link-2', 'Application', 'link-2');">Application</a></tt><tt class="py-op">,</tt> <tt id="link-3" class="py-name" targets="Class muntjac.ui.window.Window=muntjac.ui.window.Window-class.html"><a title="muntjac.ui.window.Window" class="py-name" href="#" onclick="return doclink('link-3', 'Window', 'link-3');">Window</a></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-4', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Package muntjac.addon=muntjac.addon-module.html"><a title="muntjac.addon" class="py-name" href="#" onclick="return doclink('link-5', 'addon', 'link-5');">addon</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Package muntjac.addon.canvas=muntjac.addon.canvas-module.html,Module muntjac.addon.canvas.canvas=muntjac.addon.canvas.canvas-module.html"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-6', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-7', 'canvas', 'link-6');">canvas</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class muntjac.addon.canvas.canvas.Canvas=muntjac.addon.canvas.canvas.Canvas-class.html"><a title="muntjac.addon.canvas.canvas.Canvas" class="py-name" href="#" onclick="return doclink('link-8', 'Canvas', 'link-8');">Canvas</a></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="CanvasApp"></a><div id="CanvasApp-def"><a name="L9"></a><tt class="py-lineno"> 9</tt> <a class="py-toggle" href="#" id="CanvasApp-toggle" onclick="return toggle('CanvasApp');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.canvas.canvas_app.CanvasApp-class.html">CanvasApp</a><tt class="py-op">(</tt><tt class="py-base-class">Application</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CanvasApp-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="CanvasApp-expanded"><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="CanvasApp.init"></a><div id="CanvasApp.init-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="CanvasApp.init-toggle" onclick="return toggle('CanvasApp.init');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.canvas.canvas_app.CanvasApp-class.html#init">init</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CanvasApp.init-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="CanvasApp.init-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Method muntjac.application.Application.setMainWindow()=muntjac.application.Application-class.html#setMainWindow"><a title="muntjac.application.Application.setMainWindow" class="py-name" href="#" onclick="return doclink('link-9', 'setMainWindow', 'link-9');">setMainWindow</a></tt><tt class="py-op">(</tt><tt id="link-10" class="py-name"><a title="muntjac.ui.window.Window" class="py-name" href="#" onclick="return doclink('link-10', 'Window', 'link-3');">Window</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">        <tt id="link-11" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-11', 'canvas', 'link-6');">canvas</a></tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas" class="py-name" href="#" onclick="return doclink('link-12', 'Canvas', 'link-8');">Canvas</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt id="link-13" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-13', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Method muntjac.terminal.sizeable.ISizeable.setWidth()=muntjac.terminal.sizeable.ISizeable-class.html#setWidth,Method muntjac.ui.abstract_component.AbstractComponent.setWidth()=muntjac.ui.abstract_component.AbstractComponent-class.html#setWidth,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setWidth,Method muntjac.ui.login_form.LoginForm.setWidth()=muntjac.ui.login_form.LoginForm-class.html#setWidth"><a title="muntjac.terminal.sizeable.ISizeable.setWidth
+muntjac.ui.abstract_component.AbstractComponent.setWidth
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setWidth
+muntjac.ui.login_form.LoginForm.setWidth" class="py-name" href="#" onclick="return doclink('link-14', 'setWidth', 'link-14');">setWidth</a></tt><tt class="py-op">(</tt><tt class="py-string">'400px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt id="link-15" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-15', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Method muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight()=muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory-class.html#setHeight,Method muntjac.terminal.sizeable.ISizeable.setHeight()=muntjac.terminal.sizeable.ISizeable-class.html#setHeight,Method muntjac.ui.abstract_component.AbstractComponent.setHeight()=muntjac.ui.abstract_component.AbstractComponent-class.html#setHeight,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setHeight,Method muntjac.ui.login_form.LoginForm.setHeight()=muntjac.ui.login_form.LoginForm-class.html#setHeight,Method muntjac.ui.text_field.TextField.setHeight()=muntjac.ui.text_field.TextField-class.html#setHeight"><a title="muntjac.addon.colorpicker.color_picker_history.ColorPickerHistory.setHeight
+muntjac.terminal.sizeable.ISizeable.setHeight
+muntjac.ui.abstract_component.AbstractComponent.setHeight
+muntjac.ui.abstract_component_container.AbstractComponentContainer.setHeight
+muntjac.ui.login_form.LoginForm.setHeight
+muntjac.ui.text_field.TextField.setHeight" class="py-name" href="#" onclick="return doclink('link-16', 'setHeight', 'link-16');">setHeight</a></tt><tt class="py-op">(</tt><tt class="py-string">'400px'</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt class="py-comment"># Draw some shapes to the canvas</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">        <tt id="link-17" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-17', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.saveContext()=muntjac.addon.canvas.canvas.Canvas-class.html#saveContext"><a title="muntjac.addon.canvas.canvas.Canvas.saveContext" class="py-name" href="#" onclick="return doclink('link-18', 'saveContext', 'link-18');">saveContext</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">        <tt id="link-19" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-19', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.clear()=muntjac.addon.canvas.canvas.Canvas-class.html#clear,Method muntjac.data.util.list_set.ListSet.clear()=muntjac.data.util.list_set.ListSet-class.html#clear,Method muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear()=muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache-class.html#clear,Method muntjac.ui.abstract_select.CaptionChangeListener.clear()=muntjac.ui.abstract_select.CaptionChangeListener-class.html#clear"><a title="muntjac.addon.canvas.canvas.Canvas.clear
+muntjac.data.util.list_set.ListSet.clear
+muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear
+muntjac.ui.abstract_select.CaptionChangeListener.clear" class="py-name" href="#" onclick="return doclink('link-20', 'clear', 'link-20');">clear</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt id="link-21" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-21', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.translate()=muntjac.addon.canvas.canvas.Canvas-class.html#translate"><a title="muntjac.addon.canvas.canvas.Canvas.translate" class="py-name" href="#" onclick="return doclink('link-22', 'translate', 'link-22');">translate</a></tt><tt class="py-op">(</tt><tt class="py-number">175</tt><tt class="py-op">,</tt> <tt class="py-number">175</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt id="link-23" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-23', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-24" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.scale()=muntjac.addon.canvas.canvas.Canvas-class.html#scale"><a title="muntjac.addon.canvas.canvas.Canvas.scale" class="py-name" href="#" onclick="return doclink('link-24', 'scale', 'link-24');">scale</a></tt><tt class="py-op">(</tt><tt class="py-number">1.6</tt><tt class="py-op">,</tt> <tt class="py-number">1.6</tt><tt class="py-op">)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">6</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">            <tt id="link-25" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-25', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.saveContext" class="py-name" href="#" onclick="return doclink('link-26', 'saveContext', 'link-18');">saveContext</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">            <tt id="link-27" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-27', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.setFillStyle()=muntjac.addon.canvas.canvas.Canvas-class.html#setFillStyle"><a title="muntjac.addon.canvas.canvas.Canvas.setFillStyle" class="py-name" href="#" onclick="return doclink('link-28', 'setFillStyle', 'link-28');">setFillStyle</a></tt><tt class="py-op">(</tt><tt class="py-string">'rgb(%d,%d,255)'</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-number">51</tt> <tt class="py-op">*</tt> <tt class="py-name">i</tt><tt class="py-op">,</tt> <tt class="py-number">255</tt> <tt class="py-op">-</tt> <tt class="py-op">(</tt><tt class="py-number">51</tt> <tt class="py-op">*</tt> <tt class="py-name">i</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">i</tt> <tt class="py-op">*</tt> <tt class="py-number">6</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">                <tt id="link-29" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-29', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.rotate()=muntjac.addon.canvas.canvas.Canvas-class.html#rotate"><a title="muntjac.addon.canvas.canvas.Canvas.rotate" class="py-name" href="#" onclick="return doclink('link-30', 'rotate', 'link-30');">rotate</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">math</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt> <tt class="py-op">*</tt> <tt class="py-number">2</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt class="py-name">i</tt> <tt class="py-op">*</tt> <tt class="py-number">6</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">                <tt id="link-31" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-31', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.beginPath()=muntjac.addon.canvas.canvas.Canvas-class.html#beginPath"><a title="muntjac.addon.canvas.canvas.Canvas.beginPath" class="py-name" href="#" onclick="return doclink('link-32', 'beginPath', 'link-32');">beginPath</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                <tt id="link-33" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-33', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.arc()=muntjac.addon.canvas.canvas.Canvas-class.html#arc"><a title="muntjac.addon.canvas.canvas.Canvas.arc" class="py-name" href="#" onclick="return doclink('link-34', 'arc', 'link-34');">arc</a></tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">i</tt> <tt class="py-op">*</tt> <tt class="py-number">12.5</tt><tt class="py-op">,</tt> <tt class="py-number">5</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">math</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt> <tt class="py-op">*</tt> <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                <tt id="link-35" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-35', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.fill()=muntjac.addon.canvas.canvas.Canvas-class.html#fill"><a title="muntjac.addon.canvas.canvas.Canvas.fill" class="py-name" href="#" onclick="return doclink('link-36', 'fill', 'link-36');">fill</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">            <tt id="link-37" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-37', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-38" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.restoreContext()=muntjac.addon.canvas.canvas.Canvas-class.html#restoreContext"><a title="muntjac.addon.canvas.canvas.Canvas.restoreContext" class="py-name" href="#" onclick="return doclink('link-38', 'restoreContext', 'link-38');">restoreContext</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt id="link-39" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-39', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.restoreContext" class="py-name" href="#" onclick="return doclink('link-40', 'restoreContext', 'link-38');">restoreContext</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt id="link-41" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-41', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">.</tt><tt id="link-42" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.drawImage()=muntjac.addon.canvas.canvas.Canvas-class.html#drawImage"><a title="muntjac.addon.canvas.canvas.Canvas.drawImage" class="py-name" href="#" onclick="return doclink('link-42', 'drawImage', 'link-42');">drawImage</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                <tt class="py-string">'http://www.google.ru/intl/en_com/images/srpr/logo1w.png'</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">                <tt class="py-number">10</tt><tt class="py-op">,</tt> <tt class="py-number">10</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name" targets="Method muntjac.application.Application.getMainWindow()=muntjac.application.Application-class.html#getMainWindow"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-43', 'getMainWindow', 'link-43');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-44" class="py-name" targets="Method muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent()=muntjac.addon.weelayout.wee_layout.WeeLayout-class.html#addComponent,Method muntjac.ui.absolute_layout.AbsoluteLayout.addComponent()=muntjac.ui.absolute_layout.AbsoluteLayout-class.html#addComponent,Method muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent()=muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#addComponent,Method muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent()=muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout-class.html#addComponent,Method muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent()=muntjac.ui.abstract_split_panel.AbstractSplitPanel-class.html#addComponent,Method muntjac.ui.component_container.IComponentContainer.addComponent()=muntjac.ui.component_container.IComponentContainer-class.html#addComponent,Method muntjac.ui.css_layout.CssLayout.addComponent()=muntjac.ui.css_layout.CssLayout-class.html#addComponent,Method muntjac.ui.custom_component.CustomComponent.addComponent()=muntjac.ui.custom_component.CustomComponent-class.html#addComponent,Method muntjac.ui.custom_layout.CustomLayout.addComponent()=muntjac.ui.custom_layout.CustomLayout-class.html#addComponent,Method muntjac.ui.expand_layout.ExpandLayout.addComponent()=muntjac.ui.expand_layout.ExpandLayout-class.html#addComponent,Method muntjac.ui.grid_layout.GridLayout.addComponent()=muntjac.ui.grid_layout.GridLayout-class.html#addComponent,Method muntjac.ui.panel.Panel.addComponent()=muntjac.ui.panel.Panel-class.html#addComponent,Method muntjac.ui.popup_view.PopupView.addComponent()=muntjac.ui.popup_view.PopupView-class.html#addComponent,Method muntjac.ui.tab_sheet.TabSheet.addComponent()=muntjac.ui.tab_sheet.TabSheet-class.html#addComponent,Method muntjac.ui.window.Window.addComponent()=muntjac.ui.window.Window-class.html#addComponent"><a title="muntjac.addon.weelayout.wee_layout.WeeLayout.addComponent
+muntjac.ui.absolute_layout.AbsoluteLayout.addComponent
+muntjac.ui.abstract_component_container.AbstractComponentContainer.addComponent
+muntjac.ui.abstract_ordered_layout.AbstractOrderedLayout.addComponent
+muntjac.ui.abstract_split_panel.AbstractSplitPanel.addComponent
+muntjac.ui.component_container.IComponentContainer.addComponent
+muntjac.ui.css_layout.CssLayout.addComponent
+muntjac.ui.custom_component.CustomComponent.addComponent
+muntjac.ui.custom_layout.CustomLayout.addComponent
+muntjac.ui.expand_layout.ExpandLayout.addComponent
+muntjac.ui.grid_layout.GridLayout.addComponent
+muntjac.ui.panel.Panel.addComponent
+muntjac.ui.popup_view.PopupView.addComponent
+muntjac.ui.tab_sheet.TabSheet.addComponent
+muntjac.ui.window.Window.addComponent" class="py-name" href="#" onclick="return doclink('link-44', 'addComponent', 'link-44');">addComponent</a></tt><tt class="py-op">(</tt><tt id="link-45" class="py-name"><a title="muntjac.addon.canvas
+muntjac.addon.canvas.canvas" class="py-name" href="#" onclick="return doclink('link-45', 'canvas', 'link-6');">canvas</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">    <tt class="py-keyword">from</tt> <tt id="link-46" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-46', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-47" class="py-name" targets="Module muntjac.main=muntjac.main-module.html,Function muntjac.main.main()=muntjac.main-module.html#main"><a title="muntjac.main
+muntjac.main.main" class="py-name" href="#" onclick="return doclink('link-47', 'main', 'link-47');">main</a></tt> <tt class="py-keyword">import</tt> <tt id="link-48" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-48', 'muntjac', 'link-0');">muntjac</a></tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt id="link-49" class="py-name"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-49', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">(</tt><tt id="link-50" class="py-name" targets="Class muntjac.addon.canvas.canvas_app.CanvasApp=muntjac.addon.canvas.canvas_app.CanvasApp-class.html"><a title="muntjac.addon.canvas.canvas_app.CanvasApp" class="py-name" href="#" onclick="return doclink('link-50', 'CanvasApp', 'link-50');">CanvasApp</a></tt><tt class="py-op">,</tt> <tt class="py-name">nogui</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">forever</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">debug</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:17 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

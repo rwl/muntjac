@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.csstools.render_info</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.csstools-module.html">Package&nbsp;csstools</a> ::
+        Module&nbsp;render_info
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.csstools.render_info-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.addon.csstools.render_info-module.html">Module muntjac.addon.csstools.render_info</a></h1>
+<pre class="py-src">
+<a name="RenderInfo"></a><div id="RenderInfo-def"><a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt> <a class="py-toggle" href="#" id="RenderInfo-toggle" onclick="return toggle('RenderInfo');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.RenderInfo-class.html">RenderInfo</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RenderInfo-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="RenderInfo-expanded"><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-docstring">"""Class for fetching render information from the client side widgets.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    @author: jouni@vaadin.com</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="RenderInfo.get"></a><div id="RenderInfo.get-def"><a name="L25"></a><tt class="py-lineno">25</tt> <a class="py-toggle" href="#" id="RenderInfo.get-toggle" onclick="return toggle('RenderInfo.get');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.RenderInfo-class.html#get">get</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">c</tt><tt class="py-op">,</tt> <tt class="py-param">cb</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-param">props</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RenderInfo.get-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="RenderInfo.get-expanded"><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-docstring">"""Initiate a request to get the render information for a given component.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">        The information can be for example the exact pixel size and position, the</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">        font size, visibility, margin, padding or border of the component in the</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">        browser. See possible values from the {@link CssProperty} enumerable.</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">        The information will be delivered asynchronously from the client, and</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">        passed as a parameter to the callback method.</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring">        You can limit the amount of properties transmitted over the connection by</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring">        passing the desired property names as the last parameter for the method.</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">        @param c:</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-docstring">                   The component whose render information you wish to get.</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring">        @param cb:</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring">                   The callback object which will receive the information when it</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">                   is available.</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-docstring">        @param props:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">                   Optional. The list of CSS properties you wish to get from the</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-docstring">                   client (limit the amount of transferred data). You can pass</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">                   any type of objects here, the C{__str__()} method</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">                   will be used to convert them to actual property names.</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-docstring">                   Preferably use the L{CssProperty} enumerable for feasible values.</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-0" class="py-name" targets="Method muntjac.ui.tree_table.CollapsibleStrategy.c()=muntjac.ui.tree_table.CollapsibleStrategy-class.html#c"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-0', 'c', 'link-0');">c</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method muntjac.addon.google_maps.google_map.MarkerApplicationResource.getApplication()=muntjac.addon.google_maps.google_map.MarkerApplicationResource-class.html#getApplication,Method muntjac.application.UserChangeEvent.getApplication()=muntjac.application.UserChangeEvent-class.html#getApplication,Method muntjac.application.WindowAttachEvent.getApplication()=muntjac.application.WindowAttachEvent-class.html#getApplication,Method muntjac.application.WindowDetachEvent.getApplication()=muntjac.application.WindowDetachEvent-class.html#getApplication,Method muntjac.terminal.application_resource.IApplicationResource.getApplication()=muntjac.terminal.application_resource.IApplicationResource-class.html#getApplication,Method muntjac.terminal.class_resource.ClassResource.getApplication()=muntjac.terminal.class_resource.ClassResource-class.html#getApplication,Method muntjac.terminal.file_resource.FileResource.getApplication()=muntjac.terminal.file_resource.FileResource-class.html#getApplication,Method muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.getApplication()=muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager-class.html#getApplication,Method muntjac.terminal.stream_resource.StreamResource.getApplication()=muntjac.terminal.stream_resource.StreamResource-class.html#getApplication,Method muntjac.ui.abstract_component.AbstractComponent.getApplication()=muntjac.ui.abstract_component.AbstractComponent-class.html#getApplication,Method muntjac.ui.component.IComponent.getApplication()=muntjac.ui.component.IComponent-class.html#getApplication,Method muntjac.ui.login_form.LoginPage.getApplication()=muntjac.ui.login_form.LoginPage-class.html#getApplication,Method muntjac.ui.window.Window.getApplication()=muntjac.ui.window.Window-class.html#getApplication"><a title="muntjac.addon.google_maps.google_map.MarkerApplicationResource.getApplication
+muntjac.application.UserChangeEvent.getApplication
+muntjac.application.WindowAttachEvent.getApplication
+muntjac.application.WindowDetachEvent.getApplication
+muntjac.terminal.application_resource.IApplicationResource.getApplication
+muntjac.terminal.class_resource.ClassResource.getApplication
+muntjac.terminal.file_resource.FileResource.getApplication
+muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.getApplication
+muntjac.terminal.stream_resource.StreamResource.getApplication
+muntjac.ui.abstract_component.AbstractComponent.getApplication
+muntjac.ui.component.IComponent.getApplication
+muntjac.ui.login_form.LoginPage.getApplication
+muntjac.ui.window.Window.getApplication" class="py-name" href="#" onclick="return doclink('link-1', 'getApplication', 'link-1');">getApplication</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">(</tt><tt class="py-string">'The component must be attached to the application before you try to get it\'s RenderInfo'</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-2', 'muntjac', 'link-2');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package muntjac.addon=muntjac.addon-module.html"><a title="muntjac.addon" class="py-name" href="#" onclick="return doclink('link-3', 'addon', 'link-3');">addon</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Package muntjac.addon.csstools=muntjac.addon.csstools-module.html"><a title="muntjac.addon.csstools" class="py-name" href="#" onclick="return doclink('link-4', 'csstools', 'link-4');">csstools</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Module muntjac.addon.csstools.render_info_fetcher=muntjac.addon.csstools.render_info_fetcher-module.html"><a title="muntjac.addon.csstools.render_info_fetcher" class="py-name" href="#" onclick="return doclink('link-5', 'render_info_fetcher', 'link-5');">render_info_fetcher</a></tt> \ </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">            <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Class muntjac.addon.csstools.render_info_fetcher.RenderInfoFetcher=muntjac.addon.csstools.render_info_fetcher.RenderInfoFetcher-class.html"><a title="muntjac.addon.csstools.render_info_fetcher.RenderInfoFetcher" class="py-name" href="#" onclick="return doclink('link-6', 'RenderInfoFetcher', 'link-6');">RenderInfoFetcher</a></tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-name">fetcher</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name"><a title="muntjac.addon.csstools.render_info_fetcher.RenderInfoFetcher" class="py-name" href="#" onclick="return doclink('link-7', 'RenderInfoFetcher', 'link-6');">RenderInfoFetcher</a></tt><tt class="py-op">(</tt><tt id="link-8" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-8', 'c', 'link-0');">c</a></tt><tt class="py-op">,</tt> <tt class="py-name">cb</tt><tt class="py-op">,</tt> <tt class="py-op">*</tt><tt class="py-name">props</tt><tt class="py-op">)</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt id="link-9" class="py-name"><a title="muntjac.ui.tree_table.CollapsibleStrategy.c" class="py-name" href="#" onclick="return doclink('link-9', 'c', 'link-0');">c</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="muntjac.addon.google_maps.google_map.MarkerApplicationResource.getApplication
+muntjac.application.UserChangeEvent.getApplication
+muntjac.application.WindowAttachEvent.getApplication
+muntjac.application.WindowDetachEvent.getApplication
+muntjac.terminal.application_resource.IApplicationResource.getApplication
+muntjac.terminal.class_resource.ClassResource.getApplication
+muntjac.terminal.file_resource.FileResource.getApplication
+muntjac.terminal.gwt.server.abstract_communication_manager.AbstractCommunicationManager.getApplication
+muntjac.terminal.stream_resource.StreamResource.getApplication
+muntjac.ui.abstract_component.AbstractComponent.getApplication
+muntjac.ui.component.IComponent.getApplication
+muntjac.ui.login_form.LoginPage.getApplication
+muntjac.ui.window.Window.getApplication" class="py-name" href="#" onclick="return doclink('link-10', 'getApplication', 'link-1');">getApplication</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Method muntjac.application.Application.getMainWindow()=muntjac.application.Application-class.html#getMainWindow"><a title="muntjac.application.Application.getMainWindow" class="py-name" href="#" onclick="return doclink('link-11', 'getMainWindow', 'link-11');">getMainWindow</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Method muntjac.application.Application.addWindow()=muntjac.application.Application-class.html#addWindow,Method muntjac.ui.window.Window.addWindow()=muntjac.ui.window.Window-class.html#addWindow"><a title="muntjac.application.Application.addWindow
+muntjac.ui.window.Window.addWindow" class="py-name" href="#" onclick="return doclink('link-12', 'addWindow', 'link-12');">addWindow</a></tt><tt class="py-op">(</tt><tt class="py-name">fetcher</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"> </tt>
+<a name="RenderInfo.__init__"></a><div id="RenderInfo.__init__-def"><a name="L60"></a><tt class="py-lineno">60</tt> <a class="py-toggle" href="#" id="RenderInfo.__init__-toggle" onclick="return toggle('RenderInfo.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.RenderInfo-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">obj</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RenderInfo.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="RenderInfo.__init__-expanded"><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_props</tt> <tt class="py-op">=</tt> <tt class="py-name">obj</tt> </tt>
+</div><a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"> </tt>
+<a name="RenderInfo.getProperty"></a><div id="RenderInfo.getProperty-def"><a name="L64"></a><tt class="py-lineno">64</tt> <a class="py-toggle" href="#" id="RenderInfo.getProperty-toggle" onclick="return toggle('RenderInfo.getProperty');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.RenderInfo-class.html#getProperty">getProperty</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">prop</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="RenderInfo.getProperty-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="RenderInfo.getProperty-expanded"><a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_props</tt><tt class="py-op">[</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">prop</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"> </tt>
+<a name="ICallback"></a><div id="ICallback-def"><a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt> <a class="py-toggle" href="#" id="ICallback-toggle" onclick="return toggle('ICallback');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.ICallback-class.html">ICallback</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ICallback-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ICallback-expanded"><a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">    <tt class="py-docstring">"""The callback interface for RenderInformation requests.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-docstring">    @author: jouni@vaadin.com</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"> </tt>
+<a name="ICallback.infoReceived"></a><div id="ICallback.infoReceived-def"><a name="L75"></a><tt class="py-lineno">75</tt> <a class="py-toggle" href="#" id="ICallback.infoReceived-toggle" onclick="return toggle('ICallback.infoReceived');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.csstools.render_info.ICallback-class.html#infoReceived">infoReceived</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">info</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ICallback.infoReceived-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ICallback.infoReceived-expanded"><a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">        <tt class="py-docstring">"""This method is called when a RenderInfo request is returned from the</tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"><tt class="py-docstring">        client and the RenderInfo for that request is available.</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"><tt class="py-docstring">        @param info:</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"><tt class="py-docstring">                   The RenderInfo object for the request, containing the</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"><tt class="py-docstring">                   requested properties (or all possible properties if no</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line"><tt class="py-docstring">                   specific properties were requested).</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">NotImplementedError</tt> </tt>
+</div></div><a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:14 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

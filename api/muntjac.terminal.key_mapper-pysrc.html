@@ -34,7 +34,7 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -62,120 +62,124 @@
 </table>
 <h1 class="epydoc">Source Code for <a href="muntjac.terminal.key_mapper-module.html">Module muntjac.terminal.key_mapper</a></h1>
 <pre class="py-src">
-<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Vaadin Ltd.</tt> </tt>
-<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2011 Richard Lincoln</tt> </tt>
-<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software: you can redistribute it and/or modify</tt> </tt>
-<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># it under the terms of the GNU Affero General Public License as published</tt> </tt>
-<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># by the Free Software Foundation, either version 3 of the License, or</tt> </tt>
-<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># (at your option) any later version.</tt> </tt>
-<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
-<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
-<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
-<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># GNU Affero General Public License for more details.</tt> </tt>
-<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU Affero General Public License</tt> </tt>
-<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
-<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
-<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># Note: This is a modified file from Vaadin. For further information on</tt> </tt>
-<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment">#       Vaadin please visit http://www.vaadin.com.</tt> </tt>
-<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
-<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">"""Simple two-way map."""</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
-<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper"></a><div id="KeyMapper-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="KeyMapper-toggle" onclick="return toggle('KeyMapper');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html">KeyMapper</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="KeyMapper-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt class="py-docstring">"""C{KeyMapper} is the simple two-way map for generating textual keys</tt> </tt>
-<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    for objects and retrieving the objects later with the key.</tt> </tt>
-<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
-<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
-<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.0.2</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper.__init__"></a><div id="KeyMapper.__init__-def"><a name="L32"></a><tt class="py-lineno">32</tt> <a class="py-toggle" href="#" id="KeyMapper.__init__-toggle" onclick="return toggle('KeyMapper.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.__init__-expanded"><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_lastKey</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-</div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
-<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper.key"></a><div id="KeyMapper.key-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="KeyMapper.key-toggle" onclick="return toggle('KeyMapper.key');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#key">key</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">o</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper.key-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.key-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets key for an object.</tt> </tt>
-<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring">        @param o: the object.</tt> </tt>
-<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">o</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
-<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-string">'null'</tt> </tt>
-<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
-<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-comment"># If the object is already mapped, use existing key</tt> </tt>
-<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt id="link-0" class="py-name" targets="Method muntjac.terminal.key_mapper.KeyMapper.key()=muntjac.terminal.key_mapper.KeyMapper-class.html#key,Method muntjac.ui.tree.Tree.key()=muntjac.ui.tree.Tree-class.html#key"><a title="muntjac.terminal.key_mapper.KeyMapper.key
-muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-0', 'key', 'link-0');">key</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Class Method muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get()=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get,Class Method muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get()=muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget-class.html#get,Method muntjac.terminal.key_mapper.KeyMapper.get()=muntjac.terminal.key_mapper.KeyMapper-class.html#get,Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.get()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#get,Class Method muntjac.ui.tree.TargetItemAllowsChildren.get()=muntjac.ui.tree.TargetItemAllowsChildren-class.html#get"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Vaadin Ltd. </tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># Copyright (C) 2012 Richard Lincoln</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">"""Simple two-way map."""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper"></a><div id="KeyMapper-def"><a name="L19"></a><tt class="py-lineno">19</tt> <a class="py-toggle" href="#" id="KeyMapper-toggle" onclick="return toggle('KeyMapper');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html">KeyMapper</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="KeyMapper-expanded"><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-docstring">"""C{KeyMapper} is the simple two-way map for generating textual keys</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    for objects and retrieving the objects later with the key.</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Vaadin Ltd.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    @author: Richard Lincoln</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    @version: 1.1.0</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper.__init__"></a><div id="KeyMapper.__init__-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="KeyMapper.__init__-toggle" onclick="return toggle('KeyMapper.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.__init__-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_lastKey</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper.key"></a><div id="KeyMapper.key-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="KeyMapper.key-toggle" onclick="return toggle('KeyMapper.key');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#key">key</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">o</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper.key-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.key-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-docstring">"""Gets key for an object.</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">        @param o: the object.</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">o</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-string">'null'</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-comment"># If the object is already mapped, use existing key</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt id="link-0" class="py-name" targets="Method muntjac.terminal.key_mapper.KeyMapper.key()=muntjac.terminal.key_mapper.KeyMapper-class.html#key,Method muntjac.ui.tree.Tree.key()=muntjac.ui.tree.Tree-class.html#key"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-0', 'key', 'link-0');">key</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Class Method muntjac.addon.csstools.render_info.RenderInfo.get()=muntjac.addon.csstools.render_info.RenderInfo-class.html#get,Class Method muntjac.application.SingletonApplication.get()=muntjac.application.SingletonApplication-class.html#get,Class Method muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get()=muntjac.event.dd.acceptcriteria.accept_all.AcceptAll-class.html#get,Class Method muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get()=muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget-class.html#get,Method muntjac.terminal.key_mapper.KeyMapper.get()=muntjac.terminal.key_mapper.KeyMapper-class.html#get,Class Method muntjac.ui.default_field_factory.DefaultFieldFactory.get()=muntjac.ui.default_field_factory.DefaultFieldFactory-class.html#get,Class Method muntjac.ui.tree.TargetItemAllowsChildren.get()=muntjac.ui.tree.TargetItemAllowsChildren-class.html#get"><a title="muntjac.addon.csstools.render_info.RenderInfo.get
+muntjac.application.SingletonApplication.get
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
 muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
 muntjac.terminal.key_mapper.KeyMapper.get
 muntjac.ui.default_field_factory.DefaultFieldFactory.get
 muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-1', 'get', 'link-1');">get</a></tt><tt class="py-op">(</tt><tt class="py-name">o</tt><tt class="py-op">)</tt> </tt>
-<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-2" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-2" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-2', 'key', 'link-0');">key</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
-<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-3" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-3" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-3', 'key', 'link-0');">key</a></tt> </tt>
-<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"> </tt>
-<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-comment"># If the object is not yet mapped, map it</tt> </tt>
-<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_lastKey</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
-<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt id="link-4" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-comment"># If the object is not yet mapped, map it</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_lastKey</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt id="link-4" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-4', 'key', 'link-0');">key</a></tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_lastKey</tt><tt class="py-op">)</tt> </tt>
-<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">[</tt><tt class="py-name">o</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-5" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">[</tt><tt class="py-name">o</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-5" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-5', 'key', 'link-0');">key</a></tt> </tt>
-<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">[</tt><tt id="link-6" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">[</tt><tt id="link-6" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-6', 'key', 'link-0');">key</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">o</tt> </tt>
-<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-7" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-7" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-7', 'key', 'link-0');">key</a></tt> </tt>
-</div><a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"> </tt>
-<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper.get"></a><div id="KeyMapper.get-def"><a name="L59"></a><tt class="py-lineno">59</tt> <a class="py-toggle" href="#" id="KeyMapper.get-toggle" onclick="return toggle('KeyMapper.get');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#get">get</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper.get-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.get-expanded"><a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-docstring">"""Retrieves object with the key.</tt> </tt>
-<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"><tt class="py-docstring">        @param key:</tt> </tt>
-<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"><tt class="py-docstring">                   the name with the desired value.</tt> </tt>
-<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the object with the key.</tt> </tt>
-<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+</div><a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper.get"></a><div id="KeyMapper.get-def"><a name="L55"></a><tt class="py-lineno">55</tt> <a class="py-toggle" href="#" id="KeyMapper.get-toggle" onclick="return toggle('KeyMapper.get');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#get">get</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper.get-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.get-expanded"><a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-docstring">"""Retrieves object with the key.</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-docstring">        @param key:</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-docstring">                   the name with the desired value.</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the object with the key.</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="muntjac.addon.csstools.render_info.RenderInfo.get
+muntjac.application.SingletonApplication.get
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
 muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
 muntjac.terminal.key_mapper.KeyMapper.get
 muntjac.ui.default_field_factory.DefaultFieldFactory.get
 muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-8', 'get', 'link-1');">get</a></tt><tt class="py-op">(</tt><tt id="link-9" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-9', 'key', 'link-0');">key</a></tt><tt class="py-op">)</tt> </tt>
-</div><a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"> </tt>
-<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper.remove"></a><div id="KeyMapper.remove-def"><a name="L69"></a><tt class="py-lineno">69</tt> <a class="py-toggle" href="#" id="KeyMapper.remove-toggle" onclick="return toggle('KeyMapper.remove');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#remove">remove</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">removeobj</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper.remove-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.remove-expanded"><a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">        <tt class="py-docstring">"""Removes object from the mapper.</tt> </tt>
-<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-docstring">        @param removeobj:</tt> </tt>
-<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-docstring">                   the object to be removed.</tt> </tt>
-<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">        <tt id="link-10" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
-muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-10', 'key', 'link-0');">key</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
+</div><a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper.remove"></a><div id="KeyMapper.remove-def"><a name="L65"></a><tt class="py-lineno">65</tt> <a class="py-toggle" href="#" id="KeyMapper.remove-toggle" onclick="return toggle('KeyMapper.remove');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#remove">remove</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">removeobj</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper.remove-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.remove-expanded"><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-docstring">"""Removes object from the mapper.</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"><tt class="py-docstring">        @param removeobj:</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-docstring">                   the object to be removed.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">        <tt id="link-10" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-10', 'key', 'link-0');">key</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="muntjac.addon.csstools.render_info.RenderInfo.get
+muntjac.application.SingletonApplication.get
+muntjac.event.dd.acceptcriteria.accept_all.AcceptAll.get
 muntjac.event.dd.acceptcriteria.source_is_target.SourceIsTarget.get
 muntjac.terminal.key_mapper.KeyMapper.get
 muntjac.ui.default_field_factory.DefaultFieldFactory.get
 muntjac.ui.tree.TargetItemAllowsChildren.get" class="py-name" href="#" onclick="return doclink('link-11', 'get', 'link-1');">get</a></tt><tt class="py-op">(</tt><tt class="py-name">removeobj</tt><tt class="py-op">)</tt> </tt>
-<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-12" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-12" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-12', 'key', 'link-0');">key</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
-<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">            <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">[</tt><tt class="py-name">removeobj</tt><tt class="py-op">]</tt> </tt>
-<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-13" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">            <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">[</tt><tt class="py-name">removeobj</tt><tt class="py-op">]</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-13" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-13', 'key', 'link-0');">key</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">:</tt> </tt>
-<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">                <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">[</tt><tt id="link-14" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">                <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">[</tt><tt id="link-14" class="py-name"><a title="muntjac.terminal.key_mapper.KeyMapper.key
 muntjac.ui.tree.Tree.key" class="py-name" href="#" onclick="return doclink('link-14', 'key', 'link-0');">key</a></tt><tt class="py-op">]</tt> </tt>
-</div><a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"> </tt>
-<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt>
-<a name="KeyMapper.removeAll"></a><div id="KeyMapper.removeAll-def"><a name="L82"></a><tt class="py-lineno">82</tt> <a class="py-toggle" href="#" id="KeyMapper.removeAll-toggle" onclick="return toggle('KeyMapper.removeAll');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#removeAll">removeAll</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="KeyMapper.removeAll-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.removeAll-expanded"><a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">        <tt class="py-docstring">"""Removes all objects from the mapper."""</tt> </tt>
-<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Method muntjac.data.util.list_set.ListSet.clear()=muntjac.data.util.list_set.ListSet-class.html#clear,Method muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear()=muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache-class.html#clear,Method muntjac.ui.abstract_select.CaptionChangeListener.clear()=muntjac.ui.abstract_select.CaptionChangeListener-class.html#clear"><a title="muntjac.data.util.list_set.ListSet.clear
+</div><a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"> </tt>
+<a name="KeyMapper.removeAll"></a><div id="KeyMapper.removeAll-def"><a name="L78"></a><tt class="py-lineno">78</tt> <a class="py-toggle" href="#" id="KeyMapper.removeAll-toggle" onclick="return toggle('KeyMapper.removeAll');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.terminal.key_mapper.KeyMapper-class.html#removeAll">removeAll</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="KeyMapper.removeAll-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="KeyMapper.removeAll-expanded"><a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">        <tt class="py-docstring">"""Removes all objects from the mapper."""</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_objectKeyMap</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Method muntjac.addon.canvas.canvas.Canvas.clear()=muntjac.addon.canvas.canvas.Canvas-class.html#clear,Method muntjac.data.util.list_set.ListSet.clear()=muntjac.data.util.list_set.ListSet-class.html#clear,Method muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear()=muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache-class.html#clear,Method muntjac.ui.abstract_select.CaptionChangeListener.clear()=muntjac.ui.abstract_select.CaptionChangeListener-class.html#clear"><a title="muntjac.addon.canvas.canvas.Canvas.clear
+muntjac.data.util.list_set.ListSet.clear
 muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear
 muntjac.ui.abstract_select.CaptionChangeListener.clear" class="py-name" href="#" onclick="return doclink('link-15', 'clear', 'link-15');">clear</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="muntjac.data.util.list_set.ListSet.clear
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_keyObjectMap</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="muntjac.addon.canvas.canvas.Canvas.clear
+muntjac.data.util.list_set.ListSet.clear
 muntjac.terminal.gwt.server.abstract_communication_manager.OpenWindowCache.clear
 muntjac.ui.abstract_select.CaptionChangeListener.clear" class="py-name" href="#" onclick="return doclink('link-16', 'clear', 'link-15');">clear</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-</div></div><a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+</div></div><a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -206,14 +210,14 @@ expandto(location.href);
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="http://www.mesori.com/muntjac">Muntjac</a></th>
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 24 02:16:37 2011
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:16 2012
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

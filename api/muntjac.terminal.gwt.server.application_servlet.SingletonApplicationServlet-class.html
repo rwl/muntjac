@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.terminal.gwt.server.application_servlet.SingletonApplicationServlet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.terminal-module.html">Package&nbsp;terminal</a> ::
+        <a href="muntjac.terminal.gwt-module.html">Package&nbsp;gwt</a> ::
+        <a href="muntjac.terminal.gwt.server-module.html">Package&nbsp;server</a> ::
+        <a href="muntjac.terminal.gwt.server.application_servlet-module.html">Module&nbsp;application_servlet</a> ::
+        Class&nbsp;SingletonApplicationServlet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.terminal.gwt.server.application_servlet.SingletonApplicationServlet-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class SingletonApplicationServlet</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                                 object --+                
+                                          |                
+             paste.webkit.wkservlet.Servlet --+            
+                                              |            
+             paste.webkit.wkservlet.HTTPServlet --+        
+                                                  |        
+                <a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a> --+    
+                                                      |    
+                                         object --+   |    
+                                                  |   |    
+                                <a href="muntjac.terminal.gwt.server.constants.Constants-class.html">constants.Constants</a> --+    
+                                                      |    
+<a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html">abstract_application_servlet.AbstractApplicationServlet</a> --+
+                                                          |
+                                                         <strong class="uidshort">SingletonApplicationServlet</strong>
+</pre>
+
+<hr />
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Nested Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.EndResponseException-class.html">EndResponse</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code><a href="paste.webkit.wkservlet.ReturnIterException-class.html">ReturnIterException</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.application_servlet.SingletonApplicationServlet-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">applicationObject</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw_args</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.application_servlet.SingletonApplicationServlet-class.html#getNewApplication" class="summary-sig-name">getNewApplication</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">request</span>)</span><br />
+      Creates a new application for the given request.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.getNewApplication">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.terminal.gwt.server.application_servlet.SingletonApplicationServlet-class.html#getApplicationClass" class="summary-sig-name">getApplicationClass</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.getApplicationClass">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html">abstract_application_servlet.AbstractApplicationServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#browserHasNewestVersion">browserHasNewestVersion</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#checkCrossSiteProtection">checkCrossSiteProtection</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#checkProductionMode">checkProductionMode</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#checkResourceCacheTime">checkResourceCacheTime</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#checkWidgetsetVersion">checkWidgetsetVersion</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#closeApplication">closeApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#createApplication">createApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#createCommunicationManager">createCommunicationManager</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#criticalNotification">criticalNotification</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#endApplication">endApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#ensureCookiesEnabled">ensureCookiesEnabled</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#findApplicationInstance">findApplicationInstance</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationCSSClassName">getApplicationCSSClassName</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationContext">getApplicationContext</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationOrSystemProperty">getApplicationOrSystemProperty</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationProperty">getApplicationProperty</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationUrl">getApplicationUrl</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationWindow">getApplicationWindow</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getExistingApplication">getExistingApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getNoScriptMessage">getNoScriptMessage</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getRequestPathInfo">getRequestPathInfo</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getRequestType">getRequestType</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getResourceCacheTime">getResourceCacheTime</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getResourceLocation">getResourceLocation</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getStaticFilesLocation">getStaticFilesLocation</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getSystemMessages">getSystemMessages</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getSystemProperty">getSystemProperty</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getThemeForWindow">getThemeForWindow</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getThemeUri">getThemeUri</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getWebApplicationsStaticFileLocation">getWebApplicationsStaticFileLocation</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleDownload">handleDownload</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleServiceException">handleServiceException</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleServiceSecurityException">handleServiceSecurityException</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleServiceSessionExpired">handleServiceSessionExpired</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#handleURI">handleURI</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#init">init</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isAllowedVAADINResourceUrl">isAllowedVAADINResourceUrl</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isApplicationRequest">isApplicationRequest</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isFileUploadRequest">isFileUploadRequest</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isOnUnloadRequest">isOnUnloadRequest</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isProductionMode">isProductionMode</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isRepaintAll">isRepaintAll</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isStandalone">isStandalone</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isStaticResourceRequest">isStaticResourceRequest</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isUIDLRequest">isUIDLRequest</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#redirectToApplication">redirectToApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#requestCanCreateApplication">requestCanCreateApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#serveStaticResources">serveStaticResources</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#serveStaticResourcesInVAADIN">serveStaticResourcesInVAADIN</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#service">service</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#setAjaxPageHeaders">setAjaxPageHeaders</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#startApplication">startApplication</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#updateBrowserProperties">updateBrowserProperties</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPage">writeAjaxPage</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlBodyStart">writeAjaxPageHtmlBodyStart</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeadStart">writeAjaxPageHtmlHeadStart</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlHeader">writeAjaxPageHtmlHeader</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMainDiv">writeAjaxPageHtmlMainDiv</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMuntjacScripts">writeAjaxPageHtmlMuntjacScripts</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeResponse">writeResponse</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html">paste_wsgi_servlet.PasteWsgiServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#awake">awake</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContentLength">getContentLength</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContentType">getContentType</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getContextPath">getContextPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getHeader">getHeader</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getIfModifiedSince">getIfModifiedSince</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getInputStream">getInputStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getMaxInactiveInterval">getMaxInactiveInterval</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getOutputStream">getOutputStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getParameter">getParameter</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getParameters">getParameters</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getPathInfo">getPathInfo</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getRequestUri">getRequestUri</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResource">getResource</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResourceAsStream">getResourceAsStream</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getResourcePath">getResourcePath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServerName">getServerName</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServerPort">getServerPort</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getServletPath">getServletPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSession">getSession</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSessionAttribute">getSessionAttribute</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getSessionId">getSessionId</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getUrlPath">getUrlPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#getUserAgent">getUserAgent</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#invalidateSession">invalidateSession</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#isSecure">isSecure</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#isSessionNew">isSessionNew</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#originalContextPath">originalContextPath</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#redirect">redirect</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#respond">respond</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setHeader">setHeader</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setParameter">setParameter</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setSessionAttribute">setSessionAttribute</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#setStatus">setStatus</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.HTTPServlet</code></b>:
+      <code>notImplemented</code>,
+      <code>respondToHead</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code>__call__</code>,
+      <code>canBeReused</code>,
+      <code>canBeThreaded</code>,
+      <code>name</code>,
+      <code>runTransaction</code>,
+      <code>sleep</code>,
+      <code>wsgi_application</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html">abstract_application_servlet.AbstractApplicationServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getDefaultTheme">getDefaultTheme</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#isSafe">isSafe</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#removeHeadingOrTrailing">removeHeadingOrTrailing</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#safeEscapeForHtml">safeEscapeForHtml</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#stripSpecialChars">stripSpecialChars</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html">abstract_application_servlet.AbstractApplicationServlet</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_APPSTYLE">REQUEST_APPSTYLE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_DEFAULT_THEME">REQUEST_DEFAULT_THEME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_FRAGMENT">REQUEST_FRAGMENT</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_SHARED_WIDGETSET">REQUEST_SHARED_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_VAADIN_STATIC_FILE_PATH">REQUEST_VAADIN_STATIC_FILE_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#REQUEST_WIDGETSET">REQUEST_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#UPLOAD_URL_PREFIX">UPLOAD_URL_PREFIX</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION">VERSION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_BUILD">VERSION_BUILD</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_MAJOR">VERSION_MAJOR</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_MINOR">VERSION_MINOR</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#VERSION_REVISION">VERSION_REVISION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#digits">digits</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html">abstract_application_servlet.AbstractApplicationServlet</a></code></b> (private):
+      <code><a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#_CHAR_BLACKLIST" onclick="show_private();">_CHAR_BLACKLIST</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>paste.webkit.wkservlet.Servlet</code></b>:
+      <code>__traceback_supplement_hide_vars__</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html">constants.Constants</a></code></b>:
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#AJAX_UIDL_URI">AJAX_UIDL_URI</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_THEME_CACHETIME">DEFAULT_THEME_CACHETIME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_THEME_NAME">DEFAULT_THEME_NAME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#DEFAULT_WIDGETSET">DEFAULT_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#ERROR_NO_WINDOW_FOUND">ERROR_NO_WINDOW_FOUND</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#INVALID_SECURITY_KEY_MSG">INVALID_SECURITY_KEY_MSG</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#MAX_BUFFER_SIZE">MAX_BUFFER_SIZE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#NOT_PRODUCTION_MODE_INFO">NOT_PRODUCTION_MODE_INFO</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PARAMETER_VAADIN_RESOURCES">PARAMETER_VAADIN_RESOURCES</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PARAMETER_WIDGETSET">PARAMETER_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_RESOURCE_PATH">PORTAL_PARAMETER_VAADIN_RESOURCE_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_THEME">PORTAL_PARAMETER_VAADIN_THEME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#PORTAL_PARAMETER_VAADIN_WIDGETSET">PORTAL_PARAMETER_VAADIN_WIDGETSET</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_DEBUG">SERVLET_PARAMETER_DEBUG</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION">SERVLET_PARAMETER_DISABLE_XSRF_PROTECTION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_PRODUCTION_MODE">SERVLET_PARAMETER_PRODUCTION_MODE</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#SERVLET_PARAMETER_RESOURCE_CACHE_TIME">SERVLET_PARAMETER_RESOURCE_CACHE_TIME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#THEME_DIRECTORY_PATH">THEME_DIRECTORY_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_CLOSE_APPLICATION">URL_PARAMETER_CLOSE_APPLICATION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_REPAINT_ALL">URL_PARAMETER_REPAINT_ALL</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_RESTART_APPLICATION">URL_PARAMETER_RESTART_APPLICATION</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#URL_PARAMETER_THEME">URL_PARAMETER_THEME</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC">WARNING_RESOURCE_CACHING_TIME_NOT_NUMERIC</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WARNING_XSRF_PROTECTION_DISABLED">WARNING_XSRF_PROTECTION_DISABLED</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WIDGETSET_DIRECTORY_PATH">WIDGETSET_DIRECTORY_PATH</a></code>,
+      <code><a href="muntjac.terminal.gwt.server.constants.Constants-class.html#WIDGETSET_MISMATCH_INFO">WIDGETSET_MISMATCH_INFO</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">applicationObject</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw_args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNewApplication"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNewApplication</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">request</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.getNewApplication">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new application for the given request.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>request</code></strong> - the HTTP request.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A new Application instance.</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.gwt.server.exceptions.ServletException-class.html">ServletException</a></strong></code></li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getNewApplication">abstract_application_servlet.AbstractApplicationServlet.getNewApplication</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getApplicationClass"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getApplicationClass</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.terminal.gwt.server.application_servlet-pysrc.html#SingletonApplicationServlet.getApplicationClass">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#getApplicationClass">abstract_application_servlet.AbstractApplicationServlet.getApplicationClass</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 16 02:43:03 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
