@@ -1,5 +1,7 @@
 # Makefile for Muntjac
 
+APPCFG = ~/tmp/google_appengine/appcfg.py
+
 ORIGIN = origin
 MASTER = master
 GH_PAGES = gh-pages
@@ -10,6 +12,22 @@ API_OUTPUT = api
 VERSION = 9.9.9.INTERNAL-DEBUG-BUILD
 
 PUSH=0
+
+MUNTJAC_COPYRIGHT = Copyright (C) 2012 Vaadin Ltd.\
+\n\# Copyright (C) 2012 Richard Lincoln
+
+MUNTJAC_LICENSE = \n\# Licensed under the Apache License, Version 2.0 (the "License");\
+\n\# you may not use this file except in compliance with the License.\
+\n\# You may obtain a copy of the License at\
+\n\#\
+\n\#     http:\/\/www.apache.org\/licenses\/LICENSE-2.0\
+\n\#\
+\n\# Unless required by applicable law or agreed to in writing, software\
+\n\# distributed under the License is distributed on an "AS IS" BASIS,\
+\n\# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\
+\n\# See the License for the specific language governing permissions and\
+\n\# limitations under the License.
+
 
 .PHONY: help clean api pypi dist 
 
@@ -38,7 +56,11 @@ api:
 	git checkout $(GH_PAGES)
 	git merge $(MASTER)
 	@echo "Replacing @VERSION@ strings with $(VERSION)"
-	@find ./ -type f -name '*.py' -o -name '*.html' -o -name '*.yaml' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g' 
+	@find ./ -type f -name '*.py' -o -name '*.html' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g' 
+	@echo "Replacing @MUNTJAC_COPYRIGHT@ strings."
+	@find ./ -type f -name '*.py' | xargs sed -i 's/@MUNTJAC_COPYRIGHT@/$(MUNTJAC_COPYRIGHT)/g' 
+	@echo "Replacing @MUNTJAC_LICENSE@ strings."
+	@find ./ -type f -name '*.py' | xargs sed -i 's/@MUNTJAC_LICENSE@/$(MUNTJAC_LICENSE)/g' 
 	epydoc --config=$(EPYDOC_CONFIG)
 	git add $(API_OUTPUT)
 	git commit -m "Updating API documentation to version $(VERSION)."
@@ -50,7 +72,11 @@ api:
 pypi:
 	git checkout -b v$(VERSION)
 	@echo "Replacing @VERSION@ strings with $(VERSION)"
-	@find ./ -type f -name '*.py' -o -name '*.html' -o -name '*.yaml' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g'
+	@find ./ -type f -name '*.py' -o -name '*.html' -o -name 'CHANGELOG' | xargs sed -i 's/@VERSION@/$(VERSION)/g'
+	@echo "Replacing @MUNTJAC_COPYRIGHT@ strings."
+	@find ./ -type f -name '*.py' | xargs sed -i 's/@MUNTJAC_COPYRIGHT@/$(MUNTJAC_COPYRIGHT)/g' 
+	@echo "Replacing @MUNTJAC_LICENSE@ strings."
+	@find ./ -type f -name '*.py' | xargs sed -i 's/@MUNTJAC_LICENSE@/$(MUNTJAC_LICENSE)/g' 
 	git add -A
 	git commit -m "Setting version to $(VERSION)."
 	if [ $(PUSH) -eq 1 ]; then git push $(ORIGIN) v$(VERSION); fi
@@ -71,3 +97,9 @@ cookie:
 	@sed -i 's/@COOKIE_KEY@/$(COOKIE_KEY)/g' appengine_config.py
 	@echo
 	@echo "Finished generating cookie key: $(COOKIE_KEY)"
+
+gae: clean cookie
+	@sed -i 's/DEBUG-VERSION/$(VERSION)/g' app.yaml
+	$(APPCFG) update . --email=r.w.lincoln@gmail.com
+	@echo
+	@echo "Finished uploading version $(VERSION) to Google AppEngine"

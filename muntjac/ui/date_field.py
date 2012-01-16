@@ -1,27 +1,11 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 """Defines a date editor component."""
 
 from datetime import datetime
 
-from babel.dates import format_date
+from babel.dates import parse_date
 
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.data.property import IProperty, ConversionException
@@ -146,6 +130,17 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
                 self.setCaption(caption)
         else:
             raise ValueError, 'too many arguments'
+
+
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_calendar']
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self._calendar = None
 
 
     def paintContent(self, target):
@@ -392,11 +387,15 @@ class DateField(AbstractField, IBlurNotifier, IFocusNotifier):
             super(DateField, self).setValue(newValue, repaintIsNotNeeded)
         else:
             try:
-                # Try to parse the given string value to Date
+                app = self.getApplication()
+                if app is not None:
+                    l = app.getLocale()
+
+                # Try to parse the given string value to datetime
                 currentTimeZone = self.getTimeZone()
                 if currentTimeZone is not None:
                     currentTimeZone  # FIXME: parse according to timezone
-                val = format_date(str(newValue)).encode('utf-8')
+                val = parse_date(str(newValue), locale=l)
                 super(DateField, self).setValue(val, repaintIsNotNeeded)
             except ValueError:
                 self._uiHasValidDateString = False

@@ -29,11 +29,15 @@ class DatePopupExample(VerticalLayout, IValueChangeListener):
 
 
     def valueChange(self, event):
+        app = self.getApplication()
+        if app is not None:
+            l = app.getLocale()
+
         # Get the new value and format it to the current locale
         value = event.getProperty().getValue()
         if (value is None) or (not isinstance(value, datetime)):
             self.getWindow().showNotification('Invalid date entered')
         else:
-            dateOut = format_date(value).encode('utf-8')
+            dateOut = format_date(value, locale=l).encode('utf-8')
             # Show notification
             self.getWindow().showNotification('Starting date: ' + dateOut)

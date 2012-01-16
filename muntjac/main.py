@@ -1,21 +1,5 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 import sys
 import logging
@@ -30,23 +14,28 @@ from wsgiref.simple_server import make_server
 from paste.session import SessionMiddleware
 from paste.fileapp import DirectoryApp, FileApp
 
+from muntjac.demo.util import InMemorySession
+
 from muntjac.terminal.gwt.server.application_servlet import ApplicationServlet
 from muntjac.demo.main import urlmap
 from muntjac.test.suite import main as test
 
 
-def muntjac(applicationClass, host='localhost', port=8880, nogui=False,
-            debug=False, serve=True, forever=True, *args, **kw_args):
+def muntjac(application, host='localhost', port=8880, nogui=False,
+            debug=False, serve=True, forever=True, servletClass=None,
+            *args, **kw_args):
+
+    if servletClass is None:
+        servletClass = ApplicationServlet
 
     level = logging.DEBUG if debug else logging.INFO
 
     logging.basicConfig(stream=sys.stdout, level=level,
             format='%(levelname)s: %(message)s')
 
-    wsgi_app = ApplicationServlet(applicationClass, debug=debug,
-            *args, **kw_args)
+    wsgi_app = servletClass(application, debug=debug, *args, **kw_args)
 
-    wsgi_app = SessionMiddleware(wsgi_app)  # wrap in middleware
+    wsgi_app = SessionMiddleware(wsgi_app, session_class=InMemorySession)
 
     url = 'http://%s:%d/' % (host, port)
 
@@ -118,6 +107,8 @@ def main(args=sys.argv[1:]):
             ctxapp = DirectoryApp(join(opts.contextRoot, 'VAADIN'))
             urlmap['/VAADIN'] = ctxapp
 
+        app = SessionMiddleware(urlmap, session_class=InMemorySession)
+
         url = 'http://%s:%d/' % (opts.host, opts.port)
 
         if not opts.nogui:
@@ -125,7 +116,7 @@ def main(args=sys.argv[1:]):
 
         print 'Serving at: %s' % url
 
-        httpd = make_server(opts.host, opts.port, urlmap)
+        httpd = make_server(opts.host, opts.port, app)
 
         try:
             httpd.serve_forever()

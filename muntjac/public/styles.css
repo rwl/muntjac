@@ -117,7 +117,7 @@ ul {
 #header h1 {
 	width: 200px;
 	height: 46px;
-	background: transparent url(../img/muntjac-logo.png) no-repeat;
+	background: transparent url(./muntjac-logo.png) no-repeat;
 	position: absolute;
 	top: 23px;
 	left: 50%;

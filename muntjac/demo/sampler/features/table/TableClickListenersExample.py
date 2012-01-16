@@ -13,6 +13,8 @@ from muntjac.util import defaultLocale
 
 class TableClickListenersExample(VerticalLayout):
 
+    CURRENCY_PATTERN = u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)'
+
     def __init__(self):
         super(TableClickListenersExample, self).__init__()
 
@@ -26,11 +28,10 @@ class TableClickListenersExample(VerticalLayout):
             value = item.getItemProperty(
                     ExampleUtil.ORDER_ITEMPRICE_PROPERTY_ID).getValue()
 
-            #amount = NumberFormat.getCurrencyInstance().parse(str(value))
-            amount = re.search(u'([\u00A3\u0024\u20AC])(\d+(?:\.\d{2})?)',
-                    str(value)).groups()[1]
-
-            totalSum += float(amount)
+            match = re.search(self.CURRENCY_PATTERN, str(value))
+            if match is not None:
+                amount = match.groups()[1]
+                totalSum += float(amount)
 
         # Create table
         table = Table('', ExampleUtil.getOrderContainer())

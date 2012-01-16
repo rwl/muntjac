@@ -1,21 +1,5 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 """String validator comparing the string against a regular expression."""
 
@@ -51,20 +35,34 @@ class RegexpValidator(AbstractStringValidator):
             3. the message to display in case the value does not validate.
         """
         self._pattern = None
+        self._regexp = ''
         self._complete = None
         self._matcher = None
 
         nargs = len(args)
         if nargs == 2:
             regexp, errorMessage = args
+            self._regexp = regexp
             RegexpValidator.__init__(self, regexp, True, errorMessage)
         elif nargs == 3:
             regexp, complete, errorMessage = args
             super(RegexpValidator, self).__init__(errorMessage)
+            self._regexp = regexp
             self._pattern = re.compile(regexp)  # FIXME: check re use
             self._complete = complete
         else:
             raise ValueError, 'invalid number of arguments'
+
+
+    def __getstate__(self):
+        result = self.__dict__.copy()
+        del result['_pattern']
+        return result
+
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self._pattern = re.compile(d.get('_regexp'))
 
 
     def isValidString(self, value):

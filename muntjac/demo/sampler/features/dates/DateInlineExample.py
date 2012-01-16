@@ -29,7 +29,13 @@ class DateInlineExample(VerticalLayout, IValueChangeListener):
 
 
     def valueChange(self, event):
+        app = self.getApplication()
+        if app is not None:
+            l = app.getLocale()
+
         # Get the new value and format it to the current locale
-        dateOut = format_date(event.getProperty().getValue()).encode('utf-8')
+        dateOut = format_date(event.getProperty().getValue(),
+                locale=l).encode('utf-8')
+
         # Show notification
         self.getWindow().showNotification('Starting date: ' + dateOut)

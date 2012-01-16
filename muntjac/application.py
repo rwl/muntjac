@@ -1,21 +1,5 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 """Defines a base class required for all Muntjac applications."""
 
@@ -36,6 +20,7 @@ from muntjac.terminal.uri_handler import IErrorEvent as URIHandlerErrorEvent
 from muntjac.terminal.parameter_handler import IErrorEvent as ParameterHandlerErrorEvent
 from muntjac.terminal.gwt.server.change_variables_error_event import ChangeVariablesErrorEvent
 from muntjac.ui.abstract_component import AbstractComponent
+from muntjac.ui.window import Window
 from muntjac.messages import SystemMessages
 
 
@@ -821,7 +806,7 @@ class Application(IUriHandler, ITerminal, IErrorListener):
         t = event.getThrowable()
         if isinstance(t, IOError):  #SocketException
             # Most likely client browser closed socket
-            logger.info('SocketException in CommunicationManager.' \
+            logger.exception('SocketException in CommunicationManager.' \
                               ' Most likely client (browser) closed socket.')
             return
 
@@ -1074,3 +1059,21 @@ class ApplicationError(IErrorEvent):
 
     def getThrowable(self):
         return self._throwable
+
+
+class SingletonApplication(Application):
+
+    _singleton = None
+
+    def __init__(self):
+        super(SingletonApplication, self).__init__()
+        self.setMainWindow(Window())
+
+    @classmethod
+    def get(cls):
+        if cls._singleton is None:
+            cls._singleton = SingletonApplication()
+        return cls._singleton
+
+    def init(self):
+        pass

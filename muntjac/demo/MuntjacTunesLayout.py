@@ -242,7 +242,7 @@ class MuntjacTunesLayout(Application):
                 'Blues', 'Jazz', 'Hip Hop', 'Electronica', 'Punk', 'Hard Rock',
                 'Dance', 'R\'n\'B', 'Gospel', 'Country']
 
-        for i in range(1000):
+        for i in range(100):
             s = NativeSelect()
             s.addItem('1 star')
             s.addItem('2 stars')

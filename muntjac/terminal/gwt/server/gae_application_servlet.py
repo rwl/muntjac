@@ -39,7 +39,7 @@ class GaeApplicationServlet(ApplicationServlet):
 
 
     def invalidateSession(self, request):
-        session = request.session()
+        session = self.getSession(request)
         session.terminate()
 
 
