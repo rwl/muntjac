@@ -1,54 +1,26 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
-from __pyjamas__ import (ARGERROR,)
-from com.invient.vaadin.charts.InvientChartsConfig import (InvientChartsConfig,)
-from com.invient.vaadin.charts.InvientCharts import (InvientCharts,)
-# from java.util.Calendar import (Calendar,)
-# from java.util.Date import (Date,)
-# from java.util.GregorianCalendar import (GregorianCalendar,)
-# from java.util.LinkedHashMap import (LinkedHashMap,)
-# from java.util.LinkedHashSet import (LinkedHashSet,)
-# from java.util.Map import (Map,)
-# from java.util.Map.Entry import (Entry,)
-DateTimeSeries = InvientCharts.DateTimeSeries
-DecimalPoint = InvientCharts.DecimalPoint
-AreaConfig = InvientChartsConfig.AreaConfig
-AreaSplineConfig = InvientChartsConfig.AreaSplineConfig
-DateTimeRange = InvientChartsConfig.AxisBase.DateTimePlotBand.DateTimeRange
-DateTimeValue = InvientChartsConfig.AxisBase.DateTimePlotLine.DateTimeValue
-Grid = InvientChartsConfig.AxisBase.Grid
-NumberRange = InvientChartsConfig.AxisBase.NumberPlotBand.NumberRange
-NumberValue = InvientChartsConfig.AxisBase.NumberPlotLine.NumberValue
-Tick = InvientChartsConfig.AxisBase.Tick
-BarConfig = InvientChartsConfig.BarConfig
-CategoryAxis = InvientChartsConfig.CategoryAxis
-ColumnConfig = InvientChartsConfig.ColumnConfig
-DateTimeAxis = InvientChartsConfig.DateTimeAxis
-ImageMarker = InvientChartsConfig.ImageMarker
-LineConfig = InvientChartsConfig.LineConfig
-NonLinearSeriesState = InvientChartsConfig.NonLinearSeriesState
-NumberAxis = InvientChartsConfig.NumberAxis
-NumberXAxis = InvientChartsConfig.NumberXAxis
-NumberYAxis = InvientChartsConfig.NumberYAxis
-PieConfig = InvientChartsConfig.PieConfig
-PieDataLabel = InvientChartsConfig.PieDataLabel
-ScatterConfig = InvientChartsConfig.ScatterConfig
-SplineConfig = InvientChartsConfig.SplineConfig
-SymbolMarker = InvientChartsConfig.SymbolMarker
-XAxisDataLabel = InvientChartsConfig.XAxisDataLabel
+from muntjac.addon.invient.invient_charts_config import InvientChartsConfig
+from muntjac.addon.invient.invient_charts \
+    import DateTimeSeries, DecimalPoint, AreaConfig, AreaSplineConfig, \
+    DateTimeRange, DateTimeValue, Grid, NumberRange, NumberValue, Tick, \
+    BarConfig, CategoryAxis, ColumnConfig, DateTimeAxis, ImageMarker, \
+    LineConfig, NonLinearSeriesState, NumberAxis, NumberXAxis, NumberYAxis, \
+    PieConfig, PieDataLabel, ScatterConfig, SplineConfig, SymbolMarker, \
+    XAxisDataLabel
 
 
 class InvientChartsUtil(object):
-    """A utility class used by {@link InvientCharts} to write its state to the UIDL
-    stream. The state includes properties of {@link InvientCharts} such as
-    {@link InvientChartsConfig}, {@link Series}, {@link Point} and various chart
-    events.
+    """A utility class used by {@link InvientCharts} to write its state to
+    the UIDL stream. The state includes properties of L{InvientCharts} such
+    as L{InvientChartsConfig}, L{Series}, L{Point} and various chart events.
 
-    In general, only non-null properties/attributes of a chart are written to the
-    UIDL stream.
+    In general, only non-null properties/attributes of a chart are written to
+    the UIDL stream.
 
-    @author Invient
+    @author: Invient
+    @author: Richard Lincoln
     """
 
     def __init__(self):
@@ -77,6 +49,7 @@ class InvientChartsUtil(object):
         if titleBaseOptions.getStyle() is not None:
             target.addAttribute('style', titleBaseOptions.getStyle())
 
+
     @classmethod
     def writeTitleConfig(cls, target, titleOptions):
         """Writes configuration attributes of the chart title.
@@ -91,6 +64,7 @@ class InvientChartsUtil(object):
             target.addAttribute('margin', titleOptions.getMargin())
         target.endTag('title')
 
+
     @classmethod
     def writeSubtitleConfig(cls, target, subtitleOptions):
         """Writes configuration attributes of the chart subtitle. Only those
@@ -104,6 +78,7 @@ class InvientChartsUtil(object):
         cls.writeTitleBaseOptions(target, subtitleOptions)
         target.endTag('subtitle')
 
+
     @classmethod
     def writeCreditConfig(cls, target, creditOptions):
         """Writes configuration attributes of the chart subtitle.
@@ -113,9 +88,12 @@ class InvientChartsUtil(object):
         @throws PaintException
         """
         target.startTag('credit')
+
         if creditOptions.getEnabled() is not None:
             target.addAttribute('enabled', creditOptions.getEnabled())
+
         target.startTag('position')
+
         if creditOptions.getPosition() is not None:
             if creditOptions.getPosition().getAlign() is not None:
                 target.addAttribute('align', creditOptions.getPosition().getAlign().getName())
@@ -125,14 +103,18 @@ class InvientChartsUtil(object):
                 target.addAttribute('x', creditOptions.getPosition().getX())
             if creditOptions.getPosition().getY() is not None:
                 target.addAttribute('y', creditOptions.getPosition().getY())
+
         target.endTag('position')
+
         if creditOptions.getLink() is not None:
             target.addAttribute('href', creditOptions.getLink())
         if creditOptions.getStyle() is not None:
             target.addAttribute('style', creditOptions.getStyle())
         if creditOptions.getText() is not None:
             target.addAttribute('text', creditOptions.getText())
+
         target.endTag('credit')
+
 
     @classmethod
     def writeLegendConfig(cls, target, legendOptions):
@@ -190,6 +172,7 @@ class InvientChartsUtil(object):
                 target.addAttribute('y', legendOptions.getPosition().getY())
         target.endTag('legend')
 
+
     @classmethod
     def writeTooltipConfig(cls, target, tooltipOptions):
         """Writes configuration attributes of the chart tooltip.
@@ -222,6 +205,7 @@ class InvientChartsUtil(object):
         if tooltipOptions.getStyle() is not None:
             target.addAttribute('style', tooltipOptions.getStyle())
         target.endTag('tooltip')
+
 
     @classmethod
     def writeGeneralChartConfig(cls, target, chartOptions):
@@ -298,11 +282,12 @@ class InvientChartsUtil(object):
             target.addAttribute('style', chartOptions.getStyle())
         target.endTag('chart')
 
+
     @classmethod
     def writeSeriesConfigPerSeriesType(cls, target, seriesOptions):
-        """Writes configuration attributes of every series type. The series type can
-        be one of the line, spline, scatter, area, areaspline, bar, column and
-        pie.
+        """Writes configuration attributes of every series type. The series
+        type can be one of the line, spline, scatter, area, areaspline, bar,
+        column and pie.
 
         @param target
         @param seriesOptions
@@ -310,13 +295,14 @@ class InvientChartsUtil(object):
         """
         target.startTag('seriesOptionsPerSeriesType')
         # For each SeriesType have separate tag
-        for seriesEntryOptions in seriesOptions.entrySet():
-            tagName = seriesEntryOptions.getKey().getName()
+        for k, seriesEntryOptions in seriesOptions.iteritems():
+            tagName = k.getName()
             target.startTag(tagName)
             # Write options for appropriate series type
-            cls.writeSeriesConfig(target, seriesEntryOptions.getValue())
+            cls.writeSeriesConfig(target, seriesEntryOptions)
             target.endTag(tagName)
         target.endTag('seriesOptionsPerSeriesType')
+
 
     @classmethod
     def writeSeriesConfig(cls, target, series):
@@ -324,7 +310,7 @@ class InvientChartsUtil(object):
 
         @param target
         @param series
-        @throws PaintException
+        @raise PaintException:
         """
         # Write options for appropriate series type
         if isinstance(series, LineConfig):
@@ -346,6 +332,7 @@ class InvientChartsUtil(object):
         else:
             # Common series attributes
             cls.writeCommonSeriesOptions(target, series)
+
 
     @classmethod
     def writeCommonSeriesOptions(cls, target, seriesOptions):
@@ -383,6 +370,7 @@ class InvientChartsUtil(object):
         # State
         cls.writeSeriesState(target, seriesOptions.getHoverState())
 
+
     @classmethod
     def writeSeriesState(cls, target, seriesState):
         """Writes configuration attributes of a series hover state.
@@ -398,21 +386,21 @@ class InvientChartsUtil(object):
                 target.addAttribute('enabled', seriesState.getEnabled())
             if seriesState.getLineWidth() is not None:
                 target.addAttribute('lineWidth', seriesState.getLineWidth())
-            if (
-                isinstance(seriesState, NonLinearSeriesState) and seriesState.getBrightness() is not None
-            ):
+            if (isinstance(seriesState, NonLinearSeriesState)
+                    and seriesState.getBrightness() is not None):
                 target.addAttribute('brightness', seriesState.getBrightness())
             target.endTag('hover')
         target.endTag('state')
 
+
     @classmethod
     def writeSeriesDataLabel(cls, target, dataLabel):
-        """Writes configuration attributes common to all types of series. It takes
-        care of specific data labels in case of pie.
+        """Writes configuration attributes common to all types of series. It
+        takes care of specific data labels in case of pie.
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('dataLabel')
         if dataLabel is not None:
@@ -422,13 +410,14 @@ class InvientChartsUtil(object):
                 cls.writeDataLabel(target, dataLabel)
         target.endTag('dataLabel')
 
+
     @classmethod
     def writeDataLabel(cls, target, dataLabel):
         """Writes configuration attributes of a series data labels.
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         if dataLabel.getAlign() is not None:
             target.addAttribute('align', dataLabel.getAlign().getName())
@@ -447,13 +436,14 @@ class InvientChartsUtil(object):
         if dataLabel.getColor() is not None:
             target.addAttribute('color', dataLabel.getColor().getString())
 
+
     @classmethod
     def writePieDataLabel(cls, target, dataLabel):
         """Writes configuration attributes of a pie chart's data label.
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeDataLabel(target, dataLabel)
         if dataLabel.getConnectorWidth() is not None:
@@ -465,17 +455,19 @@ class InvientChartsUtil(object):
         if dataLabel.getDistance() is not None:
             target.addAttribute('distance', dataLabel.getDistance())
 
+
     @classmethod
     def writeAxisDataLabel(cls, target, dataLabel):
         """Writes configuration attributes of an axis data labels.
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeDataLabel(target, dataLabel)
         if dataLabel.getStep() is not None:
             target.addAttribute('step', dataLabel.getStep())
+
 
     @classmethod
     def writeXAxisDataLabel(cls, target, dataLabel):
@@ -483,7 +475,7 @@ class InvientChartsUtil(object):
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('label')
         if dataLabel is not None:
@@ -492,27 +484,29 @@ class InvientChartsUtil(object):
                 target.addAttribute('staggerLines', dataLabel.getStaggerLines())
         target.endTag('label')
 
+
     @classmethod
     def writeYAxisDataLabel(cls, target, dataLabel):
         """Writes configuration attributes of y-axis data labels.
 
         @param target
         @param dataLabel
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('label')
         if dataLabel is not None:
             cls.writeAxisDataLabel(target, dataLabel)
         target.endTag('label')
 
+
     @classmethod
     def writeMarkerOptions(cls, target, markerOptions):
-        """Writes configuration attributes of a marker. It takes care of handling
-        image or symbol marker.
+        """Writes configuration attributes of a marker. It takes care of
+        handling image or symbol marker.
 
         @param target
         @param markerOptions
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('marker')
         if markerOptions is not None:
@@ -527,14 +521,14 @@ class InvientChartsUtil(object):
                 cls.writeMarkerStates(target, markerOptions)
         target.endTag('marker')
 
+
     @classmethod
     def writeMarkerStates(cls, target, marker):
         """Writes configuration attributes of a marker states hover and select
 
-
         @param target
         @param marker
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('states')
         target.startTag('hover')
@@ -547,16 +541,18 @@ class InvientChartsUtil(object):
         target.endTag('select')
         target.endTag('states')
 
+
     @classmethod
     def writeImageMarkerOptions(cls, target, imgMarker):
         """Writes configuration attributes of an image marker
 
         @param target
         @param imgMarker
-        @throws PaintException
+        @raise PaintException
         """
         if imgMarker.getImageURL() is not None:
             target.addAttribute('symbol', imgMarker.getImageURL())
+
 
     @classmethod
     def writeSymbolMarkerOptions(cls, target, symbolMarker):
@@ -564,7 +560,7 @@ class InvientChartsUtil(object):
 
         @param target
         @param symbolMarker
-        @throws PaintException
+        @raise PaintException
         """
         if symbolMarker.getFillColor() is not None:
             target.addAttribute('fillColor', symbolMarker.getFillColor().getString())
@@ -577,13 +573,14 @@ class InvientChartsUtil(object):
         if symbolMarker.getSymbol() is not None:
             target.addAttribute('symbol', symbolMarker.getSymbol().getName())
 
+
     @classmethod
     def writeMarkerState(cls, target, markerState):
         """Writes configuration attributes of a marker
 
         @param target
         @param markerState
-        @throws PaintException
+        @raise PaintException
         """
         if markerState.getEnabled() is not None:
             target.addAttribute('enabled', markerState.getEnabled())
@@ -596,14 +593,15 @@ class InvientChartsUtil(object):
         if markerState.getRadius() is not None:
             target.addAttribute('radius', markerState.getRadius())
 
+
     @classmethod
     def writeBaseLineOptions(cls, target, baseLineOptions):
-        """Writes configuration attributes common to all lines series such as line,
-        spline and area.
+        """Writes configuration attributes common to all lines series such
+        as line, spline and area.
 
         @param target
         @param baseLineOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeCommonSeriesOptions(target, baseLineOptions)
         if baseLineOptions.getDashStyle() is not None:
@@ -618,15 +616,17 @@ class InvientChartsUtil(object):
             target.addAttribute('stickyTracking', baseLineOptions.getStickyTracking())
         cls.writeMarkerOptions(target, baseLineOptions.getMarker())
 
+
     @classmethod
     def writeSplineOptions(cls, target, splineOptions):
         """Writes configuration attributes of a spline series
 
         @param target
         @param splineOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseLineOptions(target, splineOptions)
+
 
     @classmethod
     def writeScatterOptions(cls, target, scatterOptions):
@@ -634,9 +634,10 @@ class InvientChartsUtil(object):
 
         @param target
         @param scatterOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseLineOptions(target, scatterOptions)
+
 
     @classmethod
     def writeLineOptions(cls, target, lineOptions):
@@ -644,11 +645,12 @@ class InvientChartsUtil(object):
 
         @param target
         @param lineOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseLineOptions(target, lineOptions)
         if lineOptions.getStep() is not None:
             target.addAttribute('step', lineOptions.getStep())
+
 
     @classmethod
     def writeAreaOptions(cls, target, areaOptions):
@@ -656,7 +658,7 @@ class InvientChartsUtil(object):
 
         @param target
         @param areaOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseLineOptions(target, areaOptions)
         if areaOptions.getFillColor() is not None:
@@ -668,15 +670,17 @@ class InvientChartsUtil(object):
         if areaOptions.getThreshold() is not None:
             target.addAttribute('threshold', areaOptions.getThreshold())
 
+
     @classmethod
     def writeAreaSplineOptions(cls, target, areaSplineOptions):
         """Writes configuration attributes of an area-spline
 
         @param target
         @param areaSplineOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeAreaOptions(target, areaSplineOptions)
+
 
     @classmethod
     def writePieOptions(cls, target, pieOptions):
@@ -684,7 +688,7 @@ class InvientChartsUtil(object):
 
         @param target
         @param pieOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeCommonSeriesOptions(target, pieOptions)
         if pieOptions.getBorderColor() is not None:
@@ -702,14 +706,15 @@ class InvientChartsUtil(object):
         if pieOptions.getSlicedOffset() is not None:
             target.addAttribute('slicedOffset', pieOptions.getSlicedOffset())
 
+
     @classmethod
     def writeBaseBarOptions(cls, target, baseBarOptions):
-        """Writes configuration attributes common to columnar series such as bar and
-        column
+        """Writes configuration attributes common to columnar series such as
+        bar and column
 
         @param target
         @param baseBarOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeCommonSeriesOptions(target, baseBarOptions)
         if baseBarOptions.getBorderColor() is not None:
@@ -729,15 +734,17 @@ class InvientChartsUtil(object):
         if baseBarOptions.getPointWidth() is not None:
             target.addAttribute('pointWidth', baseBarOptions.getPointWidth())
 
+
     @classmethod
     def writeBarOptions(cls, target, barOptions):
         """Writes configuration attributes of a bar series
 
         @param target
         @param barOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseBarOptions(target, barOptions)
+
 
     @classmethod
     def writeColumnOptions(cls, target, columnOptions):
@@ -745,14 +752,15 @@ class InvientChartsUtil(object):
 
         @param target
         @param columnOptions
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeBaseBarOptions(target, columnOptions)
 
+
     @classmethod
     def writeSeries(cls, target, chartSeriesType, data, xAxes, yAxes):
-        """Writes data of each series of the chart. It transforms data into a form
-        which is usable by the Vaadin terminal class. It also writes
+        """Writes data of each series of the chart. It transforms data into
+        a form which is usable by the Muntjac terminal class. It also writes
         configuration attributes specific to each series, if any.
 
         @param target
@@ -787,11 +795,13 @@ class InvientChartsUtil(object):
             target.endTag('points')
             target.endTag('series')
 
+
     @classmethod
     def writePoints(cls, target, points):
-        """Writes point data (x, y) and its configuration attributes, if any. If a
-        point does not have x and y values then the point is skipped. However,
-        for such points empty tags is created without any attributes or children.
+        """Writes point data (x, y) and its configuration attributes, if any.
+        If a point does not have x and y values then the point is skipped.
+        However, for such points empty tags is created without any attributes
+        or children.
 
         @param target
         @param points
@@ -811,9 +821,12 @@ class InvientChartsUtil(object):
                         target.addAttribute('x', point.getX())
                     else:
                         target.addAttribute('x', cls.getDate(point.getX(), point.getSeries().isIncludeTime()))
+
                 if point.getY() is not None:
                     target.addAttribute('y', point.getY())
+
                 target.addAttribute('isShift', point.isShift())
+
                 # Point config
                 if point.getConfig() is not None:
                     if point.getConfig().getSliced() is not None:
@@ -825,6 +838,7 @@ class InvientChartsUtil(object):
                     if point.getConfig().getMarker() is not None:
                         cls.writeMarkerOptions(target, point.getConfig().getMarker())
             target.endTag('point')
+
 
     @classmethod
     def writeBaseAxis(cls, target, axis, axes):
@@ -877,13 +891,16 @@ class InvientChartsUtil(object):
             cls.writeAxisTick(target, axis.getTick())
         if axis.getType() is not None:
             target.addAttribute('type', axis.getType().getName())
+
         # Title
         cls.writeAxisTitle(target, axis.getTitle())
+
         # Labels
         if isinstance(axis.getLabel(), XAxisDataLabel):
             cls.writeXAxisDataLabel(target, axis.getLabel())
         else:
             cls.writeYAxisDataLabel(target, axis.getLabel())
+
         if isinstance(axis, NumberAxis):
             cls.writePlotBands(target, axis.getPlotBands())
             cls.writePlotLines(target, axis.getPlotLines())
@@ -894,17 +911,19 @@ class InvientChartsUtil(object):
             cls.writePlotBands(target, axis.getPlotBands())
             cls.writePlotLines(target, axis.getPlotLines())
 
+
     @classmethod
     def getXAxisIndex(cls, indexOfXAxis, xAxes):
-        """Returns an index of an x-axis in a list of x-axis only if the x-axis
-        exists otherwise null
+        """Returns an index of an x-axis in a list of x-axis only if the
+        x-axis exists otherwise null
 
         @param indexOfXAxis
         @param xAxes
-        @return Retrieves Retrieves an index of an x-axis in a list of x-axis
-                only if the x-axis exists otherwise null
+        @return: Retrieves Retrieves an index of an x-axis in a list of x-axis
+                 only if the x-axis exists otherwise null
         """
         return cls.getAxisIndex(indexOfXAxis, xAxes)
+
 
     @classmethod
     def getYAxisIndex(cls, indexOfYAxis, yAxes):
@@ -913,33 +932,38 @@ class InvientChartsUtil(object):
 
         @param indexOfYAxis
         @param yAxes
-        @return Returns index of a y-axis in a list of y-axis only if the y-axis
-                exists otherwise null
+        @return: Returns index of a y-axis in a list of y-axis only if the
+                 y-axis exists otherwise null
         """
         return cls.getAxisIndex(indexOfYAxis, yAxes)
 
+
     @classmethod
     def getAxisIndex(cls, indexOfAxis, axes):
-        """Returns an index of an axis in a list of axis only if the axis exists
-        otherwise null
+        """Returns an index of an axis in a list of axis only if the axis
+        exists otherwise null
 
         @param indexOfAxis
         @param axes
-        @return Returns an index of an axis in a list of axis only if the axis
-                exists otherwise null
+        @return: Returns an index of an axis in a list of axis only if the
+                 axis exists otherwise null
         """
         if ((indexOfAxis is None) or (axes is None)) or (len(axes) == 0):
             return 0
+
         index = 0
         for axis in axes:
             if axis == indexOfAxis:
                 return index
             index += 1
+
         return None
+
 
     @classmethod
     def writePlotBands(cls, target, plotBands):
-        """Writes configuration attributes of the plotbands associated with an axis.
+        """Writes configuration attributes of the plotbands associated with
+        an axis.
 
         @param target
         @param plotBands
@@ -959,6 +983,7 @@ class InvientChartsUtil(object):
                 cls.writePlotBandRange(target, plotBand.getRange())
                 target.endTag('plotBand')
         target.endTag('plotBands')
+
 
     @classmethod
     def writePlotLabel(cls, target, plotLabel):
@@ -988,10 +1013,11 @@ class InvientChartsUtil(object):
                 target.addAttribute('y', plotLabel.getY())
         target.endTag('label')
 
+
     @classmethod
     def writePlotBandRange(cls, target, plotBandRange):
-        """Writes from/to value for a plotband. It considers date and number values
-        separately.
+        """Writes from/to value for a plotband. It considers date and number
+        values separately.
 
         @param target
         @param plotBandRange
@@ -1023,6 +1049,7 @@ class InvientChartsUtil(object):
                 target.endTag('to')
         target.endTag('rangeValue')
 
+
     @classmethod
     def writePlotLines(cls, target, plotLines):
         """Writes configuration attributes of the plotlines
@@ -1050,6 +1077,7 @@ class InvientChartsUtil(object):
                 target.endTag('plotLine')
         target.endTag('plotLines')
 
+
     @classmethod
     def writePlotLineValue(cls, target, plotLineValue):
         """Writes value of a plotline. It considers date and number value
@@ -1061,14 +1089,12 @@ class InvientChartsUtil(object):
         """
         target.startTag('lineValue')
         if plotLineValue is not None:
-            if (
-                isinstance(plotLineValue, NumberValue) and plotLineValue.getValue() is not None
-            ):
+            if (isinstance(plotLineValue, NumberValue)
+                    and plotLineValue.getValue() is not None):
                 target.addAttribute('valueType', 'number')
                 target.addAttribute('value', plotLineValue.getValue())
-            elif (
-                isinstance(plotLineValue, DateTimeValue) and plotLineValue.getValue() is not None
-            ):
+            elif (isinstance(plotLineValue, DateTimeValue)
+                    and plotLineValue.getValue() is not None):
                 target.addAttribute('valueType', 'date')
                 date = plotLineValue.getValue()
                 target.addAttribute('year', cls.getYearFromDate(date))
@@ -1076,11 +1102,12 @@ class InvientChartsUtil(object):
                 target.addAttribute('day', cls.getDayFromDate(date))
         target.endTag('lineValue')
 
+
     @classmethod
     def writeAxisTick(cls, target, tick):
         """@param target
         @param tick
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeAxisMinorTick(target, tick)
         if tick.getPixelInterval() is not None:
@@ -1088,15 +1115,16 @@ class InvientChartsUtil(object):
         if tick.getPlacement() is not None:
             target.addAttribute('tickmarkPlacement', tick.getPlacement().getName())
 
+
     @classmethod
     def writeAxisMinorTick(cls, target, tick):
-        """Writes configuration attributes of an axis. Depending on type of the
-        argument tick, it either writes attributes for {@link MinorTick} or
-        {@link Tick}
+        """Writes configuration attributes of an axis. Depending on type of
+        the argument tick, it either writes attributes for L{MinorTick} or
+        L{Tick}
 
         @param target
         @param tick
-        @throws PaintException
+        @raise PaintException
         """
         attNameColor = 'minorTickColor'
         attNameInterval = 'minorTickInterval'
@@ -1120,23 +1148,25 @@ class InvientChartsUtil(object):
         if tick.getWidth() is not None:
             target.addAttribute(attNameWidth, tick.getWidth())
 
+
     @classmethod
     def writeAxisGrid(cls, target, grid):
         """@param target
         @param grid
-        @throws PaintException
+        @raise PaintException
         """
         cls.writeAxisMinorGrid(target, grid)
 
+
     @classmethod
     def writeAxisMinorGrid(cls, target, grid):
-        """Writes configuration attributes of an axis. Depending on type of the
-        argument tick, it either writes attributes for {@link MinorGrid} or
-        {@link Grid}
+        """Writes configuration attributes of an axis. Depending on type of
+        the argument tick, it either writes attributes for L{MinorGrid} or
+        L{Grid}
 
         @param target
         @param grid
-        @throws PaintException
+        @raise PaintException
         """
         attNameLineColor = 'minorGridLineColor'
         attNameLineWidth = 'minorGridLineWidth'
@@ -1152,11 +1182,12 @@ class InvientChartsUtil(object):
         if grid.getLineDashStyle() is not None:
             target.addAttribute(attNameLineDashStyle, grid.getLineDashStyle().getName())
 
+
     @classmethod
     def writeAxisTitle(cls, target, title):
         """@param target
         @param title
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('title')
         if title is not None:
@@ -1172,15 +1203,16 @@ class InvientChartsUtil(object):
                 target.addAttribute('text', title.getText())
         target.endTag('title')
 
+
     @classmethod
     def writeXAxes(cls, target, axes, config):
-        """Iteratively processes each x-axis and writes configuration attributes of
-        each axis based on type of the axis e.g. {@link NumberAxis},
-        {@link DateTimeAxis} and {@link CategoryAxis}
+        """Iteratively processes each x-axis and writes configuration
+        attributes of each axis based on type of the axis e.g. L{NumberAxis},
+        L{DateTimeAxis} and L{CategoryAxis}
 
         @param target
         @param axes
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('xAxes')
         if axes is not None:
@@ -1194,9 +1226,12 @@ class InvientChartsUtil(object):
                 elif isinstance(xAxis, DateTimeAxis):
                     # Check if time should be included as part of a date value.
                     # If any of the datetime series
-                    cls.writeDateTimeAxis(target, xAxis, cls.isIncludeTime(xAxis, config.getInvientCharts().getAllSeries()))
+                    cls.writeDateTimeAxis(target, xAxis,
+                            cls.isIncludeTime(xAxis,
+                                    config.getInvientCharts().getAllSeries()))
                 target.endTag('xAxis')
         target.endTag('xAxes')
+
 
     @classmethod
     def isIncludeTime(cls, axis, chartSeries):
@@ -1205,11 +1240,12 @@ class InvientChartsUtil(object):
                 return series.isIncludeTime()
         return False
 
+
     @classmethod
     def writeNumberAxis(cls, target, numberAxis):
         """@param target
         @param numberAxis
-        @throws PaintException
+        @raise PaintException
         """
         if numberAxis.getAllowDecimals() is not None:
             target.addAttribute('allowDecimals', numberAxis.getAllowDecimals())
@@ -1218,44 +1254,32 @@ class InvientChartsUtil(object):
         if numberAxis.getMin() is not None:
             target.addAttribute('min', numberAxis.getMin())
 
-    @classmethod
-    def getDate(cls, *args):
-        """Returns milliseconds of the date argument dt excluding time.
 
-        @param dt
-        @return
-        ---
-        Returns milliseconds of the date argument dt. If the argument
+    @classmethod
+    def getDate(cls, dt, isIncludeTime=False):
+        """Returns milliseconds of the date argument dt. If the argument
         isIncludeTime is false then the returned milliseconds does not include
         time.
 
         @param dt
         @param isIncludeTime
-        @return
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            dt, = _0
-            return cls.getDate(dt, False)
-        elif _1 == 2:
-            dt, isIncludeTime = _0
-            cal = GregorianCalendar.getInstance()
-            cal.setTime(dt)
-            if not isIncludeTime:
-                cal.set(Calendar.HOUR, 0)
-                cal.set(Calendar.MINUTE, 0)
-                cal.set(Calendar.SECOND, 0)
-                cal.set(Calendar.MILLISECOND, 0)
-            return cal.getTimeInMillis()
-        else:
-            raise ARGERROR(1, 2)
+        dt, isIncludeTime = _0
+        cal = GregorianCalendar.getInstance()
+        cal.setTime(dt)
+        if not isIncludeTime:
+            cal.set(Calendar.HOUR, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
+        return cal.getTimeInMillis()
+
 
     @classmethod
     def writeDateTimeAxis(cls, target, dateTimeAxis, isIncludeTime):
         """@param target
         @param dateTimeAxis
-        @throws PaintException
+        @raise PaintException
         """
         if dateTimeAxis.getMax() is not None:
             target.addAttribute('max', cls.getDate(dateTimeAxis.getMax(), isIncludeTime))
@@ -1280,27 +1304,28 @@ class InvientChartsUtil(object):
                 target.addAttribute('year', dateTimeAxis.getDateTimeLabelFormat().getYear())
             target.endTag('dateTimeLabelFormats')
 
+
     @classmethod
     def writeCategoryAxis(cls, target, categoryAxis):
         """@param target
         @param categoryAxis
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('categories')
-        if (
-            categoryAxis.getCategories() is not None and len(categoryAxis.getCategories()) > 0
-        ):
+        if (categoryAxis.getCategories() is not None
+                and len(categoryAxis.getCategories()) > 0):
             for category in categoryAxis.getCategories():
                 target.startTag('category')
                 target.addAttribute('name', category)
                 target.endTag('category')
         target.endTag('categories')
 
+
     @classmethod
     def writeYAxes(cls, target, axes, config):
         """@param target
         @param axes
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('yAxes')
         if axes is not None:
@@ -1312,18 +1337,18 @@ class InvientChartsUtil(object):
                 target.endTag('yAxis')
         target.endTag('yAxes')
 
+
     @classmethod
     def writeChartLabelConfig(cls, target, chartLabel):
         """Writes configuration attributes of the chart labels.
 
         @param target
         @param chartLabel
-        @throws PaintException
+        @raise PaintException
         """
         target.startTag('labels')
-        if (
-            chartLabel is not None and chartLabel.getLabels() is not None and len(chartLabel.getLabels()) > 0
-        ):
+        if (chartLabel is not None and chartLabel.getLabels() is not None
+                and len(chartLabel.getLabels()) > 0):
             if chartLabel.getStyle() is not None:
                 target.addAttribute('style', chartLabel.getStyle())
             target.startTag('items')
@@ -1338,6 +1363,7 @@ class InvientChartsUtil(object):
             target.endTag('items')
         target.endTag('labels')
 
+
     @classmethod
     def getYearFromDate(cls, date):
         """@param date
@@ -1347,19 +1373,22 @@ class InvientChartsUtil(object):
             return None
         cal = Calendar.getInstance()
         cal.setTime(date)
-        return String.valueOf.valueOf(cal.get(Calendar.YEAR))
+        return str( cal.get(Calendar.YEAR) )
+
 
     @classmethod
     def getMonthFromDate(cls, date):
         """@param date
-        @return Returns month of the argument date. The returned values is based
-                on zero-index i.e. for month January, the values returned is "0"
+        @return: Returns month of the argument date. The returned values is
+                 based on zero-index i.e. for month January, the values
+                 returned is "0"
         """
         if date is None:
             return None
         cal = Calendar.getInstance()
         cal.setTime(date)
-        return String.valueOf.valueOf(cal.get(Calendar.MONTH))
+        return str(cal.get(Calendar.MONTH))
+
 
     @classmethod
     def getDayFromDate(cls, date):
@@ -1370,19 +1399,20 @@ class InvientChartsUtil(object):
             return None
         cal = Calendar.getInstance()
         cal.setTime(date)
-        return String.valueOf.valueOf(cal.get(Calendar.DAY_OF_MONTH))
+        return str(cal.get(Calendar.DAY_OF_MONTH))
+
 
     @classmethod
     def writeChartDataUpdates(cls, target, seriesCURMap):
-        """Writes information about which series were added, removed or updated.
-        This information is used by Vaadin terminal class to decide whether to
-        add a new series or remove/delete an existing series. Basically, this
-        information helps client to update only a portion of the chart instead of
-        full chart.
+        """Writes information about which series were added, removed or
+        updated. This information is used by Muntjac terminal class to decide
+        whether to add a new series or remove/delete an existing series.
+        Basically, this information helps client to update only a portion of
+        the chart instead of full chart.
 
         @param target
         @param seriesCURMap
-        @throws PaintException
+        @raise PaintException
         """
         for seriesName in seriesCURMap.keys():
             seriesCURSet = seriesCURMap.get(seriesName)
