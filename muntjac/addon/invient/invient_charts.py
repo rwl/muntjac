@@ -68,6 +68,7 @@ class InvientCharts(AbstractComponent):
         self._svgAvailableListener = None
         self._chartSeries = set()
         self._reloadChartSeries = False
+        self._seriesCURMap = dict()
 
 
     def getConfig(self):
@@ -885,579 +886,14 @@ class InvientCharts(AbstractComponent):
                     self.requestRepaint()
 
 
-
-
-
-
-    def DateTimePoint(InvientCharts_this, *args, **kwargs):
-
-        return DateTimePoint(*args, **kwargs)
-
-    def Series(InvientCharts_this, *args, **kwargs):
-
-        return Series(*args, **kwargs)
-
-    def XYSeries(InvientCharts_this, *args, **kwargs):
-
-        class XYSeries(Series):
-            """This class defines a number series. In this series both X and Y values
-            must be number. To use date values, use {@link DateTimeSeries}
-
-            @author Invient
-
-            @see DateTimeSeries
-            """
-
-            def __init__(self, *args):
-                """Creates a series with given name
-
-                @param name
-                           the name of this series
-                ---
-                Creates a series with given name and configuration
-
-                @param name
-                           the name of this series
-                @param config
-                           the configuration for this series
-                ---
-                Creates a series with given name and type
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                ---
-                Creates a series with given name, type and configuration
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                @param config
-                           the configuration for this series
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    name, = _0
-                    super(XYSeries, self)(name)
-                elif _1 == 2:
-                    if isinstance(_0[1], InvientCharts_this.SeriesType):
-                        name, seriesType = _0
-                        super(XYSeries, self)(name, seriesType)
-                    else:
-                        name, config = _0
-                        super(XYSeries, self)(name, config)
-                elif _1 == 3:
-                    name, seriesType, config = _0
-                    super(XYSeries, self)(name, seriesType, config)
-                else:
-                    raise ARGERROR(1, 3)
-
-            def removePoint(self, *points):
-                """Removes the specified point from the series
-
-                @param points
-                """
-                # (non-Javadoc)
-                #
-                # @see com.invient.vaadin.chart.InvientChart.Series#removeAllPoints()
-
-                super(XYSeries, self).removePoint(points)
-
-            def removeAllPoints(self):
-                super(XYSeries, self).removeAllPoints()
-
-            def addPoint(self, *args):
-                """Appends the specified point into the series if they do not exists in
-                this series. The points which already exists will not be appended. A
-                collection of points appended to this series will be returned.
-
-                @param points
-                @return Returns a collection of points which are added in this
-                        series. If a point has same (x, y) value as any other point
-                        in the input argument points then it will not be added in
-                        this series.
-                ---
-                Append the specified point into this series. If the argument shift is
-                true then one point is shifted off the start of this series as one is
-                appended to the end.
-
-                @param points
-                @param shift
-                           If true then one point is shifted off the start of this
-                           series as one is appended to the end.
-                @return Returns a collection of points which are added in this
-                        series. If a point has same (x, y) value as any other point
-                        in the input argument points then it will not be added in
-                        this series.
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    points, = _0
-                    return super(XYSeries, self).addPoint(False, points)
-                elif _1 == 2:
-                    point, shift = _0
-                    point.setShift(shift)
-                    return super(XYSeries, self).addPoint(shift, point)
-                else:
-                    raise ARGERROR(1, 2)
-
-            # (non-Javadoc)
-            #
-            # @see com.invient.vaadin.chart.InvientChart.Series#getPoints()
-
-            def getPoints(self):
-                return super(XYSeries, self).getPoints()
-
-            def setSeriesPoints(self, points):
-                """Sets points into this series. This method removes all of its points
-                and then add points specified in the method argument. If the argument
-                is null then no actions are taken.
-
-                @param points
-                           the collection of points to set into this series.
-                @return Returns a collection of points which are set in this series.
-                        If a point has same (x, y) value as any other point in the
-                        argument points then it will not be added.
-                """
-                return super(XYSeries, self).setPoints(points)
-
-            def updatePointXValuesIfNotPresent(self):
-                pointStart = 0
-                pointInterval = 1
-                if isinstance(super(XYSeries, self).getConfig(), BaseLineConfig):
-                    config = super(XYSeries, self).getConfig()
-                    if config.getPointStart() is not None:
-                        pointStart = config.getPointStart()
-                    if config.getPointInterval() is not None:
-                        pointInterval = config.getPointInterval()
-                count = 0
-                for point in self.getPoints():
-                    if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
-                        point.setAutosetX(True)
-                        if count == 0:
-                            point.setX(pointStart)
-                            count += 1
-                        else:
-                            pointStart = pointStart + pointInterval
-                            point.setX(pointStart)
-
-        return XYSeries(*args, **kwargs)
-
-    def DateTimeSeries(InvientCharts_this, *args, **kwargs):
-
-        class DateTimeSeries(Series):
-            """This class defines a datetime series. In this series, the X value must be
-            date and Y values must be number. To use number values, use
-            {@link XYSeries}
-            <p>
-            By default, the time of a day is not included in the X value. In order to
-            include time, use a constructor with argument isIncludeTime and pass true
-            value for the argument.
-
-            @author Invient
-
-            @see XYSeries
-            """
-            _includeTime = None
-
-            def __init__(self, *args):
-                """Creates a series with given name. This series will not consider time
-                in the X property of {@link DateTimePoint}. To include time, use any
-                constructor having isIncludeTime as part of the arguments.
-
-                @param name
-                           the name of this series
-                ---
-                Creates a series with given name and boolean value.
-
-                @param name
-                           the name of this series
-                @param isIncludeTime
-                           If true then the time in the X property of
-                           {@link DateTimePoint} will be considered when drawing the
-                           chart. Defaults to false.
-                ---
-                Creates a series with given name and configuration.
-
-                @param name
-                           the name of this series
-                @param config
-                           the configuration for this series
-                ---
-                Creates a series with given name, configuration and boolean value.
-
-                @param name
-                           the name of this series
-                @param config
-                           the configuration for this series
-                @param isIncludeTime
-                           If true then the time in the X property of
-                           {@link DateTimePoint} will be considered when drawing the
-                           chart. Defaults to false.
-                ---
-                Creates a series with given name and type.
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                ---
-                Creates a series with given name, type and boolean value.
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                @param isIncludeTime
-                           If true then the time in the X property of
-                           {@link DateTimePoint} will be considered when drawing the
-                           chart. Defaults to false.
-                ---
-                Creates a series with given name, type and configuration.
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                @param config
-                           the configuration for this series
-                ---
-                Creates a series with given name, type, configuration and boolean
-                value.
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                @param config
-                           the configuration for this series
-                @param isIncludeTime
-                           If true then the time in the X property of
-                           {@link DateTimePoint} will be considered when drawing the
-                           chart. Defaults to false.
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    name, = _0
-                    self.__init__(name, False)
-                elif _1 == 2:
-                    if isinstance(_0[1], InvientCharts_this.SeriesType):
-                        name, seriesType = _0
-                        self.__init__(name, seriesType, False)
-                    elif isinstance(_0[1], SeriesConfig):
-                        name, config = _0
-                        self.__init__(name, config, False)
-                    else:
-                        name, isIncludeTime = _0
-                        super(DateTimeSeries, self)(name)
-                        self._includeTime = isIncludeTime
-                elif _1 == 3:
-                    if isinstance(_0[1], InvientCharts_this.SeriesType):
-                        if isinstance(_0[2], SeriesConfig):
-                            name, seriesType, config = _0
-                            self.__init__(name, seriesType, config, False)
-                        else:
-                            name, seriesType, isIncludeTime = _0
-                            super(DateTimeSeries, self)(name, seriesType)
-                            self._includeTime = isIncludeTime
-                    else:
-                        name, config, isIncludeTime = _0
-                        super(DateTimeSeries, self)(name, config)
-                        self._includeTime = isIncludeTime
-                elif _1 == 4:
-                    name, seriesType, config, isIncludeTime = _0
-                    super(DateTimeSeries, self)(name, seriesType, config)
-                    self._includeTime = isIncludeTime
-                else:
-                    raise ARGERROR(1, 4)
-
-            def removePoint(self, *points):
-                """Removes all points specified as method argument into this series
-
-                @param points
-                """
-                # (non-Javadoc)
-                #
-                # @see com.invient.vaadin.chart.InvientChart.Series#removeAllPoints()
-
-                super(DateTimeSeries, self).removePoint(points)
-
-            def removeAllPoints(self):
-                super(DateTimeSeries, self).removeAllPoints()
-
-            def addPoint(self, *args):
-                """Appends the specified point into the series if they do not exists in
-                this series. The points which already exists will not be appended. A
-                collection of points appended to this series will be returned.
-
-                @param points
-                @return Returns a collection of points which are added in this
-                        series. If a point has same (x, y) value as any other point
-                        in the input argument points then it will not be added in
-                        this series.
-                ---
-                Append the specified point into this series. If the argument shift is
-                true then one point is shifted off the start of this series as one is
-                appended to the end.
-
-                @param point
-                           A point to be added at the end of this series
-                @param shift
-                           If true then one point is shifted off the start of this
-                           series as one is appended to the end.
-                @return Returns a collection of points which are added in this
-                        series. If a point has same (x, y) value as any other point
-                        in the input argument points then it will not be added in
-                        this series.
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    points, = _0
-                    return super(DateTimeSeries, self).addPoint(False, points)
-                elif _1 == 2:
-                    point, shift = _0
-                    point.setShift(shift)
-                    return super(DateTimeSeries, self).addPoint(shift, point)
-                else:
-                    raise ARGERROR(1, 2)
-
-            def isIncludeTime(self):
-                """@return Returns true if the time in the X property of
-                        {@link DateTimePoint} will be considered when drawing the
-                        chart otherwise false.
-                """
-                # (non-Javadoc)
-                #
-                # @see com.invient.vaadin.chart.InvientChart.Series#getPoints()
-
-                return self._includeTime
-
-            def getPoints(self):
-                return super(DateTimeSeries, self).getPoints()
-
-            def setSeriesPoints(self, points):
-                """Sets points into this series. This method removes all of its points
-                and then add points specified in the method argument. If the argument
-                is null then no actions are taken.
-
-                @param points
-                           the collection of points to set into this series.
-                @return Returns a collection of points which are added in this
-                        series. If a point has same (x, y) value as any other point
-                        in the input argument points then it will not be added in
-                        this series.
-                """
-                return super(DateTimeSeries, self).setPoints(points)
-
-            def updatePointXValuesIfNotPresent(self):
-                pointStart = self.getDefPointStart()
-                pointInterval = 3600000
-                # 1 hour
-                if isinstance(super(DateTimeSeries, self).getConfig(), BaseLineConfig):
-                    config = super(DateTimeSeries, self).getConfig()
-                    if config.getPointStart() is not None:
-                        pointStart = config.getPointStart()
-                    if config.getPointInterval() is not None:
-                        pointInterval = config.getPointInterval()
-                prevDate = Date(pointStart)
-                count = 0
-                for point in self.getPoints():
-                    if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
-                        point.setAutosetX(True)
-                        if count == 0:
-                            point.setX(prevDate)
-                            count += 1
-                        else:
-                            point.setX(self.getUpdatedDate(prevDate, pointInterval))
-                            prevDate = point.getX()
-
-            @classmethod
-            def getDefPointStart(cls):
-                cal = GregorianCalendar.getInstance()
-                cal.set(Calendar.YEAR, 1970)
-                cal.set(Calendar.MONTH, Calendar.JANUARY)
-                cal.set(Calendar.DAY_OF_MONTH, 1)
-                cal.set(Calendar.HOUR, 0)
-                cal.set(Calendar.MINUTE, 0)
-                cal.set(Calendar.SECOND, 0)
-                cal.set(Calendar.MILLISECOND, 0)
-                return cal.getTimeInMillis()
-
-            @classmethod
-            def getUpdatedDate(cls, dt, milliseconds):
-                cal = Calendar.getInstance()
-                cal.setTimeInMillis(dt.getTime() + milliseconds)
-                return cal.getTime()
-
-            def toString(self):
-                return 'DateTimeSeries [includeTime=' + self._includeTime + ', getConfig()=' + InvientCharts_this.getConfig() + ', getName()=' + self.getName() + ', getType()=' + self.getType() + ', getStack()=' + self.getStack() + ', getXAxis()=' + self.getXAxis() + ', getYAxis()=' + self.getYAxis() + ']'
-
-        return DateTimeSeries(*args, **kwargs)
-
-    # *******************************************************************//
-    # *************** Highcharts Configuration options ******************//
-    # *******************************************************************//
-
-    class SeriesType(object):
-        COMMONSERIES = ['series']
-        LINE = ['line']
-        SPLINE = ['spline']
-        SCATTER = ['scatter']
-        AREA = ['area']
-        AREASPLINE = ['areaspline']
-        BAR = ['bar']
-        COLUMN = ['column']
-        PIE = ['pie']
-        _type = None
-
-        def __init__(self, type):
-            self._type = type
-
-        def getName(self):
-            return self._type
-
-        _values = [COMMONSERIES, LINE, SPLINE, SCATTER, AREA, AREASPLINE, BAR, COLUMN, PIE]
-
-        @classmethod
-        def values(cls):
-            return cls._enum_values[:]
-
-    SeriesType._enum_values = [SeriesType(*v) for v in SeriesType._enum_values]
-
-    class SeriesCUR(Serializable):
-        _type = None
-        _name = None
-        _reloadPoints = False
-        _pointsAdded = LinkedHashSet()
-        _pointsRemoved = LinkedHashSet()
-
-        def getType(self):
-            return self._type
-
-        def getName(self):
-            return self._name
-
-        def __init__(self, *args):
-            _0 = args
-            _1 = len(args)
-            if _1 == 2:
-                type, name = _0
-                super(SeriesCUR, self)()
-                self._type = type
-                self._name = name
-            elif _1 == 3:
-                type, name, reloadPoints = _0
-                super(SeriesCUR, self)()
-                self._type = type
-                self._name = name
-                self._reloadPoints = reloadPoints
-            else:
-                raise ARGERROR(2, 3)
-
-        def isReloadPoints(self):
-            """Indicates whether the client/terminal should update series by setting
-            all data of a series instead of adding or removing individual points
-
-            @return Returns true if the data of the series must be reloaded
-                    otherwise false.
-            """
-            return self._reloadPoints
-
-        def setReloadPoints(self, reloadPoints):
-            self._reloadPoints = reloadPoints
-
-        def trackPointAdded(self, point):
-            self._pointsAdded.add(point)
-
-        def trackPointRemoved(self, point):
-            # If the point was added earlier and now removed
-            # then there is no need to record its add/remove operation
-            # as add of a point is nullified by remove of a point
-            if not self.removePointIfTrackedAlready(point):
-                self._pointsRemoved.add(point)
-
-        def removePointIfTrackedAlready(self, point):
-            # Used to clear all points added/removed when
-            # series data is set/cleared using series.setPoints() or
-            # series.removeAllPoints()
-            return self._pointsAdded.remove(point)
-
-        def clearTrackedPoints(self):
-            self._pointsAdded.clear()
-            self._pointsRemoved.clear()
-
-        def getPointsAdded(self):
-            return self._pointsAdded
-
-        def getPointsRemoved(self):
-            return self._pointsRemoved
-
-        def hashCode(self):
-            prime = 31
-            result = 1
-            result = (prime * result) + (0 if self._name is None else self._name.hashCode())
-            result = (prime * result) + (0 if self._type is None else self._type.hashCode())
-            return result
-
-        def equals(self, obj):
-            if self is obj:
-                return True
-            if obj is None:
-                return False
-            if self.getClass() != obj.getClass():
-                return False
-            other = obj
-            if self._name is None:
-                if other.name is not None:
-                    return False
-            elif not (self._name == other.name):
-                return False
-            if self._type is None:
-                if other.type is not None:
-                    return False
-            elif not (self._type == other.type):
-                return False
-            return True
-
-        def toString(self):
-            return 'SeriesCUR [type=' + self._type + ', name=' + self._name + ', reloadPoints=' + self._reloadPoints + ', pointsAdded=' + self._pointsAdded + ', pointsRemoved=' + self._pointsRemoved + ']'
-
-        class SeriesCURType(object):
-            ADD = ['Add']
-            UPDATE = ['Update']
-            REMOVE = ['Remove']
-            _name = None
-
-            def __init__(self, name):
-                self._name = name
-
-            def getName(self):
-                return self._name
-
-            _values = [ADD, UPDATE, REMOVE]
-
-            @classmethod
-            def values(cls):
-                return cls._enum_values[:]
-
-        SeriesCURType._enum_values = [SeriesCURType(*v) for v in SeriesCURType._enum_values]
-
-    _seriesCURMap = LinkedHashMap()
-
     def addSeriesCUROperation(self, newSeriesCUR):
         if self._seriesCURMap.keys().contains(newSeriesCUR.getName()):
             seriesCURSet = self._seriesCURMap.get(newSeriesCUR.getName())
             # If for a series, no operation is found
             if (seriesCURSet is None) or (len(seriesCURSet) == 0):
-                seriesCURSet = LinkedHashSet()
+                seriesCURSet = set()
                 seriesCURSet.add(newSeriesCUR)
-                self._seriesCURMap.put(newSeriesCUR.getName(), seriesCURSet)
+                self._seriesCURMap[newSeriesCUR.getName()] = seriesCURSet
             elif seriesCURSet.contains(newSeriesCUR):
                 seriesCUR = self.getMatchedSeriesCUR(seriesCURSet, newSeriesCUR)
                 # In case of series update (due to series.show/hide or
@@ -1478,9 +914,8 @@ class InvientCharts(AbstractComponent):
                 while seriesCURItr.hasNext():
                     seriesCUR = seriesCURItr.next()
                     if seriesCUR.getName() == newSeriesCUR.getName():
-                        if (
-                            SeriesCURType.REMOVE == newSeriesCUR.getType() and SeriesCURType.ADD == seriesCUR.getType()
-                        ):
+                        if (SeriesCURType.REMOVE == newSeriesCUR.getType()
+                                and SeriesCURType.ADD == seriesCUR.getType()):
                             # Remove addition of a series as there is no reason
                             # to add
                             # a series and
@@ -1490,18 +925,16 @@ class InvientCharts(AbstractComponent):
                             # actually there is nothing to be done
                             seriesCURItr.remove()
                             return False
-                        if (
-                            SeriesCURType.UPDATE == newSeriesCUR.getType() and SeriesCURType.ADD == seriesCUR.getType()
-                        ):
+                        if (SeriesCURType.UPDATE == newSeriesCUR.getType()
+                                and SeriesCURType.ADD == seriesCUR.getType()):
                             # There is no need for update as adding a series
                             # will
                             # take care of applying any update to the series
                             # attributes
                             # specifically visibility
                             return False
-                        if (
-                            SeriesCURType.REMOVE == newSeriesCUR.getType() and SeriesCURType.UPDATE == seriesCUR.getType()
-                        ):
+                        if (SeriesCURType.REMOVE == newSeriesCUR.getType()
+                                and SeriesCURType.UPDATE == seriesCUR.getType()):
                             # Remove update of a series as there is no reason
                             # to update
                             # a series
@@ -1518,19 +951,20 @@ class InvientCharts(AbstractComponent):
             seriesCURSet.add(newSeriesCUR)
             return True
         else:
-            seriesCURSet = LinkedHashSet()
+            seriesCURSet = set()
             seriesCURSet.add(newSeriesCUR)
             self._seriesCURMap.put(newSeriesCUR.getName(), seriesCURSet)
             return True
 
+
     def addSeriesPointAddedOperation(self, seriesName, point):
         seriesCURSet = self._seriesCURMap.get(seriesName)
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
-            seriesCUR = self.SeriesCUR(SeriesCURType.UPDATE, seriesName)
+            seriesCUR = SeriesCUR(SeriesCURType.UPDATE, seriesName)
             seriesCUR.trackPointAdded(point)
-            seriesCURSet = LinkedHashSet()
+            seriesCURSet = set()
             seriesCURSet.add(seriesCUR)
-            self._seriesCURMap.put(seriesName, seriesCURSet)
+            self._seriesCURMap[seriesName] = seriesCURSet
         else:
             lastSeriesCur = self.getLastSeriesCUR(seriesCURSet)
             # Track points only if series is updated.
@@ -1540,10 +974,10 @@ class InvientCharts(AbstractComponent):
             # 2. A series is removed : In this case, a series will be removed
             # and hence any point added to the series doesn't carry any
             # meaning.
-            if (
-                lastSeriesCur.getType() == SeriesCURType.UPDATE and not lastSeriesCur.isReloadPoints()
-            ):
+            if (lastSeriesCur.getType() == SeriesCURType.UPDATE
+                    and not lastSeriesCur.isReloadPoints()):
                 lastSeriesCur.trackPointAdded(point)
+
 
     def getLastSeriesCUR(self, seriesCURSet):
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
@@ -1553,20 +987,22 @@ class InvientCharts(AbstractComponent):
             lastSeriesCur = seriesCur
         return lastSeriesCur
 
+
     def getMatchedSeriesCUR(self, seriesCURSet, matchAgainstSeriesCUR):
         for seriesCur in seriesCURSet:
             if matchAgainstSeriesCUR == seriesCur:
                 return seriesCur
         return None
 
+
     def addSeriesPointRemovedOperation(self, seriesName, point):
         seriesCURSet = self._seriesCURMap.get(seriesName)
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
             seriesCUR = self.SeriesCUR(SeriesCURType.UPDATE, seriesName)
             seriesCUR.trackPointRemoved(point)
-            seriesCURSet = LinkedHashSet()
+            seriesCURSet = set()
             seriesCURSet.add(seriesCUR)
-            self._seriesCURMap.put(seriesName, seriesCURSet)
+            self._seriesCURMap[seriesName] = seriesCURSet
         else:
             lastSeriesCur = self.getLastSeriesCUR(seriesCURSet)
             # Track points only if series is updated.
@@ -1576,28 +1012,29 @@ class InvientCharts(AbstractComponent):
             # 2. A series is removed : In this case, a series will be removed
             # and hence any point removed from the series
             # doesn't carry any meaning.
-            if (
-                lastSeriesCur.getType() == SeriesCURType.UPDATE and not lastSeriesCur.isReloadPoints()
-            ):
+            if (lastSeriesCur.getType() == SeriesCURType.UPDATE
+                    and not lastSeriesCur.isReloadPoints()):
                 lastSeriesCur.trackPointRemoved(point)
 
+
     def refresh(self):
-        """After a series is added or removed, there is no need to call this method
-        as it is handled implicitly. This method will send updates to the client.
-        This method should be called after adding/removing plotbands and
-        plotlines. This inconsistency will be fixed in next revision.
+        """After a series is added or removed, there is no need to call this
+        method as it is handled implicitly. This method will send updates to
+        the client. This method should be called after adding/removing
+        plotbands and plotlines. This inconsistency will be fixed in next
+        revision.
         """
         super(InvientCharts, self).requestRepaint()
 
+
     def print_(self):
-        """Displays a Print dialog of the Webkit to print this chart. Invoking this
-        method causes the Webkit to hide other widgets on the screen and only
-        this chart widget will be visible. Also it prints this chart widget as it
-        is displayed.
+        """Displays a Print dialog of the Webkit to print this chart. Invoking
+        this method causes the Webkit to hide other widgets on the screen and
+        only this chart widget will be visible. Also it prints this chart
+        widget as it is displayed.
         """
         self._isPrint = True
         self.requestRepaint()
-
 
 
 class MousePosition(object):
@@ -3115,52 +2552,62 @@ class Series(object):
         """
         if shift:
             # Remove first point as other points gets appended at the end
-            pointsItr = self._points
-            if pointsItr.hasNext():
-                pointsItr.next()
-                pointsItr.remove()
+#            pointsItr = self._points
+#            if pointsItr.hasNext():
+#                pointsItr.next()
+#                pointsItr.remove()
+            self._points = set()
+
         pointsAddedList = list()
+
         for point in points:
             if self._points.add(point):
                 pointsAddedList.add(point)
+
         self.updatePointXValuesIfNotPresent()
+
         # Now record point add event as we need to know x value of a point
         for point in pointsAddedList:
             if self._invientCharts is not None:
                 self._invientCharts.addSeriesPointAddedOperation(point.getSeries().getName(), point)
                 self._invientCharts.requestRepaint()
-        return LinkedHashSet(pointsAddedList)
+
+        return set(pointsAddedList)
+
 
     def addPointsInternal(self, points):
         for point in points:
             self._points.add(point)
 
+
     def getPoints(self):
-        """@return Returns all points of this series. Adding or removing any
+        """@return: Returns all points of this series. Adding or removing any
                 point to or from the returned collection will not impact the
                 chart. To add a point or points, use addPoint() or
                 removePoint() method.
         """
-        return LinkedHashSet(self._points)
+        return set(self._points)
+
 
     def setPoints(self, points):
         """Sets points into this series
 
         @param points
-        @return Returns null if the argument is null otherwise returns a
-                collection of points which are set in this series. If a point
-                has same (x, y) value as any other point in the argument
-                points then it will not be added.
+        @return: Returns null if the argument is null otherwise returns a
+                 collection of points which are set in this series. If a point
+                 has same (x, y) value as any other point in the argument
+                 points then it will not be added.
         """
         if points is not None:
             self._points.clear()
             self.addPointsInternal(points)
             self.updatePointXValuesIfNotPresent()
             if self._invientCharts is not None:
-                self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
+                self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
                 self._invientCharts.requestRepaint()
             return self.getPoints()
         return None
+
 
     def updatePointXValuesIfNotPresent(self):
         """Each of the subclass needs to implement this method to ensure that
@@ -3168,32 +2615,37 @@ class Series(object):
         """
         pass
 
+
     def show(self):
         """Show this series"""
         self._config = SeriesConfig() if self._config is None else self._config
         self._config.setVisible(True)
         if self._invientCharts is not None:
-            self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName()))
             self._invientCharts.requestRepaint()
+
 
     def hide(self):
         """Hide this series"""
         self._config = SeriesConfig() if self._config is None else self._config
         self._config.setVisible(False)
         if self._invientCharts is not None:
-            self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName()))
             self._invientCharts.requestRepaint()
+
 
     def setInvientCharts(self, invientCharts):
         self._invientCharts = invientCharts
 
-    def hashCode(self):
+
+    def __hash__(self):
         prime = 31
         result = 1
-        result = (prime * result) + (0 if self._name is None else self._name.hashCode())
+        result = (prime * result) + (0 if self._name is None else self._name.__hash__())
         return result
 
-    def equals(self, obj):
+
+    def __eq__(self, obj):
         if self is obj:
             return True
         if obj is None:
@@ -3208,5 +2660,542 @@ class Series(object):
             return False
         return True
 
-    def toString(self):
-        return 'Series [points=' + self._points + ', name=' + self._name + ', type=' + self._type + ', stack=' + self._stack + ', xAxis=' + self._xAxis + ', yAxis=' + self._yAxis + ', config=' + self._config + ']'
+
+    def __str__(self):
+        return ('Series [points=' + self._points
+                + ', name=' + self._name
+                + ', type=' + self._type
+                + ', stack=' + self._stack
+                + ', xAxis=' + self._xAxis
+                + ', yAxis=' + self._yAxis
+                + ', config=' + self._config + ']')
+
+
+class XYSeries(Series):
+    """This class defines a number series. In this series both X and Y values
+    must be number. To use date values, use {@link DateTimeSeries}
+
+    @author: Invient
+    @author: Richard Lincoln
+
+    @see: L{DateTimeSeries}
+    """
+
+    def __init__(self, name, seriesType_or_config=None, config=None):
+        """Creates a series with given name, type and configuration
+
+        @param name:
+                   the name of this series
+        @param seriesType_or_config:
+                   the type of this series or the configuration for this series
+        @param config:
+                   the configuration for this series
+        """
+        if seriesType_or_config is not None:
+            if isinstance(seriesType_or_config, SeriesType):
+                seriesType = seriesType_or_config
+            else:
+                config = seriesType_or_config
+
+        super(XYSeries, self).__init__(name, seriesType, config)
+
+
+    def removePoint(self, *points):
+        """Removes the specified point from the series
+
+        @param points
+        """
+        super(XYSeries, self).removePoint(points)
+
+
+    def removeAllPoints(self):
+        super(XYSeries, self).removeAllPoints()
+
+
+    def addPoint(self, point_or_points, shift=None):
+        """Appends the specified point into the series if they do not exists in
+        this series. The points which already exists will not be appended. A
+        collection of points appended to this series will be returned.
+
+        @param points
+        @return Returns a collection of points which are added in this
+                series. If a point has same (x, y) value as any other point
+                in the input argument points then it will not be added in
+                this series.
+        ---
+        Append the specified point into this series. If the argument shift is
+        true then one point is shifted off the start of this series as one is
+        appended to the end.
+
+        @param points
+        @param shift
+                   If true then one point is shifted off the start of this
+                   series as one is appended to the end.
+        @return Returns a collection of points which are added in this
+                series. If a point has same (x, y) value as any other point
+                in the input argument points then it will not be added in
+                this series.
+        """
+        if shift is None:
+            points = point_or_points
+            return super(XYSeries, self).addPoint(False, points)
+        else:
+            point = point_or_points
+            point.setShift(shift)
+            return super(XYSeries, self).addPoint(shift, point)
+
+
+    def getPoints(self):
+        return super(XYSeries, self).getPoints()
+
+
+    def setSeriesPoints(self, points):
+        """Sets points into this series. This method removes all of its points
+        and then add points specified in the method argument. If the argument
+        is null then no actions are taken.
+
+        @param points:
+                   the collection of points to set into this series.
+        @return: Returns a collection of points which are set in this series.
+                 If a point has same (x, y) value as any other point in the
+                 argument points then it will not be added.
+        """
+        return super(XYSeries, self).setPoints(points)
+
+
+    def updatePointXValuesIfNotPresent(self):
+        pointStart = 0
+        pointInterval = 1
+
+        if isinstance(super(XYSeries, self).getConfig(), BaseLineConfig):
+            config = super(XYSeries, self).getConfig()
+            if config.getPointStart() is not None:
+                pointStart = config.getPointStart()
+            if config.getPointInterval() is not None:
+                pointInterval = config.getPointInterval()
+
+        count = 0
+
+        for point in self.getPoints():
+            if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
+                point.setAutosetX(True)
+                if count == 0:
+                    point.setX(pointStart)
+                    count += 1
+                else:
+                    pointStart = pointStart + pointInterval
+                    point.setX(pointStart)
+
+
+class DateTimeSeries(Series):
+    """This class defines a datetime series. In this series, the X value must
+    be date and Y values must be number. To use number values, use L{XYSeries}
+
+    By default, the time of a day is not included in the X value. In order to
+    include time, use a constructor with argument isIncludeTime and pass true
+    value for the argument.
+
+    @author: Invient
+    @author: Richard Lincoln
+
+    @see: L{XYSeries}
+    """
+
+    def __init__(self, *args):
+        """Creates a series with given name. This series will not consider time
+        in the X property of {@link DateTimePoint}. To include time, use any
+        constructor having isIncludeTime as part of the arguments.
+
+        @param name
+                   the name of this series
+        ---
+        Creates a series with given name and boolean value.
+
+        @param name
+                   the name of this series
+        @param isIncludeTime
+                   If true then the time in the X property of
+                   {@link DateTimePoint} will be considered when drawing the
+                   chart. Defaults to false.
+        ---
+        Creates a series with given name and configuration.
+
+        @param name
+                   the name of this series
+        @param config
+                   the configuration for this series
+        ---
+        Creates a series with given name, configuration and boolean value.
+
+        @param name
+                   the name of this series
+        @param config
+                   the configuration for this series
+        @param isIncludeTime
+                   If true then the time in the X property of
+                   {@link DateTimePoint} will be considered when drawing the
+                   chart. Defaults to false.
+        ---
+        Creates a series with given name and type.
+
+        @param name
+                   the name of this series
+        @param seriesType
+                   the type of this series
+        ---
+        Creates a series with given name, type and boolean value.
+
+        @param name
+                   the name of this series
+        @param seriesType
+                   the type of this series
+        @param isIncludeTime
+                   If true then the time in the X property of
+                   {@link DateTimePoint} will be considered when drawing the
+                   chart. Defaults to false.
+        ---
+        Creates a series with given name, type and configuration.
+
+        @param name
+                   the name of this series
+        @param seriesType
+                   the type of this series
+        @param config
+                   the configuration for this series
+        ---
+        Creates a series with given name, type, configuration and boolean
+        value.
+
+        @param name
+                   the name of this series
+        @param seriesType
+                   the type of this series
+        @param config
+                   the configuration for this series
+        @param isIncludeTime
+                   If true then the time in the X property of
+                   {@link DateTimePoint} will be considered when drawing the
+                   chart. Defaults to false.
+        """
+        self._includeTime = None
+
+        args = args
+        nargs = len(args)
+        if nargs == 1:
+            name, = args
+            self.__init__(name, False)
+        elif nargs == 2:
+            if isinstance(args[1], SeriesType):
+                name, seriesType = args
+                self.__init__(name, seriesType, False)
+            elif isinstance(args[1], SeriesConfig):
+                name, config = args
+                self.__init__(name, config, False)
+            else:
+                name, isIncludeTime = args
+                super(DateTimeSeries, self).__init__(name)
+                self._includeTime = isIncludeTime
+        elif nargs == 3:
+            if isinstance(args[1], SeriesType):
+                if isinstance(args[2], SeriesConfig):
+                    name, seriesType, config = args
+                    self.__init__(name, seriesType, config, False)
+                else:
+                    name, seriesType, isIncludeTime = args
+                    super(DateTimeSeries, self).__init__(name, seriesType)
+                    self._includeTime = isIncludeTime
+            else:
+                name, config, isIncludeTime = args
+                super(DateTimeSeries, self).__init__(name, config)
+                self._includeTime = isIncludeTime
+        elif nargs == 4:
+            name, seriesType, config, isIncludeTime = args
+            super(DateTimeSeries, self).__init__(name, seriesType, config)
+            self._includeTime = isIncludeTime
+        else:
+            raise ValueError
+
+
+    def removePoint(self, *points):
+        """Removes all points specified as method argument into this series
+
+        @param points
+        """
+        super(DateTimeSeries, self).removePoint(points)
+
+
+    def removeAllPoints(self):
+        super(DateTimeSeries, self).removeAllPoints()
+
+
+    def addPoint(self, point_or_points, shift=None):
+        """Appends the specified point into the series if they do not exists in
+        this series. The points which already exists will not be appended. A
+        collection of points appended to this series will be returned.
+
+        @param points
+        @return Returns a collection of points which are added in this
+                series. If a point has same (x, y) value as any other point
+                in the input argument points then it will not be added in
+                this series.
+        ---
+        Append the specified point into this series. If the argument shift is
+        true then one point is shifted off the start of this series as one is
+        appended to the end.
+
+        @param point:
+                   A point to be added at the end of this series
+        @param shift:
+                   If true then one point is shifted off the start of this
+                   series as one is appended to the end.
+        @return: Returns a collection of points which are added in this
+                 series. If a point has same (x, y) value as any other point
+                 in the input argument points then it will not be added in
+                 this series.
+        """
+        if shift is None:
+            points, = point_or_points
+            return super(DateTimeSeries, self).addPoint(False, points)
+        else:
+            point = point_or_points
+            point.setShift(shift)
+            return super(DateTimeSeries, self).addPoint(shift, point)
+
+
+    def isIncludeTime(self):
+        """@return: Returns true if the time in the X property of
+                L{DateTimePoint} will be considered when drawing the
+                chart otherwise false.
+        """
+        return self._includeTime
+
+
+    def getPoints(self):
+        return super(DateTimeSeries, self).getPoints()
+
+
+    def setSeriesPoints(self, points):
+        """Sets points into this series. This method removes all of its points
+        and then add points specified in the method argument. If the argument
+        is null then no actions are taken.
+
+        @param points:
+                   the collection of points to set into this series.
+        @return: Returns a collection of points which are added in this
+                 series. If a point has same (x, y) value as any other point
+                 in the input argument points then it will not be added in
+                 this series.
+        """
+        return super(DateTimeSeries, self).setPoints(points)
+
+
+    def updatePointXValuesIfNotPresent(self):
+        pointStart = self.getDefPointStart()
+        pointInterval = 3600000
+        # 1 hour
+        if isinstance(super(DateTimeSeries, self).getConfig(), BaseLineConfig):
+            config = super(DateTimeSeries, self).getConfig()
+            if config.getPointStart() is not None:
+                pointStart = config.getPointStart()
+            if config.getPointInterval() is not None:
+                pointInterval = config.getPointInterval()
+        prevDate = datetime(pointStart)
+        count = 0
+        for point in self.getPoints():
+            if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
+                point.setAutosetX(True)
+                if count == 0:
+                    point.setX(prevDate)
+                    count += 1
+                else:
+                    point.setX(self.getUpdatedDate(prevDate, pointInterval))
+                    prevDate = point.getX()
+
+
+    @classmethod
+    def getDefPointStart(cls):
+        cal = GregorianCalendar.getInstance()
+        cal.set(Calendar.YEAR, 1970)
+        cal.set(Calendar.MONTH, Calendar.JANUARY)
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+        cal.set(Calendar.HOUR, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+        return cal.getTimeInMillis()
+
+
+    @classmethod
+    def getUpdatedDate(cls, dt, milliseconds):
+        cal = Calendar.getInstance()
+        cal.setTimeInMillis(dt.getTime() + milliseconds)
+        return cal.getTime()
+
+
+    def __str__(self):
+        return ('DateTimeSeries [includeTime=' + self._includeTime
+                + ', getConfig()=' + InvientCharts_this.getConfig()
+                + ', getName()=' + self.getName()
+                + ', getType()=' + self.getType()
+                + ', getStack()=' + self.getStack()
+                + ', getXAxis()=' + self.getXAxis()
+                + ', getYAxis()=' + self.getYAxis() + ']')
+
+
+class SeriesType(object):
+    COMMONSERIES = None
+    LINE = None
+    SPLINE = None
+    SCATTER = None
+    AREA = None
+    AREASPLINE = None
+    BAR = None
+    COLUMN = None
+    PIE = None
+
+    def __init__(self, typ):
+        self._type = typ
+
+    def getName(self):
+        return self._type
+
+    _values = [COMMONSERIES, LINE, SPLINE, SCATTER, AREA, AREASPLINE, BAR, COLUMN, PIE]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
+
+SeriesType.COMMONSERIES = SeriesType('series')
+SeriesType.LINE = SeriesType('line')
+SeriesType.SPLINE = SeriesType('spline')
+SeriesType.SCATTER = SeriesType('scatter')
+SeriesType.AREA = SeriesType('area')
+SeriesType.AREASPLINE = SeriesType('areaspline')
+SeriesType.BAR = SeriesType('bar')
+SeriesType.COLUMN = SeriesType('column')
+SeriesType.PIE = SeriesType('pie')
+
+
+class SeriesCUR(object):
+
+    def getType(self):
+        return self._type
+
+    def getName(self):
+        return self._name
+
+    def __init__(self, typ, name, reloadPoints=False):
+        self._type = typ
+        self._name = name
+        self._reloadPoints = reloadPoints
+        self._pointsAdded = set()
+        self._pointsRemoved = set()
+
+        super(SeriesCUR, self).__init__()
+
+
+    def isReloadPoints(self):
+        """Indicates whether the client/terminal should update series by
+        setting all data of a series instead of adding or removing individual
+        points
+
+        @return: Returns true if the data of the series must be reloaded
+                 otherwise false.
+        """
+        return self._reloadPoints
+
+
+    def setReloadPoints(self, reloadPoints):
+        self._reloadPoints = reloadPoints
+
+
+    def trackPointAdded(self, point):
+        self._pointsAdded.add(point)
+
+
+    def trackPointRemoved(self, point):
+        # If the point was added earlier and now removed
+        # then there is no need to record its add/remove operation
+        # as add of a point is nullified by remove of a point
+        if not self.removePointIfTrackedAlready(point):
+            self._pointsRemoved.add(point)
+
+
+    def removePointIfTrackedAlready(self, point):
+        # Used to clear all points added/removed when
+        # series data is set/cleared using series.setPoints() or
+        # series.removeAllPoints()
+        return self._pointsAdded.remove(point)
+
+
+    def clearTrackedPoints(self):
+        self._pointsAdded.clear()
+        self._pointsRemoved.clear()
+
+
+    def getPointsAdded(self):
+        return self._pointsAdded
+
+
+    def getPointsRemoved(self):
+        return self._pointsRemoved
+
+
+    def __hash__(self):
+        prime = 31
+        result = 1
+        result = (prime * result) + (0 if self._name is None else self._name.__hash__())
+        result = (prime * result) + (0 if self._type is None else self._type.__hash__())
+        return result
+
+
+    def __eq__(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.getClass() != obj.getClass():
+            return False
+        other = obj
+        if self._name is None:
+            if other.name is not None:
+                return False
+        elif not (self._name == other.name):
+            return False
+        if self._type is None:
+            if other.type is not None:
+                return False
+        elif not (self._type == other.type):
+            return False
+        return True
+
+
+    def __str__(self):
+        return ('SeriesCUR [type=' + self._type
+                + ', name=' + self._name
+                + ', reloadPoints=' + self._reloadPoints
+                + ', pointsAdded=' + self._pointsAdded
+                + ', pointsRemoved=' + self._pointsRemoved + ']')
+
+
+class SeriesCURType(object):
+
+    ADD = None
+    UPDATE = None
+    REMOVE = None
+
+    def __init__(self, name):
+        self._name = name
+
+    def getName(self):
+        return self._name
+
+    _values = [ADD, UPDATE, REMOVE]
+
+    @classmethod
+    def values(cls):
+        return cls._values[:]
+
+SeriesCURType.ADD = SeriesCURType('Add')
+SeriesCURType.UPDATE = SeriesCURType('Update')
+SeriesCURType.REMOVE = SeriesCURType('Remove')
