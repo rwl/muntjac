@@ -1,32 +1,15 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
+import datetime
 
-from __pyjamas__ import (ARGERROR,)
-from com.invient.vaadin.charts.InvientChartsConfig import (InvientChartsConfig,)
-from com.invient.vaadin.charts.InvientChartsUtil import (InvientChartsUtil,)
-# from com.vaadin.terminal.PaintException import (PaintException,)
-# from com.vaadin.terminal.PaintTarget import (PaintTarget,)
-# from com.vaadin.ui.AbstractComponent import (AbstractComponent,)
-# from com.vaadin.ui.ClientWidget import (ClientWidget,)
-# from com.vaadin.ui.Component import (Component,)
-# from java.io.Serializable import (Serializable,)
-# from java.lang.reflect.Method import (Method,)
-# from java.util.ArrayList import (ArrayList,)
-# from java.util.Calendar import (Calendar,)
-# from java.util.Date import (Date,)
-# from java.util.GregorianCalendar import (GregorianCalendar,)
-# from java.util.HashMap import (HashMap,)
-# from java.util.HashSet import (HashSet,)
-# from java.util.Iterator import (Iterator,)
-# from java.util.LinkedHashMap import (LinkedHashMap,)
-# from java.util.LinkedHashSet import (LinkedHashSet,)
-# from java.util.List import (List,)
-# from java.util.Map import (Map,)
-# from java.util.Set import (Set,)
-SeriesCURType = InvientCharts.SeriesCUR.SeriesCURType
-BaseLineConfig = InvientChartsConfig.BaseLineConfig
-PointConfig = InvientChartsConfig.PointConfig
-SeriesConfig = InvientChartsConfig.SeriesConfig
+from muntjac.ui.abstract_component \
+    import AbstractComponent
+
+from muntjac.addon.invient.invient_charts_config \
+    import BaseLineConfig, PointConfig, SeriesConfig
+
+from muntjac.addon.invient.invient_charts_util \
+    import InvientChartsUtil
 
 
 class InvientCharts(AbstractComponent):
@@ -37,26 +20,23 @@ class InvientCharts(AbstractComponent):
     This class allows us to specify series of different types say line and pie
     and hence it makes it easy to build a combination chart.
 
-    After a chart {@link InvientCharts} is created, the following changes to the
+    After a chart L{InvientCharts} is created, the following changes to the
     chart will be reflected rendered on the webkit.
-    <ul>
-    <li>Set or update chart {@link Title} and/or {@link SubTitle}</li>
-    <li>Modify chart size</li>
-    <li>Add, update and remove one or more instances of {@link PlotBand} and
-    {@link PlotLine}</li>
-    <li>Set or update axis categories</li>
-    <li>Set or update axis min and max values</li>
-    <li>Add, update and remove one or more instances of {@link Series}</li>
-    <li>Show or hide one or more instances of {@link Series}</li>
-    <li>Add and remove one or more instances of {@link Point}</li>
-    <li>Register and unregister event listeners</li>
-    </ul>
 
-    @author Invient
+      * Set or update chart {@link Title} and/or {@link SubTitle}</li>
+      * Modify chart size</li>
+      * Add, update and remove one or more instances of {@link PlotBand} and
+    {@link PlotLine}</li>
+      * Set or update axis categories</li>
+      * Set or update axis min and max values</li>
+      * Add, update and remove one or more instances of {@link Series}</li>
+      * Show or hide one or more instances of {@link Series}</li>
+      * Add and remove one or more instances of {@link Point}</li>
+      * Register and unregister event listeners</li>
+
+    @author: Invient
+    @author: Richard Lincoln
     """
-    _chartConfig = None
-    _isRetrieveSVG = False
-    _isPrint = False
 
     def __init__(self, chartConfig):
         """Creates this chart object with given chart configuration
@@ -64,21 +44,46 @@ class InvientCharts(AbstractComponent):
         @param chartConfig
         """
         if chartConfig is None:
-            raise self.IllegalArgumentException('The chart cannot be created without chartConfig argument.')
+            raise ValueError('The chart cannot be created without '
+                    'chartConfig argument.')
         self._chartConfig = chartConfig
         self._chartConfig.setInvientCharts(self)
+
+        self._isRetrieveSVG = False
+        self._isPrint = False
+
+        self._pointClickListeners = dict()
+        self._pointRemoveListeners = dict()
+        self._pointUnselectListeners = dict()
+        self._pointSelectListeners = dict()
+        self._seriesClickListeners = dict()
+        self._seriesHideListeners = dict()
+        self._seriesShowListeners = dict()
+        self._seriesLegendItemClickListeners = dict()
+        self._pieChartLegendItemClickListener = set()
+        self._chartClickListener = set()
+        self._chartAddSeriesListener = set()
+        self._chartZoomListener = set()
+        self._chartResetZoomListener = set()
+        self._svgAvailableListener = None
+        self._chartSeries = set()
+        self._reloadChartSeries = False
+
 
     def getConfig(self):
         """Returns chart configuration object
 
-        @return Returns chart configuration object
+        @return: Returns chart configuration object
         """
         return self._chartConfig
 
+
     def paintContent(self, target):
         super(InvientCharts, self).paintContent(target)
+
         # Update all series with reference of x and y axis.
         self.setAxisInAllSeriesIfNotSetAlready()
+
         # Configurations options
         target.startTag('options')
         if self._chartConfig is not None:
@@ -94,19 +99,30 @@ class InvientCharts(AbstractComponent):
             InvientChartsUtil.writeChartLabelConfig(target, self._chartConfig.getChartLabel())
         target.endTag('options')
         target.startTag('chartData')
-        InvientChartsUtil.writeSeries(target, self._chartConfig.getGeneralChartConfig().getType(), self._chartSeries, self._chartConfig.getXAxes(), self._chartConfig.getYAxes())
+
+        InvientChartsUtil.writeSeries(target,
+                self._chartConfig.getGeneralChartConfig().getType(),
+                self._chartSeries,
+                self._chartConfig.getXAxes(),
+                self._chartConfig.getYAxes())
         target.endTag('chartData')
+
         # A flag to indicate whether to retrieve svg from client or not.
         target.addAttribute('isRetrieveSVG', self._isRetrieveSVG)
+
         # A flag to indicate whether to prompt print dialog on client or not
         target.addAttribute('isPrint', self._isPrint)
+
         # Events
         target.startTag('events')
+
         # Chart Events
         self.paintChartEvents(target)
+
         # Series/Point Events
         self.paintSeriesAndPointEvents(target)
         target.endTag('events')
+
         # If the flag reloadChartData is true then the
         # client will ignore seriesOperations and
         # remove all existing series of a chart and
@@ -116,27 +132,33 @@ class InvientCharts(AbstractComponent):
         if not self._reloadChartSeries:
             InvientChartsUtil.writeChartDataUpdates(target, self._seriesCURMap)
         target.endTag('chartDataUpdates')
+
         # reset flag
         self._reloadChartSeries = False
+
         # reset series operations
         self._seriesCURMap.clear()
+
         # reset to not retrieve svg when other updates on the chart occurs.
         # The svg is retrieved only when a svg available listener is registered
         # on this chart
         self._isRetrieveSVG = False
         self._isPrint = False
 
+
     def paintChartEvents(self, target):
         target.startTag('chartEvents')
-        if (
-            self._chartAddSeriesListener is not None and len(self._chartAddSeriesListener) > 0
-        ):
+        if (self._chartAddSeriesListener is not None
+                and len(self._chartAddSeriesListener) > 0):
             target.addAttribute('addSeries', True)
-        if self._chartClickListener is not None and len(self._chartClickListener) > 0:
+        if (self._chartClickListener is not None
+                and len(self._chartClickListener) > 0):
             target.addAttribute('click', True)
-        if self._chartZoomListener is not None and len(self._chartZoomListener) > 0:
+        if (self._chartZoomListener is not None
+                and len(self._chartZoomListener) > 0):
             target.addAttribute('selection', True)
         target.endTag('chartEvents')
+
 
     def paintSeriesAndPointEvents(self, target):
         target.startTag('seriesEvents')
@@ -145,122 +167,111 @@ class InvientCharts(AbstractComponent):
             self.paintSeriesEvents(target, seriesType)
         target.endTag('seriesEvents')
 
+
     def paintSeriesEvents(self, target, seriesType):
         tagName = seriesType.getName()
         target.startTag(tagName)
-        if (
-            seriesType in self._seriesClickListeners and len(self._seriesClickListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._seriesClickListeners
+                and len(self._seriesClickListeners[seriesType]) > 0):
             target.addAttribute('click', True)
-        if (
-            seriesType in self._seriesHideListeners and len(self._seriesHideListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._seriesHideListeners
+                and len(self._seriesHideListeners[seriesType]) > 0):
             target.addAttribute('hide', True)
-        if (
-            seriesType in self._seriesShowListeners and len(self._seriesShowListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._seriesShowListeners
+                and len(self._seriesShowListeners[seriesType]) > 0):
             target.addAttribute('show', True)
-        if (
-            seriesType in self._seriesLegendItemClickListeners and len(self._seriesLegendItemClickListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._seriesLegendItemClickListeners
+                and len(self._seriesLegendItemClickListeners[seriesType]) > 0):
             target.addAttribute('legendItemClick', True)
+
         # Check for point events
         self.paintPointEvents(target, seriesType)
         target.endTag(tagName)
 
+
     def paintPointEvents(self, target, seriesType):
         target.startTag('pointEvents')
-        if (
-            seriesType in self._pointClickListeners and len(self._pointClickListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._pointClickListeners
+                and len(self._pointClickListeners[seriesType]) > 0):
             target.addAttribute('click', True)
-        if (
-            seriesType in self._pointRemoveListeners and len(self._pointRemoveListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._pointRemoveListeners
+                and len(self._pointRemoveListeners[seriesType]) > 0):
             target.addAttribute('remove', True)
-        if (
-            seriesType in self._pointSelectListeners and len(self._pointSelectListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._pointSelectListeners
+                and len(self._pointSelectListeners[seriesType]) > 0):
             target.addAttribute('select', True)
-        if (
-            seriesType in self._pointUnselectListeners and len(self._pointUnselectListeners[seriesType]) > 0
-        ):
+        if (seriesType in self._pointUnselectListeners
+                and len(self._pointUnselectListeners[seriesType]) > 0):
             target.addAttribute('unselect', True)
         # Event applicable only for pie chart
-        if (
-            self.SeriesType.PIE == seriesType and len(self._pieChartLegendItemClickListener) > 0
-        ):
+        if (SeriesType.PIE == seriesType
+                and len(self._pieChartLegendItemClickListener) > 0):
             target.addAttribute('legendItemClick', True)
         target.endTag('pointEvents')
+
 
     def changeVariables(self, source, variables):
         if 'event' in variables:
             eventData = variables['eventData']
             eventName = variables['event']
-            # if (eventName.equalsIgnoreCase("addSeries")) {
-            # fireAddSeries();
-            # } else if (eventName.equalsIgnoreCase("chartClick")) {
-            # double xAxisPos = Double.parseDouble((String) eventData
-            # .get("xAxisPos"));
-            # double yAxisPos = Double.parseDouble((String) eventData
-            # .get("yAxisPos"));
-            # //
-            # MousePosition mousePosition = getClickPosition(eventData);
-            # fireChartClick(new DecimalPoint(xAxisPos, yAxisPos),
-            # mousePosition);
-            # } else if (eventName.equalsIgnoreCase("chartZoom")) {
-            # double xAxisMin = Double.parseDouble((String) eventData
-            # .get("xAxisMin"));
-            # double xAxisMax = Double.parseDouble((String) eventData
-            # .get("xAxisMax"));
-            # double yAxisMin = Double.parseDouble((String) eventData
-            # .get("yAxisMin"));
-            # double yAxisMax = Double.parseDouble((String) eventData
-            # .get("yAxisMax"));
-            # fireChartZoom(new ChartArea(xAxisMin, xAxisMax, yAxisMin,
-            # yAxisMax));
-            # } else if (eventName.equalsIgnoreCase("chartResetZoom")) {
-            # fireChartResetZoom();
-            # } else if (eventName.equalsIgnoreCase("chartSVGAvailable")) {
-            # fireChartSVGAvailable((String) eventData.get("svg"));
-            # } else if (eventName.equalsIgnoreCase("seriesClick")) {
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # //
-            # MousePosition mousePosition = getClickPosition(eventData);
-            # fireSeriesClick(
-            # getSeriesFromEventData(pointEventData.getSeriesName()),
-            # getPointFromEventData(pointEventData), mousePosition);
-            # } else if (eventName.equalsIgnoreCase("seriesHide")) {
-            # String seriesName = (String) eventData.get("seriesName");
-            # fireSeriesHide(getSeriesFromEventData(seriesName));
-            # } else if (eventName.equalsIgnoreCase("seriesShow")) {
-            # String seriesName = (String) eventData.get("seriesName");
-            # fireSeriesShow(getSeriesFromEventData(seriesName));
-            # } else if (eventName.equalsIgnoreCase("seriesLegendItemClick")) {
-            # String seriesName = (String) eventData.get("seriesName");
-            # fireSeriesLegendItemClick(getSeriesFromEventData(seriesName));
-            # } else if (eventName.equalsIgnoreCase("pieLegendItemClick")) {
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # fireLegendItemClick(getPointFromEventData(pointEventData));
-            # } else if (eventName.equalsIgnoreCase("pointClick")) {
-            # MousePosition mousePosition = getClickPosition(eventData);
-            # //
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # firePointClick(pointEventData.getCategory(),
-            # getPointFromEventData(pointEventData), mousePosition);
-            # } else if (eventName.equalsIgnoreCase("pointSelect")) {
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # firePointSelect(pointEventData.getCategory(),
-            # getPointFromEventData(pointEventData));
-            # } else if (eventName.equalsIgnoreCase("pointUnselect")) {
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # firePointUnselect(pointEventData.getCategory(),
-            # getPointFromEventData(pointEventData));
-            # } else if (eventName.equalsIgnoreCase("pointRemove")) {
-            # PointEventData pointEventData = getPointEventData(eventData);
-            # firePointRemove(pointEventData.getCategory(),
-            # getPointFromEventData(pointEventData));
-            # }
+            if eventName.lower() == "addSeries".lower():
+                self.fireAddSeries()
+            elif eventName.lower() == "chartClick".lower():
+                xAxisPos = float(eventData.get("xAxisPos"))
+                yAxisPos = float(eventData.get("yAxisPos"))
+                ##
+                mousePosition = self.getClickPosition(eventData)
+                self.fireChartClick(DecimalPoint(xAxisPos, yAxisPos),
+                        mousePosition)
+            elif eventName.lower() == "chartZoom".lower():
+                xAxisMin = float(eventData.get("xAxisMin"))
+                xAxisMax = float(eventData.get("xAxisMax"))
+                yAxisMin = float(eventData.get("yAxisMin"))
+                yAxisMax = float(eventData.get("yAxisMax"))
+                self.fireChartZoom(ChartArea(xAxisMin, xAxisMax, yAxisMin,
+                        yAxisMax))
+            elif eventName.lower() == "chartResetZoom".lower():
+                self.fireChartResetZoom()
+            elif eventName.lower() == "chartSVGAvailable".lower():
+                self.fireChartSVGAvailable(eventData.get("svg"))
+            elif eventName.lower() == "seriesClick".lower():
+                pointEventData = self.getPointEventData(eventData)
+                ##
+                mousePosition = self.getClickPosition(eventData)
+                self.fireSeriesClick(
+                        self.getSeriesFromEventData(pointEventData.getSeriesName()),
+                        self.getPointFromEventData(pointEventData), mousePosition)
+            elif eventName.lower() == "seriesHide".lower():
+                seriesName = eventData.get("seriesName")
+                self.fireSeriesHide(self.getSeriesFromEventData(seriesName))
+            elif eventName.lower() == "seriesShow".lower():
+                seriesName = eventData.get("seriesName")
+                self.fireSeriesShow(self.getSeriesFromEventData(seriesName))
+            elif eventName.lower() == "seriesLegendItemClick".lower():
+                seriesName = eventData.get("seriesName")
+                self.fireSeriesLegendItemClick(self.getSeriesFromEventData(seriesName))
+            elif eventName.lower() == "pieLegendItemClick".lower():
+                pointEventData = self.getPointEventData(eventData)
+                self.fireLegendItemClick(self.getPointFromEventData(pointEventData))
+            elif eventName.lower() == "pointClick".lower():
+                mousePosition = self.getClickPosition(eventData)
+                ##
+                pointEventData = self.getPointEventData(eventData)
+                self.firePointClick(pointEventData.getCategory(),
+                        self.getPointFromEventData(pointEventData), mousePosition)
+            elif eventName.lower() == "pointSelect".lower():
+                pointEventData = self.getPointEventData(eventData)
+                self.firePointSelect(pointEventData.getCategory(),
+                        self.getPointFromEventData(pointEventData))
+            elif eventName.lower() == "pointUnselect".lower():
+                pointEventData = self.getPointEventData(eventData)
+                self.firePointUnselect(pointEventData.getCategory(),
+                        self.getPointFromEventData(pointEventData))
+            elif eventName.lower() == "pointRemove".lower():
+                pointEventData = self.getPointEventData(eventData)
+                self.firePointRemove(pointEventData.getCategory(),
+                        self.getPointFromEventData(pointEventData))
+
 
     def getPointFromEventData(self, eventData):
         # First locate a series and then point
@@ -268,17 +279,21 @@ class InvientCharts(AbstractComponent):
         if series is not None:
             if isinstance(series, self.XYSeries):
                 for point in series.getPoints():
-                    if (
-                        point.getY() is not None and point.getY().compareTo(eventData.getPointY()) == 0 and point.getX() is not None and point.getX().compareTo(eventData.getPointX()) == 0
-                    ):
+                    if (point.getY() is not None
+                        and point.getY().compareTo(eventData.getPointY()) == 0
+                        and point.getX() is not None
+                        and point.getX().compareTo(eventData.getPointX()) == 0):
                         return point
             else:
                 for point in series.getPoints():
-                    if (
-                        point.getY() is not None and point.getY().compareTo(eventData.getPointY()) == 0 and point.getX() is not None and self.getDateInMilliseconds(point.getX(), series.isIncludeTime()) == eventData.getPointX()
-                    ):
+                    if (point.getY() is not None
+                        and point.getY().compareTo(eventData.getPointY()) == 0
+                        and point.getX() is not None
+                        and self.getDateInMilliseconds(point.getX(),
+                                series.isIncludeTime()) == eventData.getPointX()):
                         return point
         return None
+
 
     @classmethod
     def getDateInMilliseconds(cls, dt, isIncludeTime):
@@ -293,6 +308,7 @@ class InvientCharts(AbstractComponent):
             cal.set(Calendar.MILLISECOND, 0)
         return cal.getTimeInMillis()
 
+
     def getSeriesFromEventData(self, seriesName):
         for series in self._chartSeries:
             if series.getName() == seriesName:
@@ -301,54 +317,70 @@ class InvientCharts(AbstractComponent):
         # If it happens then why? Any comments???
         return None
 
+
     def fireAddSeries(self):
-        self.fireEvent(self.ChartAddSeriesEvent(self, self))
+        self.fireEvent(ChartAddSeriesEvent(self, self))
+
 
     def fireChartClick(self, point, mousePosition):
-        self.fireEvent(self.ChartClickEvent(self, self, point, mousePosition))
+        self.fireEvent(ChartClickEvent(self, self, point, mousePosition))
+
 
     def fireChartZoom(self, selectedArea):
-        self.fireEvent(self.ChartZoomEvent(self, self, selectedArea))
+        self.fireEvent(ChartZoomEvent(self, self, selectedArea))
+
 
     def fireChartSVGAvailable(self, svg):
-        self.fireEvent(self.ChartSVGAvailableEvent(self, self, svg))
+        self.fireEvent(ChartSVGAvailableEvent(self, self, svg))
+
 
     def fireChartResetZoom(self):
-        self.fireEvent(self.ChartResetZoomEvent(self, self))
+        self.fireEvent(ChartResetZoomEvent(self, self))
+
 
     def fireSeriesClick(self, series, point, mousePosition):
-        self.fireEvent(self.SeriesClickEvent(self, self, series, point, mousePosition))
+        self.fireEvent(SeriesClickEvent(self, self, series, point, mousePosition))
+
 
     def fireSeriesShow(self, series):
-        self.fireEvent(self.SeriesShowEvent(self, self, series))
+        self.fireEvent(SeriesShowEvent(self, self, series))
+
 
     def fireSeriesHide(self, series):
-        self.fireEvent(self.SeriesHideEvent(self, self, series))
+        self.fireEvent(SeriesHideEvent(self, self, series))
+
 
     def fireSeriesLegendItemClick(self, series):
-        self.fireEvent(self.SeriesLegendItemClickEvent(self, self, series))
+        self.fireEvent(SeriesLegendItemClickEvent(self, self, series))
+
 
     def firePointClick(self, category, point, mousePosition):
-        self.fireEvent(self.PointClickEvent(self, self, category, point, mousePosition))
+        self.fireEvent(PointClickEvent(self, self, category, point, mousePosition))
+
 
     def firePointSelect(self, category, point):
-        self.fireEvent(self.PointSelectEvent(self, self, category, point))
+        self.fireEvent(PointSelectEvent(self, self, category, point))
+
 
     def firePointUnselect(self, category, point):
-        self.fireEvent(self.PointUnselectEvent(self, self, category, point))
+        self.fireEvent(PointUnselectEvent(self, self, category, point))
+
 
     def firePointRemove(self, category, point):
-        self.fireEvent(self.PointRemoveEvent(self, self, category, point))
+        self.fireEvent(PointRemoveEvent(self, self, category, point))
+
 
     def fireLegendItemClick(self, point):
-        self.fireEvent(self.PieChartLegendItemClickEvent(self, self, point))
+        self.fireEvent(PieChartLegendItemClickEvent(self, self, point))
+
 
     def getPointEventData(self, eventData):
         seriesName = eventData['seriesName']
         category = eventData['category']
-        pointX = Double.valueOf.valueOf(eventData['pointX'])
-        pointY = Double.valueOf.valueOf(eventData['pointY'])
-        return self.PointEventData(seriesName, category, pointX, pointY)
+        pointX = float(eventData['pointX'])
+        pointY = float(eventData['pointY'])
+        return PointEventData(seriesName, category, pointX, pointY)
+
 
     def getClickPosition(self, eventData):
         mouseX = None
@@ -358,139 +390,11 @@ class InvientCharts(AbstractComponent):
         if isinstance(eventData['mouseY'], int):
             mouseY = eventData['mouseY']
         if mouseX is not None and mouseY is not None:
-            return self.MousePosition(mouseX, mouseY)
+            return MousePosition(mouseX, mouseY)
         return None
 
-    class MousePosition(Serializable):
-        """This class contain mouse coordinates when a click event occurs on a
-        chart, a series or a point.
 
-        The mouse coordinates are in pixels.
-
-        @author Invient
-        """
-        _mouseX = None
-        _mouseY = None
-
-        def __init__(self, mouseX, mouseY):
-            """Creates this object with given arguments.
-
-            @param mouseX
-                       x position of mouse when a click event occurred, in pixel
-            @param mouseY
-                       y position of mouse when a click event occurred, in pixel
-            """
-            self._mouseX = mouseX
-            self._mouseY = mouseY
-
-        def getMouseX(self):
-            """@return Returns x position of mouse when a click event occurred, in
-                    pixel
-            """
-            return self._mouseX
-
-        def getMouseY(self):
-            """@return Returns y position of mouse when a click event occurred, in
-                    pixel
-            """
-            return self._mouseY
-
-        def toString(self):
-            return 'MousePosition [mouseX=' + self._mouseX + ', mouseY=' + self._mouseY + ']'
-
-    class PointEventData(Serializable):
-        # POINT CLICK EVENT ****************************
-        _seriesName = None
-        _category = None
-        _pointX = None
-        _pointY = None
-
-        def __init__(self, seriesName, category, pointX, pointY):
-            super(PointEventData, self)()
-            self._seriesName = seriesName
-            self._category = category
-            self._pointX = pointX
-            self._pointY = pointY
-
-        def getSeriesName(self):
-            return self._seriesName
-
-        def getCategory(self):
-            return self._category
-
-        def getPointX(self):
-            return self._pointX
-
-        def getPointY(self):
-            return self._pointY
-
-        def toString(self):
-            return 'PointEventData [seriesName=' + self._seriesName + ', category=' + self._category + ', pointX=' + self._pointX + ', pointY=' + self._pointY + ']'
-
-    class PointClickEvent(Component.Event):
-        """Click event. This event is thrown, when any point of this chart is
-        clicked and the point marker is enabled. The point marker is enabled by
-        default.
-
-        @author Invient
-        """
-        _category = None
-        _point = None
-        _chart = None
-        _mousePosition = None
-
-        def __init__(self, source, chart, category, point, mousePosition):
-            """New instance of the point click event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param category
-                       a category to which point is associated in case of
-                       categorized axis,
-            @param point
-                       the point on which the click event occurred
-            @param mousePosition
-                       the position of a mouse when the click event occurred
-            """
-            super(PointClickEvent, self)(source)
-            self._chart = chart
-            self._category = category
-            self._point = point
-            self._mousePosition = mousePosition
-
-        def getCategory(self):
-            """@return Returns a category to which point is associated in case of
-                    categorized axis only.
-            """
-            return self._category
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getPoint(self):
-            """@return Returns the point on which the click event occurred"""
-            return self._point
-
-        def getMousePosition(self):
-            """@return Returns the position of a mouse when the click event occurred"""
-            return self._mousePosition
-
-    class PointClickListener(Serializable):
-        """Interface for listening for a {@link PointClickEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def pointClick(self, pointClickEvent):
-            pass
-
-    _pointClickListeners = dict()
-
-    def addListener(self, *args):
+    def addListener(self, listener, seriesTypes=None):
         """Adds the point click listener. If the argument seriesTypes is not
         specified then the listener will be added for all series type otherwise
         it will be added for a specific series type
@@ -579,69 +483,58 @@ class InvientCharts(AbstractComponent):
         @param listener
                    the Listener to be added or registered.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], self.ChartAddSeriesListener):
-                listener, = _0
+        if seriesTypes is None:
+            if isinstance(listener, ChartAddSeriesListener):
                 self._chartAddSeriesListener.add(listener)
-                self.addListener(self.ChartAddSeriesEvent, listener, self._CHART_ADD_SERIES_METHOD)
-            elif isinstance(_0[0], self.ChartClickListener):
-                listener, = _0
+                self.addListener(ChartAddSeriesEvent, listener,
+                                 self._CHART_ADD_SERIES_METHOD)
+            elif isinstance(listener, ChartClickListener):
                 self._chartClickListener.add(listener)
-                self.addListener(self.ChartClickEvent, listener, self._CHART_CLICK_METHOD)
-            elif isinstance(_0[0], self.ChartResetZoomListener):
-                listener, = _0
+                self.addListener(ChartClickEvent, listener, self._CHART_CLICK_METHOD)
+            elif isinstance(listener, ChartResetZoomListener):
                 self._chartResetZoomListener.add(listener)
-                self.addListener(self.ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
-            elif isinstance(_0[0], self.ChartSVGAvailableListener):
-                listener, = _0
-                if (
-                    self._svgAvailableListener is not None and self._svgAvailableListener != listener
-                ):
+                self.addListener(ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
+            elif isinstance(listener, ChartSVGAvailableListener):
+                if (self._svgAvailableListener is not None
+                        and self._svgAvailableListener != listener):
                     # remove earlier listener
                     self.removeListener(self._svgAvailableListener)
                 self._svgAvailableListener = listener
-                self.addListener(self.ChartSVGAvailableEvent, self._svgAvailableListener, self._CHART_SVG_AVAILABLE_METHOD)
+                self.addListener(ChartSVGAvailableEvent, self._svgAvailableListener, self._CHART_SVG_AVAILABLE_METHOD)
                 self._isRetrieveSVG = True
                 self.requestRepaint()
-            elif isinstance(_0[0], self.ChartZoomListener):
-                listener, = _0
+            elif isinstance(listener, ChartZoomListener):
                 self._chartZoomListener.add(listener)
-                self.addListener(self.ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
+                self.addListener(ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
             else:
-                listener, = _0
                 self._pieChartLegendItemClickListener.add(listener)
-                self.addListener(self.PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
-        elif _1 == 2:
-            if isinstance(_0[0], self.PointClickListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.addListener(PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
+        else:
+            if isinstance(listener, PointClickListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointClickListeners:
                         self._pointClickListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._pointClickListeners.put(seriesType, listeners)
-                self.addListener(self.PointClickEvent, listener, self._POINT_CLICK_METHOD)
-            elif isinstance(_0[0], self.PointRemoveListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                        self._pointClickListeners[seriesType] = listeners
+                self.addListener(PointClickEvent, listener, _POINT_CLICK_METHOD)
+            elif isinstance(listener, PointRemoveListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointRemoveListeners:
                         self._pointRemoveListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._pointRemoveListeners.put(seriesType, listeners)
-                self.addListener(self.PointRemoveEvent, listener, self._POINT_REMOVE_METHOD)
-            elif isinstance(_0[0], self.PointSelectListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                        self._pointRemoveListeners[seriesType] = listeners
+                self.addListener(PointRemoveEvent, listener, _POINT_REMOVE_METHOD)
+            elif isinstance(listener, PointSelectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointSelectListeners:
                         self._pointSelectListeners[seriesType].add(listener)
@@ -649,11 +542,10 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointSelectListeners.put(seriesType, listeners)
-                self.addListener(self.PointSelectEvent, listener, self._POINT_SELECT_METHOD)
-            elif isinstance(_0[0], self.PointUnselectListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.addListener(PointSelectEvent, listener, _POINT_SELECT_METHOD)
+            elif isinstance(listener, PointUnselectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointUnselectListeners:
                         self._pointUnselectListeners[seriesType].add(listener)
@@ -661,59 +553,54 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointUnselectListeners.put(seriesType, listeners)
-                self.addListener(self.PointUnselectEvent, listener, self._POINT_UNSELECT_METHOD)
-            elif isinstance(_0[0], self.SeriesClickListerner):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.addListener(PointUnselectEvent, listener, _POINT_UNSELECT_METHOD)
+            elif isinstance(listener, SeriesClickListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesClickListeners:
                         self._seriesClickListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._seriesClickListeners.put(seriesType, listeners)
-                self.addListener(self.SeriesClickEvent, listener, self._SERIES_CLICK_METHOD)
-            elif isinstance(_0[0], self.SeriesHideListerner):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                        self._seriesClickListeners[seriesType] = listeners
+                self.addListener(SeriesClickEvent, listener, _SERIES_CLICK_METHOD)
+            elif isinstance(listener, SeriesHideListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesHideListeners:
                         self._seriesHideListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._seriesHideListeners.put(seriesType, listeners)
-                self.addListener(self.SeriesHideEvent, listener, self._SERIES_HIDE_METHOD)
-            elif isinstance(_0[0], self.SeriesLegendItemClickListerner):
-                listener, seriesTypes = _0
+                        self._seriesHideListeners[seriesType] = listeners
+                self.addListener(SeriesHideEvent, listener, _SERIES_HIDE_METHOD)
+            elif isinstance(listener, SeriesLegendItemClickListerner):
                 if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesLegendItemClickListeners:
                         self._seriesLegendItemClickListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._seriesLegendItemClickListeners.put(seriesType, listeners)
-                self.addListener(self.SeriesLegendItemClickEvent, listener, self._SERIES_LEGENDITEM_CLICK_METHOD)
+                        self._seriesLegendItemClickListeners[seriesType] = listeners
+                self.addListener(self.SeriesLegendItemClickEvent, listener, _SERIES_LEGENDITEM_CLICK_METHOD)
             else:
-                listener, seriesTypes = _0
                 if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesShowListeners:
                         self._seriesShowListeners[seriesType].add(listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._seriesShowListeners.put(seriesType, listeners)
-                self.addListener(self.SeriesShowEvent, listener, self._SERIES_SHOW_METHOD)
-        else:
-            raise ARGERROR(1, 2)
+                        self._seriesShowListeners[seriesType] = listeners
+                self.addListener(SeriesShowEvent, listener, _SERIES_SHOW_METHOD)
 
-    def removeListener(self, *args):
+
+    def removeListener(self, listener, seriesTypes=None):
         """Removes the point click listener. If the argument seriesTypes is not
         specified then the listener will be removed only for a series type
         SeriesType.COMMONSERIES otherwise the listener will be removed for all
@@ -824,858 +711,93 @@ class InvientCharts(AbstractComponent):
         @param listener
                    the listener to be removed or unregistered.
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], self.ChartAddSeriesListener):
-                listener, = _0
+        if seriesTypes is None:
+            if isinstance(listener, ChartAddSeriesListener):
                 self._chartAddSeriesListener.remove(listener)
-                self.removeListener(self.ChartAddSeriesEvent, listener, self._CHART_ADD_SERIES_METHOD)
-            elif isinstance(_0[0], self.ChartClickListener):
-                listener, = _0
+                self.removeListener(ChartAddSeriesEvent, listener, self._CHART_ADD_SERIES_METHOD)
+            elif isinstance(listener, ChartClickListener):
                 self._chartClickListener.remove(listener)
-                self.removeListener(self.ChartClickEvent, listener, self._CHART_CLICK_METHOD)
-            elif isinstance(_0[0], self.ChartResetZoomListener):
-                listener, = _0
+                self.removeListener(ChartClickEvent, listener, self._CHART_CLICK_METHOD)
+            elif isinstance(listener, ChartResetZoomListener):
                 self._chartResetZoomListener.remove(listener)
-                self.removeListener(self.ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
-            elif isinstance(_0[0], self.ChartSVGAvailableListener):
-                listener, = _0
+                self.removeListener(ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
+            elif isinstance(listener, ChartSVGAvailableListener):
                 if self._svgAvailableListener == listener:
-                    self.removeListener(self.ChartSVGAvailableEvent, listener, self._CHART_SVG_AVAILABLE_METHOD)
+                    self.removeListener(ChartSVGAvailableEvent, listener, self._CHART_SVG_AVAILABLE_METHOD)
                     self._isRetrieveSVG = False
                     self._svgAvailableListener = None
-            elif isinstance(_0[0], self.ChartZoomListener):
-                listener, = _0
+            elif isinstance(listener, ChartZoomListener):
                 self._chartZoomListener.remove(listener)
-                self.removeListener(self.ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
+                self.removeListener(ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
             else:
-                listener, = _0
                 self._pieChartLegendItemClickListener.remove(listener)
-                self.removeListener(self.PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
-        elif _1 == 2:
-            if isinstance(_0[0], self.PointClickListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
+        else:
+            if isinstance(listener, PointClickListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointClickListeners:
                         self._pointClickListeners[seriesType].remove(listener)
-                self.removeListener(self.PointClickEvent, listener, self._POINT_CLICK_METHOD)
-            elif isinstance(_0[0], self.PointRemoveListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(PointClickEvent, listener, _POINT_CLICK_METHOD)
+            elif isinstance(listener, PointRemoveListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointRemoveListeners:
                         self._pointRemoveListeners[seriesType].remove(listener)
                 self._pointRemoveListeners.remove(listener)
-                self.removeListener(self.PointRemoveEvent, listener, self._POINT_REMOVE_METHOD)
-            elif isinstance(_0[0], self.PointSelectListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(PointRemoveEvent, listener, _POINT_REMOVE_METHOD)
+            elif isinstance(listener, PointSelectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointSelectListeners:
                         self._pointSelectListeners[seriesType].remove(listener)
-                self.removeListener(self.PointSelectEvent, listener, self._POINT_SELECT_METHOD)
-            elif isinstance(_0[0], self.PointUnselectListener):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(PointSelectEvent, listener, _POINT_SELECT_METHOD)
+            elif isinstance(listener, PointUnselectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointUnselectListeners:
                         self._pointUnselectListeners[seriesType].remove(listener)
-                self.removeListener(self.PointUnselectEvent, listener, self._POINT_UNSELECT_METHOD)
-            elif isinstance(_0[0], self.SeriesClickListerner):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(PointUnselectEvent, listener, _POINT_UNSELECT_METHOD)
+            elif isinstance(listener, SeriesClickListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesClickListeners:
                         self._seriesClickListeners[seriesType].remove(listener)
-                self.removeListener(self.SeriesClickEvent, listener, self._SERIES_CLICK_METHOD)
-            elif isinstance(_0[0], self.SeriesHideListerner):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(SeriesClickEvent, listener, _SERIES_CLICK_METHOD)
+            elif isinstance(listener, SeriesHideListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesHideListeners:
                         self._seriesHideListeners[seriesType].remove(listener)
-                self.removeListener(self.SeriesHideEvent, listener, self._SERIES_HIDE_METHOD)
-            elif isinstance(_0[0], self.SeriesLegendItemClickListerner):
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                self.removeListener(SeriesHideEvent, listener, _SERIES_HIDE_METHOD)
+            elif isinstance(listener, SeriesLegendItemClickListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesLegendItemClickListeners:
                         self._seriesLegendItemClickListeners[seriesType].remove(listener)
-                self.removeListener(self.SeriesLegendItemClickEvent, listener, self._SERIES_LEGENDITEM_CLICK_METHOD)
+                self.removeListener(SeriesLegendItemClickEvent, listener, _SERIES_LEGENDITEM_CLICK_METHOD)
             else:
-                listener, seriesTypes = _0
-                if seriesTypes.length == 0:
-                    seriesTypes = [self.SeriesType.COMMONSERIES]
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesShowListeners:
                         self._seriesShowListeners[seriesType].remove(listener)
-                self.removeListener(self.SeriesShowEvent, listener, self._SERIES_SHOW_METHOD)
-        else:
-            raise ARGERROR(1, 2)
+                self.removeListener(SeriesShowEvent, listener, _SERIES_SHOW_METHOD)
 
-    class PointRemoveEvent(Component.Event):
-        """Point remove event. This event is thrown, when any point of this chart is
-        removed from its series.
-
-        This event is EXPERIMENTAL ONLY.
-
-        @author Invient
-        """
-        _category = None
-        _point = None
-        _chart = None
-
-        def __init__(self, source, chart, category, point):
-            """New instance of the point remove event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param category
-                       a category to which point is associated in case of
-                       categorized axis,
-            @param point
-                       the point removed
-            """
-            super(PointRemoveEvent, self)(source)
-            self._chart = chart
-            self._category = category
-            self._point = point
-
-        def getCategory(self):
-            """@return Returns a category to which point is associated in case of
-                    categorized axis only.
-            """
-            return self._category
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getPoint(self):
-            """@return Returns the point which has been removed"""
-            return self._point
-
-    class PointRemoveListener(Serializable):
-        """Interface for listening for a {@link PointRemoveEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def pointRemove(self, pointRemoveEvent):
-            pass
-
-    _pointRemoveListeners = dict()
-
-    class PointUnselectEvent(Component.Event):
-        """Poin unselect event. This event is thrown, when any point of this chart
-        is unselected and the point marker is enabled. The point marker is
-        enabled by default.
-
-        @author Invient
-        """
-        _category = None
-        _point = None
-        _chart = None
-
-        def __init__(self, source, chart, category, point):
-            """New instance of the point unselect event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param category
-                       a category to which point is associated in case of
-                       categorized axis,
-            @param point
-                       the point unselected as a result of this event
-            """
-            super(PointUnselectEvent, self)(source)
-            self._chart = chart
-            self._category = category
-            self._point = point
-
-        def getCategory(self):
-            """@return Returns a category to which point is associated in case of
-                    categorized axis only.
-            """
-            return self._category
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getPoint(self):
-            """@return Returns the unselected point"""
-            return self._point
-
-    class PointUnselectListener(Serializable):
-        """Interface for listening for a {@link PointUnselectEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def pointUnSelect(self, pointUnSelectEvent):
-            pass
-
-    _pointUnselectListeners = dict()
-
-    class PointSelectEvent(Component.Event):
-        """Point select event. This event is thrown, when any point of this chart is
-        selected and the point marker is enabled. The point marker is enabled by
-        default.
-
-        @author Invient
-        """
-        _category = None
-        _point = None
-        _chart = None
-
-        def __init__(self, source, chart, category, point):
-            """New instance of the point select event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param category
-                       a category to which point is associated in case of
-                       categorized axis,
-            @param point
-                       the point selected as a result of this event
-            """
-            super(PointSelectEvent, self)(source)
-            self._chart = chart
-            self._category = category
-            self._point = point
-
-        def getCategory(self):
-            """@return Returns a category to which point is associated in case of
-                    categorized axis only.
-            """
-            return self._category
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getPoint(self):
-            """@return Returns the selected point"""
-            return self._point
-
-    class PointSelectListener(Serializable):
-        """Interface for listening for a {@link PointSelectListener} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def pointSelected(self, pointSelectEvent):
-            pass
-
-    _pointSelectListeners = dict()
-    _POINT_CLICK_METHOD = None
-    _POINT_REMOVE_METHOD = None
-    _POINT_SELECT_METHOD = None
-    _POINT_UNSELECT_METHOD = None
-    # This should not happen
-    try:
-        _POINT_CLICK_METHOD = PointClickListener.getDeclaredMethod('pointClick', [PointClickEvent])
-        _POINT_REMOVE_METHOD = PointRemoveListener.getDeclaredMethod('pointRemove', [PointRemoveEvent])
-        _POINT_SELECT_METHOD = PointSelectListener.getDeclaredMethod('pointSelected', [PointSelectEvent])
-        _POINT_UNSELECT_METHOD = PointUnselectListener.getDeclaredMethod('pointUnSelect', [PointUnselectEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in Button')
-    # // ***************************** Series Events ***************************
-
-    class SeriesClickEvent(Component.Event):
-        """Series click event. This event is thrown, when any series of this chart
-        is clicked.
-
-        @author Invient
-        """
-        _point = None
-        _series = None
-        _chart = None
-        _mousePosition = None
-
-        def __init__(self, source, chart, series, point, mousePosition):
-            """New instance of the series click event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param series
-                       the series on which click event occurred
-            @param point
-                       the closest point of a series
-            @param mousePosition
-                       the position of a mouse when the click event occurred
-            """
-            super(SeriesClickEvent, self)(source)
-            self._chart = chart
-            self._series = series
-            self._point = point
-            self._mousePosition = mousePosition
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getSeries(self):
-            """@return Returns the series object on which the click event occurred"""
-            return self._series
-
-        def getNearestPoint(self):
-            """@return Returns the point of a series closest to the position where
-                    mouse click event occurred.
-            """
-            return self._point
-
-        def getMousePosition(self):
-            """@return Returns the position of a mouse when the click event occurred"""
-            return self._mousePosition
-
-    class SeriesClickListerner(Serializable):
-        """Interface for listening for a {@link SeriesClickListerner} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def seriesClick(self, seriesClickEvent):
-            pass
-
-    _seriesClickListeners = dict()
-
-    class SeriesHideEvent(Component.Event):
-        """Series Hide event. This event is thrown, when any series of this chart is
-        hidden.
-
-        @author Invient
-        """
-        _series = None
-        _chart = None
-
-        def __init__(self, source, chart, series):
-            """@param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param series
-                       the series which got hidden
-            """
-            super(SeriesHideEvent, self)(source)
-            self._chart = chart
-            self._series = series
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getSeries(self):
-            """@return Returns the series which got hidden"""
-            return self._series
-
-    class SeriesHideListerner(Serializable):
-        """Interface for listening for a {@link SeriesHideEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def seriesHide(self, seriesHideEvent):
-            pass
-
-    _seriesHideListeners = dict()
-
-    class SeriesShowEvent(Component.Event):
-        """Series show event. This event is thrown, when any series of this chart is
-        displayed after a chart is created.
-
-        @author Invient
-        """
-        _series = None
-        _chart = None
-
-        def __init__(self, source, chart, series):
-            """New instance of the series show event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param series
-                       the series which got displayed
-            """
-            super(SeriesShowEvent, self)(source)
-            self._chart = chart
-            self._series = series
-
-        def getChart(self):
-            """@return Returns the chart object associated with the series"""
-            return self._chart
-
-        def getSeries(self):
-            """@return Returns the series which got displayed"""
-            return self._series
-
-    class SeriesShowListerner(Serializable):
-        """Interface for listening for a {@link SeriesShowEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def seriesShow(self, seriesShowEvent):
-            pass
-
-    _seriesShowListeners = dict()
-    # LEGENDITEMCLICK
-    # This event occurs when a series is clicked in the legend.
-    # This event is not applicable for PieChart instead use
-    # LegendItemClickEvent/LegendItemClickListener
-
-    class SeriesLegendItemClickEvent(Component.Event):
-        """Series legend item click event. This event is thrown, when legend item is
-        clicked. This event is not applicable for PieChart instead use
-        {@link LegendItemClickEvent}
-
-        @author Invient
-        """
-        _series = None
-        _chart = None
-
-        def __init__(self, source, chart, series):
-            """New instance of the point click event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param series
-                       the series associated with the legend item
-            """
-            super(SeriesLegendItemClickEvent, self)(source)
-            self._chart = chart
-            self._series = series
-
-        def getChart(self):
-            """@return Returns the chart object associated with the series"""
-            return self._chart
-
-        def getSeries(self):
-            """@return Returns the series associated with the legend item"""
-            return self._series
-
-    class SeriesLegendItemClickListerner(Serializable):
-        """Interface for listening for a {@link SeriesLegendItemClickEvent}
-        triggered by {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def seriesLegendItemClick(self, seriesLegendItemClickEvent):
-            pass
-
-    _seriesLegendItemClickListeners = dict()
-    _SERIES_CLICK_METHOD = None
-    # private static final Method SERIES_CHECKBOX_CLICK_METHOD;
-    _SERIES_HIDE_METHOD = None
-    _SERIES_SHOW_METHOD = None
-    _SERIES_LEGENDITEM_CLICK_METHOD = None
-    # This should never happen
-    try:
-        _SERIES_CLICK_METHOD = SeriesClickListerner.getDeclaredMethod('seriesClick', [SeriesClickEvent])
-        # SERIES_CHECKBOX_CLICK_METHOD = SeriesCheckboxClickListerner.class
-        # .getDeclaredMethod("seriesCheckboxClick",
-        # new Class[] { SeriesCheckboxClickEvent.class });
-        _SERIES_HIDE_METHOD = SeriesHideListerner.getDeclaredMethod('seriesHide', [SeriesHideEvent])
-        _SERIES_SHOW_METHOD = SeriesShowListerner.getDeclaredMethod('seriesShow', [SeriesShowEvent])
-        _SERIES_LEGENDITEM_CLICK_METHOD = SeriesLegendItemClickListerner.getDeclaredMethod('seriesLegendItemClick', [SeriesLegendItemClickEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in Button')
-    # PieChart related events ***************************
-    # PieChart LEGENDITEMCLICK
-    # This event occurs when a point of a PieChart is clicked
-
-    class PieChartLegendItemClickEvent(Component.Event):
-        """PieChart legend item click event. This event is thrown, when the legend
-        item belonging to the pie point (slice) is clicked.
-
-        @author Invient
-        """
-        _chart = None
-        _point = None
-
-        def __init__(self, source, chart, point):
-            """New instance of the piechart legend item click event
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param point
-                       the pie point (slice) associated with the legend item
-            """
-            super(PieChartLegendItemClickEvent, self)(source)
-            self._chart = chart
-            self._point = point
-
-        def getChart(self):
-            """@return Returns the chart object associated with the point"""
-            return self._chart
-
-        def getPoint(self):
-            """@return Returns the pie point (slice) associated with the legend item"""
-            return self._point
-
-    class PieChartLegendItemClickListener(Serializable):
-        """Interface for listening for a {@link PieChartLegendItemClickEvent}
-        triggered by {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def legendItemClick(self, legendItemClickEvent):
-            pass
-
-    _pieChartLegendItemClickListener = set()
-    _LEGENDITEM_CLICK_METHOD = None
-    # This should never happen
-    try:
-        _LEGENDITEM_CLICK_METHOD = PieChartLegendItemClickListener.getDeclaredMethod('legendItemClick', [PieChartLegendItemClickEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in Button')
-    # Chart Events ****************************
-
-    class ChartClickEvent(Component.Event):
-        """Chart Click event. This event is thrown, when this chart is clicked.
-
-        @author Invient
-        """
-        _chart = None
-        _point = None
-        _mousePosition = None
-
-        def __init__(self, source, chart, point, mousePosition):
-            """New instance of the chart click event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param point
-                       the position where the click event occurred in axes units
-            @param mousePosition
-                       the coordinate of mouse where the click event occurred in
-                       pixels
-            """
-            super(ChartClickEvent, self)(source)
-            self._chart = chart
-            self._point = point
-            self._mousePosition = mousePosition
-
-        def getChart(self):
-            """Returns the chart object on which the click event occurred
-
-            @return Returns the chart object on which the click event occurred
-            @see InvientCharts
-            """
-            return self._chart
-
-        def getPoint(self):
-            """Returns the point representing the position where the click event
-            occurred in axes units
-
-            @return Returns the point representing the position where the click
-                    event occurred in axes units
-            @see Point
-            """
-            return self._point
-
-        def getMousePosition(self):
-            """Returns the position of a mouse when the click event occurred
-
-            @return Returns the position of a mouse when the click event occurred
-            @see MousePosition
-            """
-            return self._mousePosition
-
-        def toString(self):
-            return 'ChartClickEvent [point=' + self._point + ', mousePosition=' + self._mousePosition + ']'
-
-    class ChartClickListener(Serializable):
-        """Interface for listening for a {@link ChartClickEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def chartClick(self, chartClickEvent):
-            pass
-
-    _chartClickListener = set()
-
-    class ChartAddSeriesEvent(Component.Event):
-        """Add series event. This event is thrown, when a series is added to the
-        chart.
-
-        @author Invient
-        """
-        _chart = None
-
-        def __init__(self, source, chart):
-            """New instance of the chart add series event.
-
-            @param source
-            @param chart
-            """
-            super(ChartAddSeriesEvent, self)(source)
-            self._chart = chart
-
-        def getChart(self):
-            """Returns the chart object to which a series is added
-
-            @return Returns the chart object to which a series has been added.
-            @see InvientCharts
-            """
-            return self._chart
-
-    class ChartAddSeriesListener(Serializable):
-        """Interface for listening for a {@link ChartAddSeriesEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def chartAddSeries(self, chartAddSeriesEvent):
-            pass
-
-    _chartAddSeriesListener = set()
-
-    class ChartArea(Serializable):
-        """Defines information on the selected area.
-
-        @author Invient
-        """
-        _xAxisMin = None
-        _xAxisMax = None
-        _yAxisMin = None
-        _yAxisMax = None
-
-        def __init__(self, xAxisMin, xAxisMax, yAxisMin, yAxisMax):
-            self._xAxisMin = xAxisMin
-            self._xAxisMax = xAxisMax
-            self._yAxisMin = yAxisMin
-            self._yAxisMax = yAxisMax
-
-        def getxAxisMin(self):
-            return self._xAxisMin
-
-        def getxAxisMax(self):
-            return self._xAxisMax
-
-        def getyAxisMin(self):
-            return self._yAxisMin
-
-        def getyAxisMax(self):
-            return self._yAxisMax
-
-        def toString(self):
-            return 'ChartSelectedArea [xAxisMin=' + self._xAxisMin + ', xAxisMax=' + self._xAxisMax + ', yAxisMin=' + self._yAxisMin + ', yAxisMax=' + self._yAxisMax + ']'
-
-    class ChartZoomEvent(Component.Event):
-        """Chart zoom event. This event is thrown, when an area of the chart has
-        been selected.
-
-        @author Invient
-        """
-        _chart = None
-        _chartArea = None
-
-        def __init__(self, source, chart, chartArea):
-            """New instance of the chart zoom event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param chartArea
-                       the chartArea object containing dimensions of zoomed area
-                       of the chart
-            """
-            super(ChartZoomEvent, self)(source)
-            self._chart = chart
-            self._chartArea = chartArea
-
-        def getChart(self):
-            """Returns the chart object for which the zoom event has occurred
-
-            @return Returns the chart object for which the zoom event has
-                    occurred
-            """
-            return self._chart
-
-        def getChartArea(self):
-            """Returns the chartArea object containing dimensions of zoomed area of
-            the chart
-
-            @return Returns the chartArea object containing dimensions of zoomed
-                    area of the chart
-            """
-            return self._chartArea
-
-    class ChartZoomListener(Serializable):
-        """Interface for listening for a {@link ChartZoomEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def chartZoom(self, chartZoomEvent):
-            pass
-
-    _chartZoomListener = set()
-
-    class ChartResetZoomEvent(Component.Event):
-        """Chart reset zoom event. This event is thrown, when a chart is reset by
-        setting its zoom level to normal.
-
-        @author Invient
-        """
-        _chart = None
-
-        def __init__(self, source, chart):
-            """New instance of the chart reset zoom event
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            """
-            super(ChartResetZoomEvent, self)(source)
-            self._chart = chart
-
-        def getChart(self):
-            """Returns the chart object for which zoom has been reset to normal
-
-            @return Returns the chart object for which zoom has been reset to
-                    normal
-            """
-            return self._chart
-
-    class ChartResetZoomListener(Serializable):
-        """Interface for listening for a {@link ChartResetZoomEvent} triggered by
-        {@link InvientCharts}
-
-        @author Invient
-        """
-
-        def chartResetZoom(self, chartResetZoomEvent):
-            pass
-
-    _chartResetZoomListener = set()
-
-    class ChartSVGAvailableEvent(Component.Event):
-        """Chart SVG event. This event is thrown, when an SVG string representing
-        the chart is received or ready.
-
-        Note that this event is thrown only once after a
-        {@link ChartSVGAvailableListener} is registered.
-
-        @author Invient
-        """
-        _chart = None
-        _svg = None
-
-        def __init__(self, source, chart, svg):
-            """New instance of the chart svg available event.
-
-            @param source
-                       the chart object itself
-            @param chart
-                       the chart object itself
-            @param svg
-                       an svg string representing the chart object
-            """
-            super(ChartSVGAvailableEvent, self)(source)
-            self._chart = chart
-            self._svg = svg
-
-        def getChart(self):
-            """Returns the chart object for which an svg string representation is
-            available
-
-            @return Returns the chart object for which an svg string
-                    representation is available
-            """
-            return self._chart
-
-        def getSVG(self):
-            """@return Returns an SVG string representing the chart"""
-            return self._svg
-
-    class ChartSVGAvailableListener(Serializable):
-        """Interface for listening for a {@link ChartSVGAvailableEvent} triggered by
-        {@link InvientCharts}.
-
-        The chart can have only one listener of this type registered at any time.
-        If a listener has already been registered and an attempt is made to
-        register another listener then the previously registered listener will be
-        unregistered and the new listener will be registered.
-
-        A listener will be called only once after it has been registered though
-        it will be called again if the same listener is registered again.
-
-        @author Invient
-        """
-
-        def svgAvailable(self, chartSVGAvailableEvent):
-            pass
-
-    _svgAvailableListener = None
-    _CHART_CLICK_METHOD = None
-    _CHART_ADD_SERIES_METHOD = None
-    _CHART_ZOOM_METHOD = None
-    _CHART_RESET_ZOOM_METHOD = None
-    _CHART_SVG_AVAILABLE_METHOD = None
-    # This should never happen unless there is a typo!
-    try:
-        _CHART_CLICK_METHOD = ChartClickListener.getDeclaredMethod('chartClick', [ChartClickEvent])
-        _CHART_ADD_SERIES_METHOD = ChartAddSeriesListener.getDeclaredMethod('chartAddSeries', [ChartAddSeriesEvent])
-        _CHART_ZOOM_METHOD = ChartZoomListener.getDeclaredMethod('chartZoom', [ChartZoomEvent])
-        _CHART_RESET_ZOOM_METHOD = ChartResetZoomListener.getDeclaredMethod('chartResetZoom', [ChartResetZoomEvent])
-        _CHART_SVG_AVAILABLE_METHOD = ChartSVGAvailableListener.getDeclaredMethod('svgAvailable', [ChartSVGAvailableEvent])
-    except java.lang.NoSuchMethodException, e:
-        raise java.lang.RuntimeException('Internal error finding methods in Button')
-    # *************************************************************************//
-    # **************************** Chart Container
-    # ****************************//
-    # *************************************************************************//
-    _chartSeries = LinkedHashSet()
-    _reloadChartSeries = False
 
     def setSeries(self, series):
-        """The data of a chart is defined in terms of {@link Series}. This method
+        """The data of a chart is defined in terms of L{Series}. This method
         removes all previously set series of this chart and adds the argument
         series. If the argument series is null then no actions are taken.
 
-        @param series
+        @param series:
                    A collection of series to set as chart's data
         """
         if series is not None:
@@ -1685,28 +807,31 @@ class InvientCharts(AbstractComponent):
             for seriesData in series:
                 self.addSeries(seriesData)
 
+
     def getSeries(self, name):
         """Returns a series whose name matches the argument name.
 
-        @param name
+        @param name:
                    the name of the series
-        @return Returns a series with the given name
+        @return: Returns a series with the given name
         """
         for series in self._chartSeries:
             if series.getName() == name:
                 return series
         return None
 
+
     def getAllSeries(self):
         """Returns all series associated with this chart.
-        @return returns all series associated with this chart.
+        @return: returns all series associated with this chart.
         """
         return self._chartSeries
+
 
     def addSeries(self, seriesData):
         """Adds the argument series to this chart.
 
-        @param seriesData
+        @param seriesData:
                    the series to be added
         """
         # Before sending data to the client, this method sets
@@ -1714,824 +839,61 @@ class InvientCharts(AbstractComponent):
         if self._chartSeries.add(seriesData):
             self.setAxisInSeriesIfNotSetAlready(seriesData)
             seriesData.setInvientCharts(self)
-            self.addSeriesCUROperation(self.SeriesCUR(SeriesCURType.ADD, seriesData.getName()))
+            self.addSeriesCUROperation(SeriesCUR(SeriesCURType.ADD, seriesData.getName()))
             self.requestRepaint()
+
 
     def setAxisInAllSeriesIfNotSetAlready(self):
         for series in self._chartSeries:
             self.setAxisInSeriesIfNotSetAlready(series)
 
+
     def setAxisInSeriesIfNotSetAlready(self, series):
         if self.getConfig() is not None:
-            if (
-                series.getXAxis() is None and self.getConfig().getXAxes() is not None and len(self.getConfig().getXAxes()) > 0
-            ):
+            if (series.getXAxis() is None
+                    and self.getConfig().getXAxes() is not None
+                    and len(self.getConfig().getXAxes()) > 0):
                 series.setXAxis(self.getConfig().getXAxes().next())
-            if (
-                series.getYAxis() is None and self.getConfig().getYAxes() is not None and len(self.getConfig().getYAxes()) > 0
-            ):
+            if (series.getYAxis() is None
+                    and self.getConfig().getYAxes() is not None
+                    and len(self.getConfig().getYAxes()) > 0):
                 series.setYAxis(self.getConfig().getYAxes().next())
 
-    def removeSeries(self, *args):
-        """Removes a series whose name matches the argument name.
 
-        @param name
-                   the name of the series
-        ---
-        Removes the argument seriesData from this chart.
+    def removeSeries(self, name_or_seriesData):
+        """Removes a series whose name matches the argument name or the
+        argument seriesData from this chart.
 
-        @param seriesData
-                   the series object to be removed
+        @param seriesData:
+                   the name of the series or the series object to be removed
         """
-        _0 = args
-        _1 = len(args)
-        if _1 == 1:
-            if isinstance(_0[0], self.Series):
-                seriesData, = _0
-                if self._chartSeries.remove(seriesData):
-                    seriesData.setInvientCharts(None)
-                    self.addSeriesCUROperation(self.SeriesCUR(SeriesCURType.REMOVE, seriesData.getName()))
-                    self.requestRepaint()
-            else:
-                name, = _0
-                _0 = True
-                seriesItr = self._chartSeries
-                while True:
-                    if _0 is True:
-                        _0 = False
-                    if not seriesItr.hasNext():
-                        break
-                    series = seriesItr.next()
-                    if series.getName() == name:
-                        seriesItr.remove()
-                        series.setInvientCharts(None)
-                        self.addSeriesCUROperation(self.SeriesCUR(SeriesCURType.REMOVE, series.getName()))
-                        self.requestRepaint()
+        if isinstance(name_or_seriesData, Series):
+            seriesData = name_or_seriesData
+            if self._chartSeries.remove(seriesData):  ## FIXME: remove
+                seriesData.setInvientCharts(None)
+                self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE, seriesData.getName()))
+                self.requestRepaint()
         else:
-            raise ARGERROR(1, 1)
+            name = name_or_seriesData
 
-    def Point(InvientCharts_this, *args, **kwargs):
+            seriesItr = self._chartSeries
+            for series in seriesItr:
+                if series.getName() == name:
+                    seriesItr.remove()
+                    series.setInvientCharts(None)
+                    self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE, series.getName()))
+                    self.requestRepaint()
 
-        class Point(Serializable):
-            """This class represents a point of the chart's series. A series can have
-            one or more points. A point has (X, Y) coordinates. None of the
-            coordinates are mandatory. The name of a point can be displayed in a
-            tooltip.
 
-            To represent no activity or missing points in the chart, create a point
-            with both X and Y as null or just Y as null.
 
-            It is possible to specify custom configuration for each point. e.g. If a
-            highest point can be marked in a chart with a different color using this
-            configuration.
 
-            A point cannot be created without a series. It must belong to a series.
-            However, the point must be added to a series by calling Series.addPoint()
-            or Series.setPoints() to permanently add point to the series.
 
-            @author Invient
-
-            @see DecimalPoint
-            @see DateTimePoint
-            @see PointConfig
-            """
-            _id = None
-            _name = None
-            _series = None
-            _config = None
-            _isAutosetX = None
-            _shift = None
-
-            def __init__(self, *args):
-                """Creates a point with given arguments.
-
-                @param series
-                           The series to which the point must be associated.
-                @exception IllegalArgumentException
-                               If the argument series is null
-                ---
-                To allow creation of a point from inside of InvientCharts component
-                ---
-                Creates a point with given arguments.
-
-                @param series
-                           The series to which the point must be associated.
-                @param config
-                           The configuration for this point, if any
-                @exception IllegalArgumentException
-                               If the argument series is null
-                ---
-                Creates a point with given arguments.
-
-                @param series
-                           The series to which the point must be associated.
-                @param name
-                           name of this point
-                @exception IllegalArgumentException
-                               If the argument series is null
-                ---
-                Creates a point with given arguments.
-
-                @param series
-                           The series to which the point must be associated.
-                @param name
-                           name of this point
-                @param config
-                           The configuration for this point, if any
-                @exception IllegalArgumentException
-                               If the argument series is null
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 0:
-                    pass # astStmt: [Stmt([]), None]
-                elif _1 == 1:
-                    series, = _0
-                    if series is None:
-                        raise self.IllegalArgumentException('A point cannot be created without a series.')
-                    self._series = series
-                elif _1 == 2:
-                    if isinstance(_0[1], PointConfig):
-                        series, config = _0
-                        self.__init__(series)
-                        self._config = config
-                    else:
-                        series, name = _0
-                        self.__init__(series)
-                        self._name = name
-                elif _1 == 3:
-                    series, name, config = _0
-                    self.__init__(series, name)
-                    self._config = config
-                else:
-                    raise ARGERROR(0, 3)
-
-            # FIXME this is not a correct way of doing it.
-
-            def getId(self):
-                return self._id
-
-            def getName(self):
-                """@return Returns name of this point"""
-                return self._name
-
-            def setName(self, name):
-                """Sets name of this point
-
-                @param name
-                           name of this point
-                """
-                self._name = name
-
-            def getSeries(self):
-                """@return Returns {@link Series} associated with this point"""
-                return self._series
-
-            def getConfig(self):
-                """@return Returns {@link PointConfig} for this point"""
-                return self._config
-
-            def setConfig(self, config):
-                """Sets {@link PointConfig} for this point
-
-                @param config
-                           configuration of this point
-                @see PointConfig
-                """
-                self._config = config
-
-            def isAutosetX(self):
-                """@return Returns true if X value of this point is set programmatically"""
-                return self._isAutosetX
-
-            def setAutosetX(self, isAutosetX):
-                """If the argument is true it indicates that the X value of this point
-                is set programmatically and user has not specified it.
-
-                @return
-                """
-                self._isAutosetX = isAutosetX
-
-            def isShift(self):
-                """@return Returns true if a point at the start of the series should be
-                        shifted off when this point is appended otherwise false.
-                """
-                return self._shift
-
-            def setShift(self, shift):
-                """A value of true means one point is shifted off the start of the
-                series as one is appended to the end.
-
-                @param shift
-                """
-                self._shift = shift
-
-            def getX(self):
-                """@return Returns X value of this point"""
-                pass
-
-            def getY(self):
-                """@return Returns Y value of this point"""
-                pass
-
-            def toString(self):
-                return 'Point [id=' + self._id + ', name=' + self._name + ', series=' + self._series.getName() + ', config=' + self._config + ']'
-
-        return Point(*args, **kwargs)
-
-    def DecimalPoint(InvientCharts_this, *args, **kwargs):
-
-        class DecimalPoint(Point):
-            """This class represent a point with (X, Y) both as number. It should be
-            used to add points to {@link XYSeries}
-
-            @author Invient
-            """
-            _x = None
-            _y = None
-
-            def __init__(self, *args):
-                """@param series
-                           the series to which this belongs to
-                ---
-                @param series
-                           the series to which this point belongs to
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param name
-                           the name of this point
-                @param y
-                           the y value of this point
-                ---
-                To allow creation of a point within the InvientChart.
-
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param name
-                           the name for this point
-                @param y
-                           the y value of this point
-                @param config
-                ---
-                @param series
-                           the series to which this belongs to
-                @param y
-                           the y value of this point
-                @param config
-                           the configuration for this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                @param config
-                           the configuration of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                @param config
-                           the configuration of this point
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    series, = _0
-                    super(DecimalPoint, self)(series)
-                elif _1 == 2:
-                    if isinstance(_0[0], InvientCharts_this.Series):
-                        series, y = _0
-                        super(DecimalPoint, self)(series)
-                        self._y = y
-                    else:
-                        x, y = _0
-                        super(DecimalPoint, self)()
-                        self._x = x
-                        self._y = y
-                elif _1 == 3:
-                    if isinstance(_0[1], float):
-                        if isinstance(_0[2], PointConfig):
-                            series, y, config = _0
-                            super(DecimalPoint, self)(series, config)
-                            self._y = y
-                        else:
-                            series, x, y = _0
-                            self.__init__(series, x, y, None)
-                            series, x, y = _0
-                            self.__init__(series, x, y, None)
-                    else:
-                        series, name, y = _0
-                        super(DecimalPoint, self)(series, name)
-                        self._y = y
-                elif _1 == 4:
-                    if isinstance(_0[1], float):
-                        series, x, y, config = _0
-                        super(DecimalPoint, self)(series, config)
-                        self._x = x
-                        self._y = y
-                        series, x, y, config = _0
-                        super(DecimalPoint, self)(series, config)
-                        self._x = x
-                        self._y = y
-                    else:
-                        series, name, y, config = _0
-                        super(DecimalPoint, self)(series, name, config)
-                        self._y = y
-                else:
-                    raise ARGERROR(1, 4)
-
-            # FIXME this is not a correct way of doing it.
-            # (non-Javadoc)
-            #
-            # @see com.invient.vaadin.chart.InvientChart.Point#getX()
-
-            def getX(self):
-                return self._x
-
-            def setX(self, x):
-                """Sets the x value of this point
-
-                @param x
-                """
-                # (non-Javadoc)
-                #
-                # @see com.invient.vaadin.chart.InvientChart.Point#getY()
-
-                self._x = x
-
-            def getY(self):
-                return self._y
-
-            def setY(self, y):
-                """Sets the y value of this point
-
-                @param y
-                """
-                self._y = y
-
-            def toString(self):
-                return 'DecimalPoint [x=' + self._x + ', y=' + self._y + ', id=' + self.getId() + ', name=' + self.getName() + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']'
-
-            def hashCode(self):
-                prime = 31
-                result = 1
-                result = (prime * result) + (0 if self._y is None else self._y.hashCode())
-                return result
-
-            def equals(self, obj):
-                if self is obj:
-                    return True
-                if obj is None:
-                    return False
-                if self.getClass() != obj.getClass():
-                    return False
-                other = obj
-                # If x is null then return always false as x is calculated if not
-                # specified
-                if (self._x is None) or (other.x is None):
-                    return False
-                if not (self._x == other.x):
-                    return False
-                if self._y is None:
-                    if other.y is not None:
-                        return False
-                elif other.y is None:
-                    return False
-                elif self._y.compareTo(other.y) != 0:
-                    return False
-                return True
-
-        return DecimalPoint(*args, **kwargs)
 
     def DateTimePoint(InvientCharts_this, *args, **kwargs):
-
-        class DateTimePoint(Point):
-            """This class represent a point with (X, Y) both as number. It should be
-            used to add points to {@link DateTimeSeries}
-
-            @author Invient
-            """
-            _x = None
-            _y = None
-
-            def __init__(self, *args):
-                """@param series
-                           the series to which this belongs to
-                ---
-                @param series
-                           the series to which this belongs to
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param name
-                           the name of this point
-                @param y
-                           the y value of this point
-                ---
-                @param series
-                           the series to which this belongs to
-                @param name
-                           the name of this point
-                @param y
-                           the y value of this point
-                @param config
-                ---
-                @param series
-                           the series to which this belongs to
-                @param x
-                           the x value of this point
-                @param y
-                           the y value of this point
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    series, = _0
-                    super(DateTimePoint, self)(series)
-                elif _1 == 2:
-                    series, y = _0
-                    self.__init__(series, '', y)
-                elif _1 == 3:
-                    if isinstance(_0[1], Date):
-                        series, x, y = _0
-                        self.__init__(series, y)
-                        self._x = x
-                    else:
-                        series, name, y = _0
-                        super(DateTimePoint, self)(series, name)
-                        self._y = y
-                elif _1 == 4:
-                    series, name, y, config = _0
-                    super(DateTimePoint, self)(series, name, config)
-                    self._y = y
-                else:
-                    raise ARGERROR(1, 4)
-
-            # (non-Javadoc)
-            #
-            # @see com.invient.vaadin.chart.InvientChart.Point#getX()
-
-            def getX(self):
-                return self._x
-
-            def setX(self, x):
-                """Sets the x value of this point
-
-                @param x
-                """
-                # (non-Javadoc)
-                #
-                # @see com.invient.vaadin.chart.InvientChart.Point#getY()
-
-                self._x = x
-
-            def getY(self):
-                return self._y
-
-            def setY(self, y):
-                """Sets the y value of this point
-
-                @param y
-                """
-                self._y = y
-
-            def toString(self):
-                return 'DateTimePoint [x=' + InvientCharts_this.getDateInMilliseconds(self._x, InvientCharts_this.getSeries().isIncludeTime() if InvientCharts_this.getSeries() is not None else False) + ', y=' + self._y + ', id=' + self.getId() + ', name=' + self.getName() + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']'
-
-            def hashCode(self):
-                prime = 31
-                result = 1
-                result = (prime * result) + (0 if self._y is None else self._y.hashCode())
-                return result
-
-            def equals(self, obj):
-                if self is obj:
-                    return True
-                if obj is None:
-                    return False
-                if self.getClass() != obj.getClass():
-                    return False
-                other = obj
-                # If x is null then return always false as x is calculated if not
-                # specified
-                if (self._x is None) or (other.x is None):
-                    return False
-                pointIncludeTime = self.getSeries().isIncludeTime() if isinstance(self.getSeries(), InvientCharts_this.DateTimeSeries) else False
-                pointOtherIncludeTime = other.getSeries().isIncludeTime() if isinstance(other.getSeries(), InvientCharts_this.DateTimeSeries) else False
-                pointX = InvientCharts_this.getDateInMilliseconds(self._x, pointIncludeTime)
-                pointOtherX = InvientCharts_this.getDateInMilliseconds(other.x, pointOtherIncludeTime)
-                if pointX.compareTo(pointOtherX) != 0:
-                    return False
-                if self._y is None:
-                    if other.y is not None:
-                        return False
-                elif other.y is None:
-                    return False
-                elif self._y.compareTo(other.y) != 0:
-                    return False
-                return True
 
         return DateTimePoint(*args, **kwargs)
 
     def Series(InvientCharts_this, *args, **kwargs):
-
-        class Series(Serializable):
-            """This class defines a series of the chart. A series contains a collection
-            of points. Series can be one of types defined by {@link SeriesType}.
-
-            Each series must have unique name. If an attempt is made to add two
-            series with same then only the first added series will be in effect.
-
-            If the series type is not specified, it defaults to chart type and the
-            default chart type is SeriesType.LINE. A series has unique xAxis and
-            yAxis object associated with it. There is no need to set xAxis and yAxis
-            unless the chart has more than one one axis of any type and the series
-            must belong to any of the secondary axis.
-
-            It is also possible to specify configuration for individual series and
-            not just series type.
-
-            @author Invient
-            """
-            _points = LinkedHashSet()
-            _name = ''
-            _type = None
-            _stack = None
-            _xAxis = None
-            _yAxis = None
-            _config = None
-            _invientCharts = None
-
-            def __init__(self, *args):
-                """Creates a series with given name
-
-                @param name
-                           the name of this series
-                ---
-                Creates a series with given name and type
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                ---
-                Creates a series with given name and configuration
-
-                @param name
-                           the name of this series
-                @param config
-                           the configuration for this series
-                ---
-                Creates a series with given name, type and configuration
-
-                @param name
-                           the name of this series
-                @param seriesType
-                           the type of this series
-                @param config
-                           the configuration for this series
-                """
-                _0 = args
-                _1 = len(args)
-                if _1 == 1:
-                    name, = _0
-                    self._name = name
-                elif _1 == 2:
-                    if isinstance(_0[1], InvientCharts_this.SeriesType):
-                        name, seriesType = _0
-                        self.__init__(name)
-                        self._type = seriesType
-                    else:
-                        name, config = _0
-                        self.__init__(name)
-                        self._config = config
-                elif _1 == 3:
-                    name, seriesType, config = _0
-                    self.__init__(name, config)
-                    self._type = seriesType
-                else:
-                    raise ARGERROR(1, 3)
-
-            def getConfig(self):
-                """@return Returns the configuration object associated with this series"""
-                return self._config
-
-            def getName(self):
-                """@return Returns name of this series"""
-                return self._name
-
-            def setName(self, name):
-                """Sets name of this series
-
-                @param name
-                """
-                self._name = name
-
-            def getType(self):
-                """@return"""
-                return self._type
-
-            def setType(self, type):
-                """Sets type of this series
-
-                @param type
-                """
-                self._type = type
-
-            def getStack(self):
-                """@return Returns stack of this series"""
-                return self._stack
-
-            def setStack(self, stack):
-                """By using this stack property, it is possible to group series in a
-                stacked chart. Sets stack for this series. If two series belongs to
-                the same stack then the resultant chart will be stacked chart
-
-                @param stack
-                """
-                self._stack = stack
-
-            def getXAxis(self):
-                """@return Returns x-axis associated with this series.
-                @see Axis
-                """
-                return self._xAxis
-
-            def setXAxis(self, xAxis):
-                """Sets x-axis of this series. A series can be associated with at most
-                one x-axis.
-
-                @param xAxis
-                """
-                self._xAxis = xAxis
-
-            def getYAxis(self):
-                """@return Returns y-axis of this series."""
-                return self._yAxis
-
-            def setYAxis(self, yAxis):
-                """Sets y-axis of this series. A series can be associated with at most
-                one y-axis.
-
-                @param yAxis
-                """
-                self._yAxis = yAxis
-
-            def removePoint(self, *points):
-                """@param points"""
-                pointsRemovedList = list()
-                for point in points:
-                    if self._points.remove(point):
-                        pointsRemovedList.add(point)
-                self.updatePointXValuesIfNotPresent()
-                for point in pointsRemovedList:
-                    if self._invientCharts is not None:
-                        self._invientCharts.addSeriesPointRemovedOperation(point.getSeries().getName(), point)
-                        self._invientCharts.requestRepaint()
-
-            def removeAllPoints(self):
-                """Removes all points in this series"""
-                self._points.clear()
-                if self._invientCharts is not None:
-                    self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
-                    self._invientCharts.requestRepaint()
-
-            def addPoint(self, shift, *points):
-                """Adds one or more points into this series, specified as an argument to
-                this method
-
-                @param points
-                @return Returns null if the argument is null otherwise returns a
-                        collection of points which are added in this series. If a
-                        point has same (x, y) value as any other point in the
-                        argument points then it will not be added.
-                """
-                if shift:
-                    # Remove first point as other points gets appended at the end
-                    pointsItr = self._points
-                    if pointsItr.hasNext():
-                        pointsItr.next()
-                        pointsItr.remove()
-                pointsAddedList = list()
-                for point in points:
-                    if self._points.add(point):
-                        pointsAddedList.add(point)
-                self.updatePointXValuesIfNotPresent()
-                # Now record point add event as we need to know x value of a point
-                for point in pointsAddedList:
-                    if self._invientCharts is not None:
-                        self._invientCharts.addSeriesPointAddedOperation(point.getSeries().getName(), point)
-                        self._invientCharts.requestRepaint()
-                return LinkedHashSet(pointsAddedList)
-
-            def addPointsInternal(self, points):
-                for point in points:
-                    self._points.add(point)
-
-            def getPoints(self):
-                """@return Returns all points of this series. Adding or removing any
-                        point to or from the returned collection will not impact the
-                        chart. To add a point or points, use addPoint() or
-                        removePoint() method.
-                """
-                return LinkedHashSet(self._points)
-
-            def setPoints(self, points):
-                """Sets points into this series
-
-                @param points
-                @return Returns null if the argument is null otherwise returns a
-                        collection of points which are set in this series. If a point
-                        has same (x, y) value as any other point in the argument
-                        points then it will not be added.
-                """
-                if points is not None:
-                    self._points.clear()
-                    self.addPointsInternal(points)
-                    self.updatePointXValuesIfNotPresent()
-                    if self._invientCharts is not None:
-                        self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
-                        self._invientCharts.requestRepaint()
-                    return self.getPoints()
-                return None
-
-            def updatePointXValuesIfNotPresent(self):
-                """Each of the subclass needs to implement this method to ensure that
-                each point has appropriate X value even if it is not specified.
-                """
-                pass
-
-            def show(self):
-                """Show this series"""
-                self._config = SeriesConfig() if self._config is None else self._config
-                self._config.setVisible(True)
-                if self._invientCharts is not None:
-                    self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
-                    self._invientCharts.requestRepaint()
-
-            def hide(self):
-                """Hide this series"""
-                self._config = SeriesConfig() if self._config is None else self._config
-                self._config.setVisible(False)
-                if self._invientCharts is not None:
-                    self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
-                    self._invientCharts.requestRepaint()
-
-            def setInvientCharts(self, invientCharts):
-                self._invientCharts = invientCharts
-
-            def hashCode(self):
-                prime = 31
-                result = 1
-                result = (prime * result) + (0 if self._name is None else self._name.hashCode())
-                return result
-
-            def equals(self, obj):
-                if self is obj:
-                    return True
-                if obj is None:
-                    return False
-                if self.getClass() != obj.getClass():
-                    return False
-                other = obj
-                if self._name is None:
-                    if other.name is not None:
-                        return False
-                elif not (self._name == other.name):
-                    return False
-                return True
-
-            def toString(self):
-                return 'Series [points=' + self._points + ', name=' + self._name + ', type=' + self._type + ', stack=' + self._stack + ', xAxis=' + self._xAxis + ', yAxis=' + self._yAxis + ', config=' + self._config + ']'
 
         return Series(*args, **kwargs)
 
@@ -3235,3 +1597,1616 @@ class InvientCharts(AbstractComponent):
         """
         self._isPrint = True
         self.requestRepaint()
+
+
+
+class MousePosition(object):
+    """This class contain mouse coordinates when a click event occurs
+    on a chart, a series or a point.
+
+    The mouse coordinates are in pixels.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, mouseX, mouseY):
+        """Creates this object with given arguments.
+
+        @param mouseX:
+                   x position of mouse when a click event occurred, in pixel
+        @param mouseY:
+                   y position of mouse when a click event occurred, in pixel
+        """
+        self._mouseX = mouseX
+        self._mouseY = mouseY
+
+
+    def getMouseX(self):
+        """@return: Returns x position of mouse when a click event occurred,
+        in pixel
+        """
+        return self._mouseX
+
+
+    def getMouseY(self):
+        """@return: Returns y position of mouse when a click event occurred,
+        in pixel
+        """
+        return self._mouseY
+
+
+    def __str__(self):
+        return ('MousePosition [mouseX=' + self._mouseX
+                + ', mouseY=' + self._mouseY + ']')
+
+
+class PointEventData(object):
+
+    def __init__(self, seriesName, category, pointX, pointY):
+        super(PointEventData, self).__init__()
+        self._seriesName = seriesName
+        self._category = category
+        self._pointX = pointX
+        self._pointY = pointY
+
+    def getSeriesName(self):
+        return self._seriesName
+
+    def getCategory(self):
+        return self._category
+
+    def getPointX(self):
+        return self._pointX
+
+    def getPointY(self):
+        return self._pointY
+
+    def __str__(self):
+        return ('PointEventData [seriesName=' + self._seriesName
+                + ', category=' + self._category
+                + ', pointX=' + self._pointX
+                + ', pointY=' + self._pointY + ']')
+
+
+class PointClickEvent(ComponentEvent):
+    """Click event. This event is thrown, when any point of this chart is
+    clicked and the point marker is enabled. The point marker is enabled by
+    default.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, category, point, mousePosition):
+        """New instance of the point click event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param category:
+                   a category to which point is associated in case of
+                   categorized axis,
+        @param point:
+                   the point on which the click event occurred
+        @param mousePosition:
+                   the position of a mouse when the click event occurred
+        """
+        super(PointClickEvent, self)(source)
+        self._chart = chart
+        self._category = category
+        self._point = point
+        self._mousePosition = mousePosition
+
+    def getCategory(self):
+        """@return: Returns a category to which point is associated in case
+        of categorized axis only.
+        """
+        return self._category
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+    def getPoint(self):
+        """@return: Returns the point on which the click event occurred"""
+        return self._point
+
+    def getMousePosition(self):
+        """@return: Returns the position of a mouse when the click event
+        occurred"""
+        return self._mousePosition
+
+
+class PointClickListener(object):
+    """Interface for listening for a L{PointClickEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def pointClick(self, pointClickEvent):
+        pass
+
+
+class PointRemoveEvent(ComponentEvent):
+    """Point remove event. This event is thrown, when any point of this chart
+    is removed from its series.
+
+    This event is EXPERIMENTAL ONLY.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, category, point):
+        """New instance of the point remove event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param category:
+                   a category to which point is associated in case of
+                   categorized axis,
+        @param point:
+                   the point removed
+        """
+        super(PointRemoveEvent, self).__init__(source)
+        self._chart = chart
+        self._category = category
+        self._point = point
+
+
+    def getCategory(self):
+        """@return: Returns a category to which point is associated in case
+        of categorized axis only.
+        """
+        return self._category
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getPoint(self):
+        """@return: Returns the point which has been removed"""
+        return self._point
+
+
+class PointRemoveListener(object):
+    """Interface for listening for a L{PointRemoveEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def pointRemove(self, pointRemoveEvent):
+        pass
+
+
+class PointUnselectEvent(ComponentEvent):
+    """Point unselect event. This event is thrown, when any point of this
+    chart is unselected and the point marker is enabled. The point marker
+    is enabled by default.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, category, point):
+        """New instance of the point unselect event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param category:
+                   a category to which point is associated in case of
+                   categorized axis,
+        @param point:
+                   the point unselected as a result of this event
+        """
+        super(PointUnselectEvent, self).__init__(source)
+        self._chart = chart
+        self._category = category
+        self._point = point
+
+
+    def getCategory(self):
+        """@return: Returns a category to which point is associated in case
+        of categorized axis only.
+        """
+        return self._category
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getPoint(self):
+        """@return: Returns the unselected point"""
+        return self._point
+
+
+class PointUnselectListener(object):
+    """Interface for listening for a L{PointUnselectEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def pointUnSelect(self, pointUnSelectEvent):
+        pass
+
+
+class PointSelectEvent(ComponentEvent):
+    """Point select event. This event is thrown, when any point of this chart
+    is selected and the point marker is enabled. The point marker is enabled
+    by default.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, category, point):
+        """New instance of the point select event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param category:
+                   a category to which point is associated in case of
+                   categorized axis,
+        @param point:
+                   the point selected as a result of this event
+        """
+        super(PointSelectEvent, self).__init__(source)
+        self._chart = chart
+        self._category = category
+        self._point = point
+
+
+    def getCategory(self):
+        """@return: Returns a category to which point is associated in case
+        of categorized axis only.
+        """
+        return self._category
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getPoint(self):
+        """@return: Returns the selected point"""
+        return self._point
+
+
+class PointSelectListener(object):
+    """Interface for listening for a L{PointSelectListener} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def pointSelected(self, pointSelectEvent):
+        pass
+
+
+_POINT_CLICK_METHOD = getattr(PointClickListener, 'pointClick')
+_POINT_REMOVE_METHOD = getattr(PointRemoveListener, 'pointRemove')
+_POINT_SELECT_METHOD = getattr(PointSelectListener, 'pointSelected')
+_POINT_UNSELECT_METHOD = getattr(PointUnselectListener, 'pointUnSelect')
+
+
+
+
+class SeriesClickEvent(ComponentEvent):
+    """Series click event. This event is thrown, when any series of this chart
+    is clicked.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, series, point, mousePosition):
+        """New instance of the series click event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param series:
+                   the series on which click event occurred
+        @param point:
+                   the closest point of a series
+        @param mousePosition:
+                   the position of a mouse when the click event occurred
+        """
+        super(SeriesClickEvent, self).__init__(source)
+        self._chart = chart
+        self._series = series
+        self._point = point
+        self._mousePosition = mousePosition
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getSeries(self):
+        """@return: Returns the series object on which the click event occurred"""
+        return self._series
+
+
+    def getNearestPoint(self):
+        """@return: Returns the point of a series closest to the position where
+        mouse click event occurred.
+        """
+        return self._point
+
+
+    def getMousePosition(self):
+        """@return: Returns the position of a mouse when the click event
+        occurred"""
+        return self._mousePosition
+
+
+class SeriesClickListerner(object):
+    """Interface for listening for a L{SeriesClickListerner} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def seriesClick(self, seriesClickEvent):
+        pass
+
+
+class SeriesHideEvent(ComponentEvent):
+    """Series Hide event. This event is thrown, when any series of this chart
+    is hidden.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, series):
+        """@param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param series:
+                   the series which got hidden
+        """
+        super(SeriesHideEvent, self).__init__(source)
+        self._chart = chart
+        self._series = series
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getSeries(self):
+        """@return: Returns the series which got hidden"""
+        return self._series
+
+
+class SeriesHideListerner(object):
+    """Interface for listening for a L{SeriesHideEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def seriesHide(self, seriesHideEvent):
+        pass
+
+
+class SeriesShowEvent(ComponentEvent):
+    """Series show event. This event is thrown, when any series of this chart
+    is displayed after a chart is created.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, series):
+        """New instance of the series show event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param series:
+                   the series which got displayed
+        """
+        super(SeriesShowEvent, self).__init__(source)
+        self._chart = chart
+        self._series = series
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the series"""
+        return self._chart
+
+
+    def getSeries(self):
+        """@return: Returns the series which got displayed"""
+        return self._series
+
+
+class SeriesShowListerner(object):
+    """Interface for listening for a L{SeriesShowEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def seriesShow(self, seriesShowEvent):
+        pass
+
+
+class SeriesLegendItemClickEvent(ComponentEvent):
+    """Series legend item click event. This event is thrown, when legend item
+    is clicked. This event is not applicable for PieChart instead use
+    L{LegendItemClickEvent}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, series):
+        """New instance of the point click event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param series:
+                   the series associated with the legend item
+        """
+        super(SeriesLegendItemClickEvent, self).__init__(source)
+        self._chart = chart
+        self._series = series
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the series"""
+        return self._chart
+
+
+    def getSeries(self):
+        """@return: Returns the series associated with the legend item"""
+        return self._series
+
+
+class SeriesLegendItemClickListerner(object):
+    """Interface for listening for a L{SeriesLegendItemClickEvent}
+    triggered by L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def seriesLegendItemClick(self, seriesLegendItemClickEvent):
+        pass
+
+
+_SERIES_CLICK_METHOD = getattr(SeriesClickListerner, 'seriesClick')
+_SERIES_HIDE_METHOD = getattr(SeriesHideListerner, 'seriesHide')
+_SERIES_SHOW_METHOD = getattr(SeriesShowListerner, 'seriesShow')
+_SERIES_LEGENDITEM_CLICK_METHOD = getattr(SeriesLegendItemClickListerner,
+        'seriesLegendItemClick')
+
+
+class PieChartLegendItemClickEvent(ComponentEvent):
+    """PieChart legend item click event. This event is thrown, when the legend
+    item belonging to the pie point (slice) is clicked.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, point):
+        """New instance of the piechart legend item click event
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param point:
+                   the pie point (slice) associated with the legend item
+        """
+        super(PieChartLegendItemClickEvent, self).__init__(source)
+        self._chart = chart
+        self._point = point
+
+
+    def getChart(self):
+        """@return: Returns the chart object associated with the point"""
+        return self._chart
+
+
+    def getPoint(self):
+        """@return: Returns the pie point (slice) associated with the legend
+        item"""
+        return self._point
+
+
+class PieChartLegendItemClickListener(object):
+    """Interface for listening for a L{PieChartLegendItemClickEvent}
+    triggered by L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def legendItemClick(self, legendItemClickEvent):
+        pass
+
+
+_LEGENDITEM_CLICK_METHOD = getattr(PieChartLegendItemClickListener,
+        'legendItemClick')
+
+
+class ChartClickEvent(ComponentEvent):
+    """Chart Click event. This event is thrown, when this chart is clicked.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, point, mousePosition):
+        """New instance of the chart click event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param point:
+                   the position where the click event occurred in axes units
+        @param mousePosition:
+                   the coordinate of mouse where the click event occurred in
+                   pixels
+        """
+        super(ChartClickEvent, self).__init__(source)
+        self._chart = chart
+        self._point = point
+        self._mousePosition = mousePosition
+
+
+    def getChart(self):
+        """Returns the chart object on which the click event occurred
+
+        @return: Returns the chart object on which the click event occurred
+        @see: L{InvientCharts}
+        """
+        return self._chart
+
+
+    def getPoint(self):
+        """Returns the point representing the position where the click event
+        occurred in axes units
+
+        @return: Returns the point representing the position where the click
+                 event occurred in axes units
+        @see: L{Point}
+        """
+        return self._point
+
+
+    def getMousePosition(self):
+        """Returns the position of a mouse when the click event occurred
+
+        @return: Returns the position of a mouse when the click event occurred
+        @see: L{MousePosition}
+        """
+        return self._mousePosition
+
+
+    def __str__(self):
+        return ('ChartClickEvent [point=' + self._point
+                + ', mousePosition=' + self._mousePosition + ']')
+
+
+class ChartClickListener(object):
+    """Interface for listening for a L{ChartClickEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def chartClick(self, chartClickEvent):
+        pass
+
+
+class ChartAddSeriesEvent(ComponentEvent):
+    """Add series event. This event is thrown, when a series is added to the
+    chart.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart):
+        """New instance of the chart add series event.
+
+        @param source
+        @param chart
+        """
+        super(ChartAddSeriesEvent, self).__init__(source)
+        self._chart = chart
+
+    def getChart(self):
+        """Returns the chart object to which a series is added
+
+        @return: Returns the chart object to which a series has been added.
+        @see: L{InvientCharts}
+        """
+        return self._chart
+
+
+class ChartAddSeriesListener(object):
+    """Interface for listening for a L{ChartAddSeriesEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def chartAddSeries(self, chartAddSeriesEvent):
+        pass
+
+
+class ChartArea(object):
+    """Defines information on the selected area.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, xAxisMin, xAxisMax, yAxisMin, yAxisMax):
+        self._xAxisMin = xAxisMin
+        self._xAxisMax = xAxisMax
+        self._yAxisMin = yAxisMin
+        self._yAxisMax = yAxisMax
+
+    def getxAxisMin(self):
+        return self._xAxisMin
+
+    def getxAxisMax(self):
+        return self._xAxisMax
+
+    def getyAxisMin(self):
+        return self._yAxisMin
+
+    def getyAxisMax(self):
+        return self._yAxisMax
+
+    def __str__(self):
+        return ('ChartSelectedArea [xAxisMin=' + self._xAxisMin
+                + ', xAxisMax=' + self._xAxisMax
+                + ', yAxisMin=' + self._yAxisMin
+                + ', yAxisMax=' + self._yAxisMax + ']')
+
+
+class ChartZoomEvent(ComponentEvent):
+    """Chart zoom event. This event is thrown, when an area of the chart has
+    been selected.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, chartArea):
+        """New instance of the chart zoom event.
+
+        @param source
+                   the chart object itself
+        @param chart
+                   the chart object itself
+        @param chartArea
+                   the chartArea object containing dimensions of zoomed area
+                   of the chart
+        """
+        super(ChartZoomEvent, self).__init__(source)
+        self._chart = chart
+        self._chartArea = chartArea
+
+
+    def getChart(self):
+        """Returns the chart object for which the zoom event has occurred
+
+        @return: Returns the chart object for which the zoom event has
+                 occurred
+        """
+        return self._chart
+
+
+    def getChartArea(self):
+        """Returns the chartArea object containing dimensions of zoomed area
+        of the chart
+
+        @return: Returns the chartArea object containing dimensions of zoomed
+                 area of the chart
+        """
+        return self._chartArea
+
+
+class ChartZoomListener(object):
+    """Interface for listening for a L{ChartZoomEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def chartZoom(self, chartZoomEvent):
+        pass
+
+
+class ChartResetZoomEvent(ComponentEvent):
+    """Chart reset zoom event. This event is thrown, when a chart is reset
+    by setting its zoom level to normal.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart):
+        """New instance of the chart reset zoom event
+
+        @param source
+                   the chart object itself
+        @param chart
+                   the chart object itself
+        """
+        super(ChartResetZoomEvent, self).__init__(source)
+        self._chart = chart
+
+
+    def getChart(self):
+        """Returns the chart object for which zoom has been reset to normal
+
+        @return: Returns the chart object for which zoom has been reset to
+                 normal
+        """
+        return self._chart
+
+
+class ChartResetZoomListener(object):
+    """Interface for listening for a L{@link ChartResetZoomEvent} triggered by
+    L{InvientCharts}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def chartResetZoom(self, chartResetZoomEvent):
+        pass
+
+
+class ChartSVGAvailableEvent(ComponentEvent):
+    """Chart SVG event. This event is thrown, when an SVG string representing
+    the chart is received or ready.
+
+    Note that this event is thrown only once after a
+    L{ChartSVGAvailableListener} is registered.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, source, chart, svg):
+        """New instance of the chart svg available event.
+
+        @param source:
+                   the chart object itself
+        @param chart:
+                   the chart object itself
+        @param svg:
+                   an svg string representing the chart object
+        """
+        super(ChartSVGAvailableEvent, self).__init__(source)
+        self._chart = chart
+        self._svg = svg
+
+
+    def getChart(self):
+        """Returns the chart object for which an svg string representation
+        is available
+
+        @return: Returns the chart object for which an svg string
+                 representation is available
+        """
+        return self._chart
+
+
+    def getSVG(self):
+        """@return: Returns an SVG string representing the chart"""
+        return self._svg
+
+
+class ChartSVGAvailableListener(object):
+    """Interface for listening for a L{ChartSVGAvailableEvent} triggered by
+    L{InvientCharts}.
+
+    The chart can have only one listener of this type registered at any time.
+    If a listener has already been registered and an attempt is made to
+    register another listener then the previously registered listener will be
+    unregistered and the new listener will be registered.
+
+    A listener will be called only once after it has been registered though
+    it will be called again if the same listener is registered again.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def svgAvailable(self, chartSVGAvailableEvent):
+        pass
+
+
+_CHART_CLICK_METHOD = getattr(ChartClickListener, 'chartClick')
+_CHART_ADD_SERIES_METHOD = getattr(ChartAddSeriesListener, 'chartAddSeries')
+_CHART_ZOOM_METHOD = getattr(ChartZoomListener, 'chartZoom')
+_CHART_RESET_ZOOM_METHOD = getattr(ChartResetZoomListener, 'chartResetZoom')
+_CHART_SVG_AVAILABLE_METHOD = getattr(ChartSVGAvailableListener, 'svgAvailable')
+
+
+class Point(object):
+    """This class represents a point of the chart's series. A series can have
+    one or more points. A point has (X, Y) coordinates. None of the
+    coordinates are mandatory. The name of a point can be displayed in a
+    tooltip.
+
+    To represent no activity or missing points in the chart, create a point
+    with both X and Y as null or just Y as null.
+
+    It is possible to specify custom configuration for each point. e.g. If a
+    highest point can be marked in a chart with a different color using this
+    configuration.
+
+    A point cannot be created without a series. It must belong to a series.
+    However, the point must be added to a series by calling Series.addPoint()
+    or Series.setPoints() to permanently add point to the series.
+
+    @author: Invient
+    @author: Richard Lincoln
+
+    @see: L{DecimalPoint}
+    @see: L{DateTimePoint}
+    @see: L{PointConfig}
+    """
+    _id = None
+    _name = None
+    _series = None
+    _config = None
+    _isAutosetX = None
+    _shift = None
+
+    def __init__(self, series, name_or_config=None, config=None):
+        """Creates a point with given arguments.
+
+        @param series
+                   The series to which the point must be associated.
+        @exception IllegalArgumentException
+                       If the argument series is null
+        ---
+        To allow creation of a point from inside of InvientCharts component
+        ---
+        Creates a point with given arguments.
+
+        @param series
+                   The series to which the point must be associated.
+        @param config
+                   The configuration for this point, if any
+        @exception IllegalArgumentException
+                       If the argument series is null
+        ---
+        Creates a point with given arguments.
+
+        @param series
+                   The series to which the point must be associated.
+        @param name
+                   name of this point
+        @exception IllegalArgumentException
+                       If the argument series is null
+        ---
+        Creates a point with given arguments.
+
+        @param series
+                   The series to which the point must be associated.
+        @param name
+                   name of this point
+        @param config
+                   The configuration for this point, if any
+        @exception IllegalArgumentException
+                       If the argument series is null
+        """
+        if name_or_config is not None:
+            if isinstance(name_or_config, PointConfig):
+                config = name_or_config
+                name = None
+            else:
+                name = name_or_config
+                config = None
+
+        self._series = series
+        self._name = name
+        self._config = config
+
+
+    def getId(self):
+        return self._id
+
+
+    def getName(self):
+        """@return: Returns name of this point"""
+        return self._name
+
+
+    def setName(self, name):
+        """Sets name of this point
+
+        @param name:
+                   name of this point
+        """
+        self._name = name
+
+
+    def getSeries(self):
+        """@return: Returns L{Series} associated with this point"""
+        return self._series
+
+
+    def getConfig(self):
+        """@return: Returns L{PointConfig} for this point"""
+        return self._config
+
+
+    def setConfig(self, config):
+        """Sets L{PointConfig} for this point
+
+        @param config:
+                   configuration of this point
+        @see: L{PointConfig}
+        """
+        self._config = config
+
+
+    def isAutosetX(self):
+        """@return: Returns true if X value of this point is set
+        programmatically"""
+        return self._isAutosetX
+
+
+    def setAutosetX(self, isAutosetX):
+        """If the argument is true it indicates that the X value of this point
+        is set programmatically and user has not specified it.
+        """
+        self._isAutosetX = isAutosetX
+
+
+    def isShift(self):
+        """@return: Returns true if a point at the start of the series should
+        beshifted off when this point is appended otherwise false.
+        """
+        return self._shift
+
+
+    def setShift(self, shift):
+        """A value of true means one point is shifted off the start of the
+        series as one is appended to the end.
+        """
+        self._shift = shift
+
+
+    def getX(self):
+        """@return: Returns X value of this point"""
+        pass
+
+
+    def getY(self):
+        """@return: Returns Y value of this point"""
+        pass
+
+
+    def __str__(self):
+        return ('Point [id=' + self._id
+                + ', name=' + self._name
+                + ', series=' + self._series.getName()
+                + ', config=' + self._config + ']')
+
+
+class DecimalPoint(Point):
+    """This class represent a point with (X, Y) both as number. It should be
+    used to add points to L{XYSeries}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, *args):
+        """@param series
+                   the series to which this belongs to
+        ---
+        @param series
+                   the series to which this point belongs to
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param name
+                   the name of this point
+        @param y
+                   the y value of this point
+        ---
+        To allow creation of a point within the InvientChart.
+
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param name
+                   the name for this point
+        @param y
+                   the y value of this point
+        @param config
+        ---
+        @param series
+                   the series to which this belongs to
+        @param y
+                   the y value of this point
+        @param config
+                   the configuration for this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        @param config
+                   the configuration of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        @param config
+                   the configuration of this point
+        """
+        nargs = len(args)
+        if nargs == 1:
+            series, = args
+            super(DecimalPoint, self).__init__(series)
+        elif nargs == 2:
+            if isinstance(args[0], Series):
+                series, y = args
+                super(DecimalPoint, self).__init__(series)
+                self._y = y
+            else:
+                x, y = args
+                super(DecimalPoint, self).__init__()
+                self._x = x
+                self._y = y
+        elif nargs == 3:
+            if isinstance(args[1], float):
+                if isinstance(args[2], PointConfig):
+                    series, y, config = args
+                    super(DecimalPoint, self).__init__(series, config)
+                    self._y = y
+                else:
+                    series, x, y = args
+                    self.__init__(series, x, y, None)
+                    series, x, y = args
+                    self.__init__(series, x, y, None)
+            else:
+                series, name, y = args
+                super(DecimalPoint, self).__init__(series, name)
+                self._y = y
+        elif nargs == 4:
+            if isinstance(args[1], float):
+                series, x, y, config = args
+                super(DecimalPoint, self).__init__(series, config)
+                self._x = x
+                self._y = y
+                series, x, y, config = args
+                super(DecimalPoint, self).__init__(series, config)
+                self._x = x
+                self._y = y
+            else:
+                series, name, y, config = args
+                super(DecimalPoint, self).__init__(series, name, config)
+                self._y = y
+        else:
+            raise ValueError
+
+
+    def getX(self):
+        return self._x
+
+
+    def setX(self, x):
+        """Sets the x value of this point
+
+        @param x
+        """
+        self._x = x
+
+
+    def getY(self):
+        return self._y
+
+
+    def setY(self, y):
+        """Sets the y value of this point
+
+        @param y
+        """
+        self._y = y
+
+
+    def __str__(self):
+        return ('DecimalPoint [x=' + self._x
+                + ', y=' + self._y
+                + ', id=' + self.getId()
+                + ', name=' + self.getName()
+                + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']')
+
+
+    def __hash__(self):
+        prime = 31
+        result = 1
+        result = (prime * result) + (0 if self._y is None else self._y.__hash__())
+        return result
+
+
+    def __eq__(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.getClass() != obj.getClass():
+            return False
+        other = obj
+        # If x is null then return always false as x is calculated if not
+        # specified
+        if (self._x is None) or (other.x is None):
+            return False
+        if not (self._x == other.x):
+            return False
+        if self._y is None:
+            if other.y is not None:
+                return False
+        elif other.y is None:
+            return False
+        elif self._y.compareTo(other.y) != 0:
+            return False
+        return True
+
+
+class DateTimePoint(Point):
+    """This class represent a point with (X, Y) both as number. It should be
+    used to add points to {@link DateTimeSeries}
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, *args):
+        """@param series
+                   the series to which this belongs to
+        ---
+        @param series
+                   the series to which this belongs to
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param name
+                   the name of this point
+        @param y
+                   the y value of this point
+        ---
+        @param series
+                   the series to which this belongs to
+        @param name
+                   the name of this point
+        @param y
+                   the y value of this point
+        @param config
+        ---
+        @param series
+                   the series to which this belongs to
+        @param x
+                   the x value of this point
+        @param y
+                   the y value of this point
+        """
+        args = args
+        nargs = len(args)
+        if nargs == 1:
+            series, = args
+            super(DateTimePoint, self).__init__(series)
+        elif nargs == 2:
+            series, y = args
+            self.__init__(series, '', y)
+        elif nargs == 3:
+            if isinstance(args[1], datetime):
+                series, x, y = args
+                self.__init__(series, y)
+                self._x = x
+            else:
+                series, name, y = args
+                super(DateTimePoint, self).__init__(series, name)
+                self._y = y
+        elif nargs == 4:
+            series, name, y, config = args
+            super(DateTimePoint, self).__init__(series, name, config)
+            self._y = y
+        else:
+            raise ValueError
+
+
+    def getX(self):
+        return self._x
+
+
+    def setX(self, x):
+        """Sets the x value of this point
+
+        @param x
+        """
+        self._x = x
+
+
+    def getY(self):
+        return self._y
+
+
+    def setY(self, y):
+        """Sets the y value of this point
+
+        @param y
+        """
+        self._y = y
+
+
+    def __str__(self):
+        return 'DateTimePoint [x=' + InvientCharts_this.getDateInMilliseconds(self._x, InvientCharts_this.getSeries().isIncludeTime() if InvientCharts_this.getSeries() is not None else False) + ', y=' + self._y + ', id=' + self.getId() + ', name=' + self.getName() + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']'
+
+
+    def __hash__(self):
+        prime = 31
+        result = 1
+        result = (prime * result) + (0 if self._y is None else self._y.__hash__())
+        return result
+
+
+    def __eq__(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.getClass() != obj.getClass():
+            return False
+        other = obj
+        # If x is null then return always false as x is calculated if not
+        # specified
+        if (self._x is None) or (other.x is None):
+            return False
+        pointIncludeTime = self.getSeries().isIncludeTime() if isinstance(self.getSeries(), InvientCharts_this.DateTimeSeries) else False
+        pointOtherIncludeTime = other.getSeries().isIncludeTime() if isinstance(other.getSeries(), InvientCharts_this.DateTimeSeries) else False
+        pointX = InvientCharts_this.getDateInMilliseconds(self._x, pointIncludeTime)
+        pointOtherX = InvientCharts_this.getDateInMilliseconds(other.x, pointOtherIncludeTime)
+        if pointX.compareTo(pointOtherX) != 0:
+            return False
+        if self._y is None:
+            if other.y is not None:
+                return False
+        elif other.y is None:
+            return False
+        elif self._y.compareTo(other.y) != 0:
+            return False
+        return True
+
+
+class Series(object):
+    """This class defines a series of the chart. A series contains a collection
+    of points. Series can be one of types defined by L{SeriesType}.
+
+    Each series must have unique name. If an attempt is made to add two
+    series with same then only the first added series will be in effect.
+
+    If the series type is not specified, it defaults to chart type and the
+    default chart type is SeriesType.LINE. A series has unique xAxis and
+    yAxis object associated with it. There is no need to set xAxis and yAxis
+    unless the chart has more than one one axis of any type and the series
+    must belong to any of the secondary axis.
+
+    It is also possible to specify configuration for individual series and
+    not just series type.
+
+    @author: Invient
+    @author: Richard Lincoln
+    """
+
+    def __init__(self, name, seriesType_or_config=None, config=None):
+        """Creates a series with given name, type and configuration
+
+        @param name:
+                   the name of this series
+        @param seriesType_or_config:
+                   the type of this series or the configuration for this series
+        @param config:
+                   the configuration for this series
+        """
+        self._points = set()
+        self._name = ''
+        self._type = None
+        self._stack = None
+        self._xAxis = None
+        self._yAxis = None
+        self._config = None
+        self._invientCharts = None
+
+        if seriesType_or_config is not None:
+            if isinstance(seriesType_or_config, SeriesType):
+                seriesType = seriesType_or_config
+            else:
+                config = seriesType_or_config
+                seriesType = None
+
+        self._name = name
+        self._type = seriesType
+        self._config = config
+
+
+    def getConfig(self):
+        """@return: Returns the configuration object associated with this
+        series"""
+        return self._config
+
+
+    def getName(self):
+        """@return: Returns name of this series"""
+        return self._name
+
+
+    def setName(self, name):
+        """Sets name of this series
+
+        @param name
+        """
+        self._name = name
+
+
+    def getType(self):
+        """@return"""
+        return self._type
+
+
+    def setType(self, typ):
+        """Sets type of this series
+
+        @param typ
+        """
+        self._type = typ
+
+
+    def getStack(self):
+        """@return: Returns stack of this series"""
+        return self._stack
+
+
+    def setStack(self, stack):
+        """By using this stack property, it is possible to group series in a
+        stacked chart. Sets stack for this series. If two series belongs to
+        the same stack then the resultant chart will be stacked chart
+
+        @param stack
+        """
+        self._stack = stack
+
+
+    def getXAxis(self):
+        """@return: Returns x-axis associated with this series.
+        @see: L{Axis}
+        """
+        return self._xAxis
+
+
+    def setXAxis(self, xAxis):
+        """Sets x-axis of this series. A series can be associated with at most
+        one x-axis.
+
+        @param xAxis
+        """
+        self._xAxis = xAxis
+
+
+    def getYAxis(self):
+        """@return: Returns y-axis of this series."""
+        return self._yAxis
+
+
+    def setYAxis(self, yAxis):
+        """Sets y-axis of this series. A series can be associated with at most
+        one y-axis.
+
+        @param yAxis
+        """
+        self._yAxis = yAxis
+
+
+    def removePoint(self, *points):
+        """@param points"""
+        pointsRemovedList = list()
+        for point in points:
+            if self._points.remove(point):
+                pointsRemovedList.append(point)
+
+        self.updatePointXValuesIfNotPresent()
+
+        for point in pointsRemovedList:
+            if self._invientCharts is not None:
+                self._invientCharts.addSeriesPointRemovedOperation(point.getSeries().getName(), point)
+                self._invientCharts.requestRepaint()
+
+
+    def removeAllPoints(self):
+        """Removes all points in this series"""
+        self._points.clear()
+        if self._invientCharts is not None:
+            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
+            self._invientCharts.requestRepaint()
+
+
+    def addPoint(self, shift, *points):
+        """Adds one or more points into this series, specified as an argument
+        to this method
+
+        @param points
+        @return: Returns null if the argument is null otherwise returns a
+                 collection of points which are added in this series. If a
+                 point has same (x, y) value as any other point in the
+                 argument points then it will not be added.
+        """
+        if shift:
+            # Remove first point as other points gets appended at the end
+            pointsItr = self._points
+            if pointsItr.hasNext():
+                pointsItr.next()
+                pointsItr.remove()
+        pointsAddedList = list()
+        for point in points:
+            if self._points.add(point):
+                pointsAddedList.add(point)
+        self.updatePointXValuesIfNotPresent()
+        # Now record point add event as we need to know x value of a point
+        for point in pointsAddedList:
+            if self._invientCharts is not None:
+                self._invientCharts.addSeriesPointAddedOperation(point.getSeries().getName(), point)
+                self._invientCharts.requestRepaint()
+        return LinkedHashSet(pointsAddedList)
+
+    def addPointsInternal(self, points):
+        for point in points:
+            self._points.add(point)
+
+    def getPoints(self):
+        """@return Returns all points of this series. Adding or removing any
+                point to or from the returned collection will not impact the
+                chart. To add a point or points, use addPoint() or
+                removePoint() method.
+        """
+        return LinkedHashSet(self._points)
+
+    def setPoints(self, points):
+        """Sets points into this series
+
+        @param points
+        @return Returns null if the argument is null otherwise returns a
+                collection of points which are set in this series. If a point
+                has same (x, y) value as any other point in the argument
+                points then it will not be added.
+        """
+        if points is not None:
+            self._points.clear()
+            self.addPointsInternal(points)
+            self.updatePointXValuesIfNotPresent()
+            if self._invientCharts is not None:
+                self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
+                self._invientCharts.requestRepaint()
+            return self.getPoints()
+        return None
+
+    def updatePointXValuesIfNotPresent(self):
+        """Each of the subclass needs to implement this method to ensure that
+        each point has appropriate X value even if it is not specified.
+        """
+        pass
+
+    def show(self):
+        """Show this series"""
+        self._config = SeriesConfig() if self._config is None else self._config
+        self._config.setVisible(True)
+        if self._invientCharts is not None:
+            self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            self._invientCharts.requestRepaint()
+
+    def hide(self):
+        """Hide this series"""
+        self._config = SeriesConfig() if self._config is None else self._config
+        self._config.setVisible(False)
+        if self._invientCharts is not None:
+            self._invientCharts.addSeriesCUROperation(InvientCharts_this.SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            self._invientCharts.requestRepaint()
+
+    def setInvientCharts(self, invientCharts):
+        self._invientCharts = invientCharts
+
+    def hashCode(self):
+        prime = 31
+        result = 1
+        result = (prime * result) + (0 if self._name is None else self._name.hashCode())
+        return result
+
+    def equals(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.getClass() != obj.getClass():
+            return False
+        other = obj
+        if self._name is None:
+            if other.name is not None:
+                return False
+        elif not (self._name == other.name):
+            return False
+        return True
+
+    def toString(self):
+        return 'Series [points=' + self._points + ', name=' + self._name + ', type=' + self._type + ', stack=' + self._stack + ', xAxis=' + self._xAxis + ', yAxis=' + self._yAxis + ', config=' + self._config + ']'
