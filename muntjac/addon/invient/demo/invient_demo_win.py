@@ -5,38 +5,48 @@
 
 
 class InvientChartsDemoWin(Window):
-    _mainSplit = None
-    _leftLayout = None
-    _rightLayout = None
-    _navTree = None
-    _eventLog = TextArea()
+
     _TREE_ITEM_CAPTION_PROP_ID = 'ChartType'
 
     def __init__(self):
+        self._mainSplit = None
+        self._leftLayout = None
+        self._rightLayout = None
+        self._navTree = None
+        self._eventLog = TextArea()
+        self._isAppRunningOnGAE = False
+
         mainLayout = VerticalLayout()
         self.setContent(mainLayout)
+
         self.setSizeFull()
         mainLayout.setSizeFull()
+
         self.setCaption('Invient Charts')
         infoBar = HorizontalLayout()
         mainLayout.addComponent(infoBar)
         infoBar.setHeight('50px')
         infoBar.setWidth('100%')
+
         lblAppTitle = Label('Demo Gallery for Invient Charts')
         lblAppTitle.setSizeFull()
         lblAppTitle.setStyleName('v-label-app-title')
         infoBar.addComponent(lblAppTitle)
+
         self._mainSplit = HorizontalSplitPanel()
         self._mainSplit.setSizeFull()
         mainLayout.addComponent(self._mainSplit)
         mainLayout.setExpandRatio(self._mainSplit, 1)
+
         self._leftLayout = VerticalLayout()
         self._leftLayout.setSpacing(True)
         self._mainSplit.setFirstComponent(self._leftLayout)
+
         self._rightLayout = VerticalLayout()
         self._rightLayout.setSpacing(True)
         self._rightLayout.setMargin(True)
         self._mainSplit.setSecondComponent(self._rightLayout)
+
         self._mainSplit.setSplitPosition(200, Sizeable.UNITS_PIXELS)
         self._navTree = self.createChartsTree()
         self._leftLayout.addComponent(self._navTree)
@@ -46,226 +56,109 @@ class InvientChartsDemoWin(Window):
         self._eventLog.setHeight('200px')
         self.setTheme('chartdemo')
 
+
     def attach(self):
         super(InvientChartsDemoWin, self).attach()
         self._isAppRunningOnGAE = self.getInvientChartsDemoApp().isAppRunningOnGAE()
         # Select line chart when the screen is loaded
         self._navTree.select(self.DemoSeriesType.LINE.getName() + self._SEPARATOR + self.ChartName.BASIC.getName())
 
-    _isAppRunningOnGAE = None
 
     def isAppRunningOnGAE(self):
         return self._isAppRunningOnGAE
 
+
     def getInvientChartsDemoApp(self):
         return self.getApplication()
+
 
     def showChart(self, demoSeriesTypeName, chartNameString):
         if not self._isAppRunningOnGAE:
             self.stopSplineSelfUpdateThread()
+
         demoSeriesType = self.getDemoSeriesType(demoSeriesTypeName)
         chartName = self.getChartName(chartNameString)
+
         if demoSeriesType is not None and chartName is not None:
-            _0 = demoSeriesType
-            _1 = False
-            while True:
-                if _0 == self.COMBINATION:
-                    _1 = True
-                    _2 = chartName
-                    _3 = False
-                    while True:
-                        if _2 == self.COMBINATION_COLUMN_LINE_AND_PIE:
-                            _3 = True
-                            self.showCombination()
-                            break
-                        if (_3 is True) or (_2 == self.SCATTER_WITH_REGRESSION_LINE):
-                            _3 = True
-                            self.showCombinationScatterWithRegressionLine()
-                            break
-                        if (_3 is True) or (_2 == self.MULTIPLE_AXES):
-                            _3 = True
-                            self.showCombinationMultipleAxes()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.LINE):
-                    _1 = True
-                    _4 = chartName
-                    _5 = False
-                    while True:
-                        if _4 == self.BASIC:
-                            _5 = True
-                            self.showLine()
-                            break
-                        if (_5 is True) or (_4 == self.CLICK_TO_ADD_POINT):
-                            _5 = True
-                            self.showClickToAddPoint()
-                            break
-                        if (_5 is True) or (_4 == self.WITH_DATA_LABELS):
-                            _5 = True
-                            self.showLineWithDataLabels()
-                            break
-                        if (_5 is True) or (_4 == self.TIMESERIES_ZOOMABLE):
-                            _5 = True
-                            self.showTimeSeriesZoomable()
-                            break
-                        if (_5 is True) or (_4 == self.MASTER_DETAIL):
-                            _5 = True
-                            self.showMasterDetail()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.BAR):
-                    _1 = True
-                    _6 = chartName
-                    _7 = False
-                    while True:
-                        if _6 == self.BASIC:
-                            _7 = True
-                            self.showBarBasic()
-                            break
-                        if (_7 is True) or (_6 == self.STACKED):
-                            _7 = True
-                            self.showBarStacked()
-                            break
-                        if (_7 is True) or (_6 == self.WITH_NEGATIVE_STACK):
-                            _7 = True
-                            self.showBarWithNegStack()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.COLUMN):
-                    _1 = True
-                    _8 = chartName
-                    _9 = False
-                    while True:
-                        if _8 == self.BASIC:
-                            _9 = True
-                            self.showColumnBasic()
-                            break
-                        if (_9 is True) or (_8 == self.WITH_NEGATIVE_VALUES):
-                            _9 = True
-                            self.showColumnWithNegValues()
-                            break
-                        if (_9 is True) or (_8 == self.STACKED):
-                            _9 = True
-                            self.showColumnStacked()
-                            break
-                        if (_9 is True) or (_8 == self.STACKED_AND_GROUPED):
-                            _9 = True
-                            self.showColumnStackedAndGrouped()
-                            break
-                        if (_9 is True) or (_8 == self.STACKED_PERCENT):
-                            _9 = True
-                            self.showColumnStackedPercent()
-                            break
-                        if (_9 is True) or (_8 == self.WITH_ROTATED_LABELS):
-                            _9 = True
-                            self.showColumnWithRotatedLabels()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.AREA):
-                    _1 = True
-                    _10 = chartName
-                    _11 = False
-                    while True:
-                        if _10 == self.BASIC:
-                            _11 = True
-                            self.showAreaBasic()
-                            break
-                        if (_11 is True) or (_10 == self.WITH_NEGATIVE_VALUES):
-                            _11 = True
-                            self.showAreaWithNegValues()
-                            break
-                        if (_11 is True) or (_10 == self.STACKED):
-                            _11 = True
-                            self.showAreaStacked()
-                            break
-                        if (_11 is True) or (_10 == self.PERCENTAGE):
-                            _11 = True
-                            self.showAreaPercent()
-                            break
-                        if (_11 is True) or (_10 == self.INVERTED_AXES):
-                            _11 = True
-                            self.showAreaInvertedAxes()
-                            break
-                        if (_11 is True) or (_10 == self.WITH_MISSING_POINTS):
-                            _11 = True
-                            self.showAreaWithMissingPoints()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.AREASPLINE):
-                    _1 = True
-                    _12 = chartName
-                    _13 = False
-                    while True:
-                        if _12 == self.BASIC:
-                            _13 = True
-                            self.showAreaSpline()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.PIE):
-                    _1 = True
-                    _14 = chartName
-                    _15 = False
-                    while True:
-                        if _14 == self.BASIC:
-                            _15 = True
-                            self.showPie()
-                            break
-                        if (_15 is True) or (_14 == self.WITH_LEGEND):
-                            _15 = True
-                            self.showPieWithLegend()
-                            break
-                        if (_15 is True) or (_14 == self.DONUT):
-                            _15 = True
-                            self.showDonut()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.SCATTER):
-                    _1 = True
-                    _16 = chartName
-                    _17 = False
-                    while True:
-                        if _16 == self.BASIC:
-                            _17 = True
-                            self.showScatter()
-                            break
-                        break
-                    break
-                if (_1 is True) or (_0 == self.SPLINE):
-                    _1 = True
-                    _18 = chartName
-                    _19 = False
-                    while True:
-                        if _18 == self.BASIC:
-                            _19 = True
-                            self.showSpline()
-                            break
-                        if (_19 is True) or (_18 == self.WITH_PLOTBANDS):
-                            _19 = True
-                            self.showSplineWithPlotBands()
-                            break
-                        if (_19 is True) or (_18 == self.WITH_SYMBOLS):
-                            _19 = True
-                            self.showSplineWithSymbol()
-                            break
-                        if (_19 is True) or (_18 == self.UPDATING_EACH_SECOND):
-                            _19 = True
-                            self.showSplineUpdatingEachSecond()
-                            break
-                        break
-                    break
-                if True:
-                    _1 = True
-                    self.getApplication().getMainWindow().showNotification('Error occurred during chart processing! Try again!!!')
-                break
+
+            if demoSeriesType == self.COMBINATION:
+                if chartName == self.COMBINATION_COLUMN_LINE_AND_PIE:
+                    self.showCombination()
+                elif chartName == self.SCATTER_WITH_REGRESSION_LINE:
+                    self.showCombinationScatterWithRegressionLine()
+                elif chartName == self.MULTIPLE_AXES:
+                    self.showCombinationMultipleAxes()
+            elif demoSeriesType == self.LINE:
+                if chartName == self.BASIC:
+                    self.showLine()
+                elif chartName == self.CLICK_TO_ADD_POINT:
+                    self.showClickToAddPoint()
+                elif chartName == self.WITH_DATA_LABELS:
+                    self.showLineWithDataLabels()
+                elif chartName == self.TIMESERIES_ZOOMABLE:
+                    self.showTimeSeriesZoomable()
+                elif chartName == self.MASTER_DETAIL:
+                    self.showMasterDetail()
+            elif demoSeriesType == self.BAR:
+                if chartName == self.BASIC:
+                    self.showBarBasic()
+                elif chartName == self.STACKED:
+                    self.showBarStacked()
+                elif chartName == self.WITH_NEGATIVE_STACK:
+                    self.showBarWithNegStack()
+            elif demoSeriesType == self.COLUMN:
+                if chartName == self.BASIC:
+                    self.showColumnBasic()
+                elif chartName == self.WITH_NEGATIVE_VALUES:
+                    self.showColumnWithNegValues()
+                elif chartName == self.STACKED:
+                    self.showColumnStacked()
+                elif chartName == self.STACKED_AND_GROUPED:
+                    self.showColumnStackedAndGrouped()
+                elif chartName == self.STACKED_PERCENT:
+                    self.showColumnStackedPercent()
+                elif chartName == self.WITH_ROTATED_LABELS:
+                    self.showColumnWithRotatedLabels()
+            elif demoSeriesType == self.AREA:
+                if chartName == self.BASIC:
+                    self.showAreaBasic()
+                elif chartName == self.WITH_NEGATIVE_VALUES:
+                    self.showAreaWithNegValues()
+                elif chartName == self.STACKED:
+                    self.showAreaStacked()
+                elif chartName == self.PERCENTAGE:
+                    self.showAreaPercent()
+                elif chartName == self.INVERTED_AXES:
+                    self.showAreaInvertedAxes()
+                elif chartName == self.WITH_MISSING_POINTS:
+                    self.showAreaWithMissingPoints()
+            elif demoSeriesType == self.AREASPLINE:
+                if chartName == self.BASIC:
+                    self.showAreaSpline()
+            elif demoSeriesType == self.PIE:
+                if chartName == self.BASIC:
+                    self.showPie()
+                elif chartName == self.WITH_LEGEND:
+                    self.showPieWithLegend()
+                elif chartName == self.DONUT:
+                    self.showDonut()
+            elif demoSeriesType == self.SCATTER:
+                if chartName == self.BASIC:
+                    self.showScatter()
+            elif demoSeriesType == self.SPLINE:
+                if chartName == self.BASIC:
+                    self.showSpline()
+                elif chartName == self.WITH_PLOTBANDS:
+                    self.showSplineWithPlotBands()
+                elif chartName == self.WITH_SYMBOLS:
+                    self.showSplineWithSymbol()
+                elif chartName == self.UPDATING_EACH_SECOND:
+                    self.showSplineUpdatingEachSecond()
+            else:
+                self.getApplication().getMainWindow().showNotification('Error occurred during chart processing! Try again!!!')
         else:
             self.getApplication().getMainWindow().showNotification('Error occurred during chart processing! Try again!!!')
+
 
     def showMasterDetail(self):
         # Create the master chart
@@ -885,7 +778,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().getMargin().setRight(50)
         chartConfig.getGeneralChartConfig().getMargin().setBottom(100)
         chartConfig.getGeneralChartConfig().getMargin().setLeft(80)
-        chartConfig.getTitle().setText('World\\'s largest cities per 2008')
+        chartConfig.getTitle().setText('World\'s largest cities per 2008')
         xAxis = CategoryAxis()
         xAxis.setCategories(Arrays.asList('Tokyo', 'Jakarta', 'New York', 'Seoul', 'Manila', 'Mumbai', 'Sao Paulo', 'Mexico City', 'Dehli', 'Osaka', 'Cairo', 'Kolkata', 'Los Angeles', 'Shanghai', 'Moscow', 'Beijing', 'Buenos Aires', 'Guangzhou', 'Shenzhen', 'Istanbul'))
         xAxis.setLabel(XAxisDataLabel())
@@ -989,7 +882,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setSpacing(Spacing())
         chartConfig.getGeneralChartConfig().getSpacing().setBottom(30)
         chartConfig.getTitle().setText('Fruit consumption *')
-        chartConfig.getSubtitle().setText('* Jane\\'s banana consumption is unknown')
+        chartConfig.getSubtitle().setText('* Jane\'s banana consumption is unknown')
         chartConfig.getSubtitle().setFloating(True)
         chartConfig.getSubtitle().setAlign(HorzAlign.RIGHT)
         chartConfig.getSubtitle().setVertAlign(VertAlign.BOTTOM)
@@ -2259,7 +2152,6 @@ class InvientChartsDemoWin(Window):
         demoCharts = self.getDemoCharts(self.getDemoSeriesType(demoSeriesTypeName))
         for chartName in demoCharts:
             btn = None
-            self._rightLayout.addComponent(
 
 
             class _20_(Button.ClickListener):
@@ -2269,7 +2161,7 @@ class InvientChartsDemoWin(Window):
 
 
             _20_ = _20_()
-            Button(chartName.getName(), _20_)
+            self._rightLayout.addComponent(Button(chartName.getName(), _20_)
             btn = _20_)
             btn.setWidth('200px')
 
