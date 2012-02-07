@@ -1,9 +1,8 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
-from muntjac.addon.invient.invient_charts import InvientCharts
 from muntjac.addon.invient.paint import IPaint
-
+from muntjac.addon.invient.invient_charts import SeriesType
 
 
 class InvientChartsConfig(object):
@@ -21,7 +20,7 @@ class InvientChartsConfig(object):
     chart L{InvientCharts}
 
     For some APIs, the description has been taken from
-    http://www.highcharts.com/ref/
+    U{http://www.highcharts.com/ref/}
 
     @author: Invient
     @author: Richard Lincoln
@@ -63,7 +62,6 @@ class InvientChartsConfig(object):
         """
         if chartLabel is not None:
             self._chartLabel = chartLabel
-
 
 
     def getXAxes(self):
@@ -234,21 +232,21 @@ class InvientChartsConfig(object):
         @return:
         """
         seriesType = SeriesType.COMMONSERIES
-        if cls.LineConfig == seriesConfig.__class__:
+        if LineConfig == seriesConfig.__class__:
             seriesType = SeriesType.LINE
-        elif cls.SplineConfig == seriesConfig.__class__:
+        elif SplineConfig == seriesConfig.__class__:
             seriesType = SeriesType.SPLINE
-        elif cls.ScatterConfig == seriesConfig.__class__:
+        elif ScatterConfig == seriesConfig.__class__:
             seriesType = SeriesType.SCATTER
-        elif cls.AreaConfig == seriesConfig.__class__:
+        elif AreaConfig == seriesConfig.__class__:
             seriesType = SeriesType.AREA
-        elif cls.AreaSplineConfig == seriesConfig.__class__:
+        elif AreaSplineConfig == seriesConfig.__class__:
             seriesType = SeriesType.AREASPLINE
-        elif cls.BarConfig == seriesConfig.__class__:
+        elif BarConfig == seriesConfig.__class__:
             seriesType = SeriesType.BAR
-        elif cls.ColumnConfig == seriesConfig.__class__:
+        elif ColumnConfig == seriesConfig.__class__:
             seriesType = SeriesType.COLUMN
-        elif cls.PieConfig == seriesConfig.__class__:
+        elif PieConfig == seriesConfig.__class__:
             seriesType = SeriesType.PIE
         return seriesType
 
@@ -359,13 +357,13 @@ class ChartLabelItem(object):
         self._style = style
 
 
-
 class GeneralChartConfig(object):
     """This class contains configuration properties at a chart level.
 
     @author: Invient
     @author: Richard Lincoln
     """
+
     def __init__(self):
         self._backgroundColor = None
         self._borderColor = None
@@ -568,9 +566,10 @@ class GeneralChartConfig(object):
 
 
     def setIgnoreHiddenSeries(self, ignoreHiddenSeries):
-        """If the argument is true, the axes will scale to the remaining visible
-        series once one series is hidden. If the argument is false, hiding
-        and showing a series will not affect the axes or the other series.
+        """If the argument is true, the axes will scale to the remaining
+        visible series once one series is hidden. If the argument is false,
+        hiding and showing a series will not affect the axes or the other
+        series.
 
         @param ignoreHiddenSeries
         """
@@ -583,8 +582,8 @@ class GeneralChartConfig(object):
 
 
     def setInverted(self, inverted):
-        """If the argument is true then the x-axis is reversed. If a bar plot is
-        present, it will be inverted automatically.
+        """If the argument is true then the x-axis is reversed. If a bar
+        plot is present, it will be inverted automatically.
 
         @param inverted
         """
@@ -607,8 +606,8 @@ class GeneralChartConfig(object):
 
 
     def setShowAxes(self, showAxes):
-        """If the argument is true then the axes will be shown initially. This
-        is useful when the chart is empty and axes must be shown.
+        """If the argument is true then the axes will be shown initially.
+        This is useful when the chart is empty and axes must be shown.
 
         @param showAxes
         """
@@ -631,8 +630,8 @@ class GeneralChartConfig(object):
 
 
     def setType(self, typ):
-        """Sets series type to one of line, spline, scatter, area, areaspline,
-        pie, bar and column.
+        """Sets series type to one of line, spline, scatter, area,
+        areaspline, pie, bar and column.
 
         @param typ
         """
@@ -645,8 +644,8 @@ class GeneralChartConfig(object):
 
 
     def setZoomType(self, zoomType):
-        """Sets zoom type. It decides how a chart can be zoomed by dragging
-        the mouse.
+        """Sets zoom type. It decides how a chart can be zoomed by
+        dragging the mouse.
 
         @param zoomType
         """
@@ -669,26 +668,26 @@ class GeneralChartConfig(object):
 
 
     def __str__(self):
-        return ('Chart [backgroundColor=' + self._backgroundColor
-                + ', borderColor=' + self._borderColor
-                + ', borderRadius=' + self._borderRadius
-                + ', borderWidth=' + self._borderWidt
-                + ', height=' + self._height
-                + ', width=' + self._width
-                + ', ignoreHiddenSeries=' + self._ignoreHiddenSeries
-                + ', inverted=' + self._inverted
-                + ', margin=' + self._margin
-                + ', spacing=' + self._spacing
-                + ', showAxes=' + self._showAxes
-                + ', type=' + self._type
-                + ', zoomType=' + self._zoomType
-                + ', alignTicks=' + self._alignTicks
-                + ', animation=' + self._animation
-                + ', className=' + self._className
-                + ', reflow=' + self._reflow
-                + ', shadow=' + self._shadow
-                + ', plot=' + self._plot
-                + ', style=' + self._style + ']')
+        return ('Chart [backgroundColor=' + str(self._backgroundColor)
+                + ', borderColor=' + str(self._borderColor)
+                + ', borderRadius=' + str(self._borderRadius)
+                + ', borderWidth=' + str(self._borderWidth)
+                + ', height=' + str(self._height)
+                + ', width=' + str(self._width)
+                + ', ignoreHiddenSeries=' + str(self._ignoreHiddenSeries)
+                + ', inverted=' + str(self._inverted)
+                + ', margin=' + str(self._margin)
+                + ', spacing=' + str(self._spacing)
+                + ', showAxes=' + str(self._showAxes)
+                + ', type=' + str(self._type)
+                + ', zoomType=' + str(self._zoomType)
+                + ', alignTicks=' + str(self._alignTicks)
+                + ', animation=' + str(self._animation)
+                + ', className=' + str(self._className)
+                + ', reflow=' + str(self._reflow)
+                + ', shadow=' + str(self._shadow)
+                + ', plot=' + str(self._plot)
+                + ', style=' + str(self._style) + ']')
 
 
 class Plot(object):
@@ -697,6 +696,7 @@ class Plot(object):
 
     @author chirag:
     """
+
     def __init__(self):
         self._backgroundColor = None
         self._backgroundImage = None
@@ -735,11 +735,11 @@ class Plot(object):
         self._shadow = shadow
 
     def __str__(self):
-        return ('Plot [backgroundColor=' + self._backgroundColor
-                + ', backgroundImage=' + self._backgroundImage
-                + ', borderColor=' + self._borderColor
-                + ', borderWidth=' + self._borderWidth
-                + ', shadow=' + self._shadow + ']')
+        return ('Plot [backgroundColor=' + str(self._backgroundColor)
+                + ', backgroundImage=' + str(self._backgroundImage)
+                + ', borderColor=' + str(self._borderColor)
+                + ', borderWidth=' + str(self._borderWidth)
+                + ', shadow=' + str(self._shadow) + ']')
 
 
 class Spacing(object):
@@ -780,15 +780,16 @@ class Spacing(object):
         self._bottom = bottom
 
     def __str__(self):
-        return ('Spacing [left=' + self._left
-                + ', top=' + self._top
-                + ', right=' + self._right
-                + ', bottom=' + self._bottom + ']')
+        return ('Spacing [left=' + str(self._left)
+                + ', top=' + str(self._top)
+                + ', right=' + str(self._right)
+                + ', bottom=' + str(self._bottom)
+                + ']')
 
 
 class Margin(object):
-    """This class represents margin between the outer edge of the chart and
-    the plot area.
+    """This class represents margin between the outer edge of the chart
+    and the plot area.
 
     @author: Invient
     @author: Richard Lincoln
@@ -825,10 +826,11 @@ class Margin(object):
         self._bottom = bottom
 
     def __str__(self):
-        return ('Margin [left=' + self._left
-                + ', top=' + self._top
-                + ', right=' + self._right
-                + ', bottom=' + self._bottom + ']')
+        return ('Margin [left=' + str(self._left)
+                + ', top=' + str(self._top)
+                + ', right=' + str(self._right)
+                + ', bottom=' + str(self._bottom)
+                + ']')
 
 
 class ZoomType(object):
@@ -864,8 +866,8 @@ ZoomType.NONE = ZoomType('')
 
 
 class SeriesConfig(object):
-    """This class contains general configuration options for all series types
-    such as line, area and pie.
+    """This class contains general configuration options for all series
+    types such as line, area and pie.
 
     @author: Invient
     @author: Richard Lincoln
@@ -987,25 +989,18 @@ class SeriesConfig(object):
 
         @param showCheckbox
         """
-        # public Boolean getSelected() {
-        # return selected;
-        # }
-        # public void setSelected(Boolean selected) {
-        # this.selected = selected;
-        # }
         self._showCheckbox = showCheckbox
 
 
     def getVisible(self):
         """@return"""
-        # Only in case of Pie chart exception is thrown
         return self._visible
 
 
     def setVisible(self, visible):
         """If the argument is true then the series is visible otherwise not
-        when a chart is rendered initially. Defaults to true However, this is
-        not applicable for series related to Pie chart.
+        when a chart is rendered initially. Defaults to true However, this
+        is not applicable for series related to Pie chart.
 
         @param visible
         @raise NotImplementedError:
@@ -1016,7 +1011,6 @@ class SeriesConfig(object):
 
     def getShadow(self):
         """@return"""
-        # Only in case of Pie and Scatter chart exception is thrown
         return self._shadow
 
 
@@ -1073,8 +1067,8 @@ class SeriesConfig(object):
 
 
 class DataLabel(object):
-    """This class contains various attributes to format data labels. The data
-    labels are displayed along with points and axis.
+    """This class contains various attributes to format data labels. The
+    data labels are displayed along with points and axis.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1127,10 +1121,10 @@ class DataLabel(object):
 
 
     def setFormatterJsFunc(self, formatterJsFunc):
-        """Sets the argument string JavaScript function. This function will be
-        called to format the data label. Refer to highchart documentation for
-        more details on this
-        http://www.highcharts.com/ref/#plotOptions-series-dataLabels
+        """Sets the argument string JavaScript function. This function will
+        be called to format the data label. Refer to highchart documentation
+        for more details on this
+        U{http://www.highcharts.com/ref/#plotOptions-series-dataLabels}
 
         @param formatterJsFunc
         """
@@ -1207,18 +1201,18 @@ class DataLabel(object):
 
 
     def __str__(self):
-        return ('DataLabel [align=' + self._align
-                + ', enabled=' + self._enabled
-                + ', formatter=' + self._formatterJsFunc
-                + ', rotation=' + self._rotation
-                + ', style=' + self._style
-                + ', x=' + self._x
-                + ', y=' + self._y + ']')
+        return ('DataLabel [align=' + str(self._align)
+                + ', enabled=' + str(self._enabled)
+                + ', formatter=' + str(self._formatterJsFunc)
+                + ', rotation=' + str(self._rotation)
+                + ', style=' + str(self._style)
+                + ', x=' + str(self._x)
+                + ', y=' + str(self._y) + ']')
 
 
 class PieDataLabel(DataLabel):
-    """This class contains configuration attributes of data labels specific to
-    Pie series.
+    """This class contains configuration attributes of data labels specific
+    to Pie series.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1294,17 +1288,17 @@ class PieDataLabel(DataLabel):
 
 
     def __str__(self):
-        return ('PieDataLabel [connectorWidth=' + self._connectorWidth
-                + ', connectorColor=' + self._connectorColor
-                + ', connectorPadding=' + self._connectorPadding
-                + ', distance=' + self._distance
-                + ', getAlign()=' + self.getAlign()
-                + ', getEnabled()=' + self.getEnabled()
-                + ', getFormatter()=' + self.getFormatterJsFunc()
-                + ', getRotation()=' + self.getRotation()
-                + ', getStyle()=' + self.getStyle()
-                + ', getX()=' + self.getX()
-                + ', getY()=' + self.getY()
+        return ('PieDataLabel [connectorWidth=' + str(self._connectorWidth)
+                + ', connectorColor=' + str(self._connectorColor)
+                + ', connectorPadding=' + str(self._connectorPadding)
+                + ', distance=' + str(self._distance)
+                + ', getAlign()=' + str(self.getAlign())
+                + ', getEnabled()=' + str(self.getEnabled())
+                + ', getFormatter()=' + str(self.getFormatterJsFunc())
+                + ', getRotation()=' + str(self.getRotation())
+                + ', getStyle()=' + str(self.getStyle())
+                + ', getX()=' + str(self.getX())
+                + ', getY()=' + str(self.getY())
                 + ', __str__()=' + super(PieDataLabel, self).__str__()
                 + ', __class__=' + self.__class__
                 + ', __hash__()=' + self.__hash__() + ']')
@@ -1385,9 +1379,7 @@ class YAxisDataLabel(AxisDataLabel):
     """
 
     def __init__(self, enabled=False):
-        """None
-        ---
-        If the argument is true then the data labels will be displayed
+        """If the argument is true then the data labels will be displayed
         otherwise not.
 
         @param enabled
@@ -1396,12 +1388,13 @@ class YAxisDataLabel(AxisDataLabel):
 
 
 class BaseLineConfig(SeriesConfig):
-    """This class contains configuration options for line series such as line
-    and area but not column series.
+    """This class contains configuration options for line series such as
+    line and area but not column series.
 
     @author: Invient
     @author: Richard Lincoln
     """
+
     def __init__(self):
         self._pointStart = None
         self._pointInterval = None
@@ -1434,9 +1427,9 @@ class BaseLineConfig(SeriesConfig):
 
     def setPointInterval(self, pointInterval):
         """If no x values are given for the points in a series, the argument
-        pointInterval defines the interval of the x values. For example, if a
-        series contains one value every day then set pointInterval to 24 *
-        3600 * 1000
+        pointInterval defines the interval of the x values. For example, if
+        a series contains one value every day then set pointInterval to
+        24 * 3600 * 1000
 
         @param pointInterval
         """
@@ -1499,6 +1492,7 @@ class BaseLineConfig(SeriesConfig):
 
 
 class DashStyle(object):
+
     SOLID = None
     SHORT_DASH = None
     SHORT_DOT = None
@@ -1525,7 +1519,6 @@ class DashStyle(object):
     def values(cls):
         return cls._values[:]
 
-
 DashStyle.SOLID = DashStyle('Solid')
 DashStyle.SHORT_DASH = DashStyle('ShortDash')
 DashStyle.SHORT_DOT = DashStyle('ShortDot')
@@ -1546,6 +1539,7 @@ class AreaConfig(BaseLineConfig):
     @author: Invient
     @author: Richard Lincoln
     """
+
     def __init__(self):
         self._fillColor = None
         self._lineColor = None
@@ -1801,16 +1795,16 @@ class PieConfig(SeriesConfig):
 
 
     def setShadow(self, shadow):
-        """@raise NotimplementedError:
+        """@raise NotImplementedError:
                        Pie chart does not support shadow property so this
                        method throws an exception if invoked.
         """
-        raise NotimplementedError('Pie chart does not support shadow.')
+        raise NotImplementedError('Pie chart does not support shadow.')
 
 
     def getVisible(self):
-        """@return: Returns null as pie does not support toggle (show/hide pie)
-        feature."""
+        """@return: Returns null as pie does not support toggle (show/hide
+        pie) feature."""
         return None
 
 
@@ -1945,7 +1939,7 @@ class BaseBarConfig(SeriesConfig):
         set the minimal point length to a pixel value like 3. In stacked
         column charts, minPointLength might not be respected for tightly
         packed values. Defaults to 0. (For detail, refer to
-        http://www.highcharts.com/ref/#plotOptions-bar);
+        U{http://www.highcharts.com/ref/#plotOptions-bar});
 
         @param minPointLength
         """
@@ -1997,16 +1991,20 @@ class BaseBarConfig(SeriesConfig):
 class ColumnConfig(BaseBarConfig):
     """This class contains configuration options for column series.
 
-    @author Invient
+    @author: Invient
+    @author: Richard Lincoln
     """
     pass
+
 
 class BarConfig(BaseBarConfig):
     """This class contains configuration options for bar series.
 
-    @author Invient
+    @author: Invient
+    @author: Richard Lincoln
     """
     pass
+
 
 class Stacking(object):
     """Defines ways in which series of a chart can be stacked.
@@ -2019,9 +2017,8 @@ class Stacking(object):
 
     @author Invient
     """
-    NORMAL = ['normal']
-    PERCENT = ['percent']
-    _stacking = None
+    NORMAL = None
+    PERCENT = None
 
     def __init__(self, stacking):
         self._stacking = stacking
@@ -2035,7 +2032,8 @@ class Stacking(object):
     def values(cls):
         return cls._enum_values[:]
 
-Stacking._enum_values = [Stacking(*v) for v in Stacking._enum_values]
+Stacking.NORMAL = Stacking('normal')
+Stacking.PERCENT = Stacking('percent')
 
 
 class PointConfig(object):
@@ -2048,34 +2046,24 @@ class PointConfig(object):
 
     def __init__(self, sliced_or_color_or_marker, selected=None, color=None,
                 marker=None):
-        """Creates an instance of this class with specified marker
+        """Creates an instance of this class with specified argument. The
+        sliced attribute has meaning only for Pie chart/series.
 
-        @param marker
-        ---
-        Creates an instance of this class with specified color
-
-        @param color
-        ---
-        Creates an instance of this class with specified argument. The sliced
-        attribute has meaning only for Pie chart/series.
-
-        @param sliced
-        ---
-        @param sliced
+        @param sliced_or_color_or_marker:
                    - If true then the slice of a pie will be at an offset
                    from the center of the pie. Applicable only for Pie
                    chart/series.
-        @param selected
+        @param selected:
                    - If true then the point, to which this object is
                    associated, will be shown as selected otherwise not.
-        @param color
+        @param color:
                    - Specifies individual color for a point, to which this
                    object is associated.
-        @param marker
+        @param marker:
                    - Specifies marker for a point, to which this object is
                    associated.
-        @see Marker
-        @see Color
+        @see: L{Marker}
+        @see: L{Color}
         """
         self._sliced = None
         self._selected = None
@@ -2143,19 +2131,20 @@ class PointConfig(object):
 
     def __str__(self):
         """@return: Returns string representation of this object."""
-        return ('PointConfig [sliced=' + self._sliced
-                + ', selected=' + self._selected
-                + ', color=' + self._color
-                + ', marker=' + self._marker + ']')
+        return ('PointConfig [sliced=' + str(self._sliced)
+                + ', selected=' + str(self._selected)
+                + ', color=' + str(self._color)
+                + ', marker=' + str(self._marker)
+                + ']')
 
 
 class TitleBase(object):
-    """A chart has a title and a subtitle. This class defines attributes which
-    are common to both.
+    """A chart has a title and a subtitle. This class defines attributes
+    which are common to both.
 
     The text of a title can be plain text or html text containing html
-    elements. It is also possible to apply css to the title. The css must be
-    valid css string e.g. { color: 'red' }
+    elements. It is also possible to apply css to the title. The css must
+    be valid css string e.g. { color: 'red' }
 
     @author: Invient
     @author: Richard Lincoln
@@ -2165,6 +2154,7 @@ class TitleBase(object):
     @see: L{HorzAlign}
     @see: L{VertAlign}
     """
+
     def __init__(self):
         self._align = None
         self._vertAlign = None
@@ -2176,97 +2166,76 @@ class TitleBase(object):
 
 
     def getAlign(self):
-        """@return"""
         return self._align
 
 
     def setAlign(self, align):
         """Sets horizontal alignment of the title. Defaults to HorzAlign.CENTER
-
-        @param align
         """
         self._align = align
 
 
     def getVertAlign(self):
-        """@return"""
         return self._vertAlign
 
 
     def setVertAlign(self, vertAlign):
         """Sets horizontal alignment of the title. Defaults to VertAlign.TOP
-
-        @param vertAlign
         """
         self._vertAlign = vertAlign
 
 
     def getFloating(self):
-        """@return"""
         return self._floating
 
 
     def setFloating(self, floating):
         """If the argument is true then the plot area will not move to make
         space for the chart title. Defaults to false.
-
-        @param floating
         """
         self._floating = floating
 
 
     def getText(self):
-        """@return"""
         return self._text
 
 
     def setText(self, text):
         """Sets text for the chart's title. The text can be plain or html
         string.
-
-        @param text
         """
         self._text = text
 
 
     def getX(self):
-        """@return"""
         return self._x
 
 
     def setX(self, x):
         """Sets x position (in pixel) of the title relative to the alignment
         within Spacing.left and Spacing.right. Defaults to 0
-
-        @param x
         """
         self._x = x
 
 
     def getY(self):
-        """@return"""
         return self._y
 
 
     def setY(self, y):
         """Sets y position (in pixel) of the title relative to the alignment
         within Spacing.top and Spacing.bottom. Defaults to 0
-
-        @param y
         """
         self._y = y
 
 
     def getStyle(self):
-        """@return"""
         return self._style
 
 
     def setStyle(self, style):
         """Sets css for the title. The css must be a valid css object. e.g. css
         string "{ color:'red' }" is valid but "{ color: 'red'" is invalid.
-
-        @param style
         """
         self._style = style
 
@@ -2277,13 +2246,13 @@ class Title(TitleBase):
     @author: Invient
     @author: Richard Lincoln
     """
+
     def __init__(self):
         super(Title, self).__init__()
         self._margin = None
 
 
     def getMargin(self):
-        """@return"""
         return self._margin
 
 
@@ -2291,8 +2260,6 @@ class Title(TitleBase):
         """Sets margin (in pixel) between the chart title and subtitle, if any.
         If chart subtitle doesn't exist then it indicates the margin between
         subtitle and plotarea. Defaults to 15
-
-        @param margin
         """
         self._margin = margin
 
@@ -2307,6 +2274,7 @@ class SubTitle(TitleBase):
 
 
 class HorzAlign(object):
+
     LEFT = None
     CENTER = None
     RIGHT = None
@@ -2329,9 +2297,10 @@ HorzAlign.RIGHT = ['right']
 
 
 class VertAlign(object):
-    TOP = ['top']
-    MIDDLE = ['middle']
-    BOTTOM = ['bottom']
+
+    TOP = None
+    MIDDLE = None
+    BOTTOM = None
 
     def __init__(self, align):
         self._align = align
@@ -2351,15 +2320,15 @@ VertAlign.BOTTOM = VertAlign('bottom')
 
 
 class State(object):
-    """Defines state for a series and point. A series can be in hover state. A
-    point can be in hover and select state. In each state, a series and a
+    """Defines state for a series and point. A series can be in hover state.
+    A point can be in hover and select state. In each state, a series and a
     point can have different visual clues. This is achived by setting some
     attributes of a seires and point.
 
     @author: Invient
     @author: Richard Lincoln
 
-    @see: SeriesState
+    @see: L{SeriesState}
     """
 
     def getEnabled(self):
@@ -2391,21 +2360,16 @@ class SeriesState(State):
         penalty.
 
         Defaults to false.
-
-        @param enabled
         """
         self._enabled = enabled
 
 
     def getLineWidth(self):
-        """@return"""
         return self._lineWidth
 
 
     def setLineWidth(self, lineWidth):
         """Sets width of a line in pixel. Defaults to 2.
-
-        @param lineWidth
         """
         self._lineWidth = lineWidth
 
@@ -2422,7 +2386,6 @@ class NonLinearSeriesState(SeriesState):
 
 
     def getBrightness(self):
-        """@return"""
         return self._brightness
 
 
@@ -2431,15 +2394,13 @@ class NonLinearSeriesState(SeriesState):
         bar and column series/chart
 
         Defaults to 0.1
-
-        @param brightness
         """
         self._brightness = brightness
 
 
 class MarkerAttribute(object):
-    """Defines a collection of attributes which makes a marker. Markers are
-    generally used to annotate a graph points.
+    """Defines a collection of attributes which makes a marker. Markers
+    are generally used to annotate a graph points.
 
     @author: Invient
     @author: Richard Lincoln
@@ -2483,36 +2444,38 @@ class MarkerAttribute(object):
         self._radius = radius
 
     def __str__(self):
-        return ('MarkerStateAttribute [enabled=' + self._enabled
-                + ', fillColor=' + self._fillColor
-                + ', lineColor=' + self._lineColor
-                + ', lineWidth=' + self._lineWidth
-                + ', radius=' + self._radius + ']')
+        return ('MarkerStateAttribute [enabled=' + str(self._enabled)
+                + ', fillColor=' + str(self._fillColor)
+                + ', lineColor=' + str(self._lineColor)
+                + ', lineWidth=' + str(self._lineWidth)
+                + ', radius=' + str(self._radius)
+                + ']')
 
 
 class MarkerState(State):
-    """Defines a set of attributes which gets applied to a point when a point is
-    selected or hovered. By default, markers are enabled so when a mouse is
+    """Defines a set of attributes which gets applied to a point when a point
+    is selected or hovered. By default, markers are enabled so when a mouse is
     over a point marker gets applied. To turn off marker, set flag enabled to
     false.
 
     A point marker is useful only if the marker is not an image.
 
-    @author Invient
+    @author: Invient
+    @author: Richard Lincoln
 
     @see: L{ImageMarker}
     @see: L{SymbolMarker}
     """
 
     def __init__(self, enabled=True):
-        """Creates this marker with enabled = true
-        ---
-        Creates this marker with specified argument. If enabled = false then
-        the marker will not be applied to a point on hover or select state.
+        """Creates this marker with specified argument. If enabled = false
+        then the marker will not be applied to a point on hover or select
+        state.
         """
         self._markerAttribute = MarkerAttribute()
 
         self._markerAttribute.setEnabled(True)
+
 
     def getEnabled(self):
         return self._markerAttribute.getEnabled()
@@ -2521,78 +2484,65 @@ class MarkerState(State):
     def setEnabled(self, enabled):
         """If enabled = false then the marker will not be applied to a point
         on hover or select state. Defaults to true
-
-        @param enabled
         """
         self._markerAttribute.setEnabled(enabled)
 
 
     def getFillColor(self):
-        """@return"""
         return self._markerAttribute.getFillColor()
 
 
     def setFillColor(self, fillColor):
         """Sets fill color for the marker. When not specified it takes color
         of a series or point.
-
-        @param fillColor
         """
         self._markerAttribute.setFillColor(fillColor)
 
 
     def getLineColor(self):
-        """@return"""
         return self._markerAttribute.getLineColor()
 
 
     def setLineColor(self, lineColor):
         """Sets color of the point marker's outline. When not specified it
         takes color of a series or point.
-
-        @param lineColor
         """
         self._markerAttribute.setLineColor(lineColor)
 
 
     def getLineWidth(self):
-        """@return"""
         return self._markerAttribute.getLineWidth()
 
 
     def setLineWidth(self, lineWidth):
         """Sets width of the point marker's outline. Defaults to 0.
-
-        @param lineWidth
         """
         self._markerAttribute.setLineWidth(lineWidth)
 
 
     def getRadius(self):
-        """@return"""
         return self._markerAttribute.getRadius()
 
 
     def setRadius(self, radius):
         """Sets radius of the point marker. Defaults to 0.
-
-        @param radius
         """
         self._markerAttribute.setRadius(radius)
 
 
     def __str__(self):
-        return ('MarkerState [enabled=' + self.getEnabled()
-                + ', fillColor=' + self.getFillColor()
-                + ', lineColor=' + self.getLineColor()
-                + ', lineWidth=' + self.getLineWidth()
-                + ', radius=' + self.getRadius() + ']')
+        return ('MarkerState [enabled=' + str(self.getEnabled())
+                + ', fillColor=' + str(self.getFillColor())
+                + ', lineColor=' + str(self.getLineColor())
+                + ', lineWidth=' + str(self.getLineWidth())
+                + ', radius=' + str(self.getRadius())
+                + ']')
 
 
 class Marker(object):
-    """Defines a marker for a point. Markers are applied to a point of chart's
-    series. The marker can be applied at the time of drawing the chart or
-    when a point is selcted or hovered.
+    """Defines a marker for a point. Markers are applied to a point of
+    chart's series. The marker can be applied at the time of drawing the
+    chart or when a point is selcted or hovered.
 
     There are two types of marker.
       * L{SymbolMarker}
@@ -2662,14 +2612,10 @@ class ImageMarker(AbstractMarker):
     for a point or all points of a series.
 
     The url of an image must be with respect to root of the web application.
-    e.g. If an image named temperature.png is under directory
-    <app.root.war>/img/climate then the url must be
-    /img/climate/temperature.png
 
     @author: Invient
     @author: Richard Lincoln
     """
-    _imageURL = None
 
     def __init__(self, imageURL, enabled=True):
         """Creates this marker with specified arguments.
@@ -2686,18 +2632,17 @@ class ImageMarker(AbstractMarker):
 
 
     def getImageURL(self):
-        """@return"""
         return self._imageURL
 
 
     def setImageURL(self, imageURL):
-        """@param imageURL"""
         self._imageURL = imageURL
 
 
     def __str__(self):
-        return ('ImageMarker [imageURL=' + self._imageURL
-                + ', enabled' + self.getEnabled() + ']')
+        return ('ImageMarker [imageURL=' + str(self._imageURL)
+                + ', enabled' + str(self.getEnabled())
+                + ']')
 
 
 class SymbolMarker(AbstractMarker):
@@ -2757,11 +2702,11 @@ class SymbolMarker(AbstractMarker):
 
         nargs = len(args)
         if nargs == 0:
-            super(SymbolMarker, self)(True)
+            super(SymbolMarker, self).__init__(True)
         elif nargs == 1:
             if isinstance(args[0], IPaint):
                 lineColor, = args
-                super(SymbolMarker, self)(True)
+                super(SymbolMarker, self).__init__(True)
                 super(SymbolMarker, self).setLineColor(lineColor)
             elif isinstance(args[0], bool):
                 enabled, = args
@@ -2795,8 +2740,6 @@ class SymbolMarker(AbstractMarker):
 
     def setLineColor(self, lineColor):
         """Sets color of the point marker's outline
-
-        @param lineColor
         """
         super(SymbolMarker, self).setLineColor(lineColor)
 
@@ -2807,8 +2750,6 @@ class SymbolMarker(AbstractMarker):
 
     def setFillColor(self, fillColor):
         """Sets color of the point marker
-
-        @param fillColor
         """
         super(SymbolMarker, self).setFillColor(fillColor)
 
@@ -2819,8 +2760,6 @@ class SymbolMarker(AbstractMarker):
 
     def setLineWidth(self, lineWidth):
         """Sets width of the point marker outline
-
-        @param lineWidth
         """
         super(SymbolMarker, self).setLineWidth(lineWidth)
 
@@ -2831,63 +2770,53 @@ class SymbolMarker(AbstractMarker):
 
     def setRadius(self, radius):
         """Sets radius of the point marker
-
-        @param radius
         """
         super(SymbolMarker, self).setRadius(radius)
 
 
     def getSymbol(self):
-        """@return"""
         return self._symbol
 
 
     def setSymbol(self, symbol):
         """Sets symbol for the point marker. It must be one of the predefine
         symbol such as Symbol.CIRCLE or Symbol.DIAMOND
-
-        @param symbol
         """
         self._symbol = symbol
 
 
     def getHoverState(self):
-        """@return"""
         return self._hoverState
 
 
     def setHoverState(self, hoverState):
         """Sets marker to be applied to a point when it is hovered.
-
-        @param hoverState
         """
         self._hoverState = hoverState
 
 
     def getSelectState(self):
-        """@return"""
         return self._selectState
 
 
     def setSelectState(self, selectState):
         """Sets marker to be applied to a point when it is selected.
-
-        @param selectState
         """
         self._selectState = selectState
 
 
     def __str__(self):
-        return ('SymbolMarker [symbol=' + self._symbol
-                + ', hoverState=' + self._hoverState
-                + ', selectState=' + self._selectState
-                + ', getLineColor()=' + self.getLineColor()
-                + ', getFillColor()=' + self.getFillColor()
-                + ', getLineWidth()=' + self.getLineWidth()
-                + ', getRadius()=' + self.getRadius()
-                + ', getSymbol()=' + self.getSymbol()
-                + ', getHoverState()=' + self.getHoverState()
-                + ', getSelectState()=' + self.getSelectState() + ']')
+        return ('SymbolMarker [symbol=' + str(self._symbol)
+                + ', hoverState=' + str(self._hoverState)
+                + ', selectState=' + str(self._selectState)
+                + ', getLineColor()=' + str(self.getLineColor())
+                + ', getFillColor()=' + str(self.getFillColor())
+                + ', getLineWidth()=' + str(self.getLineWidth())
+                + ', getRadius()=' + str(self.getRadius())
+                + ', getSymbol()=' + str(self.getSymbol())
+                + ', getHoverState()=' + str(self.getHoverState())
+                + ', getSelectState()=' + str(self.getSelectState())
+                + ']')
 
 
 class Symbol(object):
@@ -2895,9 +2824,11 @@ class Symbol(object):
     L{SymbolMarker}
 
     @author: Invient
+    @author: Richard Lincoln
 
     @see: L{SymbolMarker}
     """
+
     CIRCLE = None
     DIAMOND = None
     SQUARE = None
@@ -2923,6 +2854,146 @@ Symbol.TRIANGLE = Symbol('triangle')
 Symbol.TRIANGLE_DOWN = Symbol('triangle-down')
 
 
+class Axis(object):
+
+    def getId(self):
+        pass
+
+    def setId(self, Id):
+        pass
+
+    def getTick(self):
+        pass
+
+    def setTick(self, tick):
+        pass
+
+    def getMaxZoom(self):
+        pass
+
+    def setMaxZoom(self, maxZoom):
+        pass
+
+    def getReversed(self):
+        pass
+
+    def setReversed(self, r):
+        pass
+
+    def getOpposite(self):
+        pass
+
+    def setOpposite(self, opposite):
+        pass
+
+    def getType(self):
+        pass
+
+    def getTitle(self):
+        pass
+
+    def setTitle(self, title):
+        pass
+
+    def getAlternateGridColor(self):
+        pass
+
+    def setAlternateGridColor(self, alternateGridColor):
+        pass
+
+    def getEndOnTick(self):
+        pass
+
+    def setEndOnTick(self, endOnTick):
+        pass
+
+    def getGrid(self):
+        pass
+
+    def setGrid(self, grid):
+        pass
+
+    def getLineColor(self):
+        pass
+
+    def setLineColor(self, lineColor):
+        pass
+
+    def getLineWidth(self):
+        pass
+
+    def setLineWidth(self, lineWidth):
+        pass
+
+    def getLinkedTo(self):
+        pass
+
+    def setLinkedTo(self, linkedTo):
+        pass
+
+    def getMaxPadding(self):
+        pass
+
+    def setMaxPadding(self, maxPadding):
+        pass
+
+    def getMinPadding(self):
+        pass
+
+    def setMinPadding(self, minPadding):
+        pass
+
+    def getMinorGrid(self):
+        pass
+
+    def setMinorGrid(self, minorGrid):
+        pass
+
+    def getMinorTick(self):
+        pass
+
+    def setMinorTick(self, minorTick):
+        pass
+
+    def getOffset(self):
+        pass
+
+    def setOffset(self, offset):
+        pass
+
+    def getShowFirstLabel(self):
+        pass
+
+    def setShowFirstLabel(self, showFirstLabel):
+        pass
+
+    def getShowLastLabel(self):
+        pass
+
+    def setShowLastLabel(self, showLastLabel):
+        pass
+
+    def getStartOfWeek(self):
+        pass
+
+    def setStartOfWeek(self, startOfWeek):
+        pass
+
+    def getStartOnTick(self):
+        pass
+
+    def setStartOnTick(self, startOnTick):
+        pass
+
+
+class XAxis(Axis):
+    pass
+
+
+class YAxis(Axis):
+    pass
+
+
 class AxisBase(Axis):
     """This class defines attributes common to X axis and Y axis. A chart can
     have one or more axis of each type.
@@ -2933,6 +3004,7 @@ class AxisBase(Axis):
     @see: L{XAxis}
     @see: L{YAxis}
     """
+
     def __init__(self):
         self._id = None
         self._type = AxisType.LINEAR
@@ -2977,50 +3049,41 @@ class AxisBase(Axis):
 
 
     def removePlotBand(self, plotBand_or_id):
-        """None
-        ---
-        Removes a plotband with given id.
-
-        @param id
+        """Removes a plotband with given id.
         """
         if isinstance(plotBand_or_id, PlotBand):
             plotBand = plotBand_or_id
             self._plotBands.remove(plotBand)
         else:
-            id = plotBand_or_id
-            for pb in self._plotBands:
-                if pb.getId() == id:
-                    plotBandItr.remove()
+            Id = plotBand_or_id
+            for i, pb in enumerate(self._plotBands[:]):
+                if pb.getId() == Id:
+                    del self._plotBands[i]
                     break
 
 
     def getAllPlotLines(self):
-        """@return"""
         return self._plotLines
 
 
     def setAllPlotLines(self, plotLines):
-        """@param plotLines"""
         if plotLines is not None:
-
             self._plotLines = plotLines
 
+
     def addPlotLine(self, plotLine):
-        """@param plotLine"""
         self._plotLines.add(plotLine)
 
 
     def removePlotLine(self, plotLine_or_id):
-        """@param plotLine
-        """
         if isinstance(plotLine_or_id, PlotLine):
             plotLine = plotLine_or_id
             self._plotLines.remove(plotLine)
         else:
             Id = plotLine_or_id
-            for pl in self._plotLines:
+            for i, pl in enumerate(self._plotLines[:]):
                 if pl.getId() == Id:
-                    plotLineItr.remove()
+                    del self._plotLines[i]
                     break
 
 
@@ -3061,8 +3124,8 @@ class AxisBase(Axis):
 
 
     def setReversed(self, r):
-        """If the argument it true then this axis will be reversed. Defaults to
-        false.
+        """If the argument it true then this axis will be reversed. Defaults
+        to false.
         """
         self._reversed = r
 
@@ -3086,8 +3149,6 @@ class AxisBase(Axis):
     def setType(self, typ):
         """Sets type of this axis. Used by subclasses
 
-        @param typ
-
         @see: L{NumberXAxis}
         @see: L{NumberYAxis}
         @see: L{DateTimeAxis}
@@ -3108,12 +3169,10 @@ class AxisBase(Axis):
 
 
     def getLabel(self):
-        """@return"""
         return self._label
 
 
     def setLabel(self, label):
-        """@param label"""
         self._label = label
 
 
@@ -3172,7 +3231,7 @@ class AxisBase(Axis):
     def setLinkedTo(self, linkedTo):
         """Sets another axis which is linked with this axis. The following
         description is copied from Highcharts API documentation
-        http://www.highcharts.com/ref/#xAxis.
+        U{http://www.highcharts.com/ref/#xAxis}.
 
         When an axis is linked to a master axis, it will take the same
         extremes as the master, but as assigned by min or max or by
@@ -3229,8 +3288,8 @@ class AxisBase(Axis):
 
 
     def setShowFirstLabel(self, showFirstLabel):
-        """If the argument is true then the label of this axis' first tick will
-        be displayed. Defaults to true.
+        """If the argument is true then the label of this axis' first tick
+        will be displayed. Defaults to true.
         """
         self._showFirstLabel = showFirstLabel
 
@@ -3240,8 +3299,8 @@ class AxisBase(Axis):
 
 
     def setShowLastLabel(self, showLastLabel):
-        """If the argument is true then the label of this axis' last tick will
-        be displayed. Defaults to false
+        """If the argument is true then the label of this axis' last tick
+        will be displayed. Defaults to false
         """
         self._showLastLabel = showLastLabel
 
@@ -3263,8 +3322,8 @@ class AxisBase(Axis):
 
 
     def setStartOnTick(self, startOnTick):
-        """If the argument is true then this axis must start on a tick. Defaults
-        to false
+        """If the argument is true then this axis must start on a tick.
+        Defaults to false.
         """
         self._startOnTick = startOnTick
 
@@ -3304,8 +3363,6 @@ class MinorTick(object):
         """Sets interval for the minor tick. The interval must be specified
         in the axis unit. e.g. If an axis has tick interval of 50 units
         then setting minortick interval to 10 will show 5 minor ticks.
-
-        @param interval
         """
         self._interval = interval
 
@@ -3316,40 +3373,34 @@ class MinorTick(object):
 
     def setLength(self, length):
         """Sets length of the minorticks in pixel
-
-        @param length
         """
         self._length = length
 
 
     def getPosition(self):
-        """@return"""
         return self._position
 
 
     def setPosition(self, position):
-        """@param position"""
         self._position = position
 
 
     def getWidth(self):
-        """@return"""
         return self._width
 
 
     def setWidth(self, width):
         """Sets width of the minorticks in pixel
-
-        @param width
         """
         self._width = width
 
 
     def __str__(self):
-        return ('MinorTick [color=' + self._color
-                + ', length=' + self._length
-                + ', position=' + self._position
-                + ', width=' + self._width + ']')
+        return ('MinorTick [color=' + str(self._color)
+                + ', length=' + str(self._length)
+                + ', position=' + str(self._position)
+                + ', width=' + str(self._width)
+                + ']')
 
 
 class Tick(MinorTick):
@@ -3365,44 +3416,40 @@ class Tick(MinorTick):
     @see: L{MinorTick}
     @see: L{TickmarkPlacement}
     """
+
     def __init__(self):
         self._placement = None
         self._pixelInterval = None
 
 
     def getPlacement(self):
-        """@return"""
         return self._placement
 
 
     def setPlacement(self, placement):
         """Sets placement of the tick marks.
-
-        @param placement
         """
         self._placement = placement
 
 
     def getPixelInterval(self):
-        """@return"""
         return self._pixelInterval
 
 
     def setPixelInterval(self, pixelInterval):
         """Sets pixel interval of the tick marks
-
-        @param pixelInterval
         """
         self._pixelInterval = pixelInterval
 
 
     def __str__(self):
-        return ('Tick [placement=' + self._placement
-                + ', pixelInterval=' + self._pixelInterval
-                + ', getColor()=' + self.getColor()
-                + ', getLength()=' + self.getLength()
-                + ', getPosition()=' + self.getPosition()
-                + ', getWidth()=' + self.getWidth() + ']')
+        return ('Tick [placement=' + str(self._placement)
+                + ', pixelInterval=' + str(self._pixelInterval)
+                + ', getColor()=' + str(self.getColor())
+                + ', getLength()=' + str(self.getLength())
+                + ', getPosition()=' + str(self.getPosition())
+                + ', getWidth()=' + str(self.getWidth())
+                + ']')
 
 
 class MinorGrid(object):
@@ -3411,6 +3458,7 @@ class MinorGrid(object):
 
     @author: Invient
     @author: Richard Lincoln
+
     @see: L{MinorTick}
     @see: L{Grid}
     """
@@ -3427,8 +3475,6 @@ class MinorGrid(object):
 
     def setLineColor(self, lineColor):
         """Sets color of the minor grid lines
-
-        @param lineColor
         """
         self._lineColor = lineColor
 
@@ -3442,9 +3488,7 @@ class MinorGrid(object):
         """Sets dash or dot style of the minor grid lines. Defaults to
         DashStyle.SOLID
 
-        @param lineDashStyle
-
-        @see DashStyle
+        @see: L{DashStyle}
         """
         self._lineDashStyle = lineDashStyle
 
@@ -3456,16 +3500,15 @@ class MinorGrid(object):
 
     def setLineWidth(self, lineWidth):
         """Sets width (in pixel) of the minor grid lines. Defaults to 1
-
-        @param lineWidth
         """
         self._lineWidth = lineWidth
 
 
     def __str__(self):
-        return ('MinorGrid [lineColor=' + self._lineColor
-                + ', lineDashStyle=' + self._lineDashStyle
-                + ', lineWidth=' + self._lineWidth + ']')
+        return ('MinorGrid [lineColor=' + str(self._lineColor)
+                + ', lineDashStyle=' + str(self._lineDashStyle)
+                + ', lineWidth=' + str(self._lineWidth)
+                + ']')
 
 
 class Grid(MinorGrid):
@@ -3479,6 +3522,7 @@ class Grid(MinorGrid):
 
 
 class WeekDay(object):
+
     SUNDAY = 'SUNDAY'
     MONDAY = 'MONDAY'
     TUESDAY = 'TUESDAY'
@@ -3486,6 +3530,7 @@ class WeekDay(object):
     THURSDAY = 'THURSDAY'
     FRIDAY = 'FRIDAY'
     SATURDAY = 'SATURDAY'
+
     _values = [SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY]
 
     @classmethod
@@ -3505,6 +3550,7 @@ class TickmarkPlacement(object):
     @author: Invient
     @author: Richard Lincoln
     """
+
     ON = None
     BETWEEN = None
 
@@ -3530,6 +3576,7 @@ class TickPosition(object):
     @author: Invient
     @author: Richard Lincoln
     """
+
     OUTSIDE = None
     INSIDE = None
 
@@ -3565,6 +3612,7 @@ class AxisType(object):
     @see: L{NumberYAxis}
     @see: L{DateTimeAxis}
     """
+
     LINEAR = None
     DATETIME = None
 
@@ -3578,13 +3626,14 @@ class AxisType(object):
 
     @classmethod
     def values(cls):
-        return cls._enum_values[:]
+        return cls._values[:]
 
 AxisType.LINEAR = AxisType('linear')
 AxisType.DATETIME = AxisType('datetime')
 
 
 class AxisTitleAlign(object):
+
     LOW = ['low']
     MIDDLE = ['middle']
     HIGH = ['high']
@@ -3599,7 +3648,7 @@ class AxisTitleAlign(object):
 
     @classmethod
     def values(cls):
-        return cls._enum_values[:]
+        return cls._values[:]
 
 AxisTitleAlign.LOW = AxisTitleAlign('low')
 AxisTitleAlign.MIDDLE = AxisTitleAlign('middle')
@@ -3942,146 +3991,6 @@ class DateTimeValue(Value):
         self._value = value
 
 
-class Axis(object):
-
-    def getId(self):
-        pass
-
-    def setId(self, Id):
-        pass
-
-    def getTick(self):
-        pass
-
-    def setTick(self, tick):
-        pass
-
-    def getMaxZoom(self):
-        pass
-
-    def setMaxZoom(self, maxZoom):
-        pass
-
-    def getReversed(self):
-        pass
-
-    def setReversed(self, r):
-        pass
-
-    def getOpposite(self):
-        pass
-
-    def setOpposite(self, opposite):
-        pass
-
-    def getType(self):
-        pass
-
-    def getTitle(self):
-        pass
-
-    def setTitle(self, title):
-        pass
-
-    def getAlternateGridColor(self):
-        pass
-
-    def setAlternateGridColor(self, alternateGridColor):
-        pass
-
-    def getEndOnTick(self):
-        pass
-
-    def setEndOnTick(self, endOnTick):
-        pass
-
-    def getGrid(self):
-        pass
-
-    def setGrid(self, grid):
-        pass
-
-    def getLineColor(self):
-        pass
-
-    def setLineColor(self, lineColor):
-        pass
-
-    def getLineWidth(self):
-        pass
-
-    def setLineWidth(self, lineWidth):
-        pass
-
-    def getLinkedTo(self):
-        pass
-
-    def setLinkedTo(self, linkedTo):
-        pass
-
-    def getMaxPadding(self):
-        pass
-
-    def setMaxPadding(self, maxPadding):
-        pass
-
-    def getMinPadding(self):
-        pass
-
-    def setMinPadding(self, minPadding):
-        pass
-
-    def getMinorGrid(self):
-        pass
-
-    def setMinorGrid(self, minorGrid):
-        pass
-
-    def getMinorTick(self):
-        pass
-
-    def setMinorTick(self, minorTick):
-        pass
-
-    def getOffset(self):
-        pass
-
-    def setOffset(self, offset):
-        pass
-
-    def getShowFirstLabel(self):
-        pass
-
-    def setShowFirstLabel(self, showFirstLabel):
-        pass
-
-    def getShowLastLabel(self):
-        pass
-
-    def setShowLastLabel(self, showLastLabel):
-        pass
-
-    def getStartOfWeek(self):
-        pass
-
-    def setStartOfWeek(self, startOfWeek):
-        pass
-
-    def getStartOnTick(self):
-        pass
-
-    def setStartOnTick(self, startOnTick):
-        pass
-
-
-class XAxis(Axis):
-    pass
-
-
-class YAxis(Axis):
-    pass
-
-
 class NumberAxis(AxisBase):
 
     def __init__(self):
@@ -4412,8 +4321,8 @@ class Legend(object):
     def getReversed(self):
         return self._reversed
 
-    def setReversed(self, reversed):
-        self._reversed = reversed
+    def setReversed(self, r):
+        self._reversed = r
 
     def getShadow(self):
         return self._shadow

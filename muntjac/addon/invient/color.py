@@ -12,7 +12,8 @@ class Color(IPaint):
 
     @author: Invient
     @author: Richard Lincoln
-"""
+    """
+    pass
 
 
 class RGB(Color):
@@ -108,8 +109,6 @@ class RGBA(RGB):
         """
         super(RGBA, self).__init__(red, green, blue)
 
-        errorCompString = ''
-
         if (alpha < 0.0) or (alpha > 1.0):
             errorCompString = ' Alpha'
             raise ValueError('Color parameter outside of expected range: '
@@ -119,13 +118,14 @@ class RGBA(RGB):
 
 
     def getAlpha(self):
-        """@return Returns the alpha component in the range (0.0-1.0)."""
+        """@return: Returns the alpha component in the range (0.0-1.0)."""
         return self._alpha
 
 
     def getString(self):
-        """@return Returns string representation of this RGBA"""
-        return ('rgba(' + str(self.getRed()) + ',' + str(self.getGreen()) + ',' + str(self.getBlue()) + ',' + str(self._alpha) + ')')
+        """@return: Returns string representation of this RGBA"""
+        return ('rgba(' + str(self.getRed()) + ',' + str(self.getGreen())
+                + ',' + str(self.getBlue()) + ',' + str(self._alpha) + ')')
 
 
     def __str__(self):
@@ -133,4 +133,5 @@ class RGBA(RGB):
         return ('RGBA [alpha=' + str(self._alpha)
                 + ', red=' + str(self.getRed())
                 + ', green=' + str(self.getGreen())
-                + ', blue=' + str(self.getBlue()) + ']')
+                + ', blue=' + str(self.getBlue())
+                + ']')

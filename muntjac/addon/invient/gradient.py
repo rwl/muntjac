@@ -131,52 +131,43 @@ class LinearGradient(IGradient):
     @author: Richard Lincoln
     """
 
-    def __init__(self, xStart, xStartUnit_or_yStart, yStart_or_xEnd, yStartUnit_or_yEnd,
-                 xEnd_or_colorStops, xEndUnit=None, yEnd=None, yEndUnit=None,
-                 colorStops=None):
-        """Creates a LinearGradient with the specified xStart, xEnd, yStart and
-        yEnd values with default {@link Unit} value number.
+    def __init__(self, xStart, xStartUnit_or_yStart, yStart_or_xEnd,
+                 yStartUnit_or_yEnd, xEnd_or_colorStops, xEndUnit=None,
+                 yEnd=None, yEndUnit=None, colorStops=None):
+        """Creates a LinearGradient with the specified xStart, xEnd, yStart
+        and yEnd values with default {@link Unit} value number.
 
         @param xStart:
                    the x-coordinate of a point at which linear gradient
                    starts.
-        @param yStart:
-                   the y-coordinate of a point at which linear gradient
-                   starts.
-        @param xEnd:
-                   the x-coordinate of a point at which linear gradient ends.
-        @param yEnd:
-                   the y-coordinate of a point at which linear gradient ends.
-        @param colorStops
-                   the list of colorstops for the linear gradient.
-        ---
-        @param xStart
-                   the x-coordinate of a point at which linear gradient
-                   starts.
-        @param xStartUnit
+        @param xStartUnit_or_yStart:
                    the unit for the xStart value. It can have one of the two
                    values Unit.NUMBER or Unit.PERCENT. If it is null then the
-                   default value is Unit.NUMBER.
-        @param yStart
+                   default value is Unit.NUMBER. Or the y-coordinate of a point
+                   at which linear gradient starts.
+        @param yStart_or_xEnd:
                    the y-coordinate of a point at which linear gradient
-                   starts.
-        @param yStartUnit
+                   starts or the x-coordinate of a point at which linear
+                   gradient ends.
+        @param yStartUnit_or_yEnd:
                    the unit for the yStart value. It can have one of the two
                    values Unit.NUMBER or Unit.PERCENT. If it is null then the
-                   default value is Unit.NUMBER.
-        @param xEnd
-                   the x-coordinate of a point at which linear gradient ends.
-        @param xEndUnit
+                   default value is Unit.NUMBER. Or the y-coordinate of a point
+                   at which linear gradient ends.
+        @param xEnd_or_colorStops:
+                   the x-coordinate of a point at which linear gradient ends or
+                   the list of colorstops for the linear gradient.
+        @param xEndUnit:
                    the unit for the xEnd value. It can have one of the two
                    values Unit.NUMBER or Unit.PERCENT. If it is null then the
                    default value is Unit.NUMBER.
-        @param yEnd
+        @param yEnd:
                    the y-coordinate of a point at which linear gradient ends.
         @param yEndUnit
                    the unit for the yEnd value. It can have one of the two
                    values Unit.NUMBER or Unit.PERCENT. If it is null then the
                    default value is Unit.NUMBER.
-        @param colorStops
+        @param colorStops:
                    the list of colorstops for the linear gradient.
         """
         self._xStart = 0
@@ -252,17 +243,18 @@ class LinearGradient(IGradient):
         sb = StringIO()
         # The prefix "JSOBJ:" indicates that the string is a JavaScript
         # object
-        x1 = '\'' + self._xStart + self._xStartUnit.getSymbol() + '\''
-        y1 = '\'' + self._yStart + self._yStartUnit.getSymbol() + '\''
-        x2 = '\'' + self._xEnd + self._xEndUnit.getSymbol() + '\''
-        y2 = '\'' + self._yEnd + self._yEndUnit.getSymbol() + '\''
+        x1 = '\'' + str(self._xStart) + self._xStartUnit.getSymbol() + '\''
+        y1 = '\'' + str(self._yStart) + self._yStartUnit.getSymbol() + '\''
+        x2 = '\'' + str(self._xEnd) + self._xEndUnit.getSymbol() + '\''
+        y2 = '\'' + str(self._yEnd) + self._yEndUnit.getSymbol() + '\''
         sb.write('JSOBJ:{')
         sb.write(' linearGradient: [' + x1 + ',' + y1 + ',' + x2 + ',' + y2 + '],')
         sb.write(' stops: [')
         count = 0
         for colorStop in self._colorStops:
             if colorStop.getColor() is not None:
-                stopAt = '\'' + colorStop.getStopAt() + colorStop.getStopAtUnit().getSymbol() + '\''
+                stopAt = ('\'' + str(colorStop.getStopAt())
+                        + colorStop.getStopAtUnit().getSymbol() + '\'')
                 stopColor = '\'' + colorStop.getColor().getString() + '\''
                 if count > 0:
                     sb.write(',')
