@@ -4355,28 +4355,30 @@ class Legend(object):
         self._position = position
 
     def __str__(self):
-        return ('Legend [backgroundColor=' + self._backgroundColor
-                + ', borderColor=' + self._borderColor
-                + ', borderRadius=' + self._borderRadius
-                + ', borderWidth=' + self._borderWidth
-                + ', enabled=' + self._enabled
-                + ', floating=' + self._floating
-                + ', itemHiddenStyle=' + self._itemHiddenStyle
-                + ', itemHoverStyle=' + self._itemHoverStyle
-                + ', itemStyle=' + self._itemStyle
-                + ', itemWidth=' + self._itemWidth
-                + ', layout=' + self._layout
-                + ', labelFormatter=' + self._labelFormatterJsFunc
-                + ', margin=' + self._margin
-                + ', reversed=' + self._reversed
-                + ', shadow=' + self._shadow
-                + ', symbolPadding=' + self._symbolPadding
-                + ', symbolWidth=' + self._symbolWidth
-                + ', width=' + self._width
-                + ', position=' + self._position + ']')
+        return ('Legend [backgroundColor=' + str(self._backgroundColor)
+                + ', borderColor=' + str(self._borderColor)
+                + ', borderRadius=' + str(self._borderRadius)
+                + ', borderWidth=' + str(self._borderWidth)
+                + ', enabled=' + str(self._enabled)
+                + ', floating=' + str(self._floating)
+                + ', itemHiddenStyle=' + str(self._itemHiddenStyle)
+                + ', itemHoverStyle=' + str(self._itemHoverStyle)
+                + ', itemStyle=' + str(self._itemStyle)
+                + ', itemWidth=' + str(self._itemWidth)
+                + ', layout=' + str(self._layout)
+                + ', labelFormatter=' + str(self._labelFormatterJsFunc)
+                + ', margin=' + str(self._margin)
+                + ', reversed=' + str(self._reversed)
+                + ', shadow=' + str(self._shadow)
+                + ', symbolPadding=' + str(self._symbolPadding)
+                + ', symbolWidth=' + str(self._symbolWidth)
+                + ', width=' + str(self._width)
+                + ', position=' + str(self._position)
+                + ']')
 
 
 class Layout(object):
+
     HORIZONTAL = None
     VERTICAL = None
 
@@ -4436,11 +4438,12 @@ class Credit(object):
         self._position = position
 
     def __str__(self):
-        return ('Credit [enabled=' + self._enabled
-                + ', link=' + self._link
-                + ', style=' + self._style
-                + ', text=' + self._text
-                + ', position=' + self._position + ']')
+        return ('Credit [enabled=' + str(self._enabled)
+                + ', link=' + str(self._link)
+                + ', style=' + str(self._style)
+                + ', text=' + str(self._text)
+                + ', position=' + str(self._position)
+                + ']')
 
 
 class Position(object):
@@ -4476,9 +4479,10 @@ class Position(object):
         self._y = y
 
     def __str__(self):
-        return ('Position [align=' + self._align
-                + ', vertAlign=' + self._vertAlign
-                + ', x=' + self._x + ', y=' + self._y + ']')
+        return ('Position [align=' + str(self._align)
+                + ', vertAlign=' + str(self._vertAlign)
+                + ', x=' + str(self._x)
+                + ', y=' + str(self._y) + ']')
 
 
 class Tooltip(object):
@@ -4565,14 +4569,15 @@ class Tooltip(object):
         self._style = style
 
     def __str__(self):
-        return ('Tooltip [backgroundColor=' + self._backgroundColor
-                + ', borderColor=' + self._borderColor
-                + ', borderRadius=' + self._borderRadius
-                + ', borderWidth=' + self._borderWidth
-                + ', crosshairs=' + self._crosshairs
-                + ', enabled=' + self._enabled
-                + ', formatter=' + self._formatterJsFunc
-                + ', shadow=' + self._shadow
-                + ', shared=' + self._shared
-                + ', snap=' + self._snap
-                + ', style=' + self._style + ']')
+        return ('Tooltip [backgroundColor=' + str(self._backgroundColor)
+                + ', borderColor=' + str(self._borderColor)
+                + ', borderRadius=' + str(self._borderRadius)
+                + ', borderWidth=' + str(self._borderWidth)
+                + ', crosshairs=' + str(self._crosshairs)
+                + ', enabled=' + str(self._enabled)
+                + ', formatter=' + str(self._formatterJsFunc)
+                + ', shadow=' + str(self._shadow)
+                + ', shared=' + str(self._shared)
+                + ', snap=' + str(self._snap)
+                + ', style=' + str(self._style)
+                + ']')

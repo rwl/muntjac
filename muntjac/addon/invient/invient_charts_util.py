@@ -1,18 +1,19 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
-from muntjac.addon.invient.invient_charts_config import InvientChartsConfig
 from muntjac.addon.invient.invient_charts \
-    import DateTimeSeries, DecimalPoint, AreaConfig, AreaSplineConfig, \
-    DateTimeRange, DateTimeValue, Grid, NumberRange, NumberValue, Tick, \
-    BarConfig, CategoryAxis, ColumnConfig, DateTimeAxis, ImageMarker, \
-    LineConfig, NonLinearSeriesState, NumberAxis, NumberXAxis, NumberYAxis, \
-    PieConfig, PieDataLabel, ScatterConfig, SplineConfig, SymbolMarker, \
-    XAxisDataLabel
+    import DateTimeSeries, DecimalPoint
+
+from muntjac.addon.invient.invient_charts_config \
+    import AreaConfig, AreaSplineConfig, DateTimeRange, DateTimeValue, \
+    Grid, NumberRange, NumberValue, Tick, BarConfig, CategoryAxis, \
+    ColumnConfig, DateTimeAxis, ImageMarker, LineConfig, \
+    NonLinearSeriesState, NumberAxis, NumberXAxis, NumberYAxis, PieConfig, \
+    PieDataLabel, ScatterConfig, SplineConfig, SymbolMarker, XAxisDataLabel
 
 
 class InvientChartsUtil(object):
-    """A utility class used by {@link InvientCharts} to write its state to
+    """A utility class used by L{InvientCharts} to write its state to
     the UIDL stream. The state includes properties of L{InvientCharts} such
     as L{InvientChartsConfig}, L{Series}, L{Point} and various chart events.
 
@@ -45,7 +46,8 @@ class InvientChartsUtil(object):
         if titleBaseOptions.getAlign() is not None:
             target.addAttribute('align', titleBaseOptions.getAlign().getName())
         if titleBaseOptions.getVertAlign() is not None:
-            target.addAttribute('verticalAlign', titleBaseOptions.getVertAlign().getName())
+            target.addAttribute('verticalAlign',
+                    titleBaseOptions.getVertAlign().getName())
         if titleBaseOptions.getStyle() is not None:
             target.addAttribute('style', titleBaseOptions.getStyle())
 
@@ -96,9 +98,11 @@ class InvientChartsUtil(object):
 
         if creditOptions.getPosition() is not None:
             if creditOptions.getPosition().getAlign() is not None:
-                target.addAttribute('align', creditOptions.getPosition().getAlign().getName())
+                target.addAttribute('align',
+                        creditOptions.getPosition().getAlign().getName())
             if creditOptions.getPosition().getVertAlign() is not None:
-                target.addAttribute('verticalAlign', creditOptions.getPosition().getVertAlign().getName())
+                target.addAttribute('verticalAlign',
+                        creditOptions.getPosition().getVertAlign().getName())
             if creditOptions.getPosition().getX() is not None:
                 target.addAttribute('x', creditOptions.getPosition().getX())
             if creditOptions.getPosition().getY() is not None:
@@ -126,11 +130,14 @@ class InvientChartsUtil(object):
         """
         target.startTag('legend')
         if legendOptions.getBackgroundColor() is not None:
-            target.addAttribute('backgroundColor', legendOptions.getBackgroundColor().getString())
+            target.addAttribute('backgroundColor',
+                    legendOptions.getBackgroundColor().getString())
         if legendOptions.getBorderColor() is not None:
-            target.addAttribute('borderColor', legendOptions.getBorderColor().getString())
+            target.addAttribute('borderColor',
+                    legendOptions.getBorderColor().getString())
         if legendOptions.getBorderRadius() is not None:
-            target.addAttribute('borderRadius', legendOptions.getBorderRadius())
+            target.addAttribute('borderRadius',
+                    legendOptions.getBorderRadius())
         if legendOptions.getBorderWidth() is not None:
             target.addAttribute('borderWidth', legendOptions.getBorderWidth())
         if legendOptions.getEnabled() is not None:
@@ -138,9 +145,11 @@ class InvientChartsUtil(object):
         if legendOptions.getFloating() is not None:
             target.addAttribute('floating', legendOptions.getFloating())
         if legendOptions.getItemHiddenStyle() is not None:
-            target.addAttribute('itemHiddenStyle', legendOptions.getItemHiddenStyle())
+            target.addAttribute('itemHiddenStyle',
+                    legendOptions.getItemHiddenStyle())
         if legendOptions.getItemHoverStyle() is not None:
-            target.addAttribute('itemHoverStyle', legendOptions.getItemHoverStyle())
+            target.addAttribute('itemHoverStyle',
+                    legendOptions.getItemHoverStyle())
         if legendOptions.getItemStyle() is not None:
             target.addAttribute('itemStyle', legendOptions.getItemStyle())
         if legendOptions.getItemWidth() is not None:
@@ -148,7 +157,8 @@ class InvientChartsUtil(object):
         if legendOptions.getLayout() is not None:
             target.addAttribute('layout', legendOptions.getLayout().getName())
         if legendOptions.getLabelFormatterJsFunc() is not None:
-            target.addAttribute('labelFormatter', legendOptions.getLabelFormatterJsFunc())
+            target.addAttribute('labelFormatter',
+                    legendOptions.getLabelFormatterJsFunc())
         if legendOptions.getMargin() is not None:
             target.addAttribute('margin', legendOptions.getMargin())
         if legendOptions.getReversed() is not None:
@@ -156,16 +166,19 @@ class InvientChartsUtil(object):
         if legendOptions.getShadow() is not None:
             target.addAttribute('shadow', legendOptions.getShadow())
         if legendOptions.getSymbolPadding() is not None:
-            target.addAttribute('symbolPadding', legendOptions.getSymbolPadding())
+            target.addAttribute('symbolPadding',
+                    legendOptions.getSymbolPadding())
         if legendOptions.getSymbolWidth() is not None:
             target.addAttribute('symbolWidth', legendOptions.getSymbolWidth())
         if legendOptions.getWidth() is not None:
             target.addAttribute('width', legendOptions.getWidth())
         if legendOptions.getPosition() is not None:
             if legendOptions.getPosition().getAlign() is not None:
-                target.addAttribute('align', legendOptions.getPosition().getAlign().getName())
+                target.addAttribute('align',
+                        legendOptions.getPosition().getAlign().getName())
             if legendOptions.getPosition().getVertAlign() is not None:
-                target.addAttribute('verticalAlign', legendOptions.getPosition().getVertAlign().getName())
+                target.addAttribute('verticalAlign',
+                        legendOptions.getPosition().getVertAlign().getName())
             if legendOptions.getPosition().getX() is not None:
                 target.addAttribute('x', legendOptions.getPosition().getX())
             if legendOptions.getPosition().getY() is not None:
@@ -183,11 +196,14 @@ class InvientChartsUtil(object):
         """
         target.startTag('tooltip')
         if tooltipOptions.getBackgroundColor() is not None:
-            target.addAttribute('backgroundColor', tooltipOptions.getBackgroundColor().getString())
+            target.addAttribute('backgroundColor',
+                    tooltipOptions.getBackgroundColor().getString())
         if tooltipOptions.getBorderColor() is not None:
-            target.addAttribute('borderColor', tooltipOptions.getBorderColor().getString())
+            target.addAttribute('borderColor',
+                    tooltipOptions.getBorderColor().getString())
         if tooltipOptions.getBorderRadius() is not None:
-            target.addAttribute('borderRadius', tooltipOptions.getBorderRadius())
+            target.addAttribute('borderRadius',
+                    tooltipOptions.getBorderRadius())
         if tooltipOptions.getBorderWidth() is not None:
             target.addAttribute('borderWidth', tooltipOptions.getBorderWidth())
         if tooltipOptions.getCrosshairs() is not None:
@@ -195,7 +211,8 @@ class InvientChartsUtil(object):
         if tooltipOptions.getEnabled() is not None:
             target.addAttribute('enabled', tooltipOptions.getEnabled())
         if tooltipOptions.getFormatterJsFunc() is not None:
-            target.addAttribute('formatter', tooltipOptions.getFormatterJsFunc())
+            target.addAttribute('formatter',
+                    tooltipOptions.getFormatterJsFunc())
         if tooltipOptions.getShadow() is not None:
             target.addAttribute('shadow', tooltipOptions.getShadow())
         if tooltipOptions.getShared() is not None:
@@ -223,39 +240,51 @@ class InvientChartsUtil(object):
         if chartOptions.getHeight() is not None:
             target.addAttribute('height', chartOptions.getHeight())
         if chartOptions.getBackgroundColor() is not None:
-            target.addAttribute('backgroundColor', chartOptions.getBackgroundColor().getString())
+            target.addAttribute('backgroundColor',
+                    chartOptions.getBackgroundColor().getString())
         if chartOptions.getBorderColor() is not None:
-            target.addAttribute('borderColor', chartOptions.getBorderColor().getString())
+            target.addAttribute('borderColor',
+                    chartOptions.getBorderColor().getString())
         if chartOptions.getBorderRadius() is not None:
             target.addAttribute('borderRadius', chartOptions.getBorderRadius())
         if chartOptions.getBorderWidth() is not None:
             target.addAttribute('borderWidth', chartOptions.getBorderWidth())
         if chartOptions.getIgnoreHiddenSeries() is not None:
-            target.addAttribute('ignoreHiddenSeries', chartOptions.getIgnoreHiddenSeries())
+            target.addAttribute('ignoreHiddenSeries',
+                    chartOptions.getIgnoreHiddenSeries())
         if chartOptions.getInverted() is not None:
             target.addAttribute('inverted', chartOptions.getInverted())
         if chartOptions.getMargin() is not None:
             if chartOptions.getMargin().getTop() is not None:
-                target.addAttribute('marginTop', chartOptions.getMargin().getTop())
+                target.addAttribute('marginTop',
+                        chartOptions.getMargin().getTop())
             if chartOptions.getMargin().getLeft() is not None:
-                target.addAttribute('marginLeft', chartOptions.getMargin().getLeft())
+                target.addAttribute('marginLeft',
+                        chartOptions.getMargin().getLeft())
             if chartOptions.getMargin().getBottom() is not None:
-                target.addAttribute('marginBottom', chartOptions.getMargin().getBottom())
+                target.addAttribute('marginBottom',
+                        chartOptions.getMargin().getBottom())
             if chartOptions.getMargin().getRight() is not None:
-                target.addAttribute('marginRight', chartOptions.getMargin().getRight())
+                target.addAttribute('marginRight',
+                        chartOptions.getMargin().getRight())
         if chartOptions.getSpacing() is not None:
             if chartOptions.getSpacing().getTop() is not None:
-                target.addAttribute('spacingTop', chartOptions.getSpacing().getTop())
+                target.addAttribute('spacingTop',
+                        chartOptions.getSpacing().getTop())
             if chartOptions.getSpacing().getLeft() is not None:
-                target.addAttribute('spacingLeft', chartOptions.getSpacing().getLeft())
+                target.addAttribute('spacingLeft',
+                        chartOptions.getSpacing().getLeft())
             if chartOptions.getSpacing().getBottom() is not None:
-                target.addAttribute('spacingBottom', chartOptions.getSpacing().getBottom())
+                target.addAttribute('spacingBottom',
+                        chartOptions.getSpacing().getBottom())
             if chartOptions.getSpacing().getRight() is not None:
-                target.addAttribute('spacingRight', chartOptions.getSpacing().getRight())
+                target.addAttribute('spacingRight',
+                        chartOptions.getSpacing().getRight())
         if chartOptions.getShowAxes() is not None:
             target.addAttribute('showAxes', chartOptions.getShowAxes())
         if chartOptions.getZoomType() is not None:
-            target.addAttribute('zoomType', chartOptions.getZoomType().getName())
+            target.addAttribute('zoomType',
+                    chartOptions.getZoomType().getName())
         target.addAttribute('clientZoom', chartOptions.isClientZoom())
         if chartOptions.getAlignTicks() is not None:
             target.addAttribute('alignTicks', chartOptions.getAlignTicks())
@@ -265,15 +294,20 @@ class InvientChartsUtil(object):
             target.addAttribute('className', chartOptions.getClassName())
         if chartOptions.getPlot() is not None:
             if chartOptions.getPlot().getBackgroundColor() is not None:
-                target.addAttribute('plotBackgroundColor', chartOptions.getPlot().getBackgroundColor().getString())
+                target.addAttribute('plotBackgroundColor',
+                    chartOptions.getPlot().getBackgroundColor().getString())
             if chartOptions.getPlot().getBorderColor() is not None:
-                target.addAttribute('plotBorderColor', chartOptions.getPlot().getBorderColor().getString())
+                target.addAttribute('plotBorderColor',
+                    chartOptions.getPlot().getBorderColor().getString())
             if chartOptions.getPlot().getBackgroundImage() is not None:
-                target.addAttribute('plotBackgroundImage', chartOptions.getPlot().getBackgroundImage())
+                target.addAttribute('plotBackgroundImage',
+                    chartOptions.getPlot().getBackgroundImage())
             if chartOptions.getPlot().getBorderWidth() is not None:
-                target.addAttribute('plotBorderWidth', chartOptions.getPlot().getBorderWidth())
+                target.addAttribute('plotBorderWidth',
+                    chartOptions.getPlot().getBorderWidth())
             if chartOptions.getPlot().getShadow() is not None:
-                target.addAttribute('plotShadow', chartOptions.getPlot().getShadow())
+                target.addAttribute('plotShadow',
+                    chartOptions.getPlot().getShadow())
         if chartOptions.getReflow() is not None:
             target.addAttribute('reflow', chartOptions.getReflow())
         if chartOptions.getShadow() is not None:
@@ -343,7 +377,8 @@ class InvientChartsUtil(object):
         @throws PaintException
         """
         if seriesOptions.getAllowPointSelect() is not None:
-            target.addAttribute('allowPointSelect', seriesOptions.getAllowPointSelect())
+            target.addAttribute('allowPointSelect',
+                    seriesOptions.getAllowPointSelect())
         if seriesOptions.getAnimation() is not None:
             target.addAttribute('animation', seriesOptions.getAnimation())
         if seriesOptions.getCursor() is not None:
@@ -351,16 +386,20 @@ class InvientChartsUtil(object):
         if seriesOptions.getColor() is not None:
             target.addAttribute('color', seriesOptions.getColor().getString())
         if seriesOptions.getEnableMouseTracking() is not None:
-            target.addAttribute('enableMouseTracking', seriesOptions.getEnableMouseTracking())
+            target.addAttribute('enableMouseTracking',
+                    seriesOptions.getEnableMouseTracking())
         # if (seriesOptions.getSelected() != null) {
         # target.addAttribute("selected", seriesOptions.getSelected());
         # }
         if seriesOptions.getShowCheckbox() is not None:
-            target.addAttribute('showCheckbox', seriesOptions.getShowCheckbox())
+            target.addAttribute('showCheckbox',
+                    seriesOptions.getShowCheckbox())
         if seriesOptions.getShowInLegend() is not None:
-            target.addAttribute('showInLegend', seriesOptions.getShowInLegend())
+            target.addAttribute('showInLegend',
+                    seriesOptions.getShowInLegend())
         if seriesOptions.getStacking() is not None:
-            target.addAttribute('stacking', seriesOptions.getStacking().getName())
+            target.addAttribute('stacking',
+                    seriesOptions.getStacking().getName())
         if seriesOptions.getShadow() is not None:
             target.addAttribute('shadow', seriesOptions.getShadow())
         if seriesOptions.getVisible() is not None:
@@ -447,11 +486,14 @@ class InvientChartsUtil(object):
         """
         cls.writeDataLabel(target, dataLabel)
         if dataLabel.getConnectorWidth() is not None:
-            target.addAttribute('connectorWidth', dataLabel.getConnectorWidth())
+            target.addAttribute('connectorWidth',
+                    dataLabel.getConnectorWidth())
         if dataLabel.getConnectorPadding() is not None:
-            target.addAttribute('connectorPadding', dataLabel.getConnectorPadding())
+            target.addAttribute('connectorPadding',
+                    dataLabel.getConnectorPadding())
         if dataLabel.getConnectorColor() is not None:
-            target.addAttribute('connectorColor', dataLabel.getConnectorColor().getString())
+            target.addAttribute('connectorColor',
+                    dataLabel.getConnectorColor().getString())
         if dataLabel.getDistance() is not None:
             target.addAttribute('distance', dataLabel.getDistance())
 
@@ -481,7 +523,8 @@ class InvientChartsUtil(object):
         if dataLabel is not None:
             cls.writeAxisDataLabel(target, dataLabel)
             if dataLabel.getStaggerLines() is not None:
-                target.addAttribute('staggerLines', dataLabel.getStaggerLines())
+                target.addAttribute('staggerLines',
+                        dataLabel.getStaggerLines())
         target.endTag('label')
 
 
@@ -563,15 +606,20 @@ class InvientChartsUtil(object):
         @raise PaintException
         """
         if symbolMarker.getFillColor() is not None:
-            target.addAttribute('fillColor', symbolMarker.getFillColor().getString())
+            target.addAttribute('fillColor',
+                    symbolMarker.getFillColor().getString())
         if symbolMarker.getLineColor() is not None:
-            target.addAttribute('lineColor', symbolMarker.getLineColor().getString())
+            target.addAttribute('lineColor',
+                    symbolMarker.getLineColor().getString())
         if symbolMarker.getLineWidth() is not None:
-            target.addAttribute('lineWidth', symbolMarker.getLineWidth())
+            target.addAttribute('lineWidth',
+                    symbolMarker.getLineWidth())
         if symbolMarker.getRadius() is not None:
-            target.addAttribute('radius', symbolMarker.getRadius())
+            target.addAttribute('radius',
+                    symbolMarker.getRadius())
         if symbolMarker.getSymbol() is not None:
-            target.addAttribute('symbol', symbolMarker.getSymbol().getName())
+            target.addAttribute('symbol',
+                    symbolMarker.getSymbol().getName())
 
 
     @classmethod
@@ -585,9 +633,11 @@ class InvientChartsUtil(object):
         if markerState.getEnabled() is not None:
             target.addAttribute('enabled', markerState.getEnabled())
         if markerState.getFillColor() is not None:
-            target.addAttribute('fillColor', markerState.getFillColor().getString())
+            target.addAttribute('fillColor',
+                    markerState.getFillColor().getString())
         if markerState.getLineColor() is not None:
-            target.addAttribute('lineColor', markerState.getLineColor().getString())
+            target.addAttribute('lineColor',
+                    markerState.getLineColor().getString())
         if markerState.getLineWidth() is not None:
             target.addAttribute('lineWidth', markerState.getLineWidth())
         if markerState.getRadius() is not None:
@@ -605,15 +655,18 @@ class InvientChartsUtil(object):
         """
         cls.writeCommonSeriesOptions(target, baseLineOptions)
         if baseLineOptions.getDashStyle() is not None:
-            target.addAttribute('dashStyle', baseLineOptions.getDashStyle().getName())
+            target.addAttribute('dashStyle',
+                    baseLineOptions.getDashStyle().getName())
         if baseLineOptions.getLineWidth() is not None:
             target.addAttribute('lineWidth', baseLineOptions.getLineWidth())
         if baseLineOptions.getPointInterval() is not None:
-            target.addAttribute('pointInterval', baseLineOptions.getPointInterval())
+            target.addAttribute('pointInterval',
+                    baseLineOptions.getPointInterval())
         if baseLineOptions.getPointStart() is not None:
             target.addAttribute('pointStart', baseLineOptions.getPointStart())
         if baseLineOptions.getStickyTracking() is not None:
-            target.addAttribute('stickyTracking', baseLineOptions.getStickyTracking())
+            target.addAttribute('stickyTracking',
+                    baseLineOptions.getStickyTracking())
         cls.writeMarkerOptions(target, baseLineOptions.getMarker())
 
 
@@ -662,11 +715,13 @@ class InvientChartsUtil(object):
         """
         cls.writeBaseLineOptions(target, areaOptions)
         if areaOptions.getFillColor() is not None:
-            target.addAttribute('fillColor', areaOptions.getFillColor().getString())
+            target.addAttribute('fillColor',
+                    areaOptions.getFillColor().getString())
         if areaOptions.getFillOpacity() is not None:
             target.addAttribute('fillOpacity', areaOptions.getFillOpacity())
         if areaOptions.getLineColor() is not None:
-            target.addAttribute('lineColor', areaOptions.getLineColor().getString())
+            target.addAttribute('lineColor',
+                    areaOptions.getLineColor().getString())
         if areaOptions.getThreshold() is not None:
             target.addAttribute('threshold', areaOptions.getThreshold())
 
@@ -692,7 +747,8 @@ class InvientChartsUtil(object):
         """
         cls.writeCommonSeriesOptions(target, pieOptions)
         if pieOptions.getBorderColor() is not None:
-            target.addAttribute('borderColor', pieOptions.getBorderColor().getString())
+            target.addAttribute('borderColor',
+                    pieOptions.getBorderColor().getString())
         if pieOptions.getBorderWidth() is not None:
             target.addAttribute('borderWidth', pieOptions.getBorderWidth())
         if pieOptions.getCenterX() is not None:
@@ -718,21 +774,29 @@ class InvientChartsUtil(object):
         """
         cls.writeCommonSeriesOptions(target, baseBarOptions)
         if baseBarOptions.getBorderColor() is not None:
-            target.addAttribute('borderColor', baseBarOptions.getBorderColor().getString())
+            target.addAttribute('borderColor',
+                    baseBarOptions.getBorderColor().getString())
         if baseBarOptions.getBorderRadius() is not None:
-            target.addAttribute('borderRadius', baseBarOptions.getBorderRadius())
+            target.addAttribute('borderRadius',
+                    baseBarOptions.getBorderRadius())
         if baseBarOptions.getBorderWidth() is not None:
-            target.addAttribute('borderWidth', baseBarOptions.getBorderWidth())
+            target.addAttribute('borderWidth',
+                    baseBarOptions.getBorderWidth())
         if baseBarOptions.getColorByPoint() is not None:
-            target.addAttribute('colorByPoint', baseBarOptions.getColorByPoint())
+            target.addAttribute('colorByPoint',
+                    baseBarOptions.getColorByPoint())
         if baseBarOptions.getGroupPadding() is not None:
-            target.addAttribute('groupPadding', baseBarOptions.getGroupPadding())
+            target.addAttribute('groupPadding',
+                    baseBarOptions.getGroupPadding())
         if baseBarOptions.getMinPointLength() is not None:
-            target.addAttribute('minPointLength', baseBarOptions.getMinPointLength())
+            target.addAttribute('minPointLength',
+                    baseBarOptions.getMinPointLength())
         if baseBarOptions.getPointPadding() is not None:
-            target.addAttribute('pointPadding', baseBarOptions.getPointPadding())
+            target.addAttribute('pointPadding',
+                    baseBarOptions.getPointPadding())
         if baseBarOptions.getPointWidth() is not None:
-            target.addAttribute('pointWidth', baseBarOptions.getPointWidth())
+            target.addAttribute('pointWidth',
+                    baseBarOptions.getPointWidth())
 
 
     @classmethod
@@ -780,8 +844,10 @@ class InvientChartsUtil(object):
                 target.addAttribute('type', series.getType().getName())
             if series.getStack() is not None and len(series.getStack()) > 0:
                 target.addAttribute('stack', series.getStack())
-            target.addAttribute('xAxis', cls.getXAxisIndex(series.getXAxis(), xAxes))
-            target.addAttribute('yAxis', cls.getYAxisIndex(series.getYAxis(), yAxes))
+            target.addAttribute('xAxis', cls.getXAxisIndex(series.getXAxis(),
+                    xAxes))
+            target.addAttribute('yAxis', cls.getYAxisIndex(series.getYAxis(),
+                    yAxes))
             seriesOptionsTagName = chartSeriesType.getName()
             if series.getType() is not None:
                 seriesOptionsTagName = series.getType().getName()
@@ -820,7 +886,8 @@ class InvientChartsUtil(object):
                     if isinstance(point, DecimalPoint):
                         target.addAttribute('x', point.getX())
                     else:
-                        target.addAttribute('x', cls.getDate(point.getX(), point.getSeries().isIncludeTime()))
+                        target.addAttribute('x', cls.getDate(point.getX(),
+                                point.getSeries().isIncludeTime()))
 
                 if point.getY() is not None:
                     target.addAttribute('y', point.getY())
@@ -830,13 +897,17 @@ class InvientChartsUtil(object):
                 # Point config
                 if point.getConfig() is not None:
                     if point.getConfig().getSliced() is not None:
-                        target.addAttribute('sliced', point.getConfig().getSliced())
+                        target.addAttribute('sliced',
+                                point.getConfig().getSliced())
                     if point.getConfig().getSelected() is not None:
-                        target.addAttribute('selected', point.getConfig().getSelected())
+                        target.addAttribute('selected',
+                                point.getConfig().getSelected())
                     if point.getConfig().getColor() is not None:
-                        target.addAttribute('color', point.getConfig().getColor().getString())
+                        target.addAttribute('color',
+                                point.getConfig().getColor().getString())
                     if point.getConfig().getMarker() is not None:
-                        cls.writeMarkerOptions(target, point.getConfig().getMarker())
+                        cls.writeMarkerOptions(target,
+                                point.getConfig().getMarker())
             target.endTag('point')
 
 
@@ -850,7 +921,8 @@ class InvientChartsUtil(object):
         @throws PaintException
         """
         if axis.getAlternateGridColor() is not None:
-            target.addAttribute('alternateGridColor', axis.getAlternateGridColor().getString())
+            target.addAttribute('alternateGridColor',
+                    axis.getAlternateGridColor().getString())
         if axis.getEndOnTick() is not None:
             target.addAttribute('endOnTick', axis.getEndOnTick())
         if axis.getGrid() is not None:
@@ -862,7 +934,8 @@ class InvientChartsUtil(object):
         if axis.getLineWidth() is not None:
             target.addAttribute('lineWidth', axis.getLineWidth())
         if axis.getLinkedTo() is not None:
-            target.addAttribute('linkedTo', cls.getAxisIndex(axis.getLinkedTo(), axes))
+            target.addAttribute('linkedTo',
+                    cls.getAxisIndex(axis.getLinkedTo(), axes))
         if axis.getMaxPadding() is not None:
             target.addAttribute('maxPadding', axis.getMaxPadding())
         if axis.getMaxZoom() is not None:
@@ -974,7 +1047,8 @@ class InvientChartsUtil(object):
             for plotBand in plotBands:
                 target.startTag('plotBand')
                 if plotBand.getColor() is not None:
-                    target.addAttribute('color', plotBand.getColor().getString())
+                    target.addAttribute('color',
+                            plotBand.getColor().getString())
                 if plotBand.getId() is not None:
                     target.addAttribute('id', plotBand.getId())
                 if plotBand.getZIndex() is not None:
@@ -1004,9 +1078,11 @@ class InvientChartsUtil(object):
             if plotLabel.getText() is not None:
                 target.addAttribute('text', plotLabel.getText())
             if plotLabel.getTextAlign() is not None:
-                target.addAttribute('textAlign', plotLabel.getTextAlign().getName())
+                target.addAttribute('textAlign',
+                        plotLabel.getTextAlign().getName())
             if plotLabel.getVertAlign() is not None:
-                target.addAttribute('verticalAlign', plotLabel.getVertAlign().getName())
+                target.addAttribute('verticalAlign',
+                        plotLabel.getVertAlign().getName())
             if plotLabel.getX() is not None:
                 target.addAttribute('x', plotLabel.getX())
             if plotLabel.getY() is not None:
@@ -1037,15 +1113,21 @@ class InvientChartsUtil(object):
                 dateRange = plotBandRange
                 target.startTag('from')
                 if dateRange.getFrom() is not None:
-                    target.addAttribute('year', cls.getYearFromDate(dateRange.getFrom()))
-                    target.addAttribute('month', cls.getMonthFromDate(dateRange.getFrom()))
-                    target.addAttribute('day', cls.getDayFromDate(dateRange.getFrom()))
+                    target.addAttribute('year',
+                            cls.getYearFromDate(dateRange.getFrom()))
+                    target.addAttribute('month',
+                            cls.getMonthFromDate(dateRange.getFrom()))
+                    target.addAttribute('day',
+                            cls.getDayFromDate(dateRange.getFrom()))
                 target.endTag('from')
                 target.startTag('to')
                 if dateRange.getTo() is not None:
-                    target.addAttribute('year', cls.getYearFromDate(dateRange.getTo()))
-                    target.addAttribute('month', cls.getMonthFromDate(dateRange.getTo()))
-                    target.addAttribute('day', cls.getDayFromDate(dateRange.getTo()))
+                    target.addAttribute('year',
+                            cls.getYearFromDate(dateRange.getTo()))
+                    target.addAttribute('month',
+                            cls.getMonthFromDate(dateRange.getTo()))
+                    target.addAttribute('day',
+                            cls.getDayFromDate(dateRange.getTo()))
                 target.endTag('to')
         target.endTag('rangeValue')
 
@@ -1063,9 +1145,11 @@ class InvientChartsUtil(object):
             for plotLine in plotLines:
                 target.startTag('plotLine')
                 if plotLine.getColor() is not None:
-                    target.addAttribute('color', plotLine.getColor().getString())
+                    target.addAttribute('color',
+                            plotLine.getColor().getString())
                 if plotLine.getDashStyle() is not None:
-                    target.addAttribute('dashStyle', plotLine.getDashStyle().getName())
+                    target.addAttribute('dashStyle',
+                            plotLine.getDashStyle().getName())
                 if plotLine.getId() is not None:
                     target.addAttribute('id', plotLine.getId())
                 if plotLine.getWidth() is not None:
@@ -1105,15 +1189,12 @@ class InvientChartsUtil(object):
 
     @classmethod
     def writeAxisTick(cls, target, tick):
-        """@param target
-        @param tick
-        @raise PaintException
-        """
         cls.writeAxisMinorTick(target, tick)
         if tick.getPixelInterval() is not None:
             target.addAttribute('tickPixelInterval', tick.getPixelInterval())
         if tick.getPlacement() is not None:
-            target.addAttribute('tickmarkPlacement', tick.getPlacement().getName())
+            target.addAttribute('tickmarkPlacement',
+                    tick.getPlacement().getName())
 
 
     @classmethod
@@ -1151,10 +1232,6 @@ class InvientChartsUtil(object):
 
     @classmethod
     def writeAxisGrid(cls, target, grid):
-        """@param target
-        @param grid
-        @raise PaintException
-        """
         cls.writeAxisMinorGrid(target, grid)
 
 
@@ -1176,19 +1253,17 @@ class InvientChartsUtil(object):
             attNameLineWidth = 'gridLineWidth'
             attNameLineDashStyle = 'gridLineDashStyle'
         if grid.getLineColor() is not None:
-            target.addAttribute(attNameLineColor, grid.getLineColor().getString())
+            target.addAttribute(attNameLineColor,
+                    grid.getLineColor().getString())
         if grid.getLineWidth() is not None:
             target.addAttribute(attNameLineWidth, grid.getLineWidth())
         if grid.getLineDashStyle() is not None:
-            target.addAttribute(attNameLineDashStyle, grid.getLineDashStyle().getName())
+            target.addAttribute(attNameLineDashStyle,
+                    grid.getLineDashStyle().getName())
 
 
     @classmethod
     def writeAxisTitle(cls, target, title):
-        """@param target
-        @param title
-        @raise PaintException
-        """
         target.startTag('title')
         if title is not None:
             if title.getAlign() is not None:
@@ -1236,17 +1311,14 @@ class InvientChartsUtil(object):
     @classmethod
     def isIncludeTime(cls, axis, chartSeries):
         for series in chartSeries:
-            if isinstance(series, DateTimeSeries) and series.getXAxis() == axis:
+            if (isinstance(series, DateTimeSeries)
+                    and series.getXAxis() == axis):
                 return series.isIncludeTime()
         return False
 
 
     @classmethod
     def writeNumberAxis(cls, target, numberAxis):
-        """@param target
-        @param numberAxis
-        @raise PaintException
-        """
         if numberAxis.getAllowDecimals() is not None:
             target.addAttribute('allowDecimals', numberAxis.getAllowDecimals())
         if numberAxis.getMax() is not None:
@@ -1260,11 +1332,7 @@ class InvientChartsUtil(object):
         """Returns milliseconds of the date argument dt. If the argument
         isIncludeTime is false then the returned milliseconds does not include
         time.
-
-        @param dt
-        @param isIncludeTime
         """
-        dt, isIncludeTime = _0
         cal = GregorianCalendar.getInstance()
         cal.setTime(dt)
         if not isIncludeTime:
@@ -1282,35 +1350,40 @@ class InvientChartsUtil(object):
         @raise PaintException
         """
         if dateTimeAxis.getMax() is not None:
-            target.addAttribute('max', cls.getDate(dateTimeAxis.getMax(), isIncludeTime))
+            target.addAttribute('max', cls.getDate(dateTimeAxis.getMax(),
+                    isIncludeTime))
         if dateTimeAxis.getMin() is not None:
-            target.addAttribute('min', cls.getDate(dateTimeAxis.getMin(), isIncludeTime))
+            target.addAttribute('min', cls.getDate(dateTimeAxis.getMin(),
+                    isIncludeTime))
         if dateTimeAxis.getDateTimeLabelFormat() is not None:
             target.startTag('dateTimeLabelFormats')
             dateTimeLabelFormat = dateTimeAxis.getDateTimeLabelFormat()
             if dateTimeLabelFormat.getSecond() is not None:
-                target.addAttribute('second', dateTimeAxis.getDateTimeLabelFormat().getSecond())
+                target.addAttribute('second',
+                        dateTimeAxis.getDateTimeLabelFormat().getSecond())
             if dateTimeLabelFormat.getMinute() is not None:
-                target.addAttribute('minute', dateTimeAxis.getDateTimeLabelFormat().getMinute())
+                target.addAttribute('minute',
+                        dateTimeAxis.getDateTimeLabelFormat().getMinute())
             if dateTimeLabelFormat.getHour() is not None:
-                target.addAttribute('hour', dateTimeAxis.getDateTimeLabelFormat().getHour())
+                target.addAttribute('hour',
+                        dateTimeAxis.getDateTimeLabelFormat().getHour())
             if dateTimeLabelFormat.getDay() is not None:
-                target.addAttribute('day', dateTimeAxis.getDateTimeLabelFormat().getDay())
+                target.addAttribute('day',
+                        dateTimeAxis.getDateTimeLabelFormat().getDay())
             if dateTimeLabelFormat.getWeek() is not None:
-                target.addAttribute('week', dateTimeAxis.getDateTimeLabelFormat().getWeek())
+                target.addAttribute('week',
+                        dateTimeAxis.getDateTimeLabelFormat().getWeek())
             if dateTimeLabelFormat.getMonth() is not None:
-                target.addAttribute('month', dateTimeAxis.getDateTimeLabelFormat().getMonth())
+                target.addAttribute('month',
+                        dateTimeAxis.getDateTimeLabelFormat().getMonth())
             if dateTimeLabelFormat.getYear() is not None:
-                target.addAttribute('year', dateTimeAxis.getDateTimeLabelFormat().getYear())
+                target.addAttribute('year',
+                        dateTimeAxis.getDateTimeLabelFormat().getYear())
             target.endTag('dateTimeLabelFormats')
 
 
     @classmethod
     def writeCategoryAxis(cls, target, categoryAxis):
-        """@param target
-        @param categoryAxis
-        @raise PaintException
-        """
         target.startTag('categories')
         if (categoryAxis.getCategories() is not None
                 and len(categoryAxis.getCategories()) > 0):
@@ -1323,10 +1396,6 @@ class InvientChartsUtil(object):
 
     @classmethod
     def writeYAxes(cls, target, axes, config):
-        """@param target
-        @param axes
-        @raise PaintException
-        """
         target.startTag('yAxes')
         if axes is not None:
             for yAxis in axes:
@@ -1341,10 +1410,6 @@ class InvientChartsUtil(object):
     @classmethod
     def writeChartLabelConfig(cls, target, chartLabel):
         """Writes configuration attributes of the chart labels.
-
-        @param target
-        @param chartLabel
-        @raise PaintException
         """
         target.startTag('labels')
         if (chartLabel is not None and chartLabel.getLabels() is not None
@@ -1353,7 +1418,8 @@ class InvientChartsUtil(object):
                 target.addAttribute('style', chartLabel.getStyle())
             target.startTag('items')
             for label in chartLabel.getLabels():
-                if (label.getHtml() is not None) or (label.getStyle() is not None):
+                if ((label.getHtml() is not None)
+                        or (label.getStyle() is not None)):
                     target.startTag('item')
                     if label.getHtml() is not None:
                         target.addAttribute('html', label.getHtml())
@@ -1366,22 +1432,19 @@ class InvientChartsUtil(object):
 
     @classmethod
     def getYearFromDate(cls, date):
-        """@param date
-        @return Returns year of the argument date.
-        """
+        """@return: Returns year of the argument date."""
         if date is None:
             return None
         cal = Calendar.getInstance()
         cal.setTime(date)
-        return str( cal.get(Calendar.YEAR) )
+        return str(cal.get(Calendar.YEAR))
 
 
     @classmethod
     def getMonthFromDate(cls, date):
-        """@param date
-        @return: Returns month of the argument date. The returned values is
-                 based on zero-index i.e. for month January, the values
-                 returned is "0"
+        """@return: Returns month of the argument date. The returned values
+                is based on zero-index i.e. for month January, the values
+                returned is "0"
         """
         if date is None:
             return None
@@ -1392,9 +1455,6 @@ class InvientChartsUtil(object):
 
     @classmethod
     def getDayFromDate(cls, date):
-        """@param date
-        @return
-        """
         if date is None:
             return None
         cal = Calendar.getInstance()
@@ -1409,10 +1469,6 @@ class InvientChartsUtil(object):
         whether to add a new series or remove/delete an existing series.
         Basically, this information helps client to update only a portion of
         the chart instead of full chart.
-
-        @param target
-        @param seriesCURMap
-        @raise PaintException
         """
         for seriesName in seriesCURMap.keys():
             seriesCURSet = seriesCURMap.get(seriesName)
@@ -1420,8 +1476,10 @@ class InvientChartsUtil(object):
                 for seriesCUR in seriesCURSet:
                     target.startTag('seriesDataUpdate')
                     target.addAttribute('seriesName', seriesCUR.getName())
-                    target.addAttribute('operation', seriesCUR.getType().getName())
-                    target.addAttribute('isReloadPoints', seriesCUR.isReloadPoints())
+                    target.addAttribute('operation',
+                            seriesCUR.getType().getName())
+                    target.addAttribute('isReloadPoints',
+                            seriesCUR.isReloadPoints())
                     target.startTag('pointsAdded')
                     if len(seriesCUR.getPointsAdded()) > 0:
                         cls.writePoints(target, seriesCUR.getPointsAdded())
