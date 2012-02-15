@@ -1,19 +1,27 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
-import datetime
+
+from datetime \
+    import datetime
 
 from muntjac.ui.abstract_component \
     import AbstractComponent
+
+from muntjac.ui.component \
+    import Event as ComponentEvent
 
 from muntjac.addon.invient.invient_charts_config \
     import BaseLineConfig, PointConfig, SeriesConfig
 
 from muntjac.addon.invient.invient_charts_util \
-    import InvientChartsUtil
+    import writeTitleConfig, writeSubtitleConfig, writeCreditConfig, \
+    writeLegendConfig, writeTooltipConfig, writeGeneralChartConfig, \
+    writeSeriesConfigPerSeriesType, writeXAxes, writeYAxes, \
+    writeChartLabelConfig, writeSeries, writeChartDataUpdates, getDate
 
 
 class InvientCharts(AbstractComponent):
-    """A Vaddin component representing charts. It is a the main class of
+    """A Muntjac component representing charts. It is a the main class of
     InvientCharts library.
 
     A chart typically contains one or more series of same or different types.
@@ -23,16 +31,16 @@ class InvientCharts(AbstractComponent):
     After a chart L{InvientCharts} is created, the following changes to the
     chart will be reflected rendered on the webkit.
 
-      * Set or update chart {@link Title} and/or {@link SubTitle}</li>
-      * Modify chart size</li>
-      * Add, update and remove one or more instances of {@link PlotBand} and
-    {@link PlotLine}</li>
-      * Set or update axis categories</li>
-      * Set or update axis min and max values</li>
-      * Add, update and remove one or more instances of {@link Series}</li>
-      * Show or hide one or more instances of {@link Series}</li>
-      * Add and remove one or more instances of {@link Point}</li>
-      * Register and unregister event listeners</li>
+      * Set or update chart L{Title} and/or L{SubTitle}
+      * Modify chart size
+      * Add, update and remove one or more instances of L{PlotBand} and
+        L{PlotLine}
+      * Set or update axis categories
+      * Set or update axis min and max values
+      * Add, update and remove one or more instances of L{Series}
+      * Show or hide one or more instances of L{Series}
+      * Add and remove one or more instances of L{Point}
+      * Register and unregister event listeners
 
     @author: Invient
     @author: Richard Lincoln
@@ -46,6 +54,9 @@ class InvientCharts(AbstractComponent):
         if chartConfig is None:
             raise ValueError('The chart cannot be created without '
                     'chartConfig argument.')
+
+        super(InvientCharts, self).__init__()
+
         self._chartConfig = chartConfig
         self._chartConfig.setInvientCharts(self)
 
@@ -88,20 +99,22 @@ class InvientCharts(AbstractComponent):
         # Configurations options
         target.startTag('options')
         if self._chartConfig is not None:
-            InvientChartsUtil.writeTitleConfig(target, self._chartConfig.getTitle())
-            InvientChartsUtil.writeSubtitleConfig(target, self._chartConfig.getSubtitle())
-            InvientChartsUtil.writeCreditConfig(target, self._chartConfig.getCredit())
-            InvientChartsUtil.writeLegendConfig(target, self._chartConfig.getLegend())
-            InvientChartsUtil.writeTooltipConfig(target, self._chartConfig.getTooltip())
-            InvientChartsUtil.writeGeneralChartConfig(target, self._chartConfig.getGeneralChartConfig())
-            InvientChartsUtil.writeSeriesConfigPerSeriesType(target, self._chartConfig.getSeriesConfig())
-            InvientChartsUtil.writeXAxes(target, self._chartConfig.getXAxes(), self._chartConfig)
-            InvientChartsUtil.writeYAxes(target, self._chartConfig.getYAxes(), self._chartConfig)
-            InvientChartsUtil.writeChartLabelConfig(target, self._chartConfig.getChartLabel())
+            writeTitleConfig(target, self._chartConfig.getTitle())
+            writeSubtitleConfig(target, self._chartConfig.getSubtitle())
+            writeCreditConfig(target, self._chartConfig.getCredit())
+            writeLegendConfig(target, self._chartConfig.getLegend())
+            writeTooltipConfig(target, self._chartConfig.getTooltip())
+            writeGeneralChartConfig(target,
+                    self._chartConfig.getGeneralChartConfig())
+            writeSeriesConfigPerSeriesType(target,
+                    self._chartConfig.getSeriesConfig())
+            writeXAxes(target, self._chartConfig.getXAxes(), self._chartConfig)
+            writeYAxes(target, self._chartConfig.getYAxes(), self._chartConfig)
+            writeChartLabelConfig(target, self._chartConfig.getChartLabel())
         target.endTag('options')
         target.startTag('chartData')
 
-        InvientChartsUtil.writeSeries(target,
+        writeSeries(target,
                 self._chartConfig.getGeneralChartConfig().getType(),
                 self._chartSeries,
                 self._chartConfig.getXAxes(),
@@ -131,7 +144,7 @@ class InvientCharts(AbstractComponent):
         target.addAttribute('reloadChartSeries', self._reloadChartSeries)
         target.startTag('chartDataUpdates')
         if not self._reloadChartSeries:
-            InvientChartsUtil.writeChartDataUpdates(target, self._seriesCURMap)
+            writeChartDataUpdates(target, self._seriesCURMap)
         target.endTag('chartDataUpdates')
 
         # reset flag
@@ -149,22 +162,26 @@ class InvientCharts(AbstractComponent):
 
     def paintChartEvents(self, target):
         target.startTag('chartEvents')
+
         if (self._chartAddSeriesListener is not None
                 and len(self._chartAddSeriesListener) > 0):
             target.addAttribute('addSeries', True)
+
         if (self._chartClickListener is not None
                 and len(self._chartClickListener) > 0):
             target.addAttribute('click', True)
+
         if (self._chartZoomListener is not None
                 and len(self._chartZoomListener) > 0):
             target.addAttribute('selection', True)
+
         target.endTag('chartEvents')
 
 
     def paintSeriesAndPointEvents(self, target):
         target.startTag('seriesEvents')
         # For each series type, check if listeners exist. If so then add.
-        for seriesType in self.SeriesType.values():
+        for seriesType in SeriesType.values():
             self.paintSeriesEvents(target, seriesType)
         target.endTag('seriesEvents')
 
@@ -172,15 +189,19 @@ class InvientCharts(AbstractComponent):
     def paintSeriesEvents(self, target, seriesType):
         tagName = seriesType.getName()
         target.startTag(tagName)
+
         if (seriesType in self._seriesClickListeners
                 and len(self._seriesClickListeners[seriesType]) > 0):
             target.addAttribute('click', True)
+
         if (seriesType in self._seriesHideListeners
                 and len(self._seriesHideListeners[seriesType]) > 0):
             target.addAttribute('hide', True)
+
         if (seriesType in self._seriesShowListeners
                 and len(self._seriesShowListeners[seriesType]) > 0):
             target.addAttribute('show', True)
+
         if (seriesType in self._seriesLegendItemClickListeners
                 and len(self._seriesLegendItemClickListeners[seriesType]) > 0):
             target.addAttribute('legendItemClick', True)
@@ -192,22 +213,28 @@ class InvientCharts(AbstractComponent):
 
     def paintPointEvents(self, target, seriesType):
         target.startTag('pointEvents')
+
         if (seriesType in self._pointClickListeners
                 and len(self._pointClickListeners[seriesType]) > 0):
             target.addAttribute('click', True)
+
         if (seriesType in self._pointRemoveListeners
                 and len(self._pointRemoveListeners[seriesType]) > 0):
             target.addAttribute('remove', True)
+
         if (seriesType in self._pointSelectListeners
                 and len(self._pointSelectListeners[seriesType]) > 0):
             target.addAttribute('select', True)
+
         if (seriesType in self._pointUnselectListeners
                 and len(self._pointUnselectListeners[seriesType]) > 0):
             target.addAttribute('unselect', True)
+
         # Event applicable only for pie chart
         if (SeriesType.PIE == seriesType
                 and len(self._pieChartLegendItemClickListener) > 0):
             target.addAttribute('legendItemClick', True)
+
         target.endTag('pointEvents')
 
 
@@ -220,9 +247,9 @@ class InvientCharts(AbstractComponent):
             elif eventName.lower() == "chartClick".lower():
                 xAxisPos = float(eventData.get("xAxisPos"))
                 yAxisPos = float(eventData.get("yAxisPos"))
-                ##
+
                 mousePosition = self.getClickPosition(eventData)
-                self.fireChartClick(DecimalPoint(xAxisPos, yAxisPos),
+                self.fireChartClick(DecimalPoint(self, xAxisPos, yAxisPos),
                         mousePosition)
             elif eventName.lower() == "chartZoom".lower():
                 xAxisMin = float(eventData.get("xAxisMin"))
@@ -237,11 +264,13 @@ class InvientCharts(AbstractComponent):
                 self.fireChartSVGAvailable(eventData.get("svg"))
             elif eventName.lower() == "seriesClick".lower():
                 pointEventData = self.getPointEventData(eventData)
-                ##
+
                 mousePosition = self.getClickPosition(eventData)
                 self.fireSeriesClick(
-                        self.getSeriesFromEventData(pointEventData.getSeriesName()),
-                        self.getPointFromEventData(pointEventData), mousePosition)
+                        self.getSeriesFromEventData(
+                                pointEventData.getSeriesName()),
+                        self.getPointFromEventData(pointEventData),
+                        mousePosition)
             elif eventName.lower() == "seriesHide".lower():
                 seriesName = eventData.get("seriesName")
                 self.fireSeriesHide(self.getSeriesFromEventData(seriesName))
@@ -250,16 +279,19 @@ class InvientCharts(AbstractComponent):
                 self.fireSeriesShow(self.getSeriesFromEventData(seriesName))
             elif eventName.lower() == "seriesLegendItemClick".lower():
                 seriesName = eventData.get("seriesName")
-                self.fireSeriesLegendItemClick(self.getSeriesFromEventData(seriesName))
+                self.fireSeriesLegendItemClick(
+                        self.getSeriesFromEventData(seriesName))
             elif eventName.lower() == "pieLegendItemClick".lower():
                 pointEventData = self.getPointEventData(eventData)
-                self.fireLegendItemClick(self.getPointFromEventData(pointEventData))
+                self.fireLegendItemClick(
+                        self.getPointFromEventData(pointEventData))
             elif eventName.lower() == "pointClick".lower():
                 mousePosition = self.getClickPosition(eventData)
-                ##
+
                 pointEventData = self.getPointEventData(eventData)
                 self.firePointClick(pointEventData.getCategory(),
-                        self.getPointFromEventData(pointEventData), mousePosition)
+                        self.getPointFromEventData(pointEventData),
+                        mousePosition)
             elif eventName.lower() == "pointSelect".lower():
                 pointEventData = self.getPointEventData(eventData)
                 self.firePointSelect(pointEventData.getCategory(),
@@ -278,44 +310,29 @@ class InvientCharts(AbstractComponent):
         # First locate a series and then point
         series = self.getSeriesFromEventData(eventData.getSeriesName())
         if series is not None:
-            if isinstance(series, self.XYSeries):
+            if isinstance(series, XYSeries):
                 for point in series.getPoints():
                     if (point.getY() is not None
-                        and point.getY().compareTo(eventData.getPointY()) == 0
+                        and cmp(point.getY(), eventData.getPointY()) == 0
                         and point.getX() is not None
-                        and point.getX().compareTo(eventData.getPointX()) == 0):
+                        and cmp(point.getX(), eventData.getPointX()) == 0):
                         return point
             else:
                 for point in series.getPoints():
                     if (point.getY() is not None
-                        and point.getY().compareTo(eventData.getPointY()) == 0
+                        and cmp(point.getY(), eventData.getPointY()) == 0
                         and point.getX() is not None
-                        and self.getDateInMilliseconds(point.getX(),
-                                series.isIncludeTime()) == eventData.getPointX()):
+                        and getDate(point.getX(),
+                            series.isIncludeTime()) == eventData.getPointX()):
                         return point
         return None
-
-
-    @classmethod
-    def getDateInMilliseconds(cls, dt, isIncludeTime):
-        if dt is None:
-            return None
-        cal = GregorianCalendar.getInstance()
-        cal.setTime(dt)
-        if not isIncludeTime:
-            cal.set(Calendar.HOUR, 0)
-            cal.set(Calendar.MINUTE, 0)
-            cal.set(Calendar.SECOND, 0)
-            cal.set(Calendar.MILLISECOND, 0)
-        return cal.getTimeInMillis()
 
 
     def getSeriesFromEventData(self, seriesName):
         for series in self._chartSeries:
             if series.getName() == seriesName:
                 return series
-        # Should not happen
-        # If it happens then why? Any comments???
+        # should not happen
         return None
 
 
@@ -340,7 +357,8 @@ class InvientCharts(AbstractComponent):
 
 
     def fireSeriesClick(self, series, point, mousePosition):
-        self.fireEvent(SeriesClickEvent(self, self, series, point, mousePosition))
+        self.fireEvent(SeriesClickEvent(self, self, series, point,
+                mousePosition))
 
 
     def fireSeriesShow(self, series):
@@ -356,7 +374,8 @@ class InvientCharts(AbstractComponent):
 
 
     def firePointClick(self, category, point, mousePosition):
-        self.fireEvent(PointClickEvent(self, self, category, point, mousePosition))
+        self.fireEvent(PointClickEvent(self, self, category, point,
+                mousePosition))
 
 
     def firePointSelect(self, category, point):
@@ -396,120 +415,45 @@ class InvientCharts(AbstractComponent):
 
 
     def addListener(self, listener, seriesTypes=None):
-        """Adds the point click listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
+        """Adds the listener. If the argument seriesTypes is not specified
+        then the listener will be added for all series type otherwise it will
+        be added for a specific series type
 
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the point remove listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the point unselect listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the point select listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the series click listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the series hide listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the series show listener. If the argument seriesTypes is not
-        specified then the listener will be added for all series type otherwise
-        it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the series legend item click listener. If the argument seriesTypes
-        is not specified then the listener will be added for all series type
-        otherwise it will be added for a specific series type
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the piechart legend item click listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the chart click listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the series add listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the chart zoom listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the chart reset zoom listener.
-
-        @param listener
-                   the Listener to be added.
-        ---
-        Adds the chart svg available listener for this chart. If the chart
-        already has a listener of this type then the existing listener will be
-        removed and the argument listener will be registered.
-
-        @param listener
-                   the Listener to be added or registered.
+        @param listener:
+                   the L{IListener} to be added.
         """
         if seriesTypes is None:
             if isinstance(listener, ChartAddSeriesListener):
                 self._chartAddSeriesListener.add(listener)
-                self.addListener(ChartAddSeriesEvent, listener,
-                                 self._CHART_ADD_SERIES_METHOD)
+                self.registerListener(ChartAddSeriesEvent, listener,
+                        _CHART_ADD_SERIES_METHOD)
             elif isinstance(listener, ChartClickListener):
                 self._chartClickListener.add(listener)
-                self.addListener(ChartClickEvent, listener, self._CHART_CLICK_METHOD)
+                self.registerListener(ChartClickEvent, listener,
+                        _CHART_CLICK_METHOD)
             elif isinstance(listener, ChartResetZoomListener):
                 self._chartResetZoomListener.add(listener)
-                self.addListener(ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
+                self.registerListener(ChartResetZoomEvent, listener,
+                        _CHART_RESET_ZOOM_METHOD)
             elif isinstance(listener, ChartSVGAvailableListener):
                 if (self._svgAvailableListener is not None
                         and self._svgAvailableListener != listener):
                     # remove earlier listener
                     self.removeListener(self._svgAvailableListener)
                 self._svgAvailableListener = listener
-                self.addListener(ChartSVGAvailableEvent, self._svgAvailableListener, self._CHART_SVG_AVAILABLE_METHOD)
+                self.registerListener(ChartSVGAvailableEvent,
+                        self._svgAvailableListener,
+                        _CHART_SVG_AVAILABLE_METHOD)
                 self._isRetrieveSVG = True
                 self.requestRepaint()
             elif isinstance(listener, ChartZoomListener):
                 self._chartZoomListener.add(listener)
-                self.addListener(ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
+                self.registerListener(ChartZoomEvent, listener,
+                        _CHART_ZOOM_METHOD)
             else:
                 self._pieChartLegendItemClickListener.add(listener)
-                self.addListener(PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
+                self.registerListener(PieChartLegendItemClickEvent, listener,
+                        _LEGENDITEM_CLICK_METHOD)
         else:
             if isinstance(listener, PointClickListener):
                 if len(seriesTypes) == 0:
@@ -521,7 +465,8 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointClickListeners[seriesType] = listeners
-                self.addListener(PointClickEvent, listener, _POINT_CLICK_METHOD)
+                self.addListener(PointClickEvent, listener,
+                        _POINT_CLICK_METHOD)
             elif isinstance(listener, PointRemoveListener):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
@@ -532,7 +477,8 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointRemoveListeners[seriesType] = listeners
-                self.addListener(PointRemoveEvent, listener, _POINT_REMOVE_METHOD)
+                self.addListener(PointRemoveEvent, listener,
+                        _POINT_REMOVE_METHOD)
             elif isinstance(listener, PointSelectListener):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
@@ -543,7 +489,8 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointSelectListeners.put(seriesType, listeners)
-                self.addListener(PointSelectEvent, listener, _POINT_SELECT_METHOD)
+                self.addListener(PointSelectEvent, listener,
+                        _POINT_SELECT_METHOD)
             elif isinstance(listener, PointUnselectListener):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
@@ -554,7 +501,8 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointUnselectListeners.put(seriesType, listeners)
-                self.addListener(PointUnselectEvent, listener, _POINT_UNSELECT_METHOD)
+                self.addListener(PointUnselectEvent, listener,
+                        _POINT_UNSELECT_METHOD)
             elif isinstance(listener, SeriesClickListerner):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
@@ -565,7 +513,8 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesClickListeners[seriesType] = listeners
-                self.addListener(SeriesClickEvent, listener, _SERIES_CLICK_METHOD)
+                self.addListener(SeriesClickEvent, listener,
+                        _SERIES_CLICK_METHOD)
             elif isinstance(listener, SeriesHideListerner):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
@@ -576,20 +525,24 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesHideListeners[seriesType] = listeners
-                self.addListener(SeriesHideEvent, listener, _SERIES_HIDE_METHOD)
+                self.addListener(SeriesHideEvent, listener,
+                        _SERIES_HIDE_METHOD)
             elif isinstance(listener, SeriesLegendItemClickListerner):
-                if seriesTypes.length == 0:
+                if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesLegendItemClickListeners:
-                        self._seriesLegendItemClickListeners[seriesType].add(listener)
+                        self._seriesLegendItemClickListeners[seriesType].add(
+                                listener)
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._seriesLegendItemClickListeners[seriesType] = listeners
-                self.addListener(self.SeriesLegendItemClickEvent, listener, _SERIES_LEGENDITEM_CLICK_METHOD)
+                        self._seriesLegendItemClickListeners[seriesType] = \
+                                listeners
+                self.addListener(SeriesLegendItemClickEvent, listener,
+                        _SERIES_LEGENDITEM_CLICK_METHOD)
             else:
-                if seriesTypes.length == 0:
+                if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesShowListeners:
@@ -598,199 +551,103 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesShowListeners[seriesType] = listeners
-                self.addListener(SeriesShowEvent, listener, _SERIES_SHOW_METHOD)
+                self.addListener(SeriesShowEvent, listener,
+                        _SERIES_SHOW_METHOD)
 
 
     def removeListener(self, listener, seriesTypes=None):
-        """Removes the point click listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
+        """Removes the listener. If the argument seriesTypes is not specified
+        then the listener will be removed only for a series type
         SeriesType.COMMONSERIES otherwise the listener will be removed for all
         specified series types.
 
-        @param listener
+        @param listener:
                    the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the point remove listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the point unselect listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the point select listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the series click listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the series hide listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the series show listener. If the argument seriesTypes is not
-        specified then the listener will be removed only for a series type
-        SeriesType.COMMONSERIES otherwise the listener will be removed for all
-        specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the series legend item click listener. If the argument
-        seriesTypes is not specified then the listener will be removed only for a
-        series type SeriesType.COMMONSERIES otherwise the listener will be
-        removed for all specified series types.
-
-        @param listener
-                   the listener to be removed
-        @param seriesTypes
-                   one or more series types as defined by (@link SeriesType}
-        ---
-        Removes the piechart legend item click listener.
-
-        @param listener
-                   the listener to be removed
-        ---
-        Removes the chart click listener.
-
-        @param listener
-                   the listener to be removed
-        ---
-        Removes the series add listener.
-
-        @param listener
-                   the listener to be removed
-        ---
-        Removes the chart zoom listener.
-
-        @param listener
-                   the listener to be removed
-        ---
-        Removes the chart reset zoom listener.
-
-        @param listener
-                   the listener to be removed
-        ---
-        Removes the chart svg available listener for this chart.
-
-        @param listener
-                   the listener to be removed or unregistered.
+        @param seriesTypes:
+                   one or more series types as defined by L{SeriesType}
         """
         if seriesTypes is None:
             if isinstance(listener, ChartAddSeriesListener):
                 self._chartAddSeriesListener.remove(listener)
-                self.removeListener(ChartAddSeriesEvent, listener, self._CHART_ADD_SERIES_METHOD)
+                self.withdrawListener(ChartAddSeriesEvent, listener,
+                        _CHART_ADD_SERIES_METHOD)
             elif isinstance(listener, ChartClickListener):
                 self._chartClickListener.remove(listener)
-                self.removeListener(ChartClickEvent, listener, self._CHART_CLICK_METHOD)
+                self.withdrawListener(ChartClickEvent, listener,
+                        _CHART_CLICK_METHOD)
             elif isinstance(listener, ChartResetZoomListener):
                 self._chartResetZoomListener.remove(listener)
-                self.removeListener(ChartResetZoomEvent, listener, self._CHART_RESET_ZOOM_METHOD)
+                self.withdrawListener(ChartResetZoomEvent, listener,
+                        _CHART_RESET_ZOOM_METHOD)
             elif isinstance(listener, ChartSVGAvailableListener):
                 if self._svgAvailableListener == listener:
-                    self.removeListener(ChartSVGAvailableEvent, listener, self._CHART_SVG_AVAILABLE_METHOD)
+                    self.withdrawListener(ChartSVGAvailableEvent, listener,
+                            _CHART_SVG_AVAILABLE_METHOD)
                     self._isRetrieveSVG = False
                     self._svgAvailableListener = None
             elif isinstance(listener, ChartZoomListener):
                 self._chartZoomListener.remove(listener)
-                self.removeListener(ChartZoomEvent, listener, self._CHART_ZOOM_METHOD)
+                self.withdrawListener(ChartZoomEvent, listener,
+                        _CHART_ZOOM_METHOD)
             else:
                 self._pieChartLegendItemClickListener.remove(listener)
-                self.removeListener(PieChartLegendItemClickEvent, listener, self._LEGENDITEM_CLICK_METHOD)
+                self.withdrawListener(PieChartLegendItemClickEvent, listener,
+                        _LEGENDITEM_CLICK_METHOD)
         else:
+            if len(seriesTypes) == 0:
+                seriesTypes = [SeriesType.COMMONSERIES]
+
             if isinstance(listener, PointClickListener):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointClickListeners:
                         self._pointClickListeners[seriesType].remove(listener)
-                self.removeListener(PointClickEvent, listener, _POINT_CLICK_METHOD)
+                self.withdrawListener(PointClickEvent, listener,
+                        _POINT_CLICK_METHOD)
             elif isinstance(listener, PointRemoveListener):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointRemoveListeners:
                         self._pointRemoveListeners[seriesType].remove(listener)
                 self._pointRemoveListeners.remove(listener)
-                self.removeListener(PointRemoveEvent, listener, _POINT_REMOVE_METHOD)
+                self.withdrawListener(PointRemoveEvent, listener,
+                        _POINT_REMOVE_METHOD)
             elif isinstance(listener, PointSelectListener):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointSelectListeners:
                         self._pointSelectListeners[seriesType].remove(listener)
-                self.removeListener(PointSelectEvent, listener, _POINT_SELECT_METHOD)
+                self.withdrawListener(PointSelectEvent, listener,
+                        _POINT_SELECT_METHOD)
             elif isinstance(listener, PointUnselectListener):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointUnselectListeners:
-                        self._pointUnselectListeners[seriesType].remove(listener)
-                self.removeListener(PointUnselectEvent, listener, _POINT_UNSELECT_METHOD)
+                        self._pointUnselectListeners[seriesType].remove(
+                                listener)
+                self.withdrawListener(PointUnselectEvent, listener,
+                        _POINT_UNSELECT_METHOD)
             elif isinstance(listener, SeriesClickListerner):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesClickListeners:
                         self._seriesClickListeners[seriesType].remove(listener)
-                self.removeListener(SeriesClickEvent, listener, _SERIES_CLICK_METHOD)
+                self.withdrawListener(SeriesClickEvent, listener,
+                        _SERIES_CLICK_METHOD)
             elif isinstance(listener, SeriesHideListerner):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesHideListeners:
                         self._seriesHideListeners[seriesType].remove(listener)
-                self.removeListener(SeriesHideEvent, listener, _SERIES_HIDE_METHOD)
+                self.withdrawListener(SeriesHideEvent, listener,
+                        _SERIES_HIDE_METHOD)
             elif isinstance(listener, SeriesLegendItemClickListerner):
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesLegendItemClickListeners:
-                        self._seriesLegendItemClickListeners[seriesType].remove(listener)
-                self.removeListener(SeriesLegendItemClickEvent, listener, _SERIES_LEGENDITEM_CLICK_METHOD)
+                        self._seriesLegendItemClickListeners[
+                                seriesType].remove(listener)
+                self.withdrawListener(SeriesLegendItemClickEvent, listener,
+                        _SERIES_LEGENDITEM_CLICK_METHOD)
             else:
-                if len(seriesTypes) == 0:
-                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesShowListeners:
                         self._seriesShowListeners[seriesType].remove(listener)
-                self.removeListener(SeriesShowEvent, listener, _SERIES_SHOW_METHOD)
+                self.withdrawListener(SeriesShowEvent, listener,
+                        _SERIES_SHOW_METHOD)
 
 
     def setSeries(self, series):
@@ -840,7 +697,8 @@ class InvientCharts(AbstractComponent):
         if self._chartSeries.add(seriesData):
             self.setAxisInSeriesIfNotSetAlready(seriesData)
             seriesData.setInvientCharts(self)
-            self.addSeriesCUROperation(SeriesCUR(SeriesCURType.ADD, seriesData.getName()))
+            self.addSeriesCUROperation(SeriesCUR(SeriesCURType.ADD,
+                    seriesData.getName()))
             self.requestRepaint()
 
 
@@ -854,11 +712,11 @@ class InvientCharts(AbstractComponent):
             if (series.getXAxis() is None
                     and self.getConfig().getXAxes() is not None
                     and len(self.getConfig().getXAxes()) > 0):
-                series.setXAxis(self.getConfig().getXAxes().next())
+                series.setXAxis(iter(self.getConfig().getXAxes()).next())  # FIXME: iterator
             if (series.getYAxis() is None
                     and self.getConfig().getYAxes() is not None
                     and len(self.getConfig().getYAxes()) > 0):
-                series.setYAxis(self.getConfig().getYAxes().next())
+                series.setYAxis(iter(self.getConfig().getYAxes()).next())  # FIXME: iterator
 
 
     def removeSeries(self, name_or_seriesData):
@@ -870,38 +728,42 @@ class InvientCharts(AbstractComponent):
         """
         if isinstance(name_or_seriesData, Series):
             seriesData = name_or_seriesData
-            if self._chartSeries.remove(seriesData):  ## FIXME: remove
+            if self._chartSeries.remove(seriesData):
                 seriesData.setInvientCharts(None)
-                self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE, seriesData.getName()))
+                self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE,
+                        seriesData.getName()))
                 self.requestRepaint()
         else:
             name = name_or_seriesData
 
-            seriesItr = self._chartSeries
+            seriesItr = self._chartSeries.copy()
             for series in seriesItr:
                 if series.getName() == name:
-                    seriesItr.remove()
+                    self._chartSeries.remove(series)
                     series.setInvientCharts(None)
-                    self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE, series.getName()))
+                    self.addSeriesCUROperation(SeriesCUR(SeriesCURType.REMOVE,
+                            series.getName()))
                     self.requestRepaint()
 
 
     def addSeriesCUROperation(self, newSeriesCUR):
-        if self._seriesCURMap.keys().contains(newSeriesCUR.getName()):
+        if newSeriesCUR.getName() in self._seriesCURMap:
             seriesCURSet = self._seriesCURMap.get(newSeriesCUR.getName())
+
             # If for a series, no operation is found
             if (seriesCURSet is None) or (len(seriesCURSet) == 0):
                 seriesCURSet = set()
                 seriesCURSet.add(newSeriesCUR)
                 self._seriesCURMap[newSeriesCUR.getName()] = seriesCURSet
             elif seriesCURSet.contains(newSeriesCUR):
-                seriesCUR = self.getMatchedSeriesCUR(seriesCURSet, newSeriesCUR)
+                seriesCUR = self.getMatchedSeriesCUR(seriesCURSet,
+                        newSeriesCUR)
+
                 # In case of series update (due to series.show/hide or
                 # series.setPoints or series.removeAllPoints)
-                # we need to check if all points of a series are set afresh. If
-                # so then
-                # set a flag to indicate that instead of adding and removing
-                # points to and from series, set series data in full.
+                # we need to check if all points of a series are set afresh.
+                # If so then set a flag to indicate that instead of adding and
+                # removing points to and from series, set series data in full.
                 if seriesCUR.getType() == SeriesCURType.UPDATE:
                     seriesCUR.setReloadPoints(newSeriesCUR.isReloadPoints())
                     if newSeriesCUR.isReloadPoints():
@@ -910,50 +772,39 @@ class InvientCharts(AbstractComponent):
                 # Operation on a series has already been recorded
                 return False
             else:
-                seriesCURItr = seriesCURSet
-                while seriesCURItr.hasNext():
-                    seriesCUR = seriesCURItr.next()
+                seriesCURItr = seriesCURSet.copy()
+                for seriesCUR in seriesCURItr:
                     if seriesCUR.getName() == newSeriesCUR.getName():
                         if (SeriesCURType.REMOVE == newSeriesCUR.getType()
                                 and SeriesCURType.ADD == seriesCUR.getType()):
                             # Remove addition of a series as there is no reason
-                            # to add
-                            # a series and
-                            # then remove it. E.g. If a new series is added and
-                            # then
-                            # removed then
-                            # actually there is nothing to be done
-                            seriesCURItr.remove()
+                            # to add a series and then remove it. E.g. If a new
+                            # series is added and then removed then actually
+                            # there is nothing to be done
+                            seriesCURSet.remove(seriesCUR)
                             return False
                         if (SeriesCURType.UPDATE == newSeriesCUR.getType()
                                 and SeriesCURType.ADD == seriesCUR.getType()):
                             # There is no need for update as adding a series
-                            # will
-                            # take care of applying any update to the series
-                            # attributes
-                            # specifically visibility
+                            # will take care of applying any update to the
+                            # series attributes specifically visibility
                             return False
                         if (SeriesCURType.REMOVE == newSeriesCUR.getType()
-                                and SeriesCURType.UPDATE == seriesCUR.getType()):
+                            and SeriesCURType.UPDATE == seriesCUR.getType()):
                             # Remove update of a series as there is no reason
-                            # to update
-                            # a series
-                            # and then remove it. E.g. If an existing series
-                            # was
-                            # updated (for show/hide) and
-                            # then removed then series need not be updated
-                            # after all it
-                            # is going to be
-                            # removed. Hover, the remove operation must be
-                            # captured.
-                            seriesCURItr.remove()
+                            # to update a series  and then remove it. E.g. If
+                            # an existing series was updated (for show/hide)
+                            # and then removed then series need not be updated
+                            # after all it is going to be removed. Hover, the
+                            # remove operation must be captured.
+                            seriesCURSet.remove(seriesCUR)
                             break
             seriesCURSet.add(newSeriesCUR)
             return True
         else:
             seriesCURSet = set()
             seriesCURSet.add(newSeriesCUR)
-            self._seriesCURMap.put(newSeriesCUR.getName(), seriesCURSet)
+            self._seriesCURMap[newSeriesCUR.getName()] = seriesCURSet
             return True
 
 
@@ -998,7 +849,7 @@ class InvientCharts(AbstractComponent):
     def addSeriesPointRemovedOperation(self, seriesName, point):
         seriesCURSet = self._seriesCURMap.get(seriesName)
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
-            seriesCUR = self.SeriesCUR(SeriesCURType.UPDATE, seriesName)
+            seriesCUR = SeriesCUR(SeriesCURType.UPDATE, seriesName)
             seriesCUR.trackPointRemoved(point)
             seriesCURSet = set()
             seriesCURSet.add(seriesCUR)
@@ -1074,14 +925,13 @@ class MousePosition(object):
 
 
     def __str__(self):
-        return ('MousePosition [mouseX=' + self._mouseX
-                + ', mouseY=' + self._mouseY + ']')
+        return ('MousePosition [mouseX=' + str(self._mouseX)
+                + ', mouseY=' + str(self._mouseY) + ']')
 
 
 class PointEventData(object):
 
     def __init__(self, seriesName, category, pointX, pointY):
-        super(PointEventData, self).__init__()
         self._seriesName = seriesName
         self._category = category
         self._pointX = pointX
@@ -1102,8 +952,8 @@ class PointEventData(object):
     def __str__(self):
         return ('PointEventData [seriesName=' + self._seriesName
                 + ', category=' + self._category
-                + ', pointX=' + self._pointX
-                + ', pointY=' + self._pointY + ']')
+                + ', pointX=' + str(self._pointX)
+                + ', pointY=' + str(self._pointY) + ']')
 
 
 class PointClickEvent(ComponentEvent):
@@ -1130,7 +980,8 @@ class PointClickEvent(ComponentEvent):
         @param mousePosition:
                    the position of a mouse when the click event occurred
         """
-        super(PointClickEvent, self)(source)
+        super(PointClickEvent, self).__init__(source)
+
         self._chart = chart
         self._category = category
         self._point = point
@@ -1165,7 +1016,7 @@ class PointClickListener(object):
     """
 
     def pointClick(self, pointClickEvent):
-        pass
+        raise NotImplementedError
 
 
 class PointRemoveEvent(ComponentEvent):
@@ -1192,6 +1043,7 @@ class PointRemoveEvent(ComponentEvent):
                    the point removed
         """
         super(PointRemoveEvent, self).__init__(source)
+
         self._chart = chart
         self._category = category
         self._point = point
@@ -1223,7 +1075,7 @@ class PointRemoveListener(object):
     """
 
     def pointRemove(self, pointRemoveEvent):
-        pass
+        raise NotImplementedError
 
 
 class PointUnselectEvent(ComponentEvent):
@@ -1249,10 +1101,10 @@ class PointUnselectEvent(ComponentEvent):
                    the point unselected as a result of this event
         """
         super(PointUnselectEvent, self).__init__(source)
+
         self._chart = chart
         self._category = category
         self._point = point
-
 
     def getCategory(self):
         """@return: Returns a category to which point is associated in case
@@ -1260,11 +1112,9 @@ class PointUnselectEvent(ComponentEvent):
         """
         return self._category
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the point"""
         return self._chart
-
 
     def getPoint(self):
         """@return: Returns the unselected point"""
@@ -1280,7 +1130,7 @@ class PointUnselectListener(object):
     """
 
     def pointUnSelect(self, pointUnSelectEvent):
-        pass
+        raise NotImplementedError
 
 
 class PointSelectEvent(ComponentEvent):
@@ -1306,10 +1156,10 @@ class PointSelectEvent(ComponentEvent):
                    the point selected as a result of this event
         """
         super(PointSelectEvent, self).__init__(source)
+
         self._chart = chart
         self._category = category
         self._point = point
-
 
     def getCategory(self):
         """@return: Returns a category to which point is associated in case
@@ -1317,11 +1167,9 @@ class PointSelectEvent(ComponentEvent):
         """
         return self._category
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the point"""
         return self._chart
-
 
     def getPoint(self):
         """@return: Returns the selected point"""
@@ -1337,7 +1185,7 @@ class PointSelectListener(object):
     """
 
     def pointSelected(self, pointSelectEvent):
-        pass
+        raise NotImplementedError
 
 
 _POINT_CLICK_METHOD = getattr(PointClickListener, 'pointClick')
@@ -1349,8 +1197,8 @@ _POINT_UNSELECT_METHOD = getattr(PointUnselectListener, 'pointUnSelect')
 
 
 class SeriesClickEvent(ComponentEvent):
-    """Series click event. This event is thrown, when any series of this chart
-    is clicked.
+    """Series click event. This event is thrown, when any series of this
+    chart is clicked.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1371,28 +1219,26 @@ class SeriesClickEvent(ComponentEvent):
                    the position of a mouse when the click event occurred
         """
         super(SeriesClickEvent, self).__init__(source)
+
         self._chart = chart
         self._series = series
         self._point = point
         self._mousePosition = mousePosition
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the point"""
         return self._chart
 
-
     def getSeries(self):
-        """@return: Returns the series object on which the click event occurred"""
+        """@return: Returns the series object on which the click event
+        occurred"""
         return self._series
 
-
     def getNearestPoint(self):
-        """@return: Returns the point of a series closest to the position where
-        mouse click event occurred.
+        """@return: Returns the point of a series closest to the position
+        where mouse click event occurred.
         """
         return self._point
-
 
     def getMousePosition(self):
         """@return: Returns the position of a mouse when the click event
@@ -1409,7 +1255,7 @@ class SeriesClickListerner(object):
     """
 
     def seriesClick(self, seriesClickEvent):
-        pass
+        raise NotImplementedError
 
 
 class SeriesHideEvent(ComponentEvent):
@@ -1432,11 +1278,9 @@ class SeriesHideEvent(ComponentEvent):
         self._chart = chart
         self._series = series
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the point"""
         return self._chart
-
 
     def getSeries(self):
         """@return: Returns the series which got hidden"""
@@ -1452,12 +1296,12 @@ class SeriesHideListerner(object):
     """
 
     def seriesHide(self, seriesHideEvent):
-        pass
+        raise NotImplementedError
 
 
 class SeriesShowEvent(ComponentEvent):
-    """Series show event. This event is thrown, when any series of this chart
-    is displayed after a chart is created.
+    """Series show event. This event is thrown, when any series of this
+    chart is displayed after a chart is created.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1477,11 +1321,9 @@ class SeriesShowEvent(ComponentEvent):
         self._chart = chart
         self._series = series
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the series"""
         return self._chart
-
 
     def getSeries(self):
         """@return: Returns the series which got displayed"""
@@ -1497,7 +1339,7 @@ class SeriesShowListerner(object):
     """
 
     def seriesShow(self, seriesShowEvent):
-        pass
+        raise NotImplementedError
 
 
 class SeriesLegendItemClickEvent(ComponentEvent):
@@ -1523,11 +1365,9 @@ class SeriesLegendItemClickEvent(ComponentEvent):
         self._chart = chart
         self._series = series
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the series"""
         return self._chart
-
 
     def getSeries(self):
         """@return: Returns the series associated with the legend item"""
@@ -1543,7 +1383,7 @@ class SeriesLegendItemClickListerner(object):
     """
 
     def seriesLegendItemClick(self, seriesLegendItemClickEvent):
-        pass
+        raise NotImplementedError
 
 
 _SERIES_CLICK_METHOD = getattr(SeriesClickListerner, 'seriesClick')
@@ -1554,8 +1394,8 @@ _SERIES_LEGENDITEM_CLICK_METHOD = getattr(SeriesLegendItemClickListerner,
 
 
 class PieChartLegendItemClickEvent(ComponentEvent):
-    """PieChart legend item click event. This event is thrown, when the legend
-    item belonging to the pie point (slice) is clicked.
+    """PieChart legend item click event. This event is thrown, when the
+    legend item belonging to the pie point (slice) is clicked.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1575,11 +1415,9 @@ class PieChartLegendItemClickEvent(ComponentEvent):
         self._chart = chart
         self._point = point
 
-
     def getChart(self):
         """@return: Returns the chart object associated with the point"""
         return self._chart
-
 
     def getPoint(self):
         """@return: Returns the pie point (slice) associated with the legend
@@ -1596,7 +1434,7 @@ class PieChartLegendItemClickListener(object):
     """
 
     def legendItemClick(self, legendItemClickEvent):
-        pass
+        raise NotImplementedError
 
 
 _LEGENDITEM_CLICK_METHOD = getattr(PieChartLegendItemClickListener,
@@ -1624,6 +1462,7 @@ class ChartClickEvent(ComponentEvent):
                    pixels
         """
         super(ChartClickEvent, self).__init__(source)
+
         self._chart = chart
         self._point = point
         self._mousePosition = mousePosition
@@ -1659,8 +1498,8 @@ class ChartClickEvent(ComponentEvent):
 
 
     def __str__(self):
-        return ('ChartClickEvent [point=' + self._point
-                + ', mousePosition=' + self._mousePosition + ']')
+        return ('ChartClickEvent [point=' + str(self._point)
+                + ', mousePosition=' + str(self._mousePosition) + ']')
 
 
 class ChartClickListener(object):
@@ -1672,12 +1511,12 @@ class ChartClickListener(object):
     """
 
     def chartClick(self, chartClickEvent):
-        pass
+        raise NotImplementedError
 
 
 class ChartAddSeriesEvent(ComponentEvent):
-    """Add series event. This event is thrown, when a series is added to the
-    chart.
+    """Add series event. This event is thrown, when a series is added to
+    the chart.
 
     @author: Invient
     @author: Richard Lincoln
@@ -1690,6 +1529,7 @@ class ChartAddSeriesEvent(ComponentEvent):
         @param chart
         """
         super(ChartAddSeriesEvent, self).__init__(source)
+
         self._chart = chart
 
     def getChart(self):
@@ -1710,7 +1550,7 @@ class ChartAddSeriesListener(object):
     """
 
     def chartAddSeries(self, chartAddSeriesEvent):
-        pass
+        raise NotImplementedError
 
 
 class ChartArea(object):
@@ -1739,10 +1579,10 @@ class ChartArea(object):
         return self._yAxisMax
 
     def __str__(self):
-        return ('ChartSelectedArea [xAxisMin=' + self._xAxisMin
-                + ', xAxisMax=' + self._xAxisMax
-                + ', yAxisMin=' + self._yAxisMin
-                + ', yAxisMax=' + self._yAxisMax + ']')
+        return ('ChartSelectedArea [xAxisMin=' + str(self._xAxisMin)
+                + ', xAxisMax=' + str(self._xAxisMax)
+                + ', yAxisMin=' + str(self._yAxisMin)
+                + ', yAxisMax=' + str(self._yAxisMax) + ']')
 
 
 class ChartZoomEvent(ComponentEvent):
@@ -1765,6 +1605,7 @@ class ChartZoomEvent(ComponentEvent):
                    of the chart
         """
         super(ChartZoomEvent, self).__init__(source)
+
         self._chart = chart
         self._chartArea = chartArea
 
@@ -1797,7 +1638,7 @@ class ChartZoomListener(object):
     """
 
     def chartZoom(self, chartZoomEvent):
-        pass
+        raise NotImplementedError
 
 
 class ChartResetZoomEvent(ComponentEvent):
@@ -1830,15 +1671,15 @@ class ChartResetZoomEvent(ComponentEvent):
 
 
 class ChartResetZoomListener(object):
-    """Interface for listening for a L{@link ChartResetZoomEvent} triggered by
-    L{InvientCharts}
+    """Interface for listening for a L{@link ChartResetZoomEvent} triggered
+    by L{InvientCharts}
 
     @author: Invient
     @author: Richard Lincoln
     """
 
     def chartResetZoom(self, chartResetZoomEvent):
-        pass
+        raise NotImplementedError
 
 
 class ChartSVGAvailableEvent(ComponentEvent):
@@ -1906,7 +1747,8 @@ _CHART_CLICK_METHOD = getattr(ChartClickListener, 'chartClick')
 _CHART_ADD_SERIES_METHOD = getattr(ChartAddSeriesListener, 'chartAddSeries')
 _CHART_ZOOM_METHOD = getattr(ChartZoomListener, 'chartZoom')
 _CHART_RESET_ZOOM_METHOD = getattr(ChartResetZoomListener, 'chartResetZoom')
-_CHART_SVG_AVAILABLE_METHOD = getattr(ChartSVGAvailableListener, 'svgAvailable')
+_CHART_SVG_AVAILABLE_METHOD = getattr(ChartSVGAvailableListener,
+        'svgAvailable')
 
 
 class Point(object):
@@ -1933,52 +1775,23 @@ class Point(object):
     @see: L{DateTimePoint}
     @see: L{PointConfig}
     """
-    _id = None
-    _name = None
-    _series = None
-    _config = None
-    _isAutosetX = None
-    _shift = None
 
     def __init__(self, series, name_or_config=None, config=None):
         """Creates a point with given arguments.
 
-        @param series
+        @param series:
                    The series to which the point must be associated.
-        @exception IllegalArgumentException
-                       If the argument series is null
-        ---
-        To allow creation of a point from inside of InvientCharts component
-        ---
-        Creates a point with given arguments.
-
-        @param series
-                   The series to which the point must be associated.
-        @param config
+        @param name_or_config:
+                   The configuration for this point, or the name of this point
+        @param config:
                    The configuration for this point, if any
-        @exception IllegalArgumentException
-                       If the argument series is null
-        ---
-        Creates a point with given arguments.
-
-        @param series
-                   The series to which the point must be associated.
-        @param name
-                   name of this point
-        @exception IllegalArgumentException
-                       If the argument series is null
-        ---
-        Creates a point with given arguments.
-
-        @param series
-                   The series to which the point must be associated.
-        @param name
-                   name of this point
-        @param config
-                   The configuration for this point, if any
-        @exception IllegalArgumentException
-                       If the argument series is null
+        @exception ValueError:
+                   If the argument series is null
         """
+        self._id = None
+        self._isAutosetX = None
+        self._shift = None
+
         if name_or_config is not None:
             if isinstance(name_or_config, PointConfig):
                 config = name_or_config
@@ -2071,7 +1884,7 @@ class Point(object):
         return ('Point [id=' + self._id
                 + ', name=' + self._name
                 + ', series=' + self._series.getName()
-                + ', config=' + self._config + ']')
+                + ', config=' + str(self._config) + ']')
 
 
 class DecimalPoint(Point):
@@ -2082,76 +1895,42 @@ class DecimalPoint(Point):
     @author: Richard Lincoln
     """
 
-    def __init__(self, *args):
-        """@param series
-                   the series to which this belongs to
-        ---
-        @param series
-                   the series to which this point belongs to
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param name
-                   the name of this point
-        @param y
-                   the y value of this point
-        ---
-        To allow creation of a point within the InvientChart.
-
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param name
-                   the name for this point
-        @param y
-                   the y value of this point
-        @param config
-        ---
-        @param series
-                   the series to which this belongs to
-        @param y
-                   the y value of this point
-        @param config
-                   the configuration for this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
-        @param config
-                   the configuration of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
-        @param config
-                   the configuration of this point
+    def __init__(self, invientCharts, *args):
+        """@param invientCharts:
+        @param args:
+            tuple of the form:
+                - (series)
+                  - the series to which this belongs to
+                - (series, y)
+                  - the series to which this belongs to
+                  - the y value of this point
+                - (series, name, y)
+                  - the series to which this belongs to
+                  - the name of this point
+                  - the y value of this point
+                - (x, y)
+                  - the x value of this point
+                  - the y value of this point
+                - (series, name, y, config)
+                  - the series to which this belongs to
+                  - the name of this point
+                  - the y value of this point
+                  - the configuration of this point
+                - (series, y, config)
+                  - the series to which this belongs to
+                  - the y value of this point
+                  - the configuration of this point
+                - (series, x, y)
+                  - the series to which this belongs to
+                  - the x value of this point
+                  - the y value of this point
+                - (series, x, y, config)
+                  - the series to which this belongs to
+                  - the x value of this point
+                  - the y value of this point
+                  - the configuration of this point
         """
+        self._invientCharts = invientCharts
         nargs = len(args)
         if nargs == 1:
             series, = args
@@ -2205,8 +1984,6 @@ class DecimalPoint(Point):
 
     def setX(self, x):
         """Sets the x value of this point
-
-        @param x
         """
         self._x = x
 
@@ -2217,8 +1994,6 @@ class DecimalPoint(Point):
 
     def setY(self, y):
         """Sets the y value of this point
-
-        @param y
         """
         self._y = y
 
@@ -2228,13 +2003,17 @@ class DecimalPoint(Point):
                 + ', y=' + self._y
                 + ', id=' + self.getId()
                 + ', name=' + self.getName()
-                + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']')
+                + ', seriesName='
+                + (self._invientCharts.getSeries().getName()
+                    if self._invientCharts.getSeries() is not None else '')
+                + ']')
 
 
     def __hash__(self):
         prime = 31
         result = 1
-        result = (prime * result) + (0 if self._y is None else self._y.__hash__())
+        result = ((prime * result)
+                + (0 if self._y is None else hash(self._y)))
         return result
 
 
@@ -2243,64 +2022,57 @@ class DecimalPoint(Point):
             return True
         if obj is None:
             return False
-        if self.getClass() != obj.getClass():
+        if self.__class__ != obj.__class__:
             return False
         other = obj
-        # If x is null then return always false as x is calculated if not
-        # specified
+        # If x is null then return always false as x is calculated
+        # if not specified
         if (self._x is None) or (other.x is None):
             return False
-        if not (self._x == other.x):
+        if not (self._x == other._x):
             return False
         if self._y is None:
-            if other.y is not None:
+            if other._y is not None:
                 return False
-        elif other.y is None:
+        elif other._y is None:
             return False
-        elif self._y.compareTo(other.y) != 0:
+        elif cmp(self._y, other.y) != 0:
             return False
         return True
 
 
 class DateTimePoint(Point):
-    """This class represent a point with (X, Y) both as number. It should be
-    used to add points to {@link DateTimeSeries}
+    """This class represent a point with (X, Y) both as number. It should
+    be used to add points to L{DateTimeSeries}
 
     @author: Invient
     @author: Richard Lincoln
     """
 
-    def __init__(self, *args):
-        """@param series
-                   the series to which this belongs to
-        ---
-        @param series
-                   the series to which this belongs to
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param name
-                   the name of this point
-        @param y
-                   the y value of this point
-        ---
-        @param series
-                   the series to which this belongs to
-        @param name
-                   the name of this point
-        @param y
-                   the y value of this point
-        @param config
-        ---
-        @param series
-                   the series to which this belongs to
-        @param x
-                   the x value of this point
-        @param y
-                   the y value of this point
+    def __init__(self, invientCharts, *args):
+        """@param args:
+            tuple of the form:
+              - (series)
+                - the series to which this belongs to
+              - (series, y)
+                - the series to which this belongs to
+                - the y value of this point
+              - (series, name, y)
+                - the series to which this belongs to
+                - the name of this point
+                - the y value of this point
+              - (series, name, y, config)
+                - the series to which this belongs to
+                - the name of this point
+                - the y value of this point
+                - the configuration of this point
+              - (series, x, y)
+                - the series to which this belongs to
+                - the x value of this point
+                - the y value of this point
         """
+        self._invientCharts = invientCharts
+
         args = args
         nargs = len(args)
         if nargs == 1:
@@ -2351,13 +2123,21 @@ class DateTimePoint(Point):
 
 
     def __str__(self):
-        return 'DateTimePoint [x=' + InvientCharts_this.getDateInMilliseconds(self._x, InvientCharts_this.getSeries().isIncludeTime() if InvientCharts_this.getSeries() is not None else False) + ', y=' + self._y + ', id=' + self.getId() + ', name=' + self.getName() + ', seriesName=' + (InvientCharts_this.getSeries().getName() if InvientCharts_this.getSeries() is not None else '') + ']'
+        return ('DateTimePoint [x='
+            + getDate(self._x,
+                    self._invientCharts.getSeries().isIncludeTime()
+                    if self._invientCharts.getSeries() is not None else False)
+            + ', y=' + str(self._y) + ', id=' + self.getId()
+            + ', name=' + self.getName()
+            + ', seriesName=' + (self._invientCharts.getSeries().getName()
+                    if self._invientCharts.getSeries() is not None else '')
+            + ']')
 
 
     def __hash__(self):
         prime = 31
         result = 1
-        result = (prime * result) + (0 if self._y is None else self._y.__hash__())
+        result = ((prime * result) + (0 if self._y is None else hash(self._y)))
         return result
 
 
@@ -2366,25 +2146,27 @@ class DateTimePoint(Point):
             return True
         if obj is None:
             return False
-        if self.getClass() != obj.getClass():
+        if self.__class__ != obj.__class__:
             return False
         other = obj
         # If x is null then return always false as x is calculated if not
         # specified
-        if (self._x is None) or (other.x is None):
+        if (self._x is None) or (other._x is None):
             return False
-        pointIncludeTime = self.getSeries().isIncludeTime() if isinstance(self.getSeries(), InvientCharts_this.DateTimeSeries) else False
-        pointOtherIncludeTime = other.getSeries().isIncludeTime() if isinstance(other.getSeries(), InvientCharts_this.DateTimeSeries) else False
-        pointX = InvientCharts_this.getDateInMilliseconds(self._x, pointIncludeTime)
-        pointOtherX = InvientCharts_this.getDateInMilliseconds(other.x, pointOtherIncludeTime)
-        if pointX.compareTo(pointOtherX) != 0:
+        pointIncludeTime = (self.getSeries().isIncludeTime()
+                if isinstance(self.getSeries(), DateTimeSeries) else False)
+        pointOtherIncludeTime = (other.getSeries().isIncludeTime()
+                if isinstance(other.getSeries(), DateTimeSeries) else False)
+        pointX = getDate(self._x, pointIncludeTime)
+        pointOtherX = getDate(other._x, pointOtherIncludeTime)
+        if cmp(pointX, pointOtherX) != 0:
             return False
         if self._y is None:
-            if other.y is not None:
+            if other._y is not None:
                 return False
-        elif other.y is None:
+        elif other._y is None:
             return False
-        elif self._y.compareTo(other.y) != 0:
+        elif cmp(self._y, other._y) != 0:
             return False
         return True
 
@@ -2453,8 +2235,6 @@ class Series(object):
 
     def setName(self, name):
         """Sets name of this series
-
-        @param name
         """
         self._name = name
 
@@ -2466,8 +2246,6 @@ class Series(object):
 
     def setType(self, typ):
         """Sets type of this series
-
-        @param typ
         """
         self._type = typ
 
@@ -2481,8 +2259,6 @@ class Series(object):
         """By using this stack property, it is possible to group series in a
         stacked chart. Sets stack for this series. If two series belongs to
         the same stack then the resultant chart will be stacked chart
-
-        @param stack
         """
         self._stack = stack
 
@@ -2497,8 +2273,6 @@ class Series(object):
     def setXAxis(self, xAxis):
         """Sets x-axis of this series. A series can be associated with at most
         one x-axis.
-
-        @param xAxis
         """
         self._xAxis = xAxis
 
@@ -2511,24 +2285,23 @@ class Series(object):
     def setYAxis(self, yAxis):
         """Sets y-axis of this series. A series can be associated with at most
         one y-axis.
-
-        @param yAxis
         """
         self._yAxis = yAxis
 
 
     def removePoint(self, *points):
-        """@param points"""
         pointsRemovedList = list()
         for point in points:
-            if self._points.remove(point):
+            if point in self._points:
+                self._points.remove(point)
                 pointsRemovedList.append(point)
 
         self.updatePointXValuesIfNotPresent()
 
         for point in pointsRemovedList:
             if self._invientCharts is not None:
-                self._invientCharts.addSeriesPointRemovedOperation(point.getSeries().getName(), point)
+                self._invientCharts.addSeriesPointRemovedOperation(
+                        point.getSeries().getName(), point)
                 self._invientCharts.requestRepaint()
 
 
@@ -2536,7 +2309,8 @@ class Series(object):
         """Removes all points in this series"""
         self._points.clear()
         if self._invientCharts is not None:
-            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
+            cur = SeriesCUR(SeriesCURType.UPDATE, self.getName(), True)
+            self._invientCharts.addSeriesCUROperation(cur)
             self._invientCharts.requestRepaint()
 
 
@@ -2544,7 +2318,6 @@ class Series(object):
         """Adds one or more points into this series, specified as an argument
         to this method
 
-        @param points
         @return: Returns null if the argument is null otherwise returns a
                  collection of points which are added in this series. If a
                  point has same (x, y) value as any other point in the
@@ -2562,14 +2335,15 @@ class Series(object):
 
         for point in points:
             if self._points.add(point):
-                pointsAddedList.add(point)
+                pointsAddedList.append(point)
 
         self.updatePointXValuesIfNotPresent()
 
         # Now record point add event as we need to know x value of a point
         for point in pointsAddedList:
             if self._invientCharts is not None:
-                self._invientCharts.addSeriesPointAddedOperation(point.getSeries().getName(), point)
+                self._invientCharts.addSeriesPointAddedOperation(
+                        point.getSeries().getName(), point)
                 self._invientCharts.requestRepaint()
 
         return set(pointsAddedList)
@@ -2592,7 +2366,6 @@ class Series(object):
     def setPoints(self, points):
         """Sets points into this series
 
-        @param points
         @return: Returns null if the argument is null otherwise returns a
                  collection of points which are set in this series. If a point
                  has same (x, y) value as any other point in the argument
@@ -2603,7 +2376,8 @@ class Series(object):
             self.addPointsInternal(points)
             self.updatePointXValuesIfNotPresent()
             if self._invientCharts is not None:
-                self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName(), True))
+                cur = SeriesCUR(SeriesCURType.UPDATE, self.getName(), True)
+                self._invientCharts.addSeriesCUROperation(cur)
                 self._invientCharts.requestRepaint()
             return self.getPoints()
         return None
@@ -2621,7 +2395,8 @@ class Series(object):
         self._config = SeriesConfig() if self._config is None else self._config
         self._config.setVisible(True)
         if self._invientCharts is not None:
-            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            cur = SeriesCUR(SeriesCURType.UPDATE, self.getName())
+            self._invientCharts.addSeriesCUROperation(cur)
             self._invientCharts.requestRepaint()
 
 
@@ -2630,7 +2405,8 @@ class Series(object):
         self._config = SeriesConfig() if self._config is None else self._config
         self._config.setVisible(False)
         if self._invientCharts is not None:
-            self._invientCharts.addSeriesCUROperation(SeriesCUR(SeriesCURType.UPDATE, self.getName()))
+            cur = SeriesCUR(SeriesCURType.UPDATE, self.getName())
+            self._invientCharts.addSeriesCUROperation(cur)
             self._invientCharts.requestRepaint()
 
 
@@ -2641,7 +2417,8 @@ class Series(object):
     def __hash__(self):
         prime = 31
         result = 1
-        result = (prime * result) + (0 if self._name is None else self._name.__hash__())
+        result = ((prime * result)
+                + (0 if self._name is None else hash(self._name)))
         return result
 
 
@@ -2650,13 +2427,13 @@ class Series(object):
             return True
         if obj is None:
             return False
-        if self.getClass() != obj.getClass():
+        if self.__class__ != obj.__class__:
             return False
         other = obj
         if self._name is None:
-            if other.name is not None:
+            if other._name is not None:
                 return False
-        elif not (self._name == other.name):
+        elif not (self._name == other._name):
             return False
         return True
 
@@ -2664,16 +2441,16 @@ class Series(object):
     def __str__(self):
         return ('Series [points=' + self._points
                 + ', name=' + self._name
-                + ', type=' + self._type
+                + ', type=' + str(self._type)
                 + ', stack=' + self._stack
-                + ', xAxis=' + self._xAxis
-                + ', yAxis=' + self._yAxis
-                + ', config=' + self._config + ']')
+                + ', xAxis=' + str(self._xAxis)
+                + ', yAxis=' + str(self._yAxis)
+                + ', config=' + str(self._config) + ']')
 
 
 class XYSeries(Series):
     """This class defines a number series. In this series both X and Y values
-    must be number. To use date values, use {@link DateTimeSeries}
+    must be number. To use date values, use L{DateTimeSeries}
 
     @author: Invient
     @author: Richard Lincoln
@@ -2702,8 +2479,6 @@ class XYSeries(Series):
 
     def removePoint(self, *points):
         """Removes the specified point from the series
-
-        @param points
         """
         super(XYSeries, self).removePoint(points)
 
@@ -2713,28 +2488,18 @@ class XYSeries(Series):
 
 
     def addPoint(self, point_or_points, shift=None):
-        """Appends the specified point into the series if they do not exists in
-        this series. The points which already exists will not be appended. A
+        """Appends the specified point(s) into the series if they do not exists
+        in this series. The points which already exists will not be appended. A
         collection of points appended to this series will be returned.
 
-        @param points
-        @return Returns a collection of points which are added in this
-                series. If a point has same (x, y) value as any other point
-                in the input argument points then it will not be added in
-                this series.
-        ---
-        Append the specified point into this series. If the argument shift is
-        true then one point is shifted off the start of this series as one is
-        appended to the end.
-
-        @param points
-        @param shift
+        @param point_or_points:
+        @param shift:
                    If true then one point is shifted off the start of this
                    series as one is appended to the end.
-        @return Returns a collection of points which are added in this
-                series. If a point has same (x, y) value as any other point
-                in the input argument points then it will not be added in
-                this series.
+        @return: Returns a collection of points which are added in this
+                 series. If a point has same (x, y) value as any other point
+                 in the input argument points then it will not be added in
+                 this series.
         """
         if shift is None:
             points = point_or_points
@@ -2777,7 +2542,8 @@ class XYSeries(Series):
         count = 0
 
         for point in self.getPoints():
-            if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
+            if ((point.getX() is None)
+                    or (point.getX() is not None and point.isAutosetX())):
                 point.setAutosetX(True)
                 if count == 0:
                     point.setX(pointStart)
@@ -2801,82 +2567,44 @@ class DateTimeSeries(Series):
     @see: L{XYSeries}
     """
 
-    def __init__(self, *args):
+    def __init__(self, invientCharts, *args):
         """Creates a series with given name. This series will not consider time
-        in the X property of {@link DateTimePoint}. To include time, use any
-        constructor having isIncludeTime as part of the arguments.
+        in the X property of L{DateTimePoint}.
 
-        @param name
-                   the name of this series
-        ---
-        Creates a series with given name and boolean value.
-
-        @param name
-                   the name of this series
-        @param isIncludeTime
-                   If true then the time in the X property of
-                   {@link DateTimePoint} will be considered when drawing the
-                   chart. Defaults to false.
-        ---
-        Creates a series with given name and configuration.
-
-        @param name
-                   the name of this series
-        @param config
-                   the configuration for this series
-        ---
-        Creates a series with given name, configuration and boolean value.
-
-        @param name
-                   the name of this series
-        @param config
-                   the configuration for this series
-        @param isIncludeTime
-                   If true then the time in the X property of
-                   {@link DateTimePoint} will be considered when drawing the
-                   chart. Defaults to false.
-        ---
-        Creates a series with given name and type.
-
-        @param name
-                   the name of this series
-        @param seriesType
-                   the type of this series
-        ---
-        Creates a series with given name, type and boolean value.
-
-        @param name
-                   the name of this series
-        @param seriesType
-                   the type of this series
-        @param isIncludeTime
-                   If true then the time in the X property of
-                   {@link DateTimePoint} will be considered when drawing the
-                   chart. Defaults to false.
-        ---
-        Creates a series with given name, type and configuration.
-
-        @param name
-                   the name of this series
-        @param seriesType
-                   the type of this series
-        @param config
-                   the configuration for this series
-        ---
-        Creates a series with given name, type, configuration and boolean
-        value.
-
-        @param name
-                   the name of this series
-        @param seriesType
-                   the type of this series
-        @param config
-                   the configuration for this series
-        @param isIncludeTime
-                   If true then the time in the X property of
-                   {@link DateTimePoint} will be considered when drawing the
-                   chart. Defaults to false.
+        @param args:
+            tuple of the form:
+              - (name)
+                - the name of this series
+              - (name, isIncludeTime)
+                - the name of this series
+                - If true then the time in the X property of L{DateTimePoint}
+                  will be considered when drawing the chart. Defaults to false.
+              - (name, config)
+                - the name of this series
+                - the configuration for this series
+              - (name, config, isIncludeTime)
+                - the name of this series
+                - the configuration for this series
+                - If true then the time in the X property of L{DateTimePoint}
+                  will be considered when drawing the chart. Defaults to false.
+              - (name, seriesType, isIncludeTime)
+                - the name of this series
+                - the type of this series
+                - If true then the time in the X property of L{DateTimePoint}
+                  will be considered when drawing the chart. Defaults to false.
+              - (name, seriesType, config)
+                - the name of this series
+                - the type of this series
+                - the configuration for this series
+              - (name, seriesType, config, isIncludeTime)
+                - the name of this series
+                - the type of this series
+                - the configuration for this series
+                - If true then the time in the X property of L{DateTimePoint}
+                  will be considered when drawing the chart. Defaults to false.
         """
+        self._invientCharts = invientCharts
+
         self._includeTime = None
 
         args = args
@@ -2918,8 +2646,6 @@ class DateTimeSeries(Series):
 
     def removePoint(self, *points):
         """Removes all points specified as method argument into this series
-
-        @param points
         """
         super(DateTimeSeries, self).removePoint(points)
 
@@ -2929,29 +2655,18 @@ class DateTimeSeries(Series):
 
 
     def addPoint(self, point_or_points, shift=None):
-        """Appends the specified point into the series if they do not exists in
+        """Appends the specified point(s) into the series if they do not exists in
         this series. The points which already exists will not be appended. A
         collection of points appended to this series will be returned.
 
-        @param points
+        @param point_or_points:
+        @param shift:
+                   If true then one point is shifted off the start of this
+                   series as one is appended to the end.
         @return Returns a collection of points which are added in this
                 series. If a point has same (x, y) value as any other point
                 in the input argument points then it will not be added in
                 this series.
-        ---
-        Append the specified point into this series. If the argument shift is
-        true then one point is shifted off the start of this series as one is
-        appended to the end.
-
-        @param point:
-                   A point to be added at the end of this series
-        @param shift:
-                   If true then one point is shifted off the start of this
-                   series as one is appended to the end.
-        @return: Returns a collection of points which are added in this
-                 series. If a point has same (x, y) value as any other point
-                 in the input argument points then it will not be added in
-                 this series.
         """
         if shift is None:
             points, = point_or_points
@@ -3002,7 +2717,8 @@ class DateTimeSeries(Series):
         prevDate = datetime(pointStart)
         count = 0
         for point in self.getPoints():
-            if (point.getX() is None) or (point.getX() is not None and point.isAutosetX()):
+            if ((point.getX() is None)
+                    or (point.getX() is not None and point.isAutosetX())):
                 point.setAutosetX(True)
                 if count == 0:
                     point.setX(prevDate)
@@ -3014,32 +2730,25 @@ class DateTimeSeries(Series):
 
     @classmethod
     def getDefPointStart(cls):
-        cal = GregorianCalendar.getInstance()
-        cal.set(Calendar.YEAR, 1970)
-        cal.set(Calendar.MONTH, Calendar.JANUARY)
-        cal.set(Calendar.DAY_OF_MONTH, 1)
-        cal.set(Calendar.HOUR, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-        return cal.getTimeInMillis()
+        cal = datetime(1970, 1, 1)
+        return 0
 
 
     @classmethod
     def getUpdatedDate(cls, dt, milliseconds):
-        cal = Calendar.getInstance()
-        cal.setTimeInMillis(dt.getTime() + milliseconds)
-        return cal.getTime()
+        ts = getDate(dt) + milliseconds
+        return datetime.fromtimestamp(ts)
 
 
     def __str__(self):
         return ('DateTimeSeries [includeTime=' + self._includeTime
-                + ', getConfig()=' + InvientCharts_this.getConfig()
+                + ', getConfig()=' + str(self._invientCharts.getConfig())
                 + ', getName()=' + self.getName()
-                + ', getType()=' + self.getType()
+                + ', getType()=' + str(self.getType())
                 + ', getStack()=' + self.getStack()
-                + ', getXAxis()=' + self.getXAxis()
-                + ', getYAxis()=' + self.getYAxis() + ']')
+                + ', getXAxis()=' + str(self.getXAxis())
+                + ', getYAxis()=' + str(self.getYAxis())
+                + ']')
 
 
 class SeriesType(object):
@@ -3059,7 +2768,8 @@ class SeriesType(object):
     def getName(self):
         return self._type
 
-    _values = [COMMONSERIES, LINE, SPLINE, SCATTER, AREA, AREASPLINE, BAR, COLUMN, PIE]
+    _values = [COMMONSERIES, LINE, SPLINE, SCATTER, AREA, AREASPLINE,
+               BAR, COLUMN, PIE]
 
     @classmethod
     def values(cls):
@@ -3144,8 +2854,10 @@ class SeriesCUR(object):
     def __hash__(self):
         prime = 31
         result = 1
-        result = (prime * result) + (0 if self._name is None else self._name.__hash__())
-        result = (prime * result) + (0 if self._type is None else self._type.__hash__())
+        result = ((prime * result)
+                + (0 if self._name is None else hash(self._name)))
+        result = ((prime * result)
+                + (0 if self._type is None else hash(self._type)))
         return result
 
 
@@ -3154,28 +2866,29 @@ class SeriesCUR(object):
             return True
         if obj is None:
             return False
-        if self.getClass() != obj.getClass():
+        if self.__class__ != obj.__class__:
             return False
         other = obj
         if self._name is None:
-            if other.name is not None:
+            if other._name is not None:
                 return False
-        elif not (self._name == other.name):
+        elif not (self._name == other._name):
             return False
         if self._type is None:
-            if other.type is not None:
+            if other._type is not None:
                 return False
-        elif not (self._type == other.type):
+        elif not (self._type == other._type):
             return False
         return True
 
 
     def __str__(self):
-        return ('SeriesCUR [type=' + self._type
+        return ('SeriesCUR [type=' + str(self._type)
                 + ', name=' + self._name
-                + ', reloadPoints=' + self._reloadPoints
-                + ', pointsAdded=' + self._pointsAdded
-                + ', pointsRemoved=' + self._pointsRemoved + ']')
+                + ', reloadPoints=' + str(self._reloadPoints)
+                + ', pointsAdded=' + str(self._pointsAdded)
+                + ', pointsRemoved=' + str(self._pointsRemoved)
+                + ']')
 
 
 class SeriesCURType(object):
