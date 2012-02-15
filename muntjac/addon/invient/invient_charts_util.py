@@ -1,6 +1,12 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
+from datetime \
+    import datetime
+
+from muntjac.util \
+    import totalseconds
+
 from muntjac.addon.invient.invient_charts \
     import DateTimeSeries, DecimalPoint
 
@@ -1333,14 +1339,10 @@ class InvientChartsUtil(object):
         isIncludeTime is false then the returned milliseconds does not include
         time.
         """
-        cal = GregorianCalendar.getInstance()
-        cal.setTime(dt)
         if not isIncludeTime:
-            cal.set(Calendar.HOUR, 0)
-            cal.set(Calendar.MINUTE, 0)
-            cal.set(Calendar.SECOND, 0)
-            cal.set(Calendar.MILLISECOND, 0)
-        return cal.getTimeInMillis()
+            dt2 = datetime(dt.year, dt.month, dt.day)
+            dt = dt2
+        return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e3)
 
 
     @classmethod
@@ -1435,9 +1437,7 @@ class InvientChartsUtil(object):
         """@return: Returns year of the argument date."""
         if date is None:
             return None
-        cal = Calendar.getInstance()
-        cal.setTime(date)
-        return str(cal.get(Calendar.YEAR))
+        return str(date.year)
 
 
     @classmethod
@@ -1448,18 +1448,14 @@ class InvientChartsUtil(object):
         """
         if date is None:
             return None
-        cal = Calendar.getInstance()
-        cal.setTime(date)
-        return str(cal.get(Calendar.MONTH))
+        return str(date.month - 1)
 
 
     @classmethod
     def getDayFromDate(cls, date):
         if date is None:
             return None
-        cal = Calendar.getInstance()
-        cal.setTime(date)
-        return str(cal.get(Calendar.DAY_OF_MONTH))
+        return str(date.day)
 
 
     @classmethod
