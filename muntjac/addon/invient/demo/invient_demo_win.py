@@ -3,10 +3,37 @@
 
 """Window for Invient charts demo."""
 
+from StringIO \
+    import StringIO
+
+from random \
+    import random
+
+from threading \
+    import Thread
+
+from time \
+    import sleep
+
+from muntjac.addon.invient.invient_charts_util \
+    import getDate
+
+from datetime \
+    import datetime
+
+from muntjac.util \
+    import totalseconds
+
 from muntjac.api \
     import TextArea, VerticalLayout, HorizontalLayout, Label, \
     HorizontalSplitPanel, Window, Tree, Alignment, Button, GridLayout, \
     ProgressIndicator
+
+from muntjac.ui \
+    import button
+
+from muntjac.data.property \
+    import IValueChangeListener
 
 from muntjac.data.util.hierarchical_container \
     import HierarchicalContainer
@@ -48,12 +75,8 @@ class InvientChartsDemoWin(Window):
     _SEPARATOR = '|'
 
     def __init__(self):
-        self._mainSplit = None
-        self._leftLayout = None
-        self._rightLayout = None
-        self._navTree = None
         self._eventLog = TextArea()
-        self._isAppRunningOnGAE = False
+        self._isAppRunningOnGAE = True
 
         mainLayout = VerticalLayout()
         self.setContent(mainLayout)
@@ -87,8 +110,10 @@ class InvientChartsDemoWin(Window):
         self._mainSplit.setSecondComponent(self._rightLayout)
 
         self._mainSplit.setSplitPosition(200, ISizeable.UNITS_PIXELS)
+
         self._navTree = self.createChartsTree()
         self._leftLayout.addComponent(self._navTree)
+
         self._eventLog.setReadOnly(True)
         self._eventLog.setStyleName('v-textarea-chart-events-log')
         self._eventLog.setSizeFull()
@@ -96,9 +121,9 @@ class InvientChartsDemoWin(Window):
         self.setTheme('chartdemo')
 
 
-        self._masterChartMinDate = self.getDateZeroTime(2006, 0, 1)
-        self._masterChartMaxDate = self.getDateZeroTime(2008, 11, 31)
-        self._detailChartPointStartDate = self.getDateZeroTime(2008, 7, 1)
+        self._masterChartMinDate = self.getDateZeroTime(2006, 1, 1)
+        self._masterChartMaxDate = self.getDateZeroTime(2008, 12, 31)
+        self._detailChartPointStartDate = self.getDateZeroTime(2008, 8, 1)
 
         self._splineThread = None
         self._indicator = None
@@ -109,10 +134,12 @@ class InvientChartsDemoWin(Window):
 
     def attach(self):
         super(InvientChartsDemoWin, self).attach()
-        self._isAppRunningOnGAE = self.getInvientChartsDemoApp().isAppRunningOnGAE()
+        self._isAppRunningOnGAE = \
+                self.getInvientChartsDemoApp().isAppRunningOnGAE()
+
         # Select line chart when the screen is loaded
-        self._navTree.select(DemoSeriesType.LINE.getName() + self._SEPARATOR
-                + ChartName.BASIC.getName())
+        self._navTree.select(DemoSeriesType.LINE.getName()
+                + self._SEPARATOR + ChartName.BASIC.getName())
 
 
     def isAppRunningOnGAE(self):
@@ -131,91 +158,102 @@ class InvientChartsDemoWin(Window):
         chartName = self.getChartName(chartNameString)
 
         if demoSeriesType is not None and chartName is not None:
-
-            if demoSeriesType == self.COMBINATION:
-                if chartName == self.COMBINATION_COLUMN_LINE_AND_PIE:
+            if demoSeriesType == DemoSeriesType.COMBINATION:
+                if chartName == ChartName.COMBINATION_COLUMN_LINE_AND_PIE:
                     self.showCombination()
-                elif chartName == self.SCATTER_WITH_REGRESSION_LINE:
+                elif chartName == ChartName.SCATTER_WITH_REGRESSION_LINE:
                     self.showCombinationScatterWithRegressionLine()
-                elif chartName == self.MULTIPLE_AXES:
+                elif chartName == ChartName.MULTIPLE_AXES:
                     self.showCombinationMultipleAxes()
-            elif demoSeriesType == self.LINE:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.LINE:
+                if chartName == ChartName.BASIC:
                     self.showLine()
-                elif chartName == self.CLICK_TO_ADD_POINT:
+                elif chartName == ChartName.CLICK_TO_ADD_POINT:
                     self.showClickToAddPoint()
-                elif chartName == self.WITH_DATA_LABELS:
+                elif chartName == ChartName.WITH_DATA_LABELS:
                     self.showLineWithDataLabels()
-                elif chartName == self.TIMESERIES_ZOOMABLE:
+                elif chartName == ChartName.TIMESERIES_ZOOMABLE:
                     self.showTimeSeriesZoomable()
-                elif chartName == self.MASTER_DETAIL:
+                elif chartName == ChartName.MASTER_DETAIL:
                     self.showMasterDetail()
-            elif demoSeriesType == self.BAR:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.BAR:
+                if chartName == ChartName.BASIC:
                     self.showBarBasic()
-                elif chartName == self.STACKED:
+                elif chartName == ChartName.STACKED:
                     self.showBarStacked()
-                elif chartName == self.WITH_NEGATIVE_STACK:
+                elif chartName == ChartName.WITH_NEGATIVE_STACK:
                     self.showBarWithNegStack()
-            elif demoSeriesType == self.COLUMN:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.COLUMN:
+                if chartName == ChartName.BASIC:
                     self.showColumnBasic()
-                elif chartName == self.WITH_NEGATIVE_VALUES:
+                elif chartName == ChartName.WITH_NEGATIVE_VALUES:
                     self.showColumnWithNegValues()
-                elif chartName == self.STACKED:
+                elif chartName == ChartName.STACKED:
                     self.showColumnStacked()
-                elif chartName == self.STACKED_AND_GROUPED:
+                elif chartName == ChartName.STACKED_AND_GROUPED:
                     self.showColumnStackedAndGrouped()
-                elif chartName == self.STACKED_PERCENT:
+                elif chartName == ChartName.STACKED_PERCENT:
                     self.showColumnStackedPercent()
-                elif chartName == self.WITH_ROTATED_LABELS:
+                elif chartName == ChartName.WITH_ROTATED_LABELS:
                     self.showColumnWithRotatedLabels()
-            elif demoSeriesType == self.AREA:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.AREA:
+                if chartName == ChartName.BASIC:
                     self.showAreaBasic()
-                elif chartName == self.WITH_NEGATIVE_VALUES:
+                elif chartName == ChartName.WITH_NEGATIVE_VALUES:
                     self.showAreaWithNegValues()
-                elif chartName == self.STACKED:
+                elif chartName == ChartName.STACKED:
                     self.showAreaStacked()
-                elif chartName == self.PERCENTAGE:
+                elif chartName == ChartName.PERCENTAGE:
                     self.showAreaPercent()
-                elif chartName == self.INVERTED_AXES:
+                elif chartName == ChartName.INVERTED_AXES:
                     self.showAreaInvertedAxes()
-                elif chartName == self.WITH_MISSING_POINTS:
+                elif chartName == ChartName.WITH_MISSING_POINTS:
                     self.showAreaWithMissingPoints()
-            elif demoSeriesType == self.AREASPLINE:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.AREASPLINE:
+                if chartName == ChartName.BASIC:
                     self.showAreaSpline()
-            elif demoSeriesType == self.PIE:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.PIE:
+                if chartName == ChartName.BASIC:
                     self.showPie()
-                elif chartName == self.WITH_LEGEND:
+                elif chartName == ChartName.WITH_LEGEND:
                     self.showPieWithLegend()
-                elif chartName == self.DONUT:
+                elif chartName == ChartName.DONUT:
                     self.showDonut()
-            elif demoSeriesType == self.SCATTER:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.SCATTER:
+                if chartName == ChartName.BASIC:
                     self.showScatter()
-            elif demoSeriesType == self.SPLINE:
-                if chartName == self.BASIC:
+
+            elif demoSeriesType == DemoSeriesType.SPLINE:
+                if chartName == ChartName.BASIC:
                     self.showSpline()
-                elif chartName == self.WITH_PLOTBANDS:
+                elif chartName == ChartName.WITH_PLOTBANDS:
                     self.showSplineWithPlotBands()
-                elif chartName == self.WITH_SYMBOLS:
+                elif chartName == ChartName.WITH_SYMBOLS:
                     self.showSplineWithSymbol()
-                elif chartName == self.UPDATING_EACH_SECOND:
+                elif chartName == ChartName.UPDATING_EACH_SECOND:
                     self.showSplineUpdatingEachSecond()
             else:
-                self.getApplication().getMainWindow().showNotification('Error occurred during chart processing! Try again!!!')
+                self.getApplication().getMainWindow().showNotification(
+                        'Error occurred during chart processing! Try again!!!')
         else:
-            self.getApplication().getMainWindow().showNotification('Error occurred during chart processing! Try again!!!')
+            self.getApplication().getMainWindow().showNotification(
+                    'Error occurred during chart processing! Try again!!!')
 
 
     def showMasterDetail(self):
         # Create the master chart
         masterChart = self.getMasterChart()
+
         # Create detail chart
         detailChart = self.getDetailChart(masterChart)
+
         # Register events
         l = MasterChartZoomListener(self)
         masterChart.addListener(l)
@@ -235,21 +273,34 @@ class InvientChartsDemoWin(Window):
         detailChartConfig.getGeneralChartConfig().getMargin().setLeft(50)
         detailChartConfig.getGeneralChartConfig().getMargin().setRight(20)
         detailChartConfig.getGeneralChartConfig().setReflow(False)
+
         detailChartConfig.getCredit().setEnabled(False)
-        detailChartConfig.getTitle().setText('Historical USD to EUR Exchange Rate')
-        detailChartConfig.getSubtitle().setText('Select an area by dragging across the lower chart')
+
+        detailChartConfig.getTitle().setText(
+                'Historical USD to EUR Exchange Rate')
+        detailChartConfig.getSubtitle().setText(
+                'Select an area by dragging across the lower chart')
 
         detailXAxis = DateTimeAxis()
         detailXAxes = set()
         detailXAxes.add(detailXAxis)
         detailChartConfig.setXAxes(detailXAxes)
+
         detailYAxis = NumberYAxis()
         detailYAxis.setTitle(AxisTitle(''))
         detailYAxes = set()
         detailYAxes.add(detailYAxis)
         detailChartConfig.setYAxes(detailYAxes)
-        detailChartConfig.getTooltip().setFormatterJsFunc('function() {' + ' var point = this.points[0];' + ' return \'<b>\'+ point.series.name +\'</b><br/>\' + ' + ' $wnd.Highcharts.dateFormat(\'%A %B %e %Y\', this.x) + \':<br/>\' + ' + ' \'1 USD = \'+ $wnd.Highcharts.numberFormat(point.y, 2) +\' EUR\';' + '}')
+
+        detailChartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' var point = this.points[0];'
+                    + ' return \'<b>\'+ point.series.name +\'</b><br/>\' + '
+                    + ' $wnd.Highcharts.dateFormat(\'%A %B %e %Y\', this.x) + \':<br/>\' + '
+                    + ' \'1 USD = \'+ $wnd.Highcharts.numberFormat(point.y, 2) +\' EUR\';'
+                    + '}')
         detailChartConfig.getTooltip().setShared(True)
+
         detailChartConfig.getLegend().setEnabled(False)
 
         lineCfg = LineConfig()
@@ -259,6 +310,7 @@ class InvientChartsDemoWin(Window):
         marker.getHoverState().setEnabled(True)
         marker.getHoverState().setRadius(3)
         detailChartConfig.addSeriesConfig(lineCfg)
+
         detailChart = InvientCharts(detailChartConfig)
 
         # Line instance configuration
@@ -266,14 +318,19 @@ class InvientChartsDemoWin(Window):
         lineSeriesCfg.setPointStart(self._detailChartPointStartDate.getTime())
         lineSeriesCfg.setPointInterval(24 * 3600 * 1000.0)
         lineSeriesCfg.setColor(RGB(69, 114, 167))
-        detailSeries = DateTimeSeries('USD to EUR', SeriesType.LINE, lineSeriesCfg)
+        detailSeries = DateTimeSeries('USD to EUR', SeriesType.LINE,
+                lineSeriesCfg)
+
         detailPoints = set()
         masterChartSeries = masterChart.getSeries('USD to EUR')
         for point in masterChartSeries.getPoints():
-            if point.getX().getTime() >= self._detailChartPointStartDate.getTime():
+            if (point.getX().getTime()
+                    >= self._detailChartPointStartDate.getTime()):
                 detailPoints.add(DateTimePoint(detailSeries, point.getY()))
+
         detailSeries.setSeriesPoints(detailPoints)
         detailChart.addSeries(detailSeries)
+
         return detailChart
 
 
@@ -301,6 +358,7 @@ class InvientChartsDemoWin(Window):
 
         xAxis.addPlotBand(plotBand)
         xAxis.setTitle(AxisTitle(''))
+
         xAxes = set()
         xAxes.add(xAxis)
         chartConfig.setXAxes(xAxes)
@@ -312,11 +370,14 @@ class InvientChartsDemoWin(Window):
         yAxis.getGrid().setLineWidth(0)
         yAxis.setLabel(YAxisDataLabel(False))
         yAxis.setTitle(AxisTitle(''))
+
         yAxes = set()
         yAxes.add(yAxis)
-
         chartConfig.setYAxes(yAxes)
-        chartConfig.getTooltip().setFormatterJsFunc('function() { return false; }')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() { return false; }')
+
         chartConfig.getLegend().setEnabled(False)
         chartConfig.getCredit().setEnabled(False)
 
@@ -335,10 +396,11 @@ class InvientChartsDemoWin(Window):
         areaCfg.setHoverState(SeriesState())
         areaCfg.getHoverState().setLineWidth(1)
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
 
-        # Provide methods to set pointInterval and pointStart and delegate call
-        # to SeriesConfig
+        # Provide methods to set pointInterval and pointStart and delegate
+        # call to SeriesConfig
         seriesDataCfg = AreaConfig()
         seriesDataCfg.setPointInterval(24 * 3600 * 1000.0)
         seriesDataCfg.setPointStart(self._masterChartMinDate.getTime())
@@ -357,6 +419,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setMargin(Margin())
         chartConfig.getGeneralChartConfig().getMargin().setRight(130)
         chartConfig.getGeneralChartConfig().getMargin().setBottom(25)
+
         chartConfig.getTitle().setX(-20)
         chartConfig.getTitle().setText('Monthly Average Temperature')
         chartConfig.getSubtitle().setText('Source: WorldClimate.com')
@@ -369,6 +432,7 @@ class InvientChartsDemoWin(Window):
         xAxesSet = set()
         xAxesSet.add(categoryAxis)
         chartConfig.setXAxes(xAxesSet)
+
         numberYAxis = NumberYAxis()
         numberYAxis.setTitle(AxisTitle('Temperature (°C)'))
         plotLine = NumberPlotLine('TempAt0')
@@ -380,6 +444,7 @@ class InvientChartsDemoWin(Window):
         yAxesSet = set()
         yAxesSet.add(numberYAxis)
         chartConfig.setYAxes(yAxesSet)
+
         legend = Legend()
         legend.setLayout(Layout.VERTICAL)
         legendPos = Position()
@@ -396,26 +461,33 @@ class InvientChartsDemoWin(Window):
         chartConfig.addSeriesConfig(lineCfg)
 
         # Tooltip formatter
-        chartConfig.getTooltip().setFormatterJsFunc('function() { '
-                + ' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'°C\''
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() { '
+                    + ' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'°C\''
+                    + '}')
+
         chart = InvientCharts(chartConfig)
+
         seriesData = XYSeries('Tokyo')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, 7.0, 6.9, 9.5,
+                14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('New York')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                -0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, -0.2, 0.8, 5.7,
+                11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Berlin')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                -0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, -0.9, 0.6, 3.5,
+                8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('London')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, 3.9, 4.2, 5.7,
+                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
@@ -423,8 +495,10 @@ class InvientChartsDemoWin(Window):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.SCATTER)
         chartConfig.getGeneralChartConfig().setMargin(Margin(70, 50, 60, 80))
+
         chartConfig.getTitle().setText('User supplied data')
-        chartConfig.getSubtitle().setText('Click the plot area to add a point. Click a point to remove it.')
+        chartConfig.getSubtitle().setText('Click the plot area to add a '
+                'point. Click a point to remove it.')
 
         xAxis = NumberXAxis()
         xAxis.setMinPadding(0.2)
@@ -466,20 +540,24 @@ class InvientChartsDemoWin(Window):
 
         l = AddPointClickListener(self)
         chart.addListener(l)
+
         self.addChart(chart, False, False)
 
 
     def showLineWithDataLabels(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setMargin(Margin())
+
         chartConfig.getTitle().setText('Monthly Average Temperature')
         chartConfig.getSubtitle().setText('Source: WorldClimate.com')
+
         categoryAxis = CategoryAxis()
         categoryAxis.setCategories(['Jan', 'Feb', 'Mar', 'Apr', 'May',
                 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
         xAxesSet = set()
         xAxesSet.add(categoryAxis)
         chartConfig.setXAxes(xAxesSet)
+
         numberYAxis = NumberYAxis()
         numberYAxis.setTitle(AxisTitle('Temperature (°C)'))
         yAxesSet = set()
@@ -496,20 +574,24 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('Tokyo')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, 7.0, 6.9, 9.5,
+                14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('London')
-        seriesData.setSeriesPoints(self.getPoints(seriesData,
-                3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, 3.9, 4.2, 5.7,
+                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showBarStacked(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.BAR)
+
         chartConfig.getTitle().setText('Stacked bar chart')
+
         xAxis = CategoryAxis()
         categories = ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
         xAxis.setCategories(categories)
@@ -529,37 +611,46 @@ class InvientChartsDemoWin(Window):
         legend.setReversed(True)
         chartConfig.setLegend(legend)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\'+ this.series.name +\': \'+ this.y +\'\'; '
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\'+ this.series.name +\': \'+ this.y +\'\'; '
+                    + '}')
+
         seriesCfg = SeriesConfig()
         seriesCfg.setStacking(Stacking.NORMAL)
         chartConfig.addSeriesConfig(seriesCfg)
 
         chart = InvientCharts(chartConfig)
+
         seriesData = XYSeries('John')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Jane')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showBarBasic(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.BAR)
+
         chartConfig.getTitle().setText('Historic World Population by Region')
         chartConfig.getSubtitle().setText('Source: Wikipedia.org')
+
         xAxisMain = CategoryAxis()
         categories = ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
         xAxisMain.setCategories(categories)
         xAxesSet = set()
         xAxesSet.add(xAxisMain)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxis.setTitle(AxisTitle('Population (millions)'))
@@ -567,9 +658,11 @@ class InvientChartsDemoWin(Window):
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\' + this.series.name +\': \'+ this.y +\' millions\';'
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.series.name +\': \'+ this.y +\' millions\';'
+                    + '}')
 
         barCfg = BarConfig()
         barCfg.setDataLabel(DataLabel())
@@ -589,27 +682,35 @@ class InvientChartsDemoWin(Window):
         chartConfig.setLegend(legend)
 
         chartConfig.getCredit().setEnabled(False)
+
         chart = InvientCharts(chartConfig)
+
         seriesData = XYSeries('Year 1800')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 107, 31, 635, 203, 2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Year 1900')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 133, 156, 947, 408, 6))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Year 2008')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 973, 914, 4054, 732, 34))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showBarWithNegStack(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.BAR)
-        chartConfig.getTitle().setText('Population pyramid for Germany, midyear 2010')
+
+        chartConfig.getTitle().setText(
+                'Population pyramid for Germany, midyear 2010')
         chartConfig.getSubtitle().setText('Source: www.census.gov')
+
         xAxisMain = CategoryAxis()
         categories = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29',
                 '30-34', '35-39', '40-44', '45-49', '50-54', '55-59',
@@ -634,18 +735,21 @@ class InvientChartsDemoWin(Window):
         yAxis.setMin(-4000000.0)
         yAxis.setMax(4000000.0)
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return (Math.abs(this.value) / 1000000) + \'M\';'
-                + ' }')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return (Math.abs(this.value) / 1000000) + \'M\';'
+                    + ' }')
+
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
 
         tooltip = Tooltip()
-        tooltip.setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.series.name +\', age \'+ this.point.category +\'</b><br/>\' + '
-                + ' \'Population: \'+ Highcharts.numberFormat(Math.abs(this.point.y), 0); '
-                + '}')
+        tooltip.setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.series.name +\', age \'+ this.point.category +\'</b><br/>\' + '
+                    + ' \'Population: \'+ Highcharts.numberFormat(Math.abs(this.point.y), 0); '
+                    + '}')
 
         series = SeriesConfig()
         series.setStacking(Stacking.NORMAL)
@@ -667,26 +771,31 @@ class InvientChartsDemoWin(Window):
                 2304444, 2426504, 2568938, 1785638, 1447162, 1005011,
                 330870, 130632, 21208))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showColumnBasic(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.COLUMN)
+
         chartConfig.getTitle().setText('Monthly Average Rainfall')
         chartConfig.getSubtitle().setText('Source: WorldClimate.com')
+
         xAxis = CategoryAxis()
         xAxis.setCategories(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxis.setTitle(AxisTitle('Rainfall (mm)'))
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         legend = Legend()
         legend.setFloating(True)
         legend.setLayout(Layout.VERTICAL)
@@ -698,74 +807,92 @@ class InvientChartsDemoWin(Window):
         legend.setShadow(True)
         legend.setBackgroundColor(RGB(255, 255, 255))
         chartConfig.setLegend(legend)
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\' + this.x +\': \'+ this.y +\' mm\'; '
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.x +\': \'+ this.y +\' mm\'; '
+                    + '}')
 
         colCfg = ColumnConfig()
         colCfg.setPointPadding(0.2)
         colCfg.setBorderWidth(0)
         chartConfig.addSeriesConfig(colCfg)
+
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('Tokyo')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
                 194.1, 95.6, 54.4))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('New York')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2,
                 83.5, 106.6, 92.3))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('London')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2,
                 59.3, 51.2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Berlin')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 42.4, 33.2,
                 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showColumnWithNegValues(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.COLUMN)
+
         chartConfig.getTitle().setText('Column chart with negative values')
+
         xAxis = CategoryAxis()
         xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         tooltip = Tooltip()
-        tooltip.setFormatterJsFunc('function() {'
-                + ' return \'\' + this.series.name +\': \'+ this.y +\'\'; '
-                + '}')
+        tooltip.setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.series.name +\': \'+ this.y +\'\'; '
+                    + '}')
         chartConfig.setTooltip(tooltip)
         chartConfig.getCredit().setEnabled(False)
+
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Jane')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, -2, -3, 2, 1))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, -2, 5))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showColumnStacked(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.COLUMN)
+
         chartConfig.getTitle().setText('Stacked column chart')
+
         xAxis = CategoryAxis()
         xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxis.setTitle(AxisTitle('Total fruit consumption'))
@@ -785,10 +912,11 @@ class InvientChartsDemoWin(Window):
         legend.setShadow(True)
         chartConfig.setLegend(legend)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.x +\'</b><br/>\'+ this.series.name +\': \'+ this.y +\'<br/>\'+'
-                + '        \'Total: \'+ this.point.stackTotal; '
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.x +\'</b><br/>\'+ this.series.name +\': \'+ this.y +\'<br/>\'+'
+                    + '        \'Total: \'+ this.point.stackTotal; '
+                    + '}')
 
         colCfg = ColumnConfig()
         colCfg.setStacking(Stacking.NORMAL)
@@ -798,24 +926,32 @@ class InvientChartsDemoWin(Window):
         seriesData = XYSeries('John')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Jane')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showColumnStackedAndGrouped(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.COLUMN)
-        chartConfig.getTitle().setText('Total fruit consumtion, grouped by gender')
+
+        chartConfig.getTitle().setText(
+                'Total fruit consumtion, grouped by gender')
+
         xAxis = CategoryAxis()
-        xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'])
+        xAxis.setCategories(['Apples', 'Oranges', 'Pears',
+                'Grapes', 'Bananas'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setAllowDecimals(False)
         yAxis.setMin(0.0)
@@ -823,67 +959,82 @@ class InvientChartsDemoWin(Window):
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         series = ColumnConfig()
         series.setStacking(Stacking.NORMAL)
         chartConfig.addSeriesConfig(series)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.x +\'</b><br/>\'+ this.series.name +\': \'+ this.y +\'<br/>\'+ \'Total: \'+ this.point.stackTotal;'
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.x +\'</b><br/>\'+ this.series.name +\': \'+ this.y +\'<br/>\'+ \'Total: \'+ this.point.stackTotal;'
+                    + '}')
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
         seriesData.setStack('male')
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
         seriesData.setStack('male')
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Jane')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 5, 6, 2, 1))
         seriesData.setStack('female')
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Janet')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 0, 4, 4, 3))
         seriesData.setStack('female')
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showColumnStackedPercent(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.COLUMN)
+
         chartConfig.getTitle().setText('Stacked column chart')
+
         xAxis = CategoryAxis()
-        xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'])
+        xAxis.setCategories(['Apples', 'Oranges', 'Pears',
+                'Grapes', 'Bananas'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxis.setTitle(AxisTitle('Total fruit consumption'))
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         series = ColumnConfig()
         series.setStacking(Stacking.PERCENT)
         chartConfig.addSeriesConfig(series)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\' + this.series.name +\': \'+ this.y +\' (\'+ Math.round(this.percentage) +\'%)\'; '
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.series.name +\': \'+ this.y +\' (\'+ Math.round(this.percentage) +\'%)\'; '
+                    + '}')
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Jane')
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
@@ -895,6 +1046,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().getMargin().setRight(50)
         chartConfig.getGeneralChartConfig().getMargin().setBottom(100)
         chartConfig.getGeneralChartConfig().getMargin().setLeft(80)
+
         chartConfig.getTitle().setText('World\'s largest cities per 2008')
 
         xAxis = CategoryAxis()
@@ -910,6 +1062,7 @@ class InvientChartsDemoWin(Window):
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxis.setTitle(AxisTitle('Population (millions)'))
@@ -918,12 +1071,14 @@ class InvientChartsDemoWin(Window):
         chartConfig.setYAxes(yAxesSet)
         chartConfig.setLegend(Legend(False))
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.x +\'</b><br/>\'+ \'Population in 2008: \'+ $wnd.Highcharts.numberFormat(this.y, 1) + '
-                + ' \' millions\' '
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.x +\'</b><br/>\'+ \'Population in 2008: \'+ $wnd.Highcharts.numberFormat(this.y, 1) + '
+                    + ' \' millions\' '
+                    + '}')
 
         chart = InvientCharts(chartConfig)
+
         colCfg = ColumnConfig()
         colCfg.setDataLabel(DataLabel())
         colCfg.getDataLabel().setRotation(-90)
@@ -936,35 +1091,47 @@ class InvientChartsDemoWin(Window):
                 + ' return this.y; '
                 + '}')
 
-        colCfg.getDataLabel().setStyle(' { font: \'normal 13px Verdana, sans-serif\' } ')
+        colCfg.getDataLabel().setStyle(
+                ' { font: \'normal 13px Verdana, sans-serif\' } ')
         seriesData = XYSeries('Population', colCfg)
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18, 17.3,
                 16.8, 15, 14.7, 14.5, 13.3, 12.8, 12.4, 11.8, 11.7, 11.2))
+
         chart.addSeries(seriesData)
+
         self.addChart(chart)
 
 
     def showAreaWithNegValues(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
+
         chartConfig.getTitle().setText('Area chart with negative values')
+
         xAxis = CategoryAxis()
-        xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'])
+        xAxis.setCategories(['Apples', 'Oranges', 'Pears',
+                'Grapes', 'Bananas'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         chartConfig.getCredit().setEnabled(False)
+
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('John')
         series.setSeriesPoints(self.getPoints(series, 5, 3, 4, 7, 2))
         chart.addSeries(series)
+
         series = XYSeries('Jane')
         series.setSeriesPoints(self.getPoints(series, 2, -2, -3, 2, 1))
         chart.addSeries(series)
+
         series = XYSeries('Joe')
         series.setSeriesPoints(self.getPoints(series, 3, 4, 4, -2, 5))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
@@ -972,8 +1139,11 @@ class InvientChartsDemoWin(Window):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
         chartConfig.getGeneralChartConfig().setInverted(True)
-        chartConfig.getTitle().setText('Average fruit consumption during one week')
-        chartConfig.getSubtitle().setStyle('{ position: \'absolute\', right: \'0px\', bottom: \'10px\'}')
+
+        chartConfig.getTitle().setText(
+                'Average fruit consumption during one week')
+        chartConfig.getSubtitle().setStyle(
+                '{ position: \'absolute\', right: \'0px\', bottom: \'10px\'}')
 
         legend = Legend()
         legend.setFloating(True)
@@ -986,33 +1156,42 @@ class InvientChartsDemoWin(Window):
         legend.setBorderWidth(1)
         legend.setBackgroundColor(RGB(255, 255, 255))
         chartConfig.setLegend(legend)
+
         xAxis = CategoryAxis()
-        xAxis.setCategories(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+        xAxis.setCategories(['Monday', 'Tuesday', 'Wednesday', 'Thursday',
+                'Friday', 'Saturday', 'Sunday'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Number of units'))
         yAxis.setMin(0.0)
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value; ' + '}')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {' + ' return this.value; ' + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         chartConfig.getTooltip().setFormatterJsFunc('function() {'
                 + ' return \'\' + this.x + \': \' + this.y; '
                 + '}')
+
         areaCfg = AreaConfig()
         areaCfg.setFillOpacity(0.5)
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('John')
         series.setSeriesPoints(self.getPoints(series, 3, 4, 3, 5, 4, 10, 12))
         chart.addSeries(series)
+
         series = XYSeries('Jane')
         series.setSeriesPoints(self.getPoints(series, 1, 3, 4, 3, 3, 5, 4))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
@@ -1021,8 +1200,10 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
         chartConfig.getGeneralChartConfig().setSpacing(Spacing())
         chartConfig.getGeneralChartConfig().getSpacing().setBottom(30)
+
         chartConfig.getTitle().setText('Fruit consumption *')
-        chartConfig.getSubtitle().setText('* Jane\'s banana consumption is unknown')
+        chartConfig.getSubtitle().setText(
+                '* Jane\'s banana consumption is unknown')
         chartConfig.getSubtitle().setFloating(True)
         chartConfig.getSubtitle().setAlign(HorzAlign.RIGHT)
         chartConfig.getSubtitle().setVertAlign(VertAlign.BOTTOM)
@@ -1039,43 +1220,55 @@ class InvientChartsDemoWin(Window):
         legend.setBorderWidth(1)
         legend.setBackgroundColor(RGB(255, 255, 255))
         chartConfig.setLegend(legend)
+
         xAxis = CategoryAxis()
-        xAxis.setCategories(['Apples', 'Pears', 'Oranges', 'Bananas', 'Grapes', 'Plums', 'Strawberries', 'Raspberries'])
+        xAxis.setCategories(['Apples', 'Pears', 'Oranges', 'Bananas',
+                'Grapes', 'Plums', 'Strawberries', 'Raspberries'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Y-Axis'))
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value; '
-                + '}')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value; '
+                    + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ this.x +\': \'+ this.y;'
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ this.x +\': \'+ this.y;'
+                    + '}')
+
         chartConfig.getCredit().setEnabled(False)
+
         areaCfg = AreaConfig()
         areaCfg.setFillOpacity(0.5)
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('John')
         series.setSeriesPoints(self.getPoints(series, 0, 1, 4, 4, 5, 2, 3, 7))
         chart.addSeries(series)
+
         series = XYSeries('Jane')
         series.addPoint(DecimalPoint(series, 1.0), DecimalPoint(series, 0.0),
                         DecimalPoint(series, 3.0), DecimalPoint(series),
                         DecimalPoint(series, 3.0), DecimalPoint(series, 1.0),
                         DecimalPoint(series, 2.0), DecimalPoint(series, 1.0))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showAreaStacked(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
+
         chartConfig.getTitle().setText('Historic and Estimated Worldwide '
                 'Population Growth by Region')
         chartConfig.getSubtitle().setText('Source: Wikipedia.org')
@@ -1096,6 +1289,7 @@ class InvientChartsDemoWin(Window):
         yAxis.getLabel().setFormatterJsFunc('function() {'
                 + ' return this.value / 1000; '
                 + '}')
+
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
@@ -1113,42 +1307,50 @@ class InvientChartsDemoWin(Window):
         marker.setLineColor(RGB(102, 102, 102))
         marker.setLineWidth(1)
         areaCfg.setMarker(marker)
+
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('Asia')
         series.setSeriesPoints(self.getPoints(series,
                 502, 635, 809, 947, 1402, 3634, 5268))
         chart.addSeries(series)
+
         series = XYSeries('Africa')
         series.setSeriesPoints(self.getPoints(series,
                 106, 107, 111, 133, 221, 767, 1766))
         chart.addSeries(series)
+
         series = XYSeries('Europe')
         series.setSeriesPoints(self.getPoints(series,
                 163, 203, 276, 408, 547, 729, 628))
         chart.addSeries(series)
+
         series = XYSeries('America')
         series.setSeriesPoints(self.getPoints(series,
                 18, 31, 54, 156, 339, 818, 1201))
         chart.addSeries(series)
+
         series = XYSeries('Oceania')
         series.setSeriesPoints(self.getPoints(series,
                 2, 2, 2, 6, 13, 30, 46))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showAreaPercent(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
+
         chartConfig.getTitle().setText('Historic and Estimated Worldwide '
                 'Population Distribution by Region')
         chartConfig.getSubtitle().setText('Source: Wikipedia.org')
 
         xAxis = CategoryAxis()
-        xAxis.setCategories(['1750', '1800', '1850', '1900', '1950', '1999',
-                '2050'])
+        xAxis.setCategories(['1750', '1800', '1850', '1900', '1950',
+                '1999', '2050'])
 
         tick = Tick()
         tick.setPlacement(TickmarkPlacement.ON)
@@ -1156,15 +1358,18 @@ class InvientChartsDemoWin(Window):
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Percent'))
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\' + this.x +\': \' + $wnd.Highcharts.numberFormat(this.percentage, 1) + ' + '    \'% (\'+ $wnd.Highcharts.numberFormat(this.y, 0, \',\') +\' millions)\'; '
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.x +\': \' + $wnd.Highcharts.numberFormat(this.percentage, 1) + '
+                    + '    \'% (\'+ $wnd.Highcharts.numberFormat(this.y, 0, \',\') +\' millions)\'; '
+                    + '}')
 
         areaCfg = AreaConfig()
         areaCfg.setStacking(Stacking.PERCENT)
@@ -1175,41 +1380,53 @@ class InvientChartsDemoWin(Window):
         marker.setLineColor(RGB(255, 255, 255))
         marker.setLineWidth(1)
         areaCfg.setMarker(marker)
+
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('Asia')
         series.setSeriesPoints(self.getPoints(series,
                 502, 635, 809, 947, 1402, 3634, 5268))
         chart.addSeries(series)
+
         series = XYSeries('Africa')
         series.setSeriesPoints(self.getPoints(series,
                 106, 107, 111, 133, 221, 767, 1766))
         chart.addSeries(series)
+
         series = XYSeries('Europe')
         series.setSeriesPoints(self.getPoints(series,
                 163, 203, 276, 408, 547, 729, 628))
         chart.addSeries(series)
+
         series = XYSeries('America')
         series.setSeriesPoints(self.getPoints(series,
                 18, 31, 54, 156, 339, 818, 1201))
         chart.addSeries(series)
+
         series = XYSeries('Oceania')
         series.setSeriesPoints(self.getPoints(series,
                 2, 2, 2, 6, 13, 30, 46))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showAreaBasic(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREA)
+
         chartConfig.getTitle().setText('US and USSR nuclear stockpiles')
-        chartConfig.getSubtitle().setText('Source: <a href=\'http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\'>thebulletin.metapress.com</a>')
+        chartConfig.getSubtitle().setText(
+                'Source: <a href=\'http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\'>thebulletin.metapress.com</a>')
 
         xAxis = NumberXAxis()
         xAxis.setLabel(XAxisDataLabel())
-        xAxis.getLabel().setFormatterJsFunc('function() {' + ' return this.value;' + '}')
+        xAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value;'
+                    + '}')
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
@@ -1217,17 +1434,20 @@ class InvientChartsDemoWin(Window):
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Nuclear weapon states'))
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value / 1000 +\'k\';'
-                + '}')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value / 1000 +\'k\';'
+                    + '}')
+
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
 
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return this.series.name +\' produced <b>\'+'
-                + '    $wnd.Highcharts.numberFormat(this.y, 0) +\'</b><br/>warheads in \'+ this.x;'
-                + '}')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.series.name +\' produced <b>\'+'
+                    + '    $wnd.Highcharts.numberFormat(this.y, 0) +\'</b><br/>warheads in \'+ this.x;'
+                    + '}')
 
         areaCfg = AreaConfig()
         areaCfg.setPointStart(1940.0)
@@ -1246,7 +1466,7 @@ class InvientChartsDemoWin(Window):
         series = XYSeries('USA', usaAreaCfg)
         points = set()
         self.addNullPoints(points, series, 5)
-        points.addAll(self.getPoints(series,
+        points = points.union(self.getPoints(series,
                 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618,
                 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982,
                 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999,
@@ -1262,7 +1482,7 @@ class InvientChartsDemoWin(Window):
         series = XYSeries('USSR/Russia', russiaAreaCfg)
         points = set()
         self.addNullPoints(points, series, 10)
-        points.addAll(self.getPoints(series,
+        points = points.union(self.getPoints(series,
                 5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471,
                 3322, 4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643,
                 13092, 14478, 15915, 17385, 19055, 21205, 23044, 25393,
@@ -1283,6 +1503,7 @@ class InvientChartsDemoWin(Window):
     def showAreaSpline(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.AREASPLINE)
+
         chartConfig.getTitle().setText('Average fruit consumption during '
                 'one week')
 
@@ -1310,32 +1531,41 @@ class InvientChartsDemoWin(Window):
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Fruit units'))
+
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
         chartConfig.getCredit().setEnabled(False)
+
         areaSpline = AreaSplineConfig()
         areaSpline.setFillOpacity(0.5)
         chartConfig.addSeriesConfig(areaSpline)
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('John')
         series.setSeriesPoints(self.getPoints(series, 3, 4, 3, 5, 4, 10, 12))
         chart.addSeries(series)
+
         series = XYSeries('Jane')
         series.setSeriesPoints(self.getPoints(series, 1, 3, 4, 3, 3, 5, 4))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showPieWithLegend(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.PIE)
+
         chartConfig.getTitle().setText('Browser market shares at a specific website, 2010')
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.point.name +\'</b>: \'+ this.y +\' %\'; '
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.point.name +\'</b>: \'+ this.y +\' %\'; '
+                    + '}')
 
         pie = PieConfig()
         pie.setAllowPointSelect(True)
@@ -1343,7 +1573,9 @@ class InvientChartsDemoWin(Window):
         pie.setDataLabel(PieDataLabel(False))
         pie.setShowInLegend(True)
         chartConfig.addSeriesConfig(pie)
+
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('Browser Share')
         points = set()
         points.add(DecimalPoint(series, 'Firefox', 45.0))
@@ -1353,30 +1585,40 @@ class InvientChartsDemoWin(Window):
         points.add(DecimalPoint(series, 'Safari', 8.5))
         points.add(DecimalPoint(series, 'Opera', 6.2))
         points.add(DecimalPoint(series, 'Others', 0.7))
+
         series.setSeriesPoints(points)
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showDonut(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.PIE)
+
         chartConfig.getGeneralChartConfig().setMargin(Margin())
         chartConfig.getGeneralChartConfig().getMargin().setTop(50)
         chartConfig.getGeneralChartConfig().getMargin().setRight(0)
         chartConfig.getGeneralChartConfig().getMargin().setBottom(0)
         chartConfig.getGeneralChartConfig().getMargin().setLeft(0)
-        chartConfig.getTitle().setText('Browser market shares at a specific website')
-        chartConfig.getSubtitle().setText('Inner circle: 2008, outer circle: 2010')
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ '
-                + '     this.point.name +\': \'+ this.y +\' %\'; '
-                + '}')
+
+        chartConfig.getTitle().setText(
+                'Browser market shares at a specific website')
+        chartConfig.getSubtitle().setText(
+                'Inner circle: 2008, outer circle: 2010')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ '
+                    + '     this.point.name +\': \'+ this.y +\' %\'; '
+                    + '}')
+
         chart = InvientCharts(chartConfig)
 
         pieCfg = PieConfig()
         pieCfg.setInnerSize(65)
         pieCfg.setDataLabel(PieDataLabel(False))
+
         series = XYSeries('2008', SeriesType.PIE, pieCfg)
         points = set()
         points.add(self.getPointWithColor(series, 'Firefox', 44.2,
@@ -1392,6 +1634,7 @@ class InvientChartsDemoWin(Window):
         points.add(self.getPointWithColor(series, 'Mozilla', 0.4,
                 RGB(219, 132, 61)))
         series.setSeriesPoints(points)
+
         chart.addSeries(series)
 
         pieCfg = PieConfig()
@@ -1399,6 +1642,7 @@ class InvientChartsDemoWin(Window):
         pieCfg.setDataLabel(PieDataLabel())
         pieCfg.setColor(RGB(0, 0, 0))
         pieCfg.getDataLabel().setConnectorColor(RGB(0, 0, 0))
+
         series = XYSeries('2010', SeriesType.PIE, pieCfg)
         points = set()
         points.add(self.getPointWithColor(series, 'Firefox', 45.0,
@@ -1414,7 +1658,9 @@ class InvientChartsDemoWin(Window):
         points.add(self.getPointWithColor(series, 'Mozilla', 0.2,
                 RGB(219, 132, 61)))
         series.setSeriesPoints(points)
+
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
@@ -1429,17 +1675,22 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setType(SeriesType.PIE)
         chartConfig.getTitle().setText('Browser market shares at a specific '
                 'website, 2010')
+
         pieCfg = PieConfig()
         pieCfg.setAllowPointSelect(True)
         pieCfg.setCursor('pointer')
         pieCfg.setDataLabel(PieDataLabel())
         pieCfg.getDataLabel().setEnabled(True)
-        pieCfg.getDataLabel().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.point.name +\'</b>: \'+ this.y +\' %\';'
-                + '}')
+        pieCfg.getDataLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.point.name +\'</b>: \'+ this.y +\' %\';'
+                    + '}')
         pieCfg.getDataLabel().setConnectorColor(RGB(0, 0, 0))
+
         chartConfig.addSeriesConfig(pieCfg)
+
         chart = InvientCharts(chartConfig)
+
         series = XYSeries('Browser Share')
         points = set()
         points.add(DecimalPoint(series, 'Firefox', 45.0))
@@ -1449,8 +1700,10 @@ class InvientChartsDemoWin(Window):
         points.add(DecimalPoint(series, 'Safari', 8.5))
         points.add(DecimalPoint(series, 'Opera', 6.2))
         points.add(DecimalPoint(series, 'Others', 0.7))
+
         series.setSeriesPoints(points)
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
@@ -1458,12 +1711,15 @@ class InvientChartsDemoWin(Window):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.SCATTER)
         chartConfig.getGeneralChartConfig().setZoomType(ZoomType.XY)
-        chartConfig.getTitle().setText('Height Versus Weight of Individuals '
-                'by Gender')
+
+        chartConfig.getTitle().setText(
+                'Height Versus Weight of Individuals by Gender')
         chartConfig.getSubtitle().setText('Source: Heinz  2003')
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'\' + this.x + \' cm, \' + this.y + \' kg\'; '
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.x + \' cm, \' + this.y + \' kg\'; '
+                    + '}')
 
         xAxis = NumberXAxis()
         xAxis.setTitle(AxisTitle('Height (cm)'))
@@ -1473,6 +1729,7 @@ class InvientChartsDemoWin(Window):
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Weight (kg)'))
         yAxesSet = set()
@@ -1493,12 +1750,14 @@ class InvientChartsDemoWin(Window):
         chartConfig.setLegend(legend)
 
         scatterCfg = ScatterConfig()
+
         marker = SymbolMarker(5)
         scatterCfg.setMarker(marker)
         marker.setHoverState(MarkerState())
         marker.getHoverState().setEnabled(True)
         marker.getHoverState().setLineColor(RGB(100, 100, 100))
         chartConfig.addSeriesConfig(scatterCfg)
+
         chart = InvientCharts(chartConfig)
 
         femaleScatterCfg = ScatterConfig()
@@ -1517,18 +1776,22 @@ class InvientChartsDemoWin(Window):
 
     def showCombinationScatterWithRegressionLine(self):
         chartConfig = InvientChartsConfig()
+
         chartConfig.getTitle().setText('Scatter plot with regression line')
+
         xAxis = NumberXAxis()
         xAxis.setMin(-0.5)
         xAxis.setMax(5.5)
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setMin(0.0)
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         chart = InvientCharts(chartConfig)
 
         # Line series
@@ -1550,6 +1813,7 @@ class InvientChartsDemoWin(Window):
         scatterSeries.setSeriesPoints(self.getPoints(scatterSeries,
                 1, 1.5, 2.8, 3.5, 3.9, 4.2))
         chart.addSeries(scatterSeries)
+
         self.addChart(chart)
 
 
@@ -1558,16 +1822,19 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setType(SeriesType.SPLINE)
         chartConfig.getGeneralChartConfig().setInverted(True)
         chartConfig.getGeneralChartConfig().setWidth(500)
+
         chartConfig.getTitle().setText('Atmosphere Temperature by Altitude')
-        chartConfig.getSubtitle().setText('According to the Standard Atmosphere Model')
+        chartConfig.getSubtitle().setText(
+                'According to the Standard Atmosphere Model')
 
         xAxis = NumberXAxis()
         xAxis.setReversed(False)
         xAxis.setTitle(AxisTitle('Altitude'))
         xAxis.setLabel(XAxisDataLabel())
-        xAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value +\'km\';'
-                + '}')
+        xAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value +\'km\';'
+                    + '}')
         xAxis.setMaxPadding(0.05)
         xAxis.setShowLastLabel(True)
         xAxesSet = set()
@@ -1578,16 +1845,18 @@ class InvientChartsDemoWin(Window):
         yAxis.setTitle(AxisTitle('Temperature'))
         yAxis.setLineWidth(2)
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value + \'°C\';'
-                + '}')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value + \'°C\';'
+                    + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
         tooltip = Tooltip()
-        tooltip.setFormatterJsFunc('function() {'
-                + ' return \'\' + this.x +\' km: \'+ this.y +\'°C\';'
-                + '}')
+        tooltip.setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + this.x +\' km: \'+ this.y +\'°C\';'
+                    + '}')
         chartConfig.setTooltip(tooltip)
 
         legend = Legend()
@@ -1603,14 +1872,17 @@ class InvientChartsDemoWin(Window):
                 [0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
                 [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showSplineWithSymbol(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.SPLINE)
+
         chartConfig.getTitle().setText('Monthly Average Temperature')
         chartConfig.getSubtitle().setText('Source: WorldClimate.com')
+
         xAxis = CategoryAxis()
         xAxis.setCategories(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
@@ -1621,7 +1893,8 @@ class InvientChartsDemoWin(Window):
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Temperature'))
         yAxis.setLabel(YAxisDataLabel())
-        yAxis.getLabel().setFormatterJsFunc('function() {' + ' return this.value + \'°\';' + '}')
+        yAxis.getLabel().setFormatterJsFunc(
+                'function() {' + ' return this.value + \'°\';' + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
@@ -1630,6 +1903,7 @@ class InvientChartsDemoWin(Window):
         tooltip.setCrosshairs(True)
         tooltip.setShared(True)
         chartConfig.setTooltip(tooltip)
+
         splineCfg = SplineConfig()
         symbolMarker = SymbolMarker(True)
         symbolMarker.setRadius(4)
@@ -1637,6 +1911,7 @@ class InvientChartsDemoWin(Window):
         symbolMarker.setLineWidth(1)
         splineCfg.setMarker(symbolMarker)
         chartConfig.addSeriesConfig(splineCfg)
+
         chart = InvientCharts(chartConfig)
 
         splineCfg = SplineConfig()
@@ -1679,6 +1954,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setType(SeriesType.SPLINE)
         chartConfig.getGeneralChartConfig().setMargin(Margin())
         chartConfig.getGeneralChartConfig().getMargin().setRight(10)
+
         chartConfig.getTitle().setText('Live random data')
 
         xAxis = DateTimeAxis()
@@ -1698,13 +1974,18 @@ class InvientChartsDemoWin(Window):
         yAxes = set()
         yAxes.add(yAxis)
         chartConfig.setYAxes(yAxes)
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ '
-                + ' $wnd.Highcharts.dateFormat(\'%Y-%m-%d %H:%M:%S\', this.x) +\'<br/>\'+ '
-                + ' $wnd.Highcharts.numberFormat(this.y, 2);'
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'<b>\'+ this.series.name +\'</b><br/>\'+ '
+                    + ' $wnd.Highcharts.dateFormat(\'%Y-%m-%d %H:%M:%S\', this.x) +\'<br/>\'+ '
+                    + ' $wnd.Highcharts.numberFormat(this.y, 2);'
+                    + '}')
+
         chartConfig.getLegend().setEnabled(False)
+
         chart = InvientCharts(chartConfig)
+
         seriesData = DateTimeSeries('Random Data', True)
         points = set()
         dtNow = datetime()
@@ -1712,15 +1993,19 @@ class InvientChartsDemoWin(Window):
         for cnt in range(-19, 0):
             points.add(DateTimePoint(seriesData,
                     self.getUpdatedDate(dtNow, cnt * 1000), random()))
+
         seriesData.setSeriesPoints(points)
         chart.addSeries(seriesData)
+
         self.addChart(chart, False, False, False)
+
         self._indicator = ProgressIndicator(0.2)
         self._indicator.setPollingInterval(1000)
         self._indicator.setStyleName('i-progressindicator-invisible')
         self._rightLayout.addComponent(self._indicator)
+
         if not self.isAppRunningOnGAE():
-            self._splineThread = self.SelfUpdateSplineThread(chart)
+            self._splineThread = SelfUpdateSplineThread(chart)
             self._splineThread.start()
         else:
             self.getApplication().getMainWindow().showNotification(
@@ -1737,17 +2022,21 @@ class InvientChartsDemoWin(Window):
 
     @classmethod
     def getUpdatedDate(cls, dt, milliseconds):
-        cal = Calendar.getInstance()
-        cal.setTimeInMillis(dt.getTime() + milliseconds)
-        return cal.getTime()
+        ts = getDate(dt) + milliseconds
+        return datetime.fromtimestamp(ts)
 
 
     def showSplineWithPlotBands(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getGeneralChartConfig().setType(SeriesType.SPLINE)
+
         chartConfig.getTitle().setText('Wind speed during two days')
-        chartConfig.getSubtitle().setText('October 6th and 7th 2009 at two locations in Vik i Sogn, Norway')
-        chartConfig.getTooltip().setFormatterJsFunc('function() {' + ' return \'\' + $wnd.Highcharts.dateFormat(\'%e. %b %Y, %H:00\', this.x) +\': \'+ this.y +\' m/s\'; ' + '}')
+        chartConfig.getSubtitle().setText('October 6th and 7th 2009 at two '
+                'locations in Vik i Sogn, Norway')
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' return \'\' + $wnd.Highcharts.dateFormat(\'%e. %b %Y, %H:00\', this.x) +\': \'+ this.y +\' m/s\'; '
+                    + '}')
 
         xAxis = DateTimeAxis()
         xAxesSet = set()
@@ -1827,9 +2116,11 @@ class InvientChartsDemoWin(Window):
         symbolMarker.getHoverState().setEnabled(True)
         symbolMarker.getHoverState().setRadius(5)
         symbolMarker.getHoverState().setLineWidth(1)
+
         splineCfg.setPointStart(self.getPointStartDate(2009, 8, 6))
         splineCfg.setPointInterval(3600000.0)
         chartConfig.addSeriesConfig(splineCfg)
+
         chart = InvientCharts(chartConfig)
 
         series = DateTimeSeries('Hestavollane', splineCfg, True)
@@ -1840,6 +2131,7 @@ class InvientChartsDemoWin(Window):
                 7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
                 3.0, 3.0))
         chart.addSeries(series)
+
         series = DateTimeSeries('Voll', splineCfg, True)
         series.setSeriesPoints(self.getDateTimePoints(series,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
@@ -1848,44 +2140,54 @@ class InvientChartsDemoWin(Window):
                 3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5,
                 0.4))
         chart.addSeries(series)
+
         self.addChart(chart)
 
 
     def showCombination(self):
         chartConfig = InvientChartsConfig()
         chartConfig.getTitle().setText('Combination chart')
+
         tooltip = Tooltip()
-        tooltip.setFormatterJsFunc('function() {'
-                + ' if (this.point.name) { // the pie chart '
-                + '   return this.point.name +\': \'+ this.y +\' fruits\'; '
-                + ' } else {'
-                + '   return this.x  +\': \'+ this.y; '
-                + ' } '
-                + '}')
+        tooltip.setFormatterJsFunc(
+                'function() {'
+                    + ' if (this.point.name) { // the pie chart '
+                    + '   return this.point.name +\': \'+ this.y +\' fruits\'; '
+                    + ' } else {'
+                    + '   return this.x  +\': \'+ this.y; '
+                    + ' } '
+                    + '}')
 
         xAxis = CategoryAxis()
         xAxis.setCategories(['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums'])
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setAllowDecimals(False)
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         chart = InvientCharts(chartConfig)
+
         seriesData = XYSeries('Jane', SeriesType.COLUMN)
         seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 2, 1, 3, 4))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('John', SeriesType.COLUMN)
         seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 3, 5, 7, 6))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Joe', SeriesType.COLUMN)
         seriesData.setSeriesPoints(self.getPoints(seriesData, 4, 3, 3, 9, 0))
         chart.addSeries(seriesData)
+
         seriesData = XYSeries('Average', SeriesType.SPLINE)
         seriesData.setSeriesPoints(self.getPoints(seriesData,
                 3, 2.67, 3, 6.33, 3.33))
+
         chart.addSeries(seriesData)
 
         # Series Total consumption
@@ -1896,8 +2198,9 @@ class InvientChartsDemoWin(Window):
         pieCfg.setShowInLegend(False)
         pieCfg.setDataLabel(PieDataLabel())
         pieCfg.getDataLabel().setEnabled(False)
-        totalConsumpSeriesData = XYSeries('Total consumption', SeriesType.PIE,
-                pieCfg)
+
+        totalConsumpSeriesData = XYSeries('Total consumption',
+                SeriesType.PIE, pieCfg)
         config = PointConfig(RGB(69, 114, 167))
         point = DecimalPoint(totalConsumpSeriesData, 'Jane', 13, config)
         totalConsumpSeriesData.addPoint(point)
@@ -1913,21 +2216,26 @@ class InvientChartsDemoWin(Window):
                 '{ left: \'40px\', top: \'8px\', color: \'black\' }'))
         chartConfig.setChartLabel(chartLabel)
         chart.addSeries(totalConsumpSeriesData)
+
         self.addChart(chart)
 
 
     def showCombinationMultipleAxes(self):
         chartConfig = InvientChartsConfig()
-        chartConfig.getTitle().setText('Average Monthly Weather Data for Tokyo')
+
+        chartConfig.getTitle().setText(
+                'Average Monthly Weather Data for Tokyo')
         chartConfig.getSubtitle().setText('Source: WorldClimate.com')
-        chartConfig.getTooltip().setFormatterJsFunc('function() {'
-                + ' var unit = { '
-                + '         \'Rainfall\': \'mm\','
-                + '         \'Temperature\': \'°C\','
-                + '         \'Sea-Level Pressure\': \'mb\''
-                + ' }[this.series.name];'
-                + '   return \'\' + this.x + \': \' + this.y + \' \' + unit; '
-                + '}')
+
+        chartConfig.getTooltip().setFormatterJsFunc(
+                'function() {'
+                    + ' var unit = { '
+                    + '         \'Rainfall\': \'mm\','
+                    + '         \'Temperature\': \'°C\','
+                    + '         \'Sea-Level Pressure\': \'mb\''
+                    + ' }[this.series.name];'
+                    + '   return \'\' + this.x + \': \' + this.y + \' \' + unit; '
+                    + '}')
 
         legend = Legend()
         legend.setLayout(Layout.VERTICAL)
@@ -1951,15 +2259,18 @@ class InvientChartsDemoWin(Window):
         temperatureAxis = NumberYAxis()
         temperatureAxis.setAllowDecimals(False)
         temperatureAxis.setLabel(YAxisDataLabel())
-        temperatureAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value +\'°C\'; '
-                + '}')
+        temperatureAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value +\'°C\'; '
+                    + '}')
         temperatureAxis.getLabel().setStyle('{ color: \'#89A54E\' }')
         temperatureAxis.setTitle(AxisTitle('Temperature'))
         temperatureAxis.getTitle().setStyle(' { color: \'#89A54E\' }')
         temperatureAxis.setOpposite(True)
+
         yAxesSet = set()
         yAxesSet.add(temperatureAxis)
+
         # secondary y-axis
         rainfallAxis = NumberYAxis()
         rainfallAxis.setGrid(Grid())
@@ -1968,9 +2279,10 @@ class InvientChartsDemoWin(Window):
         rainfallAxis.getTitle().setStyle(' { color: \'#4572A7\' }')
         rainfallAxis.setLabel(YAxisDataLabel())
         rainfallAxis.getLabel().setStyle('{ color: \'#4572A7\' }')
-        rainfallAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value +\' mm\'; '
-                + '}')
+        rainfallAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value +\' mm\'; '
+                    + '}')
         yAxesSet.add(rainfallAxis)
 
         # tertiary y-axis
@@ -1981,12 +2293,14 @@ class InvientChartsDemoWin(Window):
         sealevelPressureAxis.getTitle().setStyle(' { color: \'#AA4643\' }')
         sealevelPressureAxis.setLabel(YAxisDataLabel())
         sealevelPressureAxis.getLabel().setStyle('{ color: \'#AA4643\' }')
-        sealevelPressureAxis.getLabel().setFormatterJsFunc('function() {'
-                + ' return this.value +\' mb\'; '
-                + '}')
+        sealevelPressureAxis.getLabel().setFormatterJsFunc(
+                'function() {'
+                    + ' return this.value +\' mb\'; '
+                    + '}')
         sealevelPressureAxis.setOpposite(True)
         yAxesSet.add(sealevelPressureAxis)
         chartConfig.setYAxes(yAxesSet)
+
         chart = InvientCharts(chartConfig)
 
         # Configuration of Rainfall series
@@ -1994,7 +2308,9 @@ class InvientChartsDemoWin(Window):
         colCfg.setColor(RGB(69, 114, 167))
         # Rainfall series
         rainfallSeriesData = XYSeries('Rainfall', SeriesType.COLUMN, colCfg)
-        rainfallSeriesData.setSeriesPoints(self.getPoints(rainfallSeriesData, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4))
+        rainfallSeriesData.setSeriesPoints(self.getPoints(rainfallSeriesData,
+                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
+                194.1, 95.6, 54.4))
         rainfallSeriesData.setYAxis(rainfallAxis)
         chart.addSeries(rainfallSeriesData)
 
@@ -2024,6 +2340,7 @@ class InvientChartsDemoWin(Window):
                 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3,
                 13.9, 9.6))
         chart.addSeries(tempSeriesData)
+
         self.addChart(chart)
 
 
@@ -2032,13 +2349,16 @@ class InvientChartsDemoWin(Window):
         chartConfig.getGeneralChartConfig().setZoomType(ZoomType.X)
         chartConfig.getGeneralChartConfig().setSpacing(Spacing())
         chartConfig.getGeneralChartConfig().getSpacing().setRight(20)
-        chartConfig.getSubtitle().setText('Click and drag in the plot area to zoom in')
+
+        chartConfig.getSubtitle().setText(
+                'Click and drag in the plot area to zoom in')
 
         xAxis = DateTimeAxis()
         xAxis.setMaxZoom(14 * 24 * 3600000)
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
+
         yAxis = NumberYAxis()
         yAxis.setTitle(AxisTitle('Exchange rate'))
         yAxis.setMin(0.6)
@@ -2047,7 +2367,9 @@ class InvientChartsDemoWin(Window):
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
+
         chartConfig.getTooltip().setShared(True)
+
         chartConfig.getLegend().setEnabled(False)
 
         # Set plot options
@@ -2058,6 +2380,7 @@ class InvientChartsDemoWin(Window):
 
         # Fill color
         areaCfg.setFillColor(LinearGradient(0, 0, 0, 300, colorStops))
+
         areaCfg.setLineWidth(1)
         areaCfg.setShadow(False)
         areaCfg.setHoverState(SeriesState())
@@ -2067,18 +2390,23 @@ class InvientChartsDemoWin(Window):
         marker.setHoverState(MarkerState())
         marker.getHoverState().setEnabled(True)
         marker.getHoverState().setRadius(5)
+
         chartConfig.addSeriesConfig(areaCfg)
+
         chart = InvientCharts(chartConfig)
 
         # Area configuration
         serieaAreaCfg = AreaConfig()
+
         serieaAreaCfg.setPointStart(self.getPointStartDate(2006, 0, 1))
         serieaAreaCfg.setPointInterval(24 * 3600 * 1000.0)
 
         # Series
-        dateTimeSeries = DateTimeSeries('USD to EUR', SeriesType.AREA, serieaAreaCfg)
+        dateTimeSeries = DateTimeSeries('USD to EUR', SeriesType.AREA,
+                serieaAreaCfg)
         dateTimeSeries.addPoint(self.getDateTimeSeriesPoints(dateTimeSeries))
         chart.addSeries(dateTimeSeries)
+
         self.addChart(chart)
 
 
@@ -2086,10 +2414,12 @@ class InvientChartsDemoWin(Window):
                 isRegisterSVGEvent=True, isSetHeight=True):
         if isRegisterEvents:
             self.registerEvents(chart)
+
         chart.setSizeFull()
         chart.setStyleName('v-chart-min-width')
         if isSetHeight:
             chart.setHeight('410px')
+
         if isPrepend:
             self._rightLayout.setStyleName('v-chart-master-detail')
             self._rightLayout.addComponentAsFirst(chart)
@@ -2103,7 +2433,8 @@ class InvientChartsDemoWin(Window):
             if isRegisterSVGEvent:
                 self.registerSVGAndPrintEvent(chart)
             # Server events log
-            self._rightLayout.addComponent(Label('Events received by the server:'))
+            lbl = Label('Events received by the server:')
+            self._rightLayout.addComponent(lbl)
             self._rightLayout.addComponent(self._eventLog)
 
 
@@ -2127,11 +2458,10 @@ class InvientChartsDemoWin(Window):
 
 
     def registerEvents(self, chart):
-
         l = DemoChartClickListener(self)
         chart.addListener(l)
-        if chart.getConfig().getGeneralChartConfig().getZoomType() is not None:
 
+        if chart.getConfig().getGeneralChartConfig().getZoomType() is not None:
             l = DemoChartZoomListener(self)
             chart.addListener(l)
 
@@ -2168,33 +2498,21 @@ class InvientChartsDemoWin(Window):
 
     @classmethod
     def getPointStartDate(cls, year, month, day):
-        cal = GregorianCalendar.getInstance()
-        cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, month)
-        cal.set(Calendar.DAY_OF_MONTH, day)
-        cal.set(Calendar.HOUR, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-        return cal.getTimeInMillis()
+        dt = datetime(year, month, day)
+        return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e3)
 
 
     @classmethod
     def getDateZeroTime(cls, year, month, day):
-        cal = GregorianCalendar.getInstance()
-        cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, month)
-        cal.set(Calendar.DAY_OF_MONTH, day)
-        cls.setZeroTime(cal)
-        return cal.getTime()
+        return datetime(year, month, day)
 
 
-    @classmethod
-    def setZeroTime(cls, cal):
-        cal.set(Calendar.HOUR, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
+#    @classmethod
+#    def setZeroTime(cls, cal):
+#        cal.set(Calendar.HOUR, 0)
+#        cal.set(Calendar.MINUTE, 0)
+#        cal.set(Calendar.SECOND, 0)
+#        cal.set(Calendar.MILLISECOND, 0)
 
 
     def getDateTimePoints(self, series, *values):
@@ -2230,13 +2548,13 @@ class InvientChartsDemoWin(Window):
     def getFormattedTimestamp(cls, dt):
         if dt is None:
             return None
-        format = SimpleDateFormat('yy/MM/dd hh:mm:ss')
-        return format.format(dt)
+        fmt = '%y/%m/%d %H:%M:%S'
+        return dt.strftime(fmt)
 
 
     @classmethod
     def getCurrFormattedTimestamp(cls):
-        return cls.getFormattedTimestamp(datetime())
+        return cls.getFormattedTimestamp(datetime.now())
 
 
     def getChartName(self, chartNameString):
@@ -2260,6 +2578,7 @@ class InvientChartsDemoWin(Window):
         tree.setItemCaptionPropertyId(self._TREE_ITEM_CAPTION_PROP_ID)
         tree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_PROPERTY)
         tree.setNullSelectionAllowed(False)
+
         for Id in tree.rootItemIds():
             tree.expandItemsRecursively(Id)
 
@@ -2270,7 +2589,8 @@ class InvientChartsDemoWin(Window):
 
     def showChartInstancesForSeriesType(self, demoSeriesTypeName):
         self._rightLayout.removeAllComponents()
-        demoCharts = self.getDemoCharts(self.getDemoSeriesType(demoSeriesTypeName))
+        demoCharts = self.getDemoCharts(self.getDemoSeriesType(
+                demoSeriesTypeName))
         for chartName in demoCharts:
             l = SeriesTypeClickListener(self)
             btn = Button(chartName.getName(), l)
@@ -2280,11 +2600,12 @@ class InvientChartsDemoWin(Window):
 
     def getContainer(self):
         container = HierarchicalContainer()
-        container.addContainerProperty(self._TREE_ITEM_CAPTION_PROP_ID, str, '')
+        container.addContainerProperty(self._TREE_ITEM_CAPTION_PROP_ID, str,'')
         for demoSeriesType in self.DemoSeriesType.values():
             itemId = demoSeriesType.getName()
             item = container.addItem(itemId)
-            item.getItemProperty(self._TREE_ITEM_CAPTION_PROP_ID).setValue(demoSeriesType.getName())
+            item.getItemProperty(self._TREE_ITEM_CAPTION_PROP_ID).setValue(
+                    demoSeriesType.getName())
             container.setChildrenAllowed(itemId, True)
             # add child
             self.addChartNamesForSeriesType(container, itemId, demoSeriesType)
@@ -2293,31 +2614,31 @@ class InvientChartsDemoWin(Window):
 
     def addChartNamesForSeriesType(self, container, parentId, demoSeriesType):
         for chartName in self.getDemoCharts(demoSeriesType):
-            childItemId = demoSeriesType.getName() + self._SEPARATOR + chartName.getName()
+            childItemId = (demoSeriesType.getName() + self._SEPARATOR
+                    + chartName.getName())
             childItem = container.addItem(childItemId)
-            childItem.getItemProperty(self._TREE_ITEM_CAPTION_PROP_ID).setValue(chartName.getName())
+            childItem.getItemProperty(
+                    self._TREE_ITEM_CAPTION_PROP_ID).setValue(
+                            chartName.getName())
             container.setParent(childItemId, parentId)
             container.setChildrenAllowed(childItemId, False)
 
 
     def getDemoCharts(self, demoSeriesType):
         chartNames = list()
-        if demoSeriesType == self.LINE:
-
+        if demoSeriesType == DemoSeriesType.LINE:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.WITH_DATA_LABELS)
             chartNames.add(ChartName.TIMESERIES_ZOOMABLE)
             chartNames.add(ChartName.MASTER_DETAIL)
             chartNames.add(ChartName.CLICK_TO_ADD_POINT)
 
-        elif demoSeriesType == self.BAR:
-
+        elif demoSeriesType == DemoSeriesType.BAR:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.STACKED)
             chartNames.add(ChartName.WITH_NEGATIVE_STACK)
 
-        elif demoSeriesType == self.COLUMN:
-
+        elif demoSeriesType == DemoSeriesType.COLUMN:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.WITH_NEGATIVE_VALUES)
             chartNames.add(ChartName.STACKED)
@@ -2325,8 +2646,7 @@ class InvientChartsDemoWin(Window):
             chartNames.add(ChartName.STACKED_PERCENT)
             chartNames.add(ChartName.WITH_ROTATED_LABELS)
 
-        elif demoSeriesType == self.AREA:
-
+        elif demoSeriesType == DemoSeriesType.AREA:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.WITH_NEGATIVE_VALUES)
             chartNames.add(ChartName.STACKED)
@@ -2334,29 +2654,24 @@ class InvientChartsDemoWin(Window):
             chartNames.add(ChartName.WITH_MISSING_POINTS)
             chartNames.add(ChartName.INVERTED_AXES)
 
-        elif demoSeriesType == self.AREASPLINE:
-
+        elif demoSeriesType == DemoSeriesType.AREASPLINE:
             chartNames.add(ChartName.BASIC)
 
-        elif demoSeriesType == self.PIE:
-
+        elif demoSeriesType == DemoSeriesType.PIE:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.WITH_LEGEND)
             chartNames.add(ChartName.DONUT)
 
-        elif demoSeriesType == self.SCATTER:
-
+        elif demoSeriesType == DemoSeriesType.SCATTER:
             chartNames.add(ChartName.BASIC)
 
-        elif demoSeriesType == self.SPLINE:
-
+        elif demoSeriesType == DemoSeriesType.SPLINE:
             chartNames.add(ChartName.BASIC)
             chartNames.add(ChartName.WITH_PLOTBANDS)
             chartNames.add(ChartName.WITH_SYMBOLS)
             chartNames.add(ChartName.UPDATING_EACH_SECOND)
 
-        elif demoSeriesType == self.COMBINATION:
-
+        elif demoSeriesType == DemoSeriesType.COMBINATION:
             chartNames.add(ChartName.COMBINATION_COLUMN_LINE_AND_PIE)
             chartNames.add(ChartName.SCATTER_WITH_REGRESSION_LINE)
             chartNames.add(ChartName.MULTIPLE_AXES)
@@ -2374,36 +2689,39 @@ class InvientChartsDemoWin(Window):
                 eventInfo, isAppend = args
                 self._eventLog.setReadOnly(False)
                 if isAppend:
-                    self._eventLog.setValue('[' + self.getCurrFormattedTimestamp() + '] ' + eventInfo + '\n' + self._eventLog.getValue())
+                    self._eventLog.setValue('['
+                            + self.getCurrFormattedTimestamp() + '] '
+                            + eventInfo + '\n'
+                            + self._eventLog.getValue())
                 else:
                     self._eventLog.setValue('')
                 self._eventLog.setReadOnly(True)
             else:
                 eventName, seriesName = args
-                sb = self.StringBuilder('')
-                sb.append('[' + eventName + ']')
-                sb.append(' series -> ' + seriesName)
-                self.logEventInfo(str(sb))
+                sb = ''
+                sb += '[' + eventName + ']'
+                sb += ' series -> ' + seriesName
+                self.logEventInfo(sb)
         elif nargs == 5:
             if isinstance(args[1], float):
                 if isinstance(args[3], float):
                     eventName, xAxisMin, xAxisMax, yAxisMin, yAxisMax = args
-                    sb = self.StringBuilder('')
-                    sb.append('[' + eventName + ']')
-                    sb.append(', xAxisMin -> ' + xAxisMin)
-                    sb.append(', xAxisMax -> ' + xAxisMax)
-                    sb.append(', yAxisMin -> ' + yAxisMin)
-                    sb.append(', yAxisMax -> ' + yAxisMax)
-                    self.logEventInfo(str(sb))
+                    sb = ''
+                    sb += '[' + eventName + ']'
+                    sb += ', xAxisMin -> ' + xAxisMin
+                    sb += ', xAxisMax -> ' + xAxisMax
+                    sb += ', yAxisMin -> ' + yAxisMin
+                    sb += ', yAxisMax -> ' + yAxisMax
+                    self.logEventInfo(sb)
                 else:
                     eventName, xAxisPos, yAxisPos, mouseX, mouseY = args
-                    sb = self.StringBuilder('')
-                    sb.append('[' + eventName + ']')
-                    sb.append(', xAxisPos -> ' + xAxisPos)
-                    sb.append(', yAxisPos -> ' + yAxisPos)
-                    sb.append(', mouseX -> ' + mouseX)
-                    sb.append(', mouseY -> ' + mouseY)
-                    self.logEventInfo(str(sb))
+                    sb = ''
+                    sb += '[' + eventName + ']'
+                    sb += ', xAxisPos -> ' + xAxisPos
+                    sb += ', yAxisPos -> ' + yAxisPos
+                    sb += ', mouseX -> ' + mouseX
+                    sb += ', mouseY -> ' + mouseY
+                    self.logEventInfo(sb)
             else:
                 if isinstance(args[3], datetime):
                     eventName, seriesName, category, x, y = args
@@ -2453,7 +2771,6 @@ class InvientChartsDemoWin(Window):
 
     def emptyEventLog(self):
         self.logEventInfo('', False)
-
 
 
     def getScatterFemalePoints(self, series):
@@ -3014,6 +3331,10 @@ class InvientChartsDemoWin(Window):
 
 class MasterChartZoomListener(ChartZoomListener):
 
+    def __init__(self, window):
+        self._window = window
+
+
     def chartZoom(self, chartZoomEvent):
         # chartZoomEvent.getChartArea().get
         masterChartSeries = self.masterChart.getSeries('USD to EUR')
@@ -3027,7 +3348,9 @@ class MasterChartZoomListener(ChartZoomListener):
 
         for point in masterChartSeries.getPoints():
             if point.getX().getTime() > min_ and point.getX().getTime() < max_:
-                detailPoints.add(DateTimePoint(detailChartSeries, point.getX(), point.getY()))
+                dtp = DateTimePoint(detailChartSeries, point.getX(),
+                        point.getY())
+                detailPoints.add(dtp)
 
         # Update series with new points
         detailChartSeries.setSeriesPoints(detailPoints)
@@ -3035,15 +3358,18 @@ class MasterChartZoomListener(ChartZoomListener):
         self.detailChart.refresh()
 
         # Update plotbands
-        masterDateTimeAxis = self.masterChart.getConfig().getXAxes().next()
+        masterDateTimeAxis = iter(self.masterChart.getConfig().getXAxes()).next()  # FIXME: iterator
         masterDateTimeAxis.removePlotBand('mask-before')
         plotBandBefore = DateTimePlotBand('mask-before')
-        plotBandBefore.setRange(DateTimeRange(InvientChartsDemoWin_this._masterChartMinDate, datetime(min_)))
+        plotBandBefore.setRange(DateTimeRange(self._window._masterChartMinDate,
+                datetime.fromtimestamp(min_)))
         plotBandBefore.setColor(RGBA(0, 0, 0, 0.2))
         masterDateTimeAxis.addPlotBand(plotBandBefore)
+
         masterDateTimeAxis.removePlotBand('mask-after')
         plotBandAfter = DateTimePlotBand('mask-after')
-        plotBandAfter.setRange(DateTimeRange(datetime(max_), InvientChartsDemoWin_this._masterChartMaxDate))
+        plotBandAfter.setRange(DateTimeRange(datetime(max_),
+                self._window._masterChartMaxDate))
         plotBandAfter.setColor(RGBA(0, 0, 0, 0.2))
         masterDateTimeAxis.addPlotBand(plotBandAfter)
         self.masterChart.refresh()
@@ -3051,23 +3377,41 @@ class MasterChartZoomListener(ChartZoomListener):
 
 class AddPointChartClickListener(ChartClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def chartClick(self, chartClickEvent):
-        InvientChartsDemoWin_this.logEventInfo('chartClick', chartClickEvent.getPoint().getX(), chartClickEvent.getPoint().getY(), chartClickEvent.getMousePosition().getMouseX(), chartClickEvent.getMousePosition().getMouseY())
+        self._window.logEventInfo('chartClick',
+                chartClickEvent.getPoint().getX(),
+                chartClickEvent.getPoint().getY(),
+                chartClickEvent.getMousePosition().getMouseX(),
+                chartClickEvent.getMousePosition().getMouseY())
         xySeries = chartClickEvent.getChart().getSeries('User Supplied Data')
-        xySeries.addPoint(DecimalPoint(xySeries, chartClickEvent.getPoint().getX(), chartClickEvent.getPoint().getY()))
+        xySeries.addPoint(DecimalPoint(xySeries,
+                chartClickEvent.getPoint().getX(),
+                chartClickEvent.getPoint().getY()))
 
 
 class AddPointClickListener(PointClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def pointClick(self, pointClickEvent):
-        InvientChartsDemoWin_this.logEventInfo('pointClick', pointClickEvent.getPoint().getSeries().getName(), pointClickEvent.getCategory(), pointClickEvent.getPoint().getX(), pointClickEvent.getPoint().getY(), pointClickEvent.getMousePosition().getMouseX(), pointClickEvent.getMousePosition().getMouseY())
+        self._window.logEventInfo('pointClick',
+                pointClickEvent.getPoint().getSeries().getName(),
+                pointClickEvent.getCategory(),
+                pointClickEvent.getPoint().getX(),
+                pointClickEvent.getPoint().getY(),
+                pointClickEvent.getMousePosition().getMouseX(),
+                pointClickEvent.getMousePosition().getMouseY())
         xySeries = pointClickEvent.getChart().getSeries('User Supplied Data')
         if len(xySeries.getPoints()) > 1:
             # remove the clicked point
             xySeries.removePoint(pointClickEvent.getPoint())
 
 
-class SelfUpdateSplineThread(Window.Thread):
+class SelfUpdateSplineThread(Thread):
 
     def __init__(self, chart):
         self._chart = chart
@@ -3087,10 +3431,10 @@ class SelfUpdateSplineThread(Window.Thread):
         while self.keepUpdating():
             # Sleep for 1 second
             try:
-                Thread.sleep(1000)
-            except InterruptedException, e:
-                print 'InterruptedException occured. Exception message '
-                        + e.getMessage()
+                sleep(1000)
+            except KeyboardInterrupt, e:
+                print ('InterruptedException occured. Exception message '
+                        + str(e))
             seriesData = self._chart.getSeries('Random Data')
             seriesData.addPoint(DateTimePoint(seriesData, datetime(),
                     random()), True)
@@ -3099,116 +3443,225 @@ class SelfUpdateSplineThread(Window.Thread):
 
 class GetSvgClickListener(button.IClickListener):
 
+    def __init__(self, chart):
+        self._chart = chart
+
     def buttonClick(self, event):
 
         l = DemoChartSVGAvailableListener(self)
-        self.chart.addListener(l)
+        self._chart.addListener(l)
 
 
 class DemoChartSVGAvailableListener(ChartSVGAvailableListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def svgAvailable(self, chartSVGAvailableEvent):
-        InvientChartsDemoWin_this.logEventInfo('[svgAvailable]' + ' svg -> ' + chartSVGAvailableEvent.getSVG())
+        self._window.logEventInfo('[svgAvailable]' + ' svg -> '
+                + chartSVGAvailableEvent.getSVG())
 
 
 class PrintClickListener(button.IClickListener):
 
+    def __init__(self, chart):
+        self._chart = chart
+
     def buttonClick(self, event):
-        self.chart.print_()
+        self._chart.print_()
 
 
 class DemoChartClickListener(ChartClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def chartClick(self, chartClickEvent):
-        InvientChartsDemoWin_this.logEventInfo('chartClick', chartClickEvent.getPoint().getX(), chartClickEvent.getPoint().getY(), chartClickEvent.getMousePosition().getMouseX(), chartClickEvent.getMousePosition().getMouseY())
+        self._window.logEventInfo('chartClick',
+                chartClickEvent.getPoint().getX(),
+                chartClickEvent.getPoint().getY(),
+                chartClickEvent.getMousePosition().getMouseX(),
+                chartClickEvent.getMousePosition().getMouseY())
 
 
 class DemoChartZoomListener(ChartZoomListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def chartZoom(self, chartZoomEvent):
-        InvientChartsDemoWin_this.logEventInfo('chartSelection', chartZoomEvent.getChartArea().getxAxisMin(), chartZoomEvent.getChartArea().getxAxisMax(), chartZoomEvent.getChartArea().getyAxisMin(), chartZoomEvent.getChartArea().getyAxisMax())
+        self._window.logEventInfo('chartSelection',
+                chartZoomEvent.getChartArea().getxAxisMin(),
+                chartZoomEvent.getChartArea().getxAxisMax(),
+                chartZoomEvent.getChartArea().getyAxisMin(),
+                chartZoomEvent.getChartArea().getyAxisMax())
 
 
 class DemoChartResetZoomListener(ChartResetZoomListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def chartResetZoom(self, chartResetZoomEvent):
-        InvientChartsDemoWin_this.logEventInfo('[chartSelectionReset]')
+        self._window.logEventInfo('[chartSelectionReset]')
 
 
 class DemoSeriesClickListerner(SeriesClickListerner):
 
+    def __init__(self, window):
+        self._window = window
+
     def seriesClick(self, seriesClickEvent):
         EVENT_NAME = 'seriesClick'
         if isinstance(seriesClickEvent.getNearestPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, seriesClickEvent.getSeries().getName(), None, seriesClickEvent.getNearestPoint().getX(), seriesClickEvent.getNearestPoint().getY(), seriesClickEvent.getMousePosition().getMouseX(), seriesClickEvent.getMousePosition().getMouseY())
+            self._window.logEventInfo(EVENT_NAME,
+                    seriesClickEvent.getSeries().getName(),
+                    None,
+                    seriesClickEvent.getNearestPoint().getX(),
+                    seriesClickEvent.getNearestPoint().getY(),
+                    seriesClickEvent.getMousePosition().getMouseX(),
+                    seriesClickEvent.getMousePosition().getMouseY())
         else:
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, seriesClickEvent.getSeries().getName(), None, seriesClickEvent.getNearestPoint().getX(), seriesClickEvent.getNearestPoint().getY(), seriesClickEvent.getMousePosition().getMouseX(), seriesClickEvent.getMousePosition().getMouseY())
+            self._window.logEventInfo(EVENT_NAME,
+                    seriesClickEvent.getSeries().getName(),
+                    None,
+                    seriesClickEvent.getNearestPoint().getX(),
+                    seriesClickEvent.getNearestPoint().getY(),
+                    seriesClickEvent.getMousePosition().getMouseX(),
+                    seriesClickEvent.getMousePosition().getMouseY())
 
 
 class DemoSeriesHideListerner(SeriesHideListerner):
 
+    def __init__(self, window):
+        self._window = window
+
     def seriesHide(self, seriesHideEvent):
-        InvientChartsDemoWin_this.logEventInfo('seriesHide', seriesHideEvent.getSeries().getName())
+        self._window.logEventInfo('seriesHide',
+                seriesHideEvent.getSeries().getName())
 
 
 class DemoSeriesShowListerner(SeriesShowListerner):
 
+    def __init__(self, window):
+        self._window = window
+
     def seriesShow(self, seriesShowEvent):
-        InvientChartsDemoWin_this.logEventInfo('seriesShow', seriesShowEvent.getSeries().getName())
+        self._window.logEventInfo('seriesShow',
+                seriesShowEvent.getSeries().getName())
 
 
 class DemoSeriesLegendItemClickListerner(SeriesLegendItemClickListerner):
 
+    def __init__(self, window):
+        self._window = window
+
     def seriesLegendItemClick(self, seriesLegendItemClickEvent):
-        InvientChartsDemoWin_this.logEventInfo('seriesLegendItemClick', seriesLegendItemClickEvent.getSeries().getName())
+        self._window.logEventInfo('seriesLegendItemClick',
+                seriesLegendItemClickEvent.getSeries().getName())
 
 
 class DemoPointClickListener(PointClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def pointClick(self, pointClickEvent):
         EVENT_NAME = 'pointClick'
         if isinstance(pointClickEvent.getPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointClickEvent.getPoint().getSeries().getName(), pointClickEvent.getCategory(), pointClickEvent.getPoint().getX(), pointClickEvent.getPoint().getY(), pointClickEvent.getMousePosition().getMouseX(), pointClickEvent.getMousePosition().getMouseY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointClickEvent.getPoint().getSeries().getName(),
+                    pointClickEvent.getCategory(),
+                    pointClickEvent.getPoint().getX(),
+                    pointClickEvent.getPoint().getY(),
+                    pointClickEvent.getMousePosition().getMouseX(),
+                    pointClickEvent.getMousePosition().getMouseY())
         else:
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointClickEvent.getPoint().getSeries().getName(), pointClickEvent.getCategory(), pointClickEvent.getPoint().getX(), pointClickEvent.getPoint().getY(), pointClickEvent.getMousePosition().getMouseX(), pointClickEvent.getMousePosition().getMouseY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointClickEvent.getPoint().getSeries().getName(),
+                    pointClickEvent.getCategory(),
+                    pointClickEvent.getPoint().getX(),
+                    pointClickEvent.getPoint().getY(),
+                    pointClickEvent.getMousePosition().getMouseX(),
+                    pointClickEvent.getMousePosition().getMouseY())
 
 
 class DemoPointRemoveListener(PointRemoveListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def pointRemove(self, pointRemoveEvent):
         EVENT_NAME = 'pointRemove'
         if isinstance(pointRemoveEvent.getPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointRemoveEvent.getPoint().getSeries().getName(), pointRemoveEvent.getCategory(), pointRemoveEvent.getPoint().getX(), pointRemoveEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointRemoveEvent.getPoint().getSeries().getName(),
+                    pointRemoveEvent.getCategory(),
+                    pointRemoveEvent.getPoint().getX(),
+                    pointRemoveEvent.getPoint().getY())
         else:
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointRemoveEvent.getPoint().getSeries().getName(), pointRemoveEvent.getCategory(), pointRemoveEvent.getPoint().getX(), pointRemoveEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointRemoveEvent.getPoint().getSeries().getName(),
+                    pointRemoveEvent.getCategory(),
+                    pointRemoveEvent.getPoint().getX(),
+                    pointRemoveEvent.getPoint().getY())
 
 
 class DemoPointSelectListener(PointSelectListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def pointSelected(self, pointSelectEvent):
         EVENT_NAME = 'pointSelected'
         if isinstance(pointSelectEvent.getPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointSelectEvent.getPoint().getSeries().getName(), pointSelectEvent.getCategory(), pointSelectEvent.getPoint().getX(), pointSelectEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointSelectEvent.getPoint().getSeries().getName(),
+                    pointSelectEvent.getCategory(),
+                    pointSelectEvent.getPoint().getX(),
+                    pointSelectEvent.getPoint().getY())
         else:
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointSelectEvent.getPoint().getSeries().getName(), pointSelectEvent.getCategory(), pointSelectEvent.getPoint().getX(), pointSelectEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointSelectEvent.getPoint().getSeries().getName(),
+                    pointSelectEvent.getCategory(),
+                    pointSelectEvent.getPoint().getX(),
+                    pointSelectEvent.getPoint().getY())
 
 
 class DemoPointUnselectListener(PointUnselectListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def pointUnSelect(self, pointUnSelectEvent):
         EVENT_NAME = 'pointUnSelected'
         if isinstance(pointUnSelectEvent.getPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointUnSelectEvent.getPoint().getSeries().getName(), pointUnSelectEvent.getCategory(), pointUnSelectEvent.getPoint().getX(), pointUnSelectEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointUnSelectEvent.getPoint().getSeries().getName(),
+                    pointUnSelectEvent.getCategory(),
+                    pointUnSelectEvent.getPoint().getX(),
+                    pointUnSelectEvent.getPoint().getY())
         else:
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, pointUnSelectEvent.getPoint().getSeries().getName(), pointUnSelectEvent.getCategory(), pointUnSelectEvent.getPoint().getX(), pointUnSelectEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    pointUnSelectEvent.getPoint().getSeries().getName(),
+                    pointUnSelectEvent.getCategory(),
+                    pointUnSelectEvent.getPoint().getX(),
+                    pointUnSelectEvent.getPoint().getY())
 
 
 class DemoPieChartLegendItemClickListener(PieChartLegendItemClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def legendItemClick(self, legendItemClickEvent):
         EVENT_NAME = 'pieLegendItemClick'
         if isinstance(legendItemClickEvent.getPoint(), DecimalPoint):
-            InvientChartsDemoWin_this.logEventInfo(EVENT_NAME, legendItemClickEvent.getPoint().getSeries().getName(), None, legendItemClickEvent.getPoint().getX(), legendItemClickEvent.getPoint().getY())
+            self._window.logEventInfo(EVENT_NAME,
+                    legendItemClickEvent.getPoint().getSeries().getName(),
+                    None,
+                    legendItemClickEvent.getPoint().getX(),
+                    legendItemClickEvent.getPoint().getY())
 
 
 class ChartName(object):
@@ -3320,26 +3773,37 @@ DemoSeriesType.COMBINATION = DemoSeriesType(SeriesType.COMMONSERIES, 'Combinatio
 
 
 
-class ChartTypeChangeListener(tree.IValueChangeListener):
+class ChartTypeChangeListener(IValueChangeListener):
+
+    def __init__(self, window):
+        self._window = window
 
     def valueChange(self, event):
         try:
             selectedId = event.getProperty().getValue()
             if self.tree.getParent(selectedId) is not None:
                 parentId = self.tree.getParent(selectedId)
-                demoSeriesTypeName = self.tree.getContainerProperty(parentId, InvientChartsDemoWin_this._TREE_ITEM_CAPTION_PROP_ID).getValue()
-                seriesInstanceName = self.tree.getContainerProperty(selectedId, InvientChartsDemoWin_this._TREE_ITEM_CAPTION_PROP_ID).getValue()
-                print 'parent : ' + demoSeriesTypeName + ', selected : ' + seriesInstanceName
-                InvientChartsDemoWin_this.showChart(demoSeriesTypeName, seriesInstanceName)
+                demoSeriesTypeName = self.tree.getContainerProperty(parentId,
+                        self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
+                seriesInstanceName = self.tree.getContainerProperty(selectedId,
+                        self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
+                print ('parent : ' + demoSeriesTypeName
+                       + ', selected : ' + seriesInstanceName)
+                self._window.showChart(demoSeriesTypeName, seriesInstanceName)
             else:
-                demoSeriesTypeName = self.tree.getContainerProperty(selectedId, InvientChartsDemoWin_this._TREE_ITEM_CAPTION_PROP_ID).getValue()
+                demoSeriesTypeName = self.tree.getContainerProperty(selectedId,
+                        self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
                 print 'Selected ' + demoSeriesTypeName
-                InvientChartsDemoWin_this.showChartInstancesForSeriesType(demoSeriesTypeName)
+                self._window.showChartInstancesForSeriesType(demoSeriesTypeName)
         except Exception, e:
             e.printStackTrace()
 
 
 class SeriesTypeClickListener(button.IClickListener):
 
+    def __init__(self, window):
+        self._window = window
+
     def buttonClick(self, event):
-        InvientChartsDemoWin_this._navTree.select(self.demoSeriesTypeName + InvientChartsDemoWin_this._SEPARATOR + event.getButton().getCaption())
+        self._window._navTree.select(self.demoSeriesTypeName
+                + self._window._SEPARATOR + event.getButton().getCaption())
