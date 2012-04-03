@@ -18,9 +18,6 @@ from datetime \
 from muntjac.util \
     import totalseconds
 
-from muntjac.addon.invient.invient_charts \
-    import DateTimeSeries, DecimalPoint
-
 from muntjac.addon.invient.invient_charts_config \
     import AreaConfig, AreaSplineConfig, DateTimeRange, DateTimeValue, \
     Grid, NumberRange, NumberValue, Tick, BarConfig, CategoryAxis, \
@@ -841,6 +838,8 @@ def writePoints(target, points):
     @param points
     @throws PaintException
     """
+    from muntjac.addon.invient.invient_charts import DecimalPoint
+
     if points is None:
         return
     for point in points:
@@ -1262,10 +1261,13 @@ def writeXAxes(target, axes, config):
 
 
 def isIncludeTime(axis, chartSeries):
+    from muntjac.addon.invient.invient_charts import DateTimeSeries
+
     for series in chartSeries:
         if (isinstance(series, DateTimeSeries)
                 and series.getXAxis() == axis):
             return series.isIncludeTime()
+
     return False
 
 

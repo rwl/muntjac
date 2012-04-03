@@ -2,7 +2,6 @@
 # @MUNTJAC_LICENSE@
 
 from muntjac.addon.invient.paint import IPaint
-from muntjac.addon.invient.invient_charts import SeriesType
 
 
 class InvientChartsConfig(object):
@@ -231,6 +230,8 @@ class InvientChartsConfig(object):
         """@param seriesConfig:
         @return:
         """
+        from muntjac.addon.invient.invient_charts import SeriesType
+
         seriesType = SeriesType.COMMONSERIES
         if LineConfig == seriesConfig.__class__:
             seriesType = SeriesType.LINE
@@ -365,6 +366,8 @@ class GeneralChartConfig(object):
     """
 
     def __init__(self):
+        from muntjac.addon.invient.invient_charts import SeriesType
+
         self._backgroundColor = None
         self._borderColor = None
         self._borderRadius = None
@@ -3006,6 +3009,8 @@ class AxisBase(Axis):
     """
 
     def __init__(self):
+        super(AxisBase, self).__init__()
+
         self._id = None
         self._type = AxisType.LINEAR
         self._title = None
@@ -3956,7 +3961,7 @@ class NumberPlotLine(PlotLine):
 class NumberValue(Value):
 
     def __init__(self, value):
-        super(NumberValue, self)()
+        super(NumberValue, self).__init__()
         self._value = value
 
     def getValue(self):
@@ -3981,7 +3986,7 @@ class DateTimePlotLine(PlotLine):
 class DateTimeValue(Value):
 
     def __init__(self, value):
-        super(DateTimeValue, self)()
+        super(DateTimeValue, self).__init__()
         self._value = value
 
     def getValue(self):
@@ -3994,6 +3999,7 @@ class DateTimeValue(Value):
 class NumberAxis(AxisBase):
 
     def __init__(self):
+        super(NumberAxis, self).__init__()
         super(NumberAxis, self).setType(AxisType.LINEAR)
         self._allowDecimals = None
         self._max = None

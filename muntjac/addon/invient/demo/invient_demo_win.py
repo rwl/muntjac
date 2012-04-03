@@ -75,6 +75,8 @@ class InvientChartsDemoWin(Window):
     _SEPARATOR = '|'
 
     def __init__(self):
+        super(InvientChartsDemoWin, self).__init__()
+
         self._eventLog = TextArea()
         self._isAppRunningOnGAE = True
 
@@ -434,7 +436,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.setXAxes(xAxesSet)
 
         numberYAxis = NumberYAxis()
-        numberYAxis.setTitle(AxisTitle('Temperature (°C)'))
+        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103C)'.encode('utf-8')))
         plotLine = NumberPlotLine('TempAt0')
         plotLine.setValue(NumberValue(0.0))
         plotLine.setWidth(1)
@@ -463,29 +465,29 @@ class InvientChartsDemoWin(Window):
         # Tooltip formatter
         chartConfig.getTooltip().setFormatterJsFunc(
                 'function() { '
-                    + ' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'°C\''
+                    + u' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'\u2103C\''.encode('utf-8')
                     + '}')
 
         chart = InvientCharts(chartConfig)
 
         seriesData = XYSeries('Tokyo')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 7.0, 6.9, 9.5,
-                14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [7.0, 6.9, 9.5,
+                14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('New York')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, -0.2, 0.8, 5.7,
-                11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [-0.2, 0.8, 5.7,
+                11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Berlin')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, -0.9, 0.6, 3.5,
-                8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [-0.9, 0.6, 3.5,
+                8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('London')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3.9, 4.2, 5.7,
-                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3.9, 4.2, 5.7,
+                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -559,7 +561,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.setXAxes(xAxesSet)
 
         numberYAxis = NumberYAxis()
-        numberYAxis.setTitle(AxisTitle('Temperature (°C)'))
+        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103C)'.encode('utf-8')))
         yAxesSet = set()
         yAxesSet.add(numberYAxis)
         chartConfig.setYAxes(yAxesSet)
@@ -574,13 +576,13 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('Tokyo')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 7.0, 6.9, 9.5,
-                14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [7.0, 6.9, 9.5,
+                14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('London')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3.9, 4.2, 5.7,
-                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3.9, 4.2, 5.7,
+                8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -623,15 +625,15 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         seriesData = XYSeries('John')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [5, 3, 4, 7, 2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Jane')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, 2, 3, 2, 1]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 4, 4, 2, 5]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -687,17 +689,17 @@ class InvientChartsDemoWin(Window):
 
         seriesData = XYSeries('Year 1800')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                107, 31, 635, 203, 2))
+                [107, 31, 635, 203, 2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Year 1900')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                133, 156, 947, 408, 6))
+                [133, 156, 947, 408, 6]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Year 2008')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                973, 914, 4054, 732, 34))
+                [973, 914, 4054, 732, 34]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -758,18 +760,18 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('Male')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                -1746181, -1884428, -2089758, -2222362, -2537431, -2507081,
+                [-1746181, -1884428, -2089758, -2222362, -2537431, -2507081,
                 -2443179, -2664537, -3556505, -3680231, -3143062, -2721122,
                 -2229181, -2227768, -2176300, -1329968, -836804, -354784,
-                -90569, -28367, -3878))
+                -90569, -28367, -3878]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Female')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                1656154, 1787564, 1981671, 2108575, 2403438, 2366003,
+                [1656154, 1787564, 1981671, 2108575, 2403438, 2366003,
                 2301402, 2519874, 3360596, 3493473, 3050775, 2759560,
                 2304444, 2426504, 2568938, 1785638, 1447162, 1005011,
-                330870, 130632, 21208))
+                330870, 130632, 21208]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -821,25 +823,25 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('Tokyo')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-                194.1, 95.6, 54.4))
+                [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
+                194.1, 95.6, 54.4]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('New York')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2,
-                83.5, 106.6, 92.3))
+                [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2,
+                83.5, 106.6, 92.3]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('London')
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2,
-                59.3, 51.2))
+                [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2,
+                59.3, 51.2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Berlin')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 42.4, 33.2,
-                34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [42.4, 33.2,
+                34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -867,15 +869,15 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [5, 3, 4, 7, 2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Jane')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, -2, -3, 2, 1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, -2, -3, 2, 1]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, -2, 5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 4, 4, -2, 5]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -924,15 +926,15 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [5, 3, 4, 7, 2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Jane')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, 2, 3, 2, 1]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 4, 4, 2, 5]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -971,22 +973,22 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [5, 3, 4, 7, 2]))
         seriesData.setStack('male')
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 4, 4, 2, 5]))
         seriesData.setStack('male')
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Jane')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 5, 6, 2, 1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, 5, 6, 2, 1]))
         seriesData.setStack('female')
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Janet')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 0, 4, 4, 3))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 0, 4, 4, 3]))
         seriesData.setStack('female')
         chart.addSeries(seriesData)
 
@@ -1024,15 +1026,15 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
         seriesData = XYSeries('John')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 5, 3, 4, 7, 2))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [5, 3, 4, 7, 2]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 4, 4, 2, 5))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 4, 4, 2, 5]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Jane')
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 2, 3, 2, 1))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, 2, 3, 2, 1]))
         chart.addSeries(seriesData)
 
         self.addChart(chart)
@@ -1095,8 +1097,8 @@ class InvientChartsDemoWin(Window):
                 ' { font: \'normal 13px Verdana, sans-serif\' } ')
         seriesData = XYSeries('Population', colCfg)
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18, 17.3,
-                16.8, 15, 14.7, 14.5, 13.3, 12.8, 12.4, 11.8, 11.7, 11.2))
+                [34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18, 17.3,
+                16.8, 15, 14.7, 14.5, 13.3, 12.8, 12.4, 11.8, 11.7, 11.2]))
 
         chart.addSeries(seriesData)
 
@@ -1121,15 +1123,15 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('John')
-        series.setSeriesPoints(self.getPoints(series, 5, 3, 4, 7, 2))
+        series.setSeriesPoints(self.getPoints(series, [5, 3, 4, 7, 2]))
         chart.addSeries(series)
 
         series = XYSeries('Jane')
-        series.setSeriesPoints(self.getPoints(series, 2, -2, -3, 2, 1))
+        series.setSeriesPoints(self.getPoints(series, [2, -2, -3, 2, 1]))
         chart.addSeries(series)
 
         series = XYSeries('Joe')
-        series.setSeriesPoints(self.getPoints(series, 3, 4, 4, -2, 5))
+        series.setSeriesPoints(self.getPoints(series, [3, 4, 4, -2, 5]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1185,11 +1187,11 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('John')
-        series.setSeriesPoints(self.getPoints(series, 3, 4, 3, 5, 4, 10, 12))
+        series.setSeriesPoints(self.getPoints(series, [3, 4, 3, 5, 4, 10, 12]))
         chart.addSeries(series)
 
         series = XYSeries('Jane')
-        series.setSeriesPoints(self.getPoints(series, 1, 3, 4, 3, 3, 5, 4))
+        series.setSeriesPoints(self.getPoints(series, [1, 3, 4, 3, 3, 5, 4]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1252,7 +1254,7 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('John')
-        series.setSeriesPoints(self.getPoints(series, 0, 1, 4, 4, 5, 2, 3, 7))
+        series.setSeriesPoints(self.getPoints(series, [0, 1, 4, 4, 5, 2, 3, 7]))
         chart.addSeries(series)
 
         series = XYSeries('Jane')
@@ -1314,27 +1316,27 @@ class InvientChartsDemoWin(Window):
 
         series = XYSeries('Asia')
         series.setSeriesPoints(self.getPoints(series,
-                502, 635, 809, 947, 1402, 3634, 5268))
+                [502, 635, 809, 947, 1402, 3634, 5268]))
         chart.addSeries(series)
 
         series = XYSeries('Africa')
         series.setSeriesPoints(self.getPoints(series,
-                106, 107, 111, 133, 221, 767, 1766))
+                [106, 107, 111, 133, 221, 767, 1766]))
         chart.addSeries(series)
 
         series = XYSeries('Europe')
         series.setSeriesPoints(self.getPoints(series,
-                163, 203, 276, 408, 547, 729, 628))
+                [163, 203, 276, 408, 547, 729, 628]))
         chart.addSeries(series)
 
         series = XYSeries('America')
         series.setSeriesPoints(self.getPoints(series,
-                18, 31, 54, 156, 339, 818, 1201))
+                [18, 31, 54, 156, 339, 818, 1201]))
         chart.addSeries(series)
 
         series = XYSeries('Oceania')
         series.setSeriesPoints(self.getPoints(series,
-                2, 2, 2, 6, 13, 30, 46))
+                [2, 2, 2, 6, 13, 30, 46]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1387,27 +1389,27 @@ class InvientChartsDemoWin(Window):
 
         series = XYSeries('Asia')
         series.setSeriesPoints(self.getPoints(series,
-                502, 635, 809, 947, 1402, 3634, 5268))
+                [502, 635, 809, 947, 1402, 3634, 5268]))
         chart.addSeries(series)
 
         series = XYSeries('Africa')
         series.setSeriesPoints(self.getPoints(series,
-                106, 107, 111, 133, 221, 767, 1766))
+                [106, 107, 111, 133, 221, 767, 1766]))
         chart.addSeries(series)
 
         series = XYSeries('Europe')
         series.setSeriesPoints(self.getPoints(series,
-                163, 203, 276, 408, 547, 729, 628))
+                [163, 203, 276, 408, 547, 729, 628]))
         chart.addSeries(series)
 
         series = XYSeries('America')
         series.setSeriesPoints(self.getPoints(series,
-                18, 31, 54, 156, 339, 818, 1201))
+                [18, 31, 54, 156, 339, 818, 1201]))
         chart.addSeries(series)
 
         series = XYSeries('Oceania')
         series.setSeriesPoints(self.getPoints(series,
-                2, 2, 2, 6, 13, 30, 46))
+                [2, 2, 2, 6, 13, 30, 46]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1467,13 +1469,13 @@ class InvientChartsDemoWin(Window):
         points = set()
         self.addNullPoints(points, series, 5)
         points = points.union(self.getPoints(series,
-                6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618,
+                [6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618,
                 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982,
                 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999,
                 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708,
                 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287,
                 14747, 13076, 12555, 12144, 11009, 10950, 10871, 10824, 10577,
-                10527, 10475, 10421, 10358, 10295, 10104))
+                10527, 10475, 10421, 10358, 10295, 10104]))
         series.setSeriesPoints(points)
         chart.addSeries(series)
 
@@ -1483,13 +1485,13 @@ class InvientChartsDemoWin(Window):
         points = set()
         self.addNullPoints(points, series, 10)
         points = points.union(self.getPoints(series,
-                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471,
+                [5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471,
                 3322, 4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643,
                 13092, 14478, 15915, 17385, 19055, 21205, 23044, 25393,
                 27935, 30062, 32049, 33952, 35804, 37431, 39197, 45000,
                 43000, 41000, 39000, 37000, 35000, 33000, 31000, 29000,
                 27000, 25000, 24000, 23000, 22000, 21000, 20000, 19000,
-                18000, 18000, 17000, 16000))
+                18000, 18000, 17000, 16000]))
         series.setSeriesPoints(points)
         chart.addSeries(series)
         self.addChart(chart)
@@ -1546,11 +1548,11 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         series = XYSeries('John')
-        series.setSeriesPoints(self.getPoints(series, 3, 4, 3, 5, 4, 10, 12))
+        series.setSeriesPoints(self.getPoints(series, [3, 4, 3, 5, 4, 10, 12]))
         chart.addSeries(series)
 
         series = XYSeries('Jane')
-        series.setSeriesPoints(self.getPoints(series, 1, 3, 4, 3, 3, 5, 4))
+        series.setSeriesPoints(self.getPoints(series, [1, 3, 4, 3, 3, 5, 4]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1802,7 +1804,7 @@ class InvientChartsDemoWin(Window):
         lineSeries = XYSeries('Regression Line', lineCfg)
         lineSeries.setType(SeriesType.LINE)
         lineSeries.setSeriesPoints(self.getPoints(lineSeries,
-                [0, 1.11], [5, 4.51]))
+                [[0, 1.11], [5, 4.51]]))
         chart.addSeries(lineSeries)
 
         # Scatter series
@@ -1811,7 +1813,7 @@ class InvientChartsDemoWin(Window):
         scatterSeries = XYSeries('Observations', scatterCfg)
         scatterSeries.setType(SeriesType.SCATTER)
         scatterSeries.setSeriesPoints(self.getPoints(scatterSeries,
-                1, 1.5, 2.8, 3.5, 3.9, 4.2))
+                [1, 1.5, 2.8, 3.5, 3.9, 4.2]))
         chart.addSeries(scatterSeries)
 
         self.addChart(chart)
@@ -1847,7 +1849,7 @@ class InvientChartsDemoWin(Window):
         yAxis.setLabel(YAxisDataLabel())
         yAxis.getLabel().setFormatterJsFunc(
                 'function() {'
-                    + ' return this.value + \'°C\';'
+                    + u' return this.value + \'\u2103C\';'.encode('utf-8')
                     + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
@@ -1855,7 +1857,7 @@ class InvientChartsDemoWin(Window):
         tooltip = Tooltip()
         tooltip.setFormatterJsFunc(
                 'function() {'
-                    + ' return \'\' + this.x +\' km: \'+ this.y +\'°C\';'
+                    + u' return \'\' + this.x +\' km: \'+ this.y +\'\u2103C\';'.encode('utf-8')
                     + '}')
         chartConfig.setTooltip(tooltip)
 
@@ -1869,8 +1871,8 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
         series = XYSeries('Temperature')
         series.setSeriesPoints(self.getPoints(series,
-                [0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
-                [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]))
+                [[0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
+                [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1894,7 +1896,9 @@ class InvientChartsDemoWin(Window):
         yAxis.setTitle(AxisTitle('Temperature'))
         yAxis.setLabel(YAxisDataLabel())
         yAxis.getLabel().setFormatterJsFunc(
-                'function() {' + ' return this.value + \'°\';' + '}')
+                'function() {' +
+                    u' return this.value + \'\u2103\';'.encode('utf-8') +
+                '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
         chartConfig.setYAxes(yAxesSet)
@@ -1918,7 +1922,7 @@ class InvientChartsDemoWin(Window):
         splineCfg.setMarker(SymbolMarker(Symbol.SQUARE))
         series = XYSeries('Tokyo', splineCfg)
         series.setSeriesPoints(self.getPoints(series,
-                7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2))
+                [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2]))
         config = PointConfig(ImageMarker('/graphics/sun.png'))
         highest = DecimalPoint(series, 26.5, config)
         series.addPoint(highest)
@@ -2173,15 +2177,15 @@ class InvientChartsDemoWin(Window):
         chart = InvientCharts(chartConfig)
 
         seriesData = XYSeries('Jane', SeriesType.COLUMN)
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 3, 2, 1, 3, 4))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [3, 2, 1, 3, 4]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('John', SeriesType.COLUMN)
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 2, 3, 5, 7, 6))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [2, 3, 5, 7, 6]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Joe', SeriesType.COLUMN)
-        seriesData.setSeriesPoints(self.getPoints(seriesData, 4, 3, 3, 9, 0))
+        seriesData.setSeriesPoints(self.getPoints(seriesData, [4, 3, 3, 9, 0]))
         chart.addSeries(seriesData)
 
         seriesData = XYSeries('Average', SeriesType.SPLINE)
@@ -2231,7 +2235,7 @@ class InvientChartsDemoWin(Window):
                 'function() {'
                     + ' var unit = { '
                     + '         \'Rainfall\': \'mm\','
-                    + '         \'Temperature\': \'°C\','
+                    + u'         \'Temperature\': \'\u2103C\','.encode('utf-8')
                     + '         \'Sea-Level Pressure\': \'mb\''
                     + ' }[this.series.name];'
                     + '   return \'\' + this.x + \': \' + this.y + \' \' + unit; '
@@ -2261,7 +2265,7 @@ class InvientChartsDemoWin(Window):
         temperatureAxis.setLabel(YAxisDataLabel())
         temperatureAxis.getLabel().setFormatterJsFunc(
                 'function() {'
-                    + ' return this.value +\'°C\'; '
+                    + u' return this.value +\'\u2103C\'; '.encode('utf-8')
                     + '}')
         temperatureAxis.getLabel().setStyle('{ color: \'#89A54E\' }')
         temperatureAxis.setTitle(AxisTitle('Temperature'))
@@ -2309,8 +2313,8 @@ class InvientChartsDemoWin(Window):
         # Rainfall series
         rainfallSeriesData = XYSeries('Rainfall', SeriesType.COLUMN, colCfg)
         rainfallSeriesData.setSeriesPoints(self.getPoints(rainfallSeriesData,
-                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-                194.1, 95.6, 54.4))
+                [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
+                 194.1, 95.6, 54.4]))
         rainfallSeriesData.setYAxis(rainfallAxis)
         chart.addSeries(rainfallSeriesData)
 
@@ -2324,8 +2328,8 @@ class InvientChartsDemoWin(Window):
         seaLevelSeriesData = XYSeries('Sea-Level Pressure', SeriesType.SPLINE,
                 seaLevelSplineCfg)
         seaLevelSeriesData.setSeriesPoints(self.getPoints(seaLevelSeriesData,
-                1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2,
-                1013.1, 1016.9, 1018.2, 1016.7))
+                [1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2,
+                 1013.1, 1016.9, 1018.2, 1016.7]))
         seaLevelSeriesData.setYAxis(sealevelPressureAxis)
         chart.addSeries(seaLevelSeriesData)
 
@@ -2337,8 +2341,8 @@ class InvientChartsDemoWin(Window):
         tempSeriesData = XYSeries('Temperature', SeriesType.SPLINE,
                 tempSplineCfg)
         tempSeriesData.setSeriesPoints(self.getPoints(tempSeriesData,
-                7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3,
-                13.9, 9.6))
+                [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3,
+                 13.9, 9.6]))
         chart.addSeries(tempSeriesData)
 
         self.addChart(chart)
@@ -2451,49 +2455,49 @@ class InvientChartsDemoWin(Window):
         self._rightLayout.addComponent(gridLayout)
 
         l = GetSvgClickListener(self)
-        svgBtn.addListener(l)
+        svgBtn.addListener(l, button.IClickListener)
 
         l = PrintClickListener(self)
-        printBtn.addListener(l)
+        printBtn.addListener(l, button.IClickListener)
 
 
     def registerEvents(self, chart):
         l = DemoChartClickListener(self)
-        chart.addListener(l)
+        chart.addListener(l, ChartClickListener)
 
         if chart.getConfig().getGeneralChartConfig().getZoomType() is not None:
             l = DemoChartZoomListener(self)
-            chart.addListener(l)
+            chart.addListener(l, ChartZoomListener)
 
             l = DemoChartResetZoomListener(self)
-            chart.addListener(l)
+            chart.addListener(l, ChartResetZoomListener)
 
-        l = DemoSeriesClickListerner()
-        chart.addListener(l)
+        l = DemoSeriesClickListerner(self)
+        chart.addListener(l, SeriesClickListerner)
 
         l = DemoSeriesHideListerner(self)
-        chart.addListener(l)
+        chart.addListener(l, SeriesHideListerner)
 
         l = DemoSeriesShowListerner(self)
-        chart.addListener(l)
+        chart.addListener(l, SeriesShowListerner)
 
         l = DemoSeriesLegendItemClickListerner(self)
-        chart.addListener(l)
+        chart.addListener(l, SeriesLegendItemClickListerner)
 
         l = DemoPointClickListener(self)
-        chart.addListener(l)
+        chart.addListener(l, PointClickListener)
 
         l = DemoPointRemoveListener(self)
-        chart.addListener(l)
+        chart.addListener(l, PointRemoveListener)
 
         l = DemoPointSelectListener(self)
-        chart.addListener(l)
+        chart.addListener(l, PointSelectListener)
 
         l = DemoPointUnselectListener(self)
-        chart.addListener(l)
+        chart.addListener(l, PointUnselectListener)
 
         l = DemoPieChartLegendItemClickListener(self)
-        chart.addListener(l)
+        chart.addListener(l, PieChartLegendItemClickListener)
 
 
     @classmethod
@@ -2515,7 +2519,7 @@ class InvientChartsDemoWin(Window):
 #        cal.set(Calendar.MILLISECOND, 0)
 
 
-    def getDateTimePoints(self, series, *values):
+    def getDateTimePoints(self, series, values):
         points = set()
         for value in values:
             points.add(DateTimePoint(series, value))
@@ -2523,7 +2527,7 @@ class InvientChartsDemoWin(Window):
 
 
     @classmethod
-    def getPoints(cls, series, *values):
+    def getPoints(cls, series, values):
         if len(values) > 0 and isinstance(values[0], float):
             points = set()
             for value in values:
@@ -2582,8 +2586,8 @@ class InvientChartsDemoWin(Window):
         for Id in tree.rootItemIds():
             tree.expandItemsRecursively(Id)
 
-        l = ChartTypeChangeListener(self)
-        tree.addListener(l)
+        l = ChartTypeChangeListener(self, tree)
+        tree.addListener(l, IValueChangeListener)
         return tree
 
 
@@ -2601,7 +2605,7 @@ class InvientChartsDemoWin(Window):
     def getContainer(self):
         container = HierarchicalContainer()
         container.addContainerProperty(self._TREE_ITEM_CAPTION_PROP_ID, str,'')
-        for demoSeriesType in self.DemoSeriesType.values():
+        for demoSeriesType in DemoSeriesType.values():
             itemId = demoSeriesType.getName()
             item = container.addItem(itemId)
             item.getItemProperty(self._TREE_ITEM_CAPTION_PROP_ID).setValue(
@@ -2627,54 +2631,54 @@ class InvientChartsDemoWin(Window):
     def getDemoCharts(self, demoSeriesType):
         chartNames = list()
         if demoSeriesType == DemoSeriesType.LINE:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.WITH_DATA_LABELS)
-            chartNames.add(ChartName.TIMESERIES_ZOOMABLE)
-            chartNames.add(ChartName.MASTER_DETAIL)
-            chartNames.add(ChartName.CLICK_TO_ADD_POINT)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.WITH_DATA_LABELS)
+            chartNames.append(ChartName.TIMESERIES_ZOOMABLE)
+            chartNames.append(ChartName.MASTER_DETAIL)
+            chartNames.append(ChartName.CLICK_TO_ADD_POINT)
 
         elif demoSeriesType == DemoSeriesType.BAR:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.STACKED)
-            chartNames.add(ChartName.WITH_NEGATIVE_STACK)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.STACKED)
+            chartNames.append(ChartName.WITH_NEGATIVE_STACK)
 
         elif demoSeriesType == DemoSeriesType.COLUMN:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.WITH_NEGATIVE_VALUES)
-            chartNames.add(ChartName.STACKED)
-            chartNames.add(ChartName.STACKED_AND_GROUPED)
-            chartNames.add(ChartName.STACKED_PERCENT)
-            chartNames.add(ChartName.WITH_ROTATED_LABELS)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.WITH_NEGATIVE_VALUES)
+            chartNames.append(ChartName.STACKED)
+            chartNames.append(ChartName.STACKED_AND_GROUPED)
+            chartNames.append(ChartName.STACKED_PERCENT)
+            chartNames.append(ChartName.WITH_ROTATED_LABELS)
 
         elif demoSeriesType == DemoSeriesType.AREA:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.WITH_NEGATIVE_VALUES)
-            chartNames.add(ChartName.STACKED)
-            chartNames.add(ChartName.PERCENTAGE)
-            chartNames.add(ChartName.WITH_MISSING_POINTS)
-            chartNames.add(ChartName.INVERTED_AXES)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.WITH_NEGATIVE_VALUES)
+            chartNames.append(ChartName.STACKED)
+            chartNames.append(ChartName.PERCENTAGE)
+            chartNames.append(ChartName.WITH_MISSING_POINTS)
+            chartNames.append(ChartName.INVERTED_AXES)
 
         elif demoSeriesType == DemoSeriesType.AREASPLINE:
-            chartNames.add(ChartName.BASIC)
+            chartNames.append(ChartName.BASIC)
 
         elif demoSeriesType == DemoSeriesType.PIE:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.WITH_LEGEND)
-            chartNames.add(ChartName.DONUT)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.WITH_LEGEND)
+            chartNames.append(ChartName.DONUT)
 
         elif demoSeriesType == DemoSeriesType.SCATTER:
-            chartNames.add(ChartName.BASIC)
+            chartNames.append(ChartName.BASIC)
 
         elif demoSeriesType == DemoSeriesType.SPLINE:
-            chartNames.add(ChartName.BASIC)
-            chartNames.add(ChartName.WITH_PLOTBANDS)
-            chartNames.add(ChartName.WITH_SYMBOLS)
-            chartNames.add(ChartName.UPDATING_EACH_SECOND)
+            chartNames.append(ChartName.BASIC)
+            chartNames.append(ChartName.WITH_PLOTBANDS)
+            chartNames.append(ChartName.WITH_SYMBOLS)
+            chartNames.append(ChartName.UPDATING_EACH_SECOND)
 
         elif demoSeriesType == DemoSeriesType.COMBINATION:
-            chartNames.add(ChartName.COMBINATION_COLUMN_LINE_AND_PIE)
-            chartNames.add(ChartName.SCATTER_WITH_REGRESSION_LINE)
-            chartNames.add(ChartName.MULTIPLE_AXES)
+            chartNames.append(ChartName.COMBINATION_COLUMN_LINE_AND_PIE)
+            chartNames.append(ChartName.SCATTER_WITH_REGRESSION_LINE)
+            chartNames.append(ChartName.MULTIPLE_AXES)
 
         return chartNames
 
@@ -2779,7 +2783,7 @@ class InvientChartsDemoWin(Window):
 
         # Initialize data
         self._scatterFemaleData = self.getPoints(series,
-                [161.2, 51.6],
+                [[161.2, 51.6],
                 [167.5, 59.0], [159.5, 49.2],
                 [157.0, 63.0], [155.8, 53.6],
                 [170.0, 59.0], [159.1, 47.6],
@@ -2909,7 +2913,7 @@ class InvientChartsDemoWin(Window):
                 [162.6, 61.4], [157.5, 76.8],
                 [176.5, 71.8], [164.4, 55.5],
                 [160.7, 48.6], [174.0, 66.4],
-                [163.8, 67.3])
+                [163.8, 67.3]])
 
         return self._scatterFemaleData
 
@@ -2919,7 +2923,7 @@ class InvientChartsDemoWin(Window):
             return self._scatterMaleData
 
         self._scatterMaleData = self.getPoints(series,
-                [174.0, 65.6],
+                [[174.0, 65.6],
                 [175.3, 71.8], [193.5, 80.7],
                 [186.5, 72.6], [187.2, 78.8],
                 [181.5, 74.8], [184.0, 86.4],
@@ -3042,7 +3046,7 @@ class InvientChartsDemoWin(Window):
                 [179.1, 89.1], [170.2, 62.3],
                 [177.8, 82.7], [179.1, 79.1],
                 [190.5, 98.2], [177.8, 84.1],
-                [180.3, 83.2], [180.3, 83.2])
+                [180.3, 83.2], [180.3, 83.2]])
 
         return self._scatterMaleData
 
@@ -3189,7 +3193,7 @@ class InvientChartsDemoWin(Window):
 
 
     def getMasterDetailData(self, series):
-        return self.getDateTimePoints(series, 0.8446, 0.8445, 0.8444, 0.8451,
+        return self.getDateTimePoints(series, [0.8446, 0.8445, 0.8444, 0.8451,
                 0.8418, 0.8264, 0.8258, 0.8232, 0.8233, 0.8258, 0.8283, 0.8278,
                 0.8256, 0.8292, 0.8239, 0.8239, 0.8245, 0.8265, 0.8261, 0.8269,
                 0.8273, 0.8244, 0.8244, 0.8172, 0.8139, 0.8146, 0.8164, 0.82,
@@ -3326,7 +3330,7 @@ class InvientChartsDemoWin(Window):
                 0.7889, 0.7879, 0.7855, 0.7866, 0.7865, 0.7795, 0.7758, 0.7717,
                 0.761, 0.7497, 0.7471, 0.7473, 0.7407, 0.7288, 0.7074, 0.6927,
                 0.7083, 0.7191, 0.719, 0.7153, 0.7156, 0.7158, 0.714, 0.7119,
-                0.7129, 0.7129, 0.7049, 0.7095)
+                0.7129, 0.7129, 0.7049, 0.7095])
 
 
 class MasterChartZoomListener(ChartZoomListener):
@@ -3695,18 +3699,16 @@ class ChartName(object):
     def getName(self):
         return self._name
 
-    _values = [BASIC, DONUT, CLICK_TO_ADD_POINT, MASTER_DETAIL,
-            TIMESERIES_ZOOMABLE, WITH_DATA_LABELS, STACKED,
-            WITH_NEGATIVE_STACK, WITH_NEGATIVE_VALUES,
-            STACKED_AND_GROUPED, STACKED_PERCENT,
-            WITH_ROTATED_LABELS, WITH_MISSING_POINTS,
-            INVERTED_AXES, WITH_LEGEND, WITH_PLOTBANDS, WITH_SYMBOLS,
-            UPDATING_EACH_SECOND, COMBINATION_COLUMN_LINE_AND_PIE,
-            PERCENTAGE, SCATTER_WITH_REGRESSION_LINE, MULTIPLE_AXES]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.BASIC, cls.DONUT, cls.CLICK_TO_ADD_POINT, cls.MASTER_DETAIL,
+            cls.TIMESERIES_ZOOMABLE, cls.WITH_DATA_LABELS, cls.STACKED,
+            cls.WITH_NEGATIVE_STACK, cls.WITH_NEGATIVE_VALUES,
+            cls.STACKED_AND_GROUPED, cls.STACKED_PERCENT,
+            cls.WITH_ROTATED_LABELS, cls.WITH_MISSING_POINTS,
+            cls.INVERTED_AXES, cls.WITH_LEGEND, cls.WITH_PLOTBANDS, cls.WITH_SYMBOLS,
+            cls.UPDATING_EACH_SECOND, cls.COMBINATION_COLUMN_LINE_AND_PIE,
+            cls.PERCENTAGE, cls.SCATTER_WITH_REGRESSION_LINE, cls.MULTIPLE_AXES]
 
 ChartName.BASIC = ChartName('Basic')
 ChartName.DONUT = ChartName('Donut')
@@ -3754,12 +3756,10 @@ class DemoSeriesType(object):
     def getName(self):
         return self._name
 
-    _values = [LINE, SPLINE, SCATTER, AREA, AREASPLINE, BAR, COLUMN,
-            PIE, COMBINATION]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.LINE, cls.SPLINE, cls.SCATTER, cls.AREA, cls.AREASPLINE,
+                cls.BAR, cls.COLUMN, cls.PIE, cls.COMBINATION]
 
 DemoSeriesType.LINE = DemoSeriesType(SeriesType.LINE, 'Line')
 DemoSeriesType.SPLINE = DemoSeriesType(SeriesType.SPLINE, 'Spline')
@@ -3775,28 +3775,29 @@ DemoSeriesType.COMBINATION = DemoSeriesType(SeriesType.COMMONSERIES, 'Combinatio
 
 class ChartTypeChangeListener(IValueChangeListener):
 
-    def __init__(self, window):
+    def __init__(self, window, tree):
         self._window = window
+        self._tree = tree
 
     def valueChange(self, event):
-        try:
+#        try:
             selectedId = event.getProperty().getValue()
-            if self.tree.getParent(selectedId) is not None:
-                parentId = self.tree.getParent(selectedId)
-                demoSeriesTypeName = self.tree.getContainerProperty(parentId,
+            if self._tree.getParent(selectedId) is not None:
+                parentId = self._tree.getParent(selectedId)
+                demoSeriesTypeName = self._tree.getContainerProperty(parentId,
                         self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
-                seriesInstanceName = self.tree.getContainerProperty(selectedId,
+                seriesInstanceName = self._tree.getContainerProperty(selectedId,
                         self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
                 print ('parent : ' + demoSeriesTypeName
                        + ', selected : ' + seriesInstanceName)
                 self._window.showChart(demoSeriesTypeName, seriesInstanceName)
             else:
-                demoSeriesTypeName = self.tree.getContainerProperty(selectedId,
+                demoSeriesTypeName = self._tree.getContainerProperty(selectedId,
                         self._window._TREE_ITEM_CAPTION_PROP_ID).getValue()
                 print 'Selected ' + demoSeriesTypeName
                 self._window.showChartInstancesForSeriesType(demoSeriesTypeName)
-        except Exception, e:
-            e.printStackTrace()
+#        except Exception, e:
+#            e.printStackTrace()
 
 
 class SeriesTypeClickListener(button.IClickListener):

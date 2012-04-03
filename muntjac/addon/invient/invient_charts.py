@@ -414,7 +414,7 @@ class InvientCharts(AbstractComponent):
         return None
 
 
-    def addListener(self, listener, seriesTypes=None):
+    def addListener(self, listener, *seriesTypes):
         """Adds the listener. If the argument seriesTypes is not specified
         then the listener will be added for all series type otherwise it will
         be added for a specific series type
@@ -465,7 +465,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointClickListeners[seriesType] = listeners
-                self.addListener(PointClickEvent, listener,
+                self.registerListener(PointClickEvent, listener,
                         _POINT_CLICK_METHOD)
             elif isinstance(listener, PointRemoveListener):
                 if len(seriesTypes) == 0:
@@ -477,7 +477,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointRemoveListeners[seriesType] = listeners
-                self.addListener(PointRemoveEvent, listener,
+                self.registerListener(PointRemoveEvent, listener,
                         _POINT_REMOVE_METHOD)
             elif isinstance(listener, PointSelectListener):
                 if len(seriesTypes) == 0:
@@ -489,7 +489,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointSelectListeners.put(seriesType, listeners)
-                self.addListener(PointSelectEvent, listener,
+                self.registerListener(PointSelectEvent, listener,
                         _POINT_SELECT_METHOD)
             elif isinstance(listener, PointUnselectListener):
                 if len(seriesTypes) == 0:
@@ -501,7 +501,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._pointUnselectListeners.put(seriesType, listeners)
-                self.addListener(PointUnselectEvent, listener,
+                self.registerListener(PointUnselectEvent, listener,
                         _POINT_UNSELECT_METHOD)
             elif isinstance(listener, SeriesClickListerner):
                 if len(seriesTypes) == 0:
@@ -513,7 +513,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesClickListeners[seriesType] = listeners
-                self.addListener(SeriesClickEvent, listener,
+                self.registerListener(SeriesClickEvent, listener,
                         _SERIES_CLICK_METHOD)
             elif isinstance(listener, SeriesHideListerner):
                 if len(seriesTypes) == 0:
@@ -525,7 +525,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesHideListeners[seriesType] = listeners
-                self.addListener(SeriesHideEvent, listener,
+                self.registerListener(SeriesHideEvent, listener,
                         _SERIES_HIDE_METHOD)
             elif isinstance(listener, SeriesLegendItemClickListerner):
                 if len(seriesTypes) == 0:
@@ -539,7 +539,7 @@ class InvientCharts(AbstractComponent):
                         listeners.add(listener)
                         self._seriesLegendItemClickListeners[seriesType] = \
                                 listeners
-                self.addListener(SeriesLegendItemClickEvent, listener,
+                self.registerListener(SeriesLegendItemClickEvent, listener,
                         _SERIES_LEGENDITEM_CLICK_METHOD)
             else:
                 if len(seriesTypes) == 0:
@@ -551,7 +551,7 @@ class InvientCharts(AbstractComponent):
                         listeners = set()
                         listeners.add(listener)
                         self._seriesShowListeners[seriesType] = listeners
-                self.addListener(SeriesShowEvent, listener,
+                self.registerListener(SeriesShowEvent, listener,
                         _SERIES_SHOW_METHOD)
 
 
@@ -1792,6 +1792,7 @@ class Point(object):
         self._isAutosetX = None
         self._shift = None
 
+        name = None
         if name_or_config is not None:
             if isinstance(name_or_config, PointConfig):
                 config = name_or_config
@@ -1930,7 +1931,11 @@ class DecimalPoint(Point):
                   - the y value of this point
                   - the configuration of this point
         """
+        self._x = None
+        self._y = None
+
         self._invientCharts = invientCharts
+
         nargs = len(args)
         if nargs == 1:
             series, = args
@@ -2027,7 +2032,7 @@ class DecimalPoint(Point):
         other = obj
         # If x is null then return always false as x is calculated
         # if not specified
-        if (self._x is None) or (other.x is None):
+        if (self._x is None) or (other._x is None):
             return False
         if not (self._x == other._x):
             return False
@@ -2210,12 +2215,12 @@ class Series(object):
         self._config = None
         self._invientCharts = None
 
+        seriesType = None
         if seriesType_or_config is not None:
             if isinstance(seriesType_or_config, SeriesType):
                 seriesType = seriesType_or_config
             else:
                 config = seriesType_or_config
-                seriesType = None
 
         self._name = name
         self._type = seriesType
@@ -2468,6 +2473,7 @@ class XYSeries(Series):
         @param config:
                    the configuration for this series
         """
+        seriesType = None
         if seriesType_or_config is not None:
             if isinstance(seriesType_or_config, SeriesType):
                 seriesType = seriesType_or_config
