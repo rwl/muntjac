@@ -1542,6 +1542,8 @@ class AreaConfig(BaseLineConfig):
     """
 
     def __init__(self):
+        super(AreaConfig, self).__init__()
+
         self._fillColor = None
         self._lineColor = None
         self._fillOpacity = None
@@ -1676,6 +1678,8 @@ class PieConfig(SeriesConfig):
     """
 
     def __init__(self):
+        super(PieConfig, self).__init__()
+
         self._centerX = None
         self._centerY = None
         self._borderColor = None
@@ -1851,6 +1855,8 @@ class BaseBarConfig(SeriesConfig):
     """
 
     def __init__(self):
+        super(BaseBarConfig, self).__init__()
+
         self._borderColor = None
         self._borderRadius = None
         self._borderWidth = None
@@ -3052,9 +3058,9 @@ class AxisBase(Axis):
             self._plotBands.remove(plotBand)
         else:
             Id = plotBand_or_id
-            for i, pb in enumerate(self._plotBands[:]):
+            for pb in set(self._plotBands):
                 if pb.getId() == Id:
-                    del self._plotBands[i]
+                    self._plotBands.remove(pb)
                     break
 
 
@@ -3859,7 +3865,7 @@ class DateTimeRange(Range):
         self._to = to
 
     def getFrom(self):
-        return self.from_
+        return self._from
 
     def setFrom(self, from_):
         self._from = from_

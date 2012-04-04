@@ -1289,7 +1289,7 @@ def getDate(dt, isIncludeTime=False):
     if not isIncludeTime:
         dt2 = datetime(dt.year, dt.month, dt.day)
         dt = dt2
-    return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e3)
+    return long(totalseconds(dt - datetime(1970, 1, 1)))
 
 
 def writeDateTimeAxis(target, dateTimeAxis, isIncludeTime):

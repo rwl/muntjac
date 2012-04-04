@@ -1900,12 +1900,12 @@ class Point(object):
 
     def getX(self):
         """@return: Returns X value of this point"""
-        pass
+        raise NotImplementedError
 
 
     def getY(self):
         """@return: Returns Y value of this point"""
-        pass
+        raise NotImplementedError
 
 
     def __str__(self):
@@ -1923,7 +1923,7 @@ class DecimalPoint(Point):
     @author: Richard Lincoln
     """
 
-    def __init__(self, invientCharts, *args):
+    def __init__(self, *args):
         """@param invientCharts:
         @param args:
             tuple of the form:
@@ -1960,8 +1960,6 @@ class DecimalPoint(Point):
         """
         self._x = None
         self._y = None
-
-        self._invientCharts = invientCharts
 
         nargs = len(args)
         if nargs == 1:
@@ -2036,8 +2034,8 @@ class DecimalPoint(Point):
                 + ', id=' + self.getId()
                 + ', name=' + self.getName()
                 + ', seriesName='
-                + (self._invientCharts.getSeries().getName()
-                    if self._invientCharts.getSeries() is not None else '')
+                + (self._series.getName()
+                    if self._series is not None else '')
                 + ']')
 
 
@@ -2081,7 +2079,7 @@ class DateTimePoint(Point):
     @author: Richard Lincoln
     """
 
-    def __init__(self, invientCharts, *args):
+    def __init__(self, *args):
         """@param args:
             tuple of the form:
               - (series)
@@ -2103,9 +2101,9 @@ class DateTimePoint(Point):
                 - the x value of this point
                 - the y value of this point
         """
-        self._invientCharts = invientCharts
+        self._x = None
+        self._y = None
 
-        args = args
         nargs = len(args)
         if nargs == 1:
             series, = args
@@ -2157,12 +2155,12 @@ class DateTimePoint(Point):
     def __str__(self):
         return ('DateTimePoint [x='
             + getDate(self._x,
-                    self._invientCharts.getSeries().isIncludeTime()
-                    if self._invientCharts.getSeries() is not None else False)
+                    self._series.isIncludeTime()
+                    if self._series is not None else False)
             + ', y=' + str(self._y) + ', id=' + self.getId()
             + ', name=' + self.getName()
-            + ', seriesName=' + (self._invientCharts.getSeries().getName()
-                    if self._invientCharts.getSeries() is not None else '')
+            + ', seriesName=' + (self._series.getName()
+                    if self._series is not None else '')
             + ']')
 
 
@@ -2346,7 +2344,7 @@ class Series(object):
             self._invientCharts.requestRepaint()
 
 
-    def addPoint(self, shift, *points):
+    def addPoint(self, shift, points):
         """Adds one or more points into this series, specified as an argument
         to this method
 
@@ -2355,6 +2353,8 @@ class Series(object):
                  point has same (x, y) value as any other point in the
                  argument points then it will not be added.
         """
+        points = [points] if isinstance(points, Point) else points
+
         if shift:
             # Remove first point as other points gets appended at the end
 #            pointsItr = self._points
@@ -2366,7 +2366,8 @@ class Series(object):
         pointsAddedList = list()
 
         for point in points:
-            if self._points.add(point):
+            if point not in self._points:
+                self._points.add(point)
                 pointsAddedList.append(point)
 
         self.updatePointXValuesIfNotPresent()
@@ -2644,14 +2645,14 @@ class DateTimeSeries(Series):
         nargs = len(args)
         if nargs == 1:
             name, = args
-            self.__init__(name, False)
+            self.__init__(invientCharts, name, False)
         elif nargs == 2:
             if isinstance(args[1], SeriesType):
                 name, seriesType = args
-                self.__init__(name, seriesType, False)
+                self.__init__(invientCharts, name, seriesType, False)
             elif isinstance(args[1], SeriesConfig):
                 name, config = args
-                self.__init__(name, config, False)
+                self.__init__(invientCharts, name, config, False)
             else:
                 name, isIncludeTime = args
                 super(DateTimeSeries, self).__init__(name)
@@ -2660,7 +2661,7 @@ class DateTimeSeries(Series):
             if isinstance(args[1], SeriesType):
                 if isinstance(args[2], SeriesConfig):
                     name, seriesType, config = args
-                    self.__init__(name, seriesType, config, False)
+                    self.__init__(invientCharts, name, seriesType, config, False)
                 else:
                     name, seriesType, isIncludeTime = args
                     super(DateTimeSeries, self).__init__(name, seriesType)
@@ -2739,7 +2740,7 @@ class DateTimeSeries(Series):
 
     def updatePointXValuesIfNotPresent(self):
         pointStart = self.getDefPointStart()
-        pointInterval = 3600000
+        pointInterval = 3600#000
         # 1 hour
         if isinstance(super(DateTimeSeries, self).getConfig(), BaseLineConfig):
             config = super(DateTimeSeries, self).getConfig()
@@ -2747,7 +2748,7 @@ class DateTimeSeries(Series):
                 pointStart = config.getPointStart()
             if config.getPointInterval() is not None:
                 pointInterval = config.getPointInterval()
-        prevDate = datetime(pointStart)
+        prevDate = datetime.fromtimestamp(pointStart)
         count = 0
         for point in self.getPoints():
             if ((point.getX() is None)
@@ -2796,10 +2797,10 @@ class SeriesType(object):
     PIE = None
 
     def __init__(self, typ):
-        self._type = typ
+        self._typ = typ
 
     def getName(self):
-        return self._type
+        return self._typ
 
     @classmethod
     def values(cls):

@@ -257,7 +257,7 @@ class InvientChartsDemoWin(Window):
         detailChart = self.getDetailChart(masterChart)
 
         # Register events
-        l = MasterChartZoomListener(self)
+        l = MasterChartZoomListener(self, masterChart, detailChart)
         masterChart.addListener(l)
 
         # Add master
@@ -317,17 +317,18 @@ class InvientChartsDemoWin(Window):
 
         # Line instance configuration
         lineSeriesCfg = LineConfig()
-        lineSeriesCfg.setPointStart(self._detailChartPointStartDate.getTime())
+        start = self._time(self._detailChartPointStartDate)
+        lineSeriesCfg.setPointStart(start)
         lineSeriesCfg.setPointInterval(24 * 3600 * 1000.0)
         lineSeriesCfg.setColor(RGB(69, 114, 167))
-        detailSeries = DateTimeSeries('USD to EUR', SeriesType.LINE,
+        detailSeries = DateTimeSeries(detailChart, 'USD to EUR', SeriesType.LINE,
                 lineSeriesCfg)
 
         detailPoints = set()
         masterChartSeries = masterChart.getSeries('USD to EUR')
         for point in masterChartSeries.getPoints():
-            if (point.getX().getTime()
-                    >= self._detailChartPointStartDate.getTime()):
+            if (self._time(point.getX())
+                    >= self._time(self._detailChartPointStartDate)):
                 detailPoints.add(DateTimePoint(detailSeries, point.getY()))
 
         detailSeries.setSeriesPoints(detailPoints)
@@ -405,14 +406,19 @@ class InvientChartsDemoWin(Window):
         # call to SeriesConfig
         seriesDataCfg = AreaConfig()
         seriesDataCfg.setPointInterval(24 * 3600 * 1000.0)
-        seriesDataCfg.setPointStart(self._masterChartMinDate.getTime())
-        masterChartSeries = DateTimeSeries('USD to EUR', SeriesType.AREA,
+        start = self._time(self._masterChartMinDate)
+        seriesDataCfg.setPointStart(start)
+        masterChartSeries = DateTimeSeries(chart, 'USD to EUR', SeriesType.AREA,
                 seriesDataCfg)
         masterChartSeries.setSeriesPoints(self.getMasterDetailData(
                 masterChartSeries))
         chart.addSeries(masterChartSeries)
 
         return chart
+
+
+    def _time(self, dt):
+        return long(totalseconds(dt - datetime(1970, 1, 1)))
 
 
     def showLine(self):
@@ -1990,7 +1996,7 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
 
-        seriesData = DateTimeSeries('Random Data', True)
+        seriesData = DateTimeSeries(chart, 'Random Data', True)
         points = set()
         dtNow = datetime()
         # Add random data.
@@ -2127,7 +2133,7 @@ class InvientChartsDemoWin(Window):
 
         chart = InvientCharts(chartConfig)
 
-        series = DateTimeSeries('Hestavollane', splineCfg, True)
+        series = DateTimeSeries(chart, 'Hestavollane', splineCfg, True)
         series.setSeriesPoints(self.getDateTimePoints(series,
                 4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
                 7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
@@ -2136,7 +2142,7 @@ class InvientChartsDemoWin(Window):
                 3.0, 3.0))
         chart.addSeries(series)
 
-        series = DateTimeSeries('Voll', splineCfg, True)
+        series = DateTimeSeries(chart, 'Voll', splineCfg, True)
         series.setSeriesPoints(self.getDateTimePoints(series,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
                 0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -2406,9 +2412,10 @@ class InvientChartsDemoWin(Window):
         serieaAreaCfg.setPointInterval(24 * 3600 * 1000.0)
 
         # Series
-        dateTimeSeries = DateTimeSeries('USD to EUR', SeriesType.AREA,
+        dateTimeSeries = DateTimeSeries(chart, 'USD to EUR', SeriesType.AREA,
                 serieaAreaCfg)
-        dateTimeSeries.addPoint(self.getDateTimeSeriesPoints(dateTimeSeries))
+        points = self.getDateTimeSeriesPoints(dateTimeSeries)
+        dateTimeSeries.addPoint(points)
         chart.addSeries(dateTimeSeries)
 
         self.addChart(chart)
@@ -2503,7 +2510,7 @@ class InvientChartsDemoWin(Window):
     @classmethod
     def getPointStartDate(cls, year, month, day):
         dt = datetime(year, month, day)
-        return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e3)
+        return long(totalseconds(dt - datetime(1970, 1, 1)))
 
 
     @classmethod
@@ -3052,7 +3059,7 @@ class InvientChartsDemoWin(Window):
 
 
     def getDateTimeSeriesPoints(self, series):
-        return [0.8446, 0.8445, 0.8444, 0.8451,
+        return self.getDateTimePoints(series, [0.8446, 0.8445, 0.8444, 0.8451,
                 0.8418, 0.8264, 0.8258, 0.8232, 0.8233, 0.8258, 0.8283, 0.8278,
                 0.8256, 0.8292, 0.8239, 0.8239, 0.8245, 0.8265, 0.8261, 0.8269,
                 0.8273, 0.8244, 0.8244, 0.8172, 0.8139, 0.8146, 0.8164, 0.82,
@@ -3189,7 +3196,7 @@ class InvientChartsDemoWin(Window):
                 0.7889, 0.7879, 0.7855, 0.7866, 0.7865, 0.7795, 0.7758, 0.7717,
                 0.761, 0.7497, 0.7471, 0.7473, 0.7407, 0.7288, 0.7074, 0.6927,
                 0.7083, 0.7191, 0.719, 0.7153, 0.7156, 0.7158, 0.714, 0.7119,
-                0.7129, 0.7129, 0.7049, 0.7095]
+                0.7129, 0.7129, 0.7049, 0.7095])
 
 
     def getMasterDetailData(self, series):
@@ -3335,34 +3342,37 @@ class InvientChartsDemoWin(Window):
 
 class MasterChartZoomListener(ChartZoomListener):
 
-    def __init__(self, window):
+    def __init__(self, window, masterChart, detailChart):
         self._window = window
+        self._masterChart = masterChart
+        self._detailChart = detailChart
 
 
     def chartZoom(self, chartZoomEvent):
         # chartZoomEvent.getChartArea().get
-        masterChartSeries = self.masterChart.getSeries('USD to EUR')
+        masterChartSeries = self._masterChart.getSeries('USD to EUR')
 
         min_ = chartZoomEvent.getChartArea().getxAxisMin()
         max_ = chartZoomEvent.getChartArea().getxAxisMax()
 
         detailPoints = set()
-        detailChartSeries = self.detailChart.getSeries('USD to EUR')
-        self.detailChart.removeSeries(detailChartSeries)
+        detailChartSeries = self._detailChart.getSeries('USD to EUR')
+        self._detailChart.removeSeries(detailChartSeries)
 
         for point in masterChartSeries.getPoints():
-            if point.getX().getTime() > min_ and point.getX().getTime() < max_:
-                dtp = DateTimePoint(detailChartSeries, point.getX(),
-                        point.getY())
+            if (self._window._time(point.getX()) > min_
+                    and self._window._time(point.getX()) < max_):
+                dtp = DateTimePoint(detailChartSeries,
+                        point.getX(), point.getY())
                 detailPoints.add(dtp)
 
         # Update series with new points
         detailChartSeries.setSeriesPoints(detailPoints)
-        self.detailChart.addSeries(detailChartSeries)
-        self.detailChart.refresh()
+        self._detailChart.addSeries(detailChartSeries)
+        self._detailChart.refresh()
 
         # Update plotbands
-        masterDateTimeAxis = iter(self.masterChart.getConfig().getXAxes()).next()  # FIXME: iterator
+        masterDateTimeAxis = iter(self._masterChart.getConfig().getXAxes()).next()  # FIXME: iterator
         masterDateTimeAxis.removePlotBand('mask-before')
         plotBandBefore = DateTimePlotBand('mask-before')
         plotBandBefore.setRange(DateTimeRange(self._window._masterChartMinDate,
@@ -3372,11 +3382,11 @@ class MasterChartZoomListener(ChartZoomListener):
 
         masterDateTimeAxis.removePlotBand('mask-after')
         plotBandAfter = DateTimePlotBand('mask-after')
-        plotBandAfter.setRange(DateTimeRange(datetime(max_),
+        plotBandAfter.setRange(DateTimeRange(datetime.fromtimestamp(max_),
                 self._window._masterChartMaxDate))
         plotBandAfter.setColor(RGBA(0, 0, 0, 0.2))
         masterDateTimeAxis.addPlotBand(plotBandAfter)
-        self.masterChart.refresh()
+        self._masterChart.refresh()
 
 
 class AddPointChartClickListener(ChartClickListener):
