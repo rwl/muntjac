@@ -369,7 +369,8 @@ def writeCommonSeriesOptions(target, seriesOptions):
         target.addAttribute('allowPointSelect',
                 seriesOptions.getAllowPointSelect())
     if seriesOptions.getAnimation() is not None:
-        target.addAttribute('animation', seriesOptions.getAnimation())
+        target.addAttribute('animation',
+                seriesOptions.getAnimation())
     if seriesOptions.getCursor() is not None:
         target.addAttribute('cursor', seriesOptions.getCursor())
     if seriesOptions.getColor() is not None:
@@ -851,13 +852,13 @@ def writePoints(target, points):
                 target.addAttribute('name', point.getName())
             if point.getX() is not None:
                 if isinstance(point, DecimalPoint):
-                    target.addAttribute('x', point.getX())
+                    target.addAttribute('x', float(point.getX()))
                 else:
                     target.addAttribute('x', getDate(point.getX(),
                             point.getSeries().isIncludeTime()))
 
             if point.getY() is not None:
-                target.addAttribute('y', point.getY())
+                target.addAttribute('y', float(point.getY()))
 
             target.addAttribute('isShift', point.isShift())
 

@@ -855,11 +855,9 @@ class ZoomType(object):
     def getName(self):
         return self._type
 
-    _values = [X, Y, XY, NONE]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.X, cls.Y, cls.XY, cls.NONE]
 
 
 ZoomType.X = ZoomType('x')
@@ -1399,6 +1397,8 @@ class BaseLineConfig(SeriesConfig):
     """
 
     def __init__(self):
+        super(BaseLineConfig, self).__init__()
+
         self._pointStart = None
         self._pointInterval = None
         self._stickyTracking = None
@@ -1514,13 +1514,11 @@ class DashStyle(object):
     def getName(self):
         return self._name
 
-    _values = [SOLID, SHORT_DASH, SHORT_DOT, SHORT_DASH_DOT,
-               SHORT_DASH_DOT_DOT, DOT, DASH, LONG_DASH, DASH_DOT,
-               LONG_DASH_DOT, LONG_DASH_DOT_DOT]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.SOLID, cls.SHORT_DASH, cls.SHORT_DOT, cls.SHORT_DASH_DOT,
+                cls.SHORT_DASH_DOT_DOT, cls.DOT, cls.DASH, cls.LONG_DASH,
+                cls.DASH_DOT, cls.LONG_DASH_DOT, cls.LONG_DASH_DOT_DOT]
 
 DashStyle.SOLID = DashStyle('Solid')
 DashStyle.SHORT_DASH = DashStyle('ShortDash')
@@ -2029,11 +2027,9 @@ class Stacking(object):
     def getName(self):
         return self._stacking
 
-    _values = [NORMAL, PERCENT]
-
     @classmethod
     def values(cls):
-        return cls._enum_values[:]
+        return [cls.NORMAL, cls.PERCENT]
 
 Stacking.NORMAL = Stacking('normal')
 Stacking.PERCENT = Stacking('percent')
@@ -2288,15 +2284,13 @@ class HorzAlign(object):
     def getName(self):
         return self._align
 
-    _values = [LEFT, CENTER, RIGHT]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.LEFT, cls.CENTER, cls.RIGHT]
 
-HorzAlign.LEFT = ['left']
-HorzAlign.CENTER = ['center']
-HorzAlign.RIGHT = ['right']
+HorzAlign.LEFT = HorzAlign('left')
+HorzAlign.CENTER = HorzAlign('center')
+HorzAlign.RIGHT = HorzAlign('right')
 
 
 class VertAlign(object):
@@ -2311,11 +2305,9 @@ class VertAlign(object):
     def getName(self):
         return self._align
 
-    _values = [TOP, MIDDLE, BOTTOM]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.TOP, cls.MIDDLE, cls.BOTTOM]
 
 VertAlign.TOP = VertAlign('top')
 VertAlign.MIDDLE = VertAlign('middle')
@@ -2844,11 +2836,10 @@ class Symbol(object):
     def getName(self):
         return self._symbol
 
-    _values = [CIRCLE, DIAMOND, SQUARE, TRIANGLE, TRIANGLE_DOWN]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.CIRCLE, cls.DIAMOND, cls.SQUARE,
+                cls.TRIANGLE, cls.TRIANGLE_DOWN]
 
 Symbol.CIRCLE = Symbol('circle')
 Symbol.DIAMOND = Symbol('diamond')
@@ -3565,11 +3556,9 @@ class TickmarkPlacement(object):
     def getName(self):
         return self._name
 
-    _values = [ON, BETWEEN]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.ON, cls.BETWEEN]
 
 TickmarkPlacement.ON = TickmarkPlacement('on')
 TickmarkPlacement.BETWEEN = TickmarkPlacement('between')
@@ -3591,11 +3580,9 @@ class TickPosition(object):
     def getName(self):
         return self._name
 
-    _values = [OUTSIDE, INSIDE]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.OUTSIDE, cls.INSIDE]
 
 TickPosition.OUTSIDE = TickPosition('outside')
 TickPosition.INSIDE = TickPosition('inside')
@@ -3627,11 +3614,9 @@ class AxisType(object):
     def getName(self):
         return self._type
 
-    _values = [LINEAR, DATETIME]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.LINEAR, cls.DATETIME]
 
 AxisType.LINEAR = AxisType('linear')
 AxisType.DATETIME = AxisType('datetime')
@@ -3649,11 +3634,9 @@ class AxisTitleAlign(object):
     def getName(self):
         return self._name
 
-    _values = [LOW, MIDDLE, HIGH]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.LOW, cls.MIDDLE, cls.HIGH]
 
 AxisTitleAlign.LOW = AxisTitleAlign('low')
 AxisTitleAlign.MIDDLE = AxisTitleAlign('middle')
@@ -4069,6 +4052,7 @@ class NumberYAxis(NumberAxis, YAxis):
 class DateTimeAxis(AxisBase, XAxis):
 
     def __init__(self):
+        super(DateTimeAxis, self).__init__()
         super(DateTimeAxis, self).setType(AxisType.DATETIME)
         self._dateTimeLabelFormats = None
         self._max = None
@@ -4394,11 +4378,9 @@ class Layout(object):
     def getName(self):
         return self._name
 
-    _values = [HORIZONTAL, VERTICAL]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.HORIZONTAL, cls.VERTICAL]
 
 Layout.HORIZONTAL = Layout('horizontal')
 Layout.VERTICAL = Layout('vertical')

@@ -46,6 +46,10 @@ class InvientCharts(AbstractComponent):
     @author: Richard Lincoln
     """
 
+    CLIENT_WIDGET = None #ClientWidget(VInvientCharts)
+
+    TYPE_MAPPING = 'com.invient.vaadin.charts.InvientCharts'
+
     def __init__(self, chartConfig):
         """Creates this chart object with given chart configuration
 
@@ -414,7 +418,7 @@ class InvientCharts(AbstractComponent):
         return None
 
 
-    def addListener(self, listener, *seriesTypes):
+    def addListener(self, listener, seriesTypes=None):
         """Adds the listener. If the argument seriesTypes is not specified
         then the listener will be added for all series type otherwise it will
         be added for a specific series type
@@ -450,10 +454,12 @@ class InvientCharts(AbstractComponent):
                 self._chartZoomListener.add(listener)
                 self.registerListener(ChartZoomEvent, listener,
                         _CHART_ZOOM_METHOD)
-            else:
+            elif isinstance(listener, PieChartLegendItemClickListener):
                 self._pieChartLegendItemClickListener.add(listener)
                 self.registerListener(PieChartLegendItemClickEvent, listener,
                         _LEGENDITEM_CLICK_METHOD)
+            else:
+                super(InvientCharts, self).addListener(listener, seriesTypes)
         else:
             if isinstance(listener, PointClickListener):
                 if len(seriesTypes) == 0:
@@ -488,7 +494,7 @@ class InvientCharts(AbstractComponent):
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._pointSelectListeners.put(seriesType, listeners)
+                        self._pointSelectListeners[seriesType] = listeners
                 self.registerListener(PointSelectEvent, listener,
                         _POINT_SELECT_METHOD)
             elif isinstance(listener, PointUnselectListener):
@@ -500,7 +506,7 @@ class InvientCharts(AbstractComponent):
                     else:
                         listeners = set()
                         listeners.add(listener)
-                        self._pointUnselectListeners.put(seriesType, listeners)
+                        self._pointUnselectListeners[seriesType] = listeners
                 self.registerListener(PointUnselectEvent, listener,
                         _POINT_UNSELECT_METHOD)
             elif isinstance(listener, SeriesClickListerner):
@@ -541,7 +547,7 @@ class InvientCharts(AbstractComponent):
                                 listeners
                 self.registerListener(SeriesLegendItemClickEvent, listener,
                         _SERIES_LEGENDITEM_CLICK_METHOD)
-            else:
+            elif isinstance(listener, SeriesShowListerner):
                 if len(seriesTypes) == 0:
                     seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
@@ -553,6 +559,9 @@ class InvientCharts(AbstractComponent):
                         self._seriesShowListeners[seriesType] = listeners
                 self.registerListener(SeriesShowEvent, listener,
                         _SERIES_SHOW_METHOD)
+            else:
+                iface = seriesTypes
+                super(InvientCharts, self).addListener(listener, iface)
 
 
     def removeListener(self, listener, seriesTypes=None):
@@ -589,21 +598,24 @@ class InvientCharts(AbstractComponent):
                 self._chartZoomListener.remove(listener)
                 self.withdrawListener(ChartZoomEvent, listener,
                         _CHART_ZOOM_METHOD)
-            else:
+            elif isinstance(listener, PieChartLegendItemClickListener):
                 self._pieChartLegendItemClickListener.remove(listener)
                 self.withdrawListener(PieChartLegendItemClickEvent, listener,
                         _LEGENDITEM_CLICK_METHOD)
+            else:
+                super(InvientCharts, self).removeListener(listener, seriesTypes)
         else:
-            if len(seriesTypes) == 0:
-                seriesTypes = [SeriesType.COMMONSERIES]
-
             if isinstance(listener, PointClickListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointClickListeners:
                         self._pointClickListeners[seriesType].remove(listener)
                 self.withdrawListener(PointClickEvent, listener,
                         _POINT_CLICK_METHOD)
             elif isinstance(listener, PointRemoveListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointRemoveListeners:
                         self._pointRemoveListeners[seriesType].remove(listener)
@@ -611,12 +623,16 @@ class InvientCharts(AbstractComponent):
                 self.withdrawListener(PointRemoveEvent, listener,
                         _POINT_REMOVE_METHOD)
             elif isinstance(listener, PointSelectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointSelectListeners:
                         self._pointSelectListeners[seriesType].remove(listener)
                 self.withdrawListener(PointSelectEvent, listener,
                         _POINT_SELECT_METHOD)
             elif isinstance(listener, PointUnselectListener):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._pointUnselectListeners:
                         self._pointUnselectListeners[seriesType].remove(
@@ -624,30 +640,41 @@ class InvientCharts(AbstractComponent):
                 self.withdrawListener(PointUnselectEvent, listener,
                         _POINT_UNSELECT_METHOD)
             elif isinstance(listener, SeriesClickListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesClickListeners:
                         self._seriesClickListeners[seriesType].remove(listener)
                 self.withdrawListener(SeriesClickEvent, listener,
                         _SERIES_CLICK_METHOD)
             elif isinstance(listener, SeriesHideListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesHideListeners:
                         self._seriesHideListeners[seriesType].remove(listener)
                 self.withdrawListener(SeriesHideEvent, listener,
                         _SERIES_HIDE_METHOD)
             elif isinstance(listener, SeriesLegendItemClickListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesLegendItemClickListeners:
                         self._seriesLegendItemClickListeners[
                                 seriesType].remove(listener)
                 self.withdrawListener(SeriesLegendItemClickEvent, listener,
                         _SERIES_LEGENDITEM_CLICK_METHOD)
-            else:
+            elif isinstance(listener, SeriesShowListerner):
+                if len(seriesTypes) == 0:
+                    seriesTypes = [SeriesType.COMMONSERIES]
                 for seriesType in seriesTypes:
                     if seriesType in self._seriesShowListeners:
                         self._seriesShowListeners[seriesType].remove(listener)
                 self.withdrawListener(SeriesShowEvent, listener,
                         _SERIES_SHOW_METHOD)
+            else:
+                iface = seriesTypes
+                super(InvientCharts, self).removeListener(listener, iface)
 
 
     def setSeries(self, series):
@@ -1790,7 +1817,7 @@ class Point(object):
         """
         self._id = None
         self._isAutosetX = None
-        self._shift = None
+        self._shift = False
 
         name = None
         if name_or_config is not None:
@@ -1947,7 +1974,7 @@ class DecimalPoint(Point):
                 self._y = y
             else:
                 x, y = args
-                super(DecimalPoint, self).__init__()
+                super(DecimalPoint, self).__init__(None)
                 self._x = x
                 self._y = y
         elif nargs == 3:
@@ -2675,7 +2702,7 @@ class DateTimeSeries(Series):
                 this series.
         """
         if shift is None:
-            points, = point_or_points
+            points = point_or_points
             return super(DateTimeSeries, self).addPoint(False, points)
         else:
             point = point_or_points
@@ -2774,12 +2801,10 @@ class SeriesType(object):
     def getName(self):
         return self._type
 
-    _values = [COMMONSERIES, LINE, SPLINE, SCATTER, AREA, AREASPLINE,
-               BAR, COLUMN, PIE]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.COMMONSERIES, cls.LINE, cls.SPLINE, cls.SCATTER,
+                cls.AREA, cls.AREASPLINE, cls.BAR, cls.COLUMN, cls.PIE]
 
 SeriesType.COMMONSERIES = SeriesType('series')
 SeriesType.LINE = SeriesType('line')
@@ -2909,11 +2934,9 @@ class SeriesCURType(object):
     def getName(self):
         return self._name
 
-    _values = [ADD, UPDATE, REMOVE]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.ADD, cls.UPDATE, cls.REMOVE]
 
 SeriesCURType.ADD = SeriesCURType('Add')
 SeriesCURType.UPDATE = SeriesCURType('Update')

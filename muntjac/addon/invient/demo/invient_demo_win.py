@@ -386,8 +386,8 @@ class InvientChartsDemoWin(Window):
         # Plot options
         areaCfg = AreaConfig()
         colorStops = list()
-        colorStops.add(LinearColorStop(0, RGB(69, 114, 167)))
-        colorStops.add(LinearColorStop(1, RGBA(0, 0, 0, 0)))
+        colorStops.append(LinearColorStop(0, RGB(69, 114, 167)))
+        colorStops.append(LinearColorStop(1, RGBA(0, 0, 0, 0)))
 
         # Fill color
         areaCfg.setFillColor(LinearGradient(0, 0, 0, 70, colorStops))
@@ -436,7 +436,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.setXAxes(xAxesSet)
 
         numberYAxis = NumberYAxis()
-        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103C)'.encode('utf-8')))
+        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103)'.encode('utf-8')))
         plotLine = NumberPlotLine('TempAt0')
         plotLine.setValue(NumberValue(0.0))
         plotLine.setWidth(1)
@@ -465,7 +465,7 @@ class InvientChartsDemoWin(Window):
         # Tooltip formatter
         chartConfig.getTooltip().setFormatterJsFunc(
                 'function() { '
-                    + u' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'\u2103C\''.encode('utf-8')
+                    + u' return \'<b>\' + this.series.name + \'</b><br/>\' +  this.x + \': \'+ this.y +\'\u2103\''.encode('utf-8')
                     + '}')
 
         chart = InvientCharts(chartConfig)
@@ -561,7 +561,7 @@ class InvientChartsDemoWin(Window):
         chartConfig.setXAxes(xAxesSet)
 
         numberYAxis = NumberYAxis()
-        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103C)'.encode('utf-8')))
+        numberYAxis.setTitle(AxisTitle(u'Temperature (\u2103)'.encode('utf-8')))
         yAxesSet = set()
         yAxesSet.add(numberYAxis)
         chartConfig.setYAxes(yAxesSet)
@@ -1849,7 +1849,7 @@ class InvientChartsDemoWin(Window):
         yAxis.setLabel(YAxisDataLabel())
         yAxis.getLabel().setFormatterJsFunc(
                 'function() {'
-                    + u' return this.value + \'\u2103C\';'.encode('utf-8')
+                    + u' return this.value + \'\u2103\';'.encode('utf-8')
                     + '}')
         yAxesSet = set()
         yAxesSet.add(yAxis)
@@ -1857,7 +1857,7 @@ class InvientChartsDemoWin(Window):
         tooltip = Tooltip()
         tooltip.setFormatterJsFunc(
                 'function() {'
-                    + u' return \'\' + this.x +\' km: \'+ this.y +\'\u2103C\';'.encode('utf-8')
+                    + u' return \'\' + this.x +\' km: \'+ this.y +\'\u2103\';'.encode('utf-8')
                     + '}')
         chartConfig.setTooltip(tooltip)
 
@@ -2235,7 +2235,7 @@ class InvientChartsDemoWin(Window):
                 'function() {'
                     + ' var unit = { '
                     + '         \'Rainfall\': \'mm\','
-                    + u'         \'Temperature\': \'\u2103C\','.encode('utf-8')
+                    + u'         \'Temperature\': \'\u2103\','.encode('utf-8')
                     + '         \'Sea-Level Pressure\': \'mb\''
                     + ' }[this.series.name];'
                     + '   return \'\' + this.x + \': \' + this.y + \' \' + unit; '
@@ -2265,7 +2265,7 @@ class InvientChartsDemoWin(Window):
         temperatureAxis.setLabel(YAxisDataLabel())
         temperatureAxis.getLabel().setFormatterJsFunc(
                 'function() {'
-                    + u' return this.value +\'\u2103C\'; '.encode('utf-8')
+                    + u' return this.value +\'\u2103\'; '.encode('utf-8')
                     + '}')
         temperatureAxis.getLabel().setStyle('{ color: \'#89A54E\' }')
         temperatureAxis.setTitle(AxisTitle('Temperature'))
@@ -2379,8 +2379,8 @@ class InvientChartsDemoWin(Window):
         # Set plot options
         areaCfg = AreaConfig()
         colorStops = list()
-        colorStops.add(LinearColorStop(0, RGB(69, 114, 167)))
-        colorStops.add(LinearColorStop(1, RGBA(2, 0, 0, 0)))
+        colorStops.append(LinearColorStop(0, RGB(69, 114, 167)))
+        colorStops.append(LinearColorStop(1, RGBA(2, 0, 0, 0)))
 
         # Fill color
         areaCfg.setFillColor(LinearGradient(0, 0, 0, 300, colorStops))
@@ -2402,7 +2402,7 @@ class InvientChartsDemoWin(Window):
         # Area configuration
         serieaAreaCfg = AreaConfig()
 
-        serieaAreaCfg.setPointStart(self.getPointStartDate(2006, 0, 1))
+        serieaAreaCfg.setPointStart(self.getPointStartDate(2006, 1, 1))
         serieaAreaCfg.setPointInterval(24 * 3600 * 1000.0)
 
         # Series
@@ -2463,41 +2463,41 @@ class InvientChartsDemoWin(Window):
 
     def registerEvents(self, chart):
         l = DemoChartClickListener(self)
-        chart.addListener(l, ChartClickListener)
+        chart.addListener(l)
 
         if chart.getConfig().getGeneralChartConfig().getZoomType() is not None:
             l = DemoChartZoomListener(self)
-            chart.addListener(l, ChartZoomListener)
+            chart.addListener(l)
 
             l = DemoChartResetZoomListener(self)
-            chart.addListener(l, ChartResetZoomListener)
+            chart.addListener(l)
 
         l = DemoSeriesClickListerner(self)
-        chart.addListener(l, SeriesClickListerner)
+        chart.addListener(l, [])
 
         l = DemoSeriesHideListerner(self)
-        chart.addListener(l, SeriesHideListerner)
+        chart.addListener(l, [])
 
         l = DemoSeriesShowListerner(self)
-        chart.addListener(l, SeriesShowListerner)
+        chart.addListener(l, [])
 
         l = DemoSeriesLegendItemClickListerner(self)
-        chart.addListener(l, SeriesLegendItemClickListerner)
+        chart.addListener(l, [])
 
         l = DemoPointClickListener(self)
-        chart.addListener(l, PointClickListener)
+        chart.addListener(l, [])
 
         l = DemoPointRemoveListener(self)
-        chart.addListener(l, PointRemoveListener)
+        chart.addListener(l, [])
 
         l = DemoPointSelectListener(self)
-        chart.addListener(l, PointSelectListener)
+        chart.addListener(l, [])
 
         l = DemoPointUnselectListener(self)
-        chart.addListener(l, PointUnselectListener)
+        chart.addListener(l, [])
 
         l = DemoPieChartLegendItemClickListener(self)
-        chart.addListener(l, PieChartLegendItemClickListener)
+        chart.addListener(l)
 
 
     @classmethod
@@ -2712,19 +2712,19 @@ class InvientChartsDemoWin(Window):
                     eventName, xAxisMin, xAxisMax, yAxisMin, yAxisMax = args
                     sb = ''
                     sb += '[' + eventName + ']'
-                    sb += ', xAxisMin -> ' + xAxisMin
-                    sb += ', xAxisMax -> ' + xAxisMax
-                    sb += ', yAxisMin -> ' + yAxisMin
-                    sb += ', yAxisMax -> ' + yAxisMax
+                    sb += ', xAxisMin -> ' + str(xAxisMin)
+                    sb += ', xAxisMax -> ' + str(xAxisMax)
+                    sb += ', yAxisMin -> ' + str(yAxisMin)
+                    sb += ', yAxisMax -> ' + str(yAxisMax)
                     self.logEventInfo(sb)
                 else:
                     eventName, xAxisPos, yAxisPos, mouseX, mouseY = args
                     sb = ''
                     sb += '[' + eventName + ']'
-                    sb += ', xAxisPos -> ' + xAxisPos
-                    sb += ', yAxisPos -> ' + yAxisPos
-                    sb += ', mouseX -> ' + mouseX
-                    sb += ', mouseY -> ' + mouseY
+                    sb += ', xAxisPos -> ' + str(xAxisPos)
+                    sb += ', yAxisPos -> ' + str(yAxisPos)
+                    sb += ', mouseX -> ' + str(mouseX)
+                    sb += ', mouseY -> ' + str(mouseY)
                     self.logEventInfo(sb)
             else:
                 if isinstance(args[3], datetime):
@@ -2762,13 +2762,13 @@ class InvientChartsDemoWin(Window):
         if category is not None and len(category) > 0:
             sb.write(', category -> ' + category)
         if x is not None:
-            sb.write(', x -> ' + x)
+            sb.write(', x -> ' + str(x))
         if y is not None:
-            sb.write(', y -> ' + y)
+            sb.write(', y -> ' + str(y))
         if mouseX is not None:
-            sb.write(', mouseX -> ' + mouseX)
+            sb.write(', mouseX -> ' + str(mouseX))
         if mouseY is not None:
-            sb.write(', mouseY -> ' + mouseY)
+            sb.write(', mouseY -> ' + str(mouseY))
         self.logEventInfo(sb.getvalue())
         sb.close()
 

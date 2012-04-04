@@ -47,5 +47,5 @@ if __name__ == '__main__':
     from invient_demo_app_servlet import InvientChartsDemoAppServlet
 
     muntjac(InvientChartsDemoApp, nogui=True, forever=True, debug=True,
-            servletClass=InvientChartsDemoAppServlet,
+#            servletClass=InvientChartsDemoAppServlet,
             contextRoot='.')

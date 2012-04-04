@@ -24,11 +24,9 @@ class Unit(object):
     def getSymbol(self):
         return self._symbol
 
-    _values = [NUMBER, PERCENT]
-
     @classmethod
     def values(cls):
-        return cls._values[:]
+        return [cls.NUMBER, cls.PERCENT]
 
 Unit.NUMBER = Unit('number', '')
 Unit.PERCENT = Unit('percent', '%')
@@ -180,6 +178,7 @@ class LinearGradient(IGradient):
         self._yEndUnit = Unit.NUMBER
         self._colorStops = list()
 
+        xStartUnit = yStartUnit = None
         if xEndUnit is None:
             xStart, yStart, xEnd, yEnd, colorStops = (xStart,
                 xStartUnit_or_yStart, yStart_or_xEnd, yStartUnit_or_yEnd,
