@@ -1,7 +1,16 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
-from muntjac.addon.invient.paint import IPaint
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
+from muntjac.addon.invient.paint \
+    import IPaint
+
+from muntjac.util \
+    import OrderedSet
 
 
 class InvientChartsConfig(object):
@@ -33,9 +42,9 @@ class InvientChartsConfig(object):
         self._legend = Legend()
         self._tooltip = Tooltip()
         self._chartLabel = ChartLabel()
-        self._seriesTypeConfig = dict()
-        self._xAxes = set()
-        self._yAxes = set()
+        self._seriesTypeConfig = OrderedDict()
+        self._xAxes = OrderedSet()
+        self._yAxes = OrderedSet()
         self._invientCharts = None
 
 
@@ -300,7 +309,7 @@ class ChartLabel(object):
         @param label:
                    element to be appended
         """
-        self._labels.add(label)
+        self._labels.append(label)
 
 
     def removeLabel(self, label):
@@ -326,7 +335,7 @@ class ChartLabelItem(object):
         @param html:
         @param style:
         """
-        super(ChartLabelItem, self)()
+        super(ChartLabelItem, self).__init__()
         self._html = html
         self._style = style
 
@@ -2070,28 +2079,22 @@ class PointConfig(object):
         @see: L{Marker}
         @see: L{Color}
         """
-        self._sliced = None
-        self._selected = None
-        self._color = None
-        self._marker = None
-
         if selected is None:
             if isinstance(sliced_or_color_or_marker, Marker):
                 marker = sliced_or_color_or_marker
-                self.__init__(None, None, None, marker)
+                sliced = selected = color = None
             elif isinstance(sliced_or_color_or_marker, IPaint):
                 color = sliced_or_color_or_marker
-                self.__init__(None, None, color, None)
+                sliced = selected = marker = None
             else:
-                sliced = sliced_or_color_or_marker
-                self.__init__(sliced, sliced, None, None)
-        else:
-            sliced = sliced_or_color_or_marker
-            super(PointConfig, self).__init__()
-            self._sliced = sliced
-            self._selected = selected
-            self._color = color
-            self._marker = marker
+                sliced = selected = sliced_or_color_or_marker
+                marker = color = None
+
+        super(PointConfig, self).__init__()
+        self._sliced = sliced
+        self._selected = selected
+        self._color = color
+        self._marker = marker
 
 
     def getSliced(self):
@@ -3012,8 +3015,8 @@ class AxisBase(Axis):
         self._type = AxisType.LINEAR
         self._title = None
         self._label = None
-        self._plotBands = set()
-        self._plotLines = set()
+        self._plotBands = OrderedSet()
+        self._plotLines = OrderedSet()
         self._alternateGridColor = None
         self._endOnTick = None
         self._grid = None
@@ -3420,6 +3423,7 @@ class Tick(MinorTick):
     """
 
     def __init__(self):
+        super(Tick, self).__init__()
         self._placement = None
         self._pixelInterval = None
 
@@ -3833,7 +3837,7 @@ class NumberRange(Range):
         self._to = to
 
     def getFrom(self):
-        return self.from_
+        return self._from
 
     def setFrom(self, from_):
         self._from = from_
@@ -4215,7 +4219,7 @@ class CategoryAxis(AxisBase, XAxis):
 
 class Legend(object):
 
-    def __init__(self, enabled=False):
+    def __init__(self, enabled=True):
         self._backgroundColor = None
         self._borderColor = None
         self._borderRadius = None

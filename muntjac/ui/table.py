@@ -8,6 +8,11 @@ import logging
 
 from warnings import warn
 
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
 from muntjac.ui.field import IField
 from muntjac.ui.field_factory import IFieldFactory
 from muntjac.ui.form import Form
@@ -41,7 +46,7 @@ from muntjac.event.item_click_event import \
 from muntjac.data.util.indexed_container import \
     ItemSetChangeEvent, IndexedContainer
 
-from muntjac.util import clsname
+from muntjac.util import clsname, OrderedSet
 
 
 logger = logging.getLogger(__name__)
@@ -175,7 +180,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         self._columnWidths = dict()
 
         #: Holds column generators
-        self._columnGenerators = dict()
+        self._columnGenerators = OrderedDict()
 
         #: Holds value of property pageLength. 0 disables paging.
         self._pageLength = 15
@@ -2557,7 +2562,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def findAndPaintBodyActions(self, target):
-        actionSet = set()
+        actionSet = OrderedSet()
         if self._actionHandlers is not None:
             keys = list()
             for ah in self._actionHandlers:

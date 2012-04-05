@@ -22,7 +22,7 @@ from datetime \
     import datetime
 
 from muntjac.util \
-    import totalseconds
+    import totalseconds, OrderedSet
 
 from muntjac.api \
     import TextArea, VerticalLayout, HorizontalLayout, Label, \
@@ -43,7 +43,7 @@ from muntjac.terminal.sizeable \
 
 from muntjac.addon.invient.invient_charts \
     import ChartZoomListener, DateTimePoint, InvientCharts, DateTimeSeries, \
-    SeriesType, XYSeries,DecimalPoint, PointClickListener, \
+    SeriesType, XYSeries, DecimalPoint, PointClickListener, \
     ChartSVGAvailableListener, ChartClickListener, ChartResetZoomListener, \
     SeriesClickListerner, SeriesHideListerner, SeriesShowListerner, \
     SeriesLegendItemClickListerner, PointRemoveListener, PointSelectListener, \
@@ -66,6 +66,10 @@ from muntjac.addon.invient.color \
 
 from muntjac.addon.invient.gradient \
     import LinearColorStop, LinearGradient
+
+
+def timestamp(dt):
+    return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e03)  # ms
 
 
 class InvientChartsDemoWin(Window):
@@ -284,13 +288,13 @@ class InvientChartsDemoWin(Window):
                 'Select an area by dragging across the lower chart')
 
         detailXAxis = DateTimeAxis()
-        detailXAxes = set()
+        detailXAxes = OrderedSet()
         detailXAxes.add(detailXAxis)
         detailChartConfig.setXAxes(detailXAxes)
 
         detailYAxis = NumberYAxis()
         detailYAxis.setTitle(AxisTitle(''))
-        detailYAxes = set()
+        detailYAxes = OrderedSet()
         detailYAxes.add(detailYAxis)
         detailChartConfig.setYAxes(detailYAxes)
 
@@ -317,18 +321,18 @@ class InvientChartsDemoWin(Window):
 
         # Line instance configuration
         lineSeriesCfg = LineConfig()
-        start = self._time(self._detailChartPointStartDate)
+        start = timestamp(self._detailChartPointStartDate)
         lineSeriesCfg.setPointStart(start)
         lineSeriesCfg.setPointInterval(24 * 3600 * 1000.0)
         lineSeriesCfg.setColor(RGB(69, 114, 167))
-        detailSeries = DateTimeSeries(detailChart, 'USD to EUR', SeriesType.LINE,
-                lineSeriesCfg)
+        detailSeries = DateTimeSeries(detailChart, 'USD to EUR',
+                SeriesType.LINE, lineSeriesCfg)
 
-        detailPoints = set()
+        detailPoints = OrderedSet()
         masterChartSeries = masterChart.getSeries('USD to EUR')
         for point in masterChartSeries.getPoints():
-            if (self._time(point.getX())
-                    >= self._time(self._detailChartPointStartDate)):
+            if (timestamp(point.getX()) >=
+                    timestamp(self._detailChartPointStartDate)):
                 detailPoints.add(DateTimePoint(detailSeries, point.getY()))
 
         detailSeries.setSeriesPoints(detailPoints)
@@ -352,7 +356,7 @@ class InvientChartsDemoWin(Window):
 
         xAxis = DateTimeAxis()
         xAxis.setShowLastLabel(True)
-        xAxis.setMaxZoom(14 * 24 * 3600000)
+        xAxis.setMaxZoom(14 * 24 * 3600 * 1000.0)
 
         plotBand = DateTimePlotBand('mask-before')
         plotBand.setRange(DateTimeRange(self._masterChartMinDate,
@@ -405,20 +409,16 @@ class InvientChartsDemoWin(Window):
         # Provide methods to set pointInterval and pointStart and delegate
         # call to SeriesConfig
         seriesDataCfg = AreaConfig()
-        seriesDataCfg.setPointInterval(24 * 3600 * 1000.0)
-        start = self._time(self._masterChartMinDate)
+        seriesDataCfg.setPointInterval(24 * 3600.0 * 1000)
+        start = timestamp(self._masterChartMinDate)
         seriesDataCfg.setPointStart(start)
-        masterChartSeries = DateTimeSeries(chart, 'USD to EUR', SeriesType.AREA,
-                seriesDataCfg)
+        masterChartSeries = DateTimeSeries(chart, 'USD to EUR',
+                SeriesType.AREA, seriesDataCfg)
         masterChartSeries.setSeriesPoints(self.getMasterDetailData(
                 masterChartSeries))
         chart.addSeries(masterChartSeries)
 
         return chart
-
-
-    def _time(self, dt):
-        return long(totalseconds(dt - datetime(1970, 1, 1)))
 
 
     def showLine(self):
@@ -547,7 +547,7 @@ class InvientChartsDemoWin(Window):
         chart.addListener(l)
 
         l = AddPointClickListener(self)
-        chart.addListener(l)
+        chart.addListener(l, [])
 
         self.addChart(chart, False, False)
 
@@ -1264,10 +1264,10 @@ class InvientChartsDemoWin(Window):
         chart.addSeries(series)
 
         series = XYSeries('Jane')
-        series.addPoint(DecimalPoint(series, 1.0), DecimalPoint(series, 0.0),
+        series.addPoint([DecimalPoint(series, 1.0), DecimalPoint(series, 0.0),
                         DecimalPoint(series, 3.0), DecimalPoint(series),
                         DecimalPoint(series, 3.0), DecimalPoint(series, 1.0),
-                        DecimalPoint(series, 2.0), DecimalPoint(series, 1.0))
+                        DecimalPoint(series, 2.0), DecimalPoint(series, 1.0)])
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -1998,11 +1998,11 @@ class InvientChartsDemoWin(Window):
 
         seriesData = DateTimeSeries(chart, 'Random Data', True)
         points = set()
-        dtNow = datetime()
+        dtNow = datetime.now()
         # Add random data.
         for cnt in range(-19, 0):
             points.add(DateTimePoint(seriesData,
-                    self.getUpdatedDate(dtNow, cnt * 1000), random()))
+                    self.getUpdatedDate(dtNow, cnt), random()))
 
         seriesData.setSeriesPoints(points)
         chart.addSeries(seriesData)
@@ -2031,8 +2031,8 @@ class InvientChartsDemoWin(Window):
 
 
     @classmethod
-    def getUpdatedDate(cls, dt, milliseconds):
-        ts = getDate(dt) + milliseconds
+    def getUpdatedDate(cls, dt, seconds):
+        ts = getDate(dt) + seconds
         return datetime.fromtimestamp(ts)
 
 
@@ -2128,27 +2128,27 @@ class InvientChartsDemoWin(Window):
         symbolMarker.getHoverState().setLineWidth(1)
 
         splineCfg.setPointStart(self.getPointStartDate(2009, 8, 6))
-        splineCfg.setPointInterval(3600000.0)
+        splineCfg.setPointInterval(3600.0 * 1000.0)
         chartConfig.addSeriesConfig(splineCfg)
 
         chart = InvientCharts(chartConfig)
 
         series = DateTimeSeries(chart, 'Hestavollane', splineCfg, True)
         series.setSeriesPoints(self.getDateTimePoints(series,
-                4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
-                7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
-                8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
-                7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
-                3.0, 3.0))
+                [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+                 7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+                 8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+                 7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+                 3.0, 3.0]))
         chart.addSeries(series)
 
         series = DateTimeSeries(chart, 'Voll', splineCfg, True)
         series.setSeriesPoints(self.getDateTimePoints(series,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
-                0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
-                3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5,
-                0.4))
+                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
+                 0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                 0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
+                 3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5,
+                 0.4]))
         chart.addSeries(series)
 
         self.addChart(chart)
@@ -2196,7 +2196,7 @@ class InvientChartsDemoWin(Window):
 
         seriesData = XYSeries('Average', SeriesType.SPLINE)
         seriesData.setSeriesPoints(self.getPoints(seriesData,
-                3, 2.67, 3, 6.33, 3.33))
+                [3, 2.67, 3, 6.33, 3.33]))
 
         chart.addSeries(seriesData)
 
@@ -2364,7 +2364,7 @@ class InvientChartsDemoWin(Window):
                 'Click and drag in the plot area to zoom in')
 
         xAxis = DateTimeAxis()
-        xAxis.setMaxZoom(14 * 24 * 3600000)
+        xAxis.setMaxZoom(14 * 24 * 3600 * 1000.0)
         xAxesSet = set()
         xAxesSet.add(xAxis)
         chartConfig.setXAxes(xAxesSet)
@@ -2461,10 +2461,10 @@ class InvientChartsDemoWin(Window):
         gridLayout.setComponentAlignment(printBtn, Alignment.MIDDLE_LEFT)
         self._rightLayout.addComponent(gridLayout)
 
-        l = GetSvgClickListener(self)
+        l = GetSvgClickListener(self, chart)
         svgBtn.addListener(l, button.IClickListener)
 
-        l = PrintClickListener(self)
+        l = PrintClickListener(chart)
         printBtn.addListener(l, button.IClickListener)
 
 
@@ -2510,7 +2510,7 @@ class InvientChartsDemoWin(Window):
     @classmethod
     def getPointStartDate(cls, year, month, day):
         dt = datetime(year, month, day)
-        return long(totalseconds(dt - datetime(1970, 1, 1)))
+        return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e03)
 
 
     @classmethod
@@ -2527,7 +2527,7 @@ class InvientChartsDemoWin(Window):
 
 
     def getDateTimePoints(self, series, values):
-        points = set()
+        points = OrderedSet()
         for value in values:
             points.add(DateTimePoint(series, value))
         return points
@@ -2535,13 +2535,13 @@ class InvientChartsDemoWin(Window):
 
     @classmethod
     def getPoints(cls, series, values):
-        if len(values) > 0 and isinstance(values[0], float):
-            points = set()
+        if len(values) > 0 and isinstance(values[0], (float, int)):
+            points = OrderedSet()
             for value in values:
                 points.add(DecimalPoint(series, value))
             return points
         else:
-            points = set()
+            points = OrderedSet()
             for value in values:
                 y = None
                 if len(value) == 0:
@@ -3360,8 +3360,8 @@ class MasterChartZoomListener(ChartZoomListener):
         self._detailChart.removeSeries(detailChartSeries)
 
         for point in masterChartSeries.getPoints():
-            if (self._window._time(point.getX()) > min_
-                    and self._window._time(point.getX()) < max_):
+            if (timestamp(point.getX()) > min_
+                    and timestamp(point.getX()) < max_):
                 dtp = DateTimePoint(detailChartSeries,
                         point.getX(), point.getY())
                 detailPoints.add(dtp)
@@ -3376,13 +3376,14 @@ class MasterChartZoomListener(ChartZoomListener):
         masterDateTimeAxis.removePlotBand('mask-before')
         plotBandBefore = DateTimePlotBand('mask-before')
         plotBandBefore.setRange(DateTimeRange(self._window._masterChartMinDate,
-                datetime.fromtimestamp(min_)))
+                datetime.fromtimestamp(min_ / 1e03)))
         plotBandBefore.setColor(RGBA(0, 0, 0, 0.2))
         masterDateTimeAxis.addPlotBand(plotBandBefore)
 
         masterDateTimeAxis.removePlotBand('mask-after')
         plotBandAfter = DateTimePlotBand('mask-after')
-        plotBandAfter.setRange(DateTimeRange(datetime.fromtimestamp(max_),
+        plotBandAfter.setRange(DateTimeRange(
+                datetime.fromtimestamp(max_ / 1e03),
                 self._window._masterChartMaxDate))
         plotBandAfter.setColor(RGBA(0, 0, 0, 0.2))
         masterDateTimeAxis.addPlotBand(plotBandAfter)
@@ -3428,6 +3429,7 @@ class AddPointClickListener(PointClickListener):
 class SelfUpdateSplineThread(Thread):
 
     def __init__(self, chart):
+        super(SelfUpdateSplineThread, self).__init__()
         self._chart = chart
         self._keepUpdating = True  ## FIXME: volatile
 
@@ -3457,12 +3459,13 @@ class SelfUpdateSplineThread(Thread):
 
 class GetSvgClickListener(button.IClickListener):
 
-    def __init__(self, chart):
+    def __init__(self, window, chart):
+        self._window = window
         self._chart = chart
 
     def buttonClick(self, event):
 
-        l = DemoChartSVGAvailableListener(self)
+        l = DemoChartSVGAvailableListener(self._window)
         self._chart.addListener(l)
 
 

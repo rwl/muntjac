@@ -1,6 +1,14 @@
 # @INVIENT_COPYRIGHT@
 # @MUNTJAC_LICENSE@
 
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
+from muntjac.util \
+    import OrderedSet
+
 from datetime \
     import datetime
 
@@ -81,9 +89,9 @@ class InvientCharts(AbstractComponent):
         self._chartZoomListener = set()
         self._chartResetZoomListener = set()
         self._svgAvailableListener = None
-        self._chartSeries = set()
+        self._chartSeries = OrderedSet()
         self._reloadChartSeries = False
-        self._seriesCURMap = dict()
+        self._seriesCURMap = OrderedDict()
 
 
     def getConfig(self):
@@ -244,8 +252,8 @@ class InvientCharts(AbstractComponent):
 
     def changeVariables(self, source, variables):
         if 'event' in variables:
-            eventData = variables['eventData']
-            eventName = variables['event']
+            eventData = variables.get('eventData')
+            eventName = variables.get('event')
             if eventName.lower() == "addSeries".lower():
                 self.fireAddSeries()
             elif eventName.lower() == "chartClick".lower():
@@ -779,7 +787,7 @@ class InvientCharts(AbstractComponent):
 
             # If for a series, no operation is found
             if (seriesCURSet is None) or (len(seriesCURSet) == 0):
-                seriesCURSet = set()
+                seriesCURSet = OrderedSet()
                 seriesCURSet.add(newSeriesCUR)
                 self._seriesCURMap[newSeriesCUR.getName()] = seriesCURSet
             elif seriesCURSet.contains(newSeriesCUR):
@@ -829,7 +837,7 @@ class InvientCharts(AbstractComponent):
             seriesCURSet.add(newSeriesCUR)
             return True
         else:
-            seriesCURSet = set()
+            seriesCURSet = OrderedSet()
             seriesCURSet.add(newSeriesCUR)
             self._seriesCURMap[newSeriesCUR.getName()] = seriesCURSet
             return True
@@ -840,7 +848,7 @@ class InvientCharts(AbstractComponent):
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
             seriesCUR = SeriesCUR(SeriesCURType.UPDATE, seriesName)
             seriesCUR.trackPointAdded(point)
-            seriesCURSet = set()
+            seriesCURSet = OrderedSet()
             seriesCURSet.add(seriesCUR)
             self._seriesCURMap[seriesName] = seriesCURSet
         else:
@@ -878,7 +886,7 @@ class InvientCharts(AbstractComponent):
         if (seriesCURSet is None) or (len(seriesCURSet) == 0):
             seriesCUR = SeriesCUR(SeriesCURType.UPDATE, seriesName)
             seriesCUR.trackPointRemoved(point)
-            seriesCURSet = set()
+            seriesCURSet = OrderedSet()
             seriesCURSet.add(seriesCUR)
             self._seriesCURMap[seriesName] = seriesCURSet
         else:
@@ -1976,7 +1984,7 @@ class DecimalPoint(Point):
                 self._x = x
                 self._y = y
         elif nargs == 3:
-            if isinstance(args[1], float):
+            if isinstance(args[1], (float, int)):
                 if isinstance(args[2], PointConfig):
                     series, y, config = args
                     super(DecimalPoint, self).__init__(series, config)
@@ -1991,11 +1999,7 @@ class DecimalPoint(Point):
                 super(DecimalPoint, self).__init__(series, name)
                 self._y = y
         elif nargs == 4:
-            if isinstance(args[1], float):
-                series, x, y, config = args
-                super(DecimalPoint, self).__init__(series, config)
-                self._x = x
-                self._y = y
+            if isinstance(args[1], (float, int)):
                 series, x, y, config = args
                 super(DecimalPoint, self).__init__(series, config)
                 self._x = x
@@ -2066,7 +2070,7 @@ class DecimalPoint(Point):
                 return False
         elif other._y is None:
             return False
-        elif cmp(self._y, other.y) != 0:
+        elif cmp(self._y, other._y) != 0:
             return False
         return True
 
@@ -2231,7 +2235,7 @@ class Series(object):
         @param config:
                    the configuration for this series
         """
-        self._points = set()
+        self._points = OrderedSet()
         self._name = ''
         self._type = None
         self._stack = None
@@ -2357,11 +2361,12 @@ class Series(object):
 
         if shift:
             # Remove first point as other points gets appended at the end
-#            pointsItr = self._points
-#            if pointsItr.hasNext():
-#                pointsItr.next()
-#                pointsItr.remove()
-            self._points = set()
+            pointsItr = iter(self._points)
+            try:
+                p = pointsItr.next()
+                self._points.remove(p)
+            except StopIteration:
+                pass
 
         pointsAddedList = list()
 
@@ -2379,7 +2384,7 @@ class Series(object):
                         point.getSeries().getName(), point)
                 self._invientCharts.requestRepaint()
 
-        return set(pointsAddedList)
+        return OrderedSet(pointsAddedList)
 
 
     def addPointsInternal(self, points):
@@ -2393,7 +2398,7 @@ class Series(object):
                 chart. To add a point or points, use addPoint() or
                 removePoint() method.
         """
-        return set(self._points)
+        return OrderedSet(self._points)
 
 
     def setPoints(self, points):
@@ -2514,7 +2519,7 @@ class XYSeries(Series):
     def removePoint(self, *points):
         """Removes the specified point from the series
         """
-        super(XYSeries, self).removePoint(points)
+        super(XYSeries, self).removePoint(*points)
 
 
     def removeAllPoints(self):
@@ -2740,7 +2745,7 @@ class DateTimeSeries(Series):
 
     def updatePointXValuesIfNotPresent(self):
         pointStart = self.getDefPointStart()
-        pointInterval = 3600#000
+        pointInterval = 3600000
         # 1 hour
         if isinstance(super(DateTimeSeries, self).getConfig(), BaseLineConfig):
             config = super(DateTimeSeries, self).getConfig()
@@ -2748,7 +2753,7 @@ class DateTimeSeries(Series):
                 pointStart = config.getPointStart()
             if config.getPointInterval() is not None:
                 pointInterval = config.getPointInterval()
-        prevDate = datetime.fromtimestamp(pointStart)
+        prevDate = datetime.fromtimestamp(pointStart / 1e03)
         count = 0
         for point in self.getPoints():
             if ((point.getX() is None)
@@ -2764,14 +2769,15 @@ class DateTimeSeries(Series):
 
     @classmethod
     def getDefPointStart(cls):
-        cal = datetime(1970, 1, 1)
-        return 0
+#        dt = datetime(1970, 1, 1)
+#        return long(totalseconds(dt - datetime(1970, 1, 1)) * 1e03)
+        return -3600000.0
 
 
     @classmethod
     def getUpdatedDate(cls, dt, milliseconds):
         ts = getDate(dt) + milliseconds
-        return datetime.fromtimestamp(ts)
+        return datetime.fromtimestamp(ts / 1e03)
 
 
     def __str__(self):
@@ -2830,8 +2836,8 @@ class SeriesCUR(object):
         self._type = typ
         self._name = name
         self._reloadPoints = reloadPoints
-        self._pointsAdded = set()
-        self._pointsRemoved = set()
+        self._pointsAdded = OrderedSet()
+        self._pointsRemoved = OrderedSet()
 
         super(SeriesCUR, self).__init__()
 

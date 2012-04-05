@@ -12,6 +12,8 @@ from muntjac.terminal.sizeable import ISizeable
 from muntjac.event.layout_events import \
     LayoutClickEvent, ILayoutClickListener, ILayoutClickNotifier
 
+from muntjac.util import OrderedSet
+
 
 class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
     """AbsoluteLayout is a layout implementation that mimics html
@@ -27,7 +29,7 @@ class AbsoluteLayout(AbstractLayout, ILayoutClickNotifier):
         super(AbsoluteLayout, self).__init__()
 
         #: The components in the layout
-        self._components = set()
+        self._components = OrderedSet()
 
         #: Maps each component to a position
         self._componentToCoordinates = dict()

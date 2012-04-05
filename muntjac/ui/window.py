@@ -21,6 +21,8 @@ from muntjac.event.field_events import \
     (IFocusNotifier, IBlurNotifier, FocusEvent, BlurEvent, IBlurListener,
     IFocusListener)
 
+from muntjac.util import OrderedSet
+
 
 class ICloseListener(object):
     """An interface used for listening to Window close events. Add the
@@ -136,7 +138,7 @@ class Window(Panel, IUriHandler, IParameterHandler, IFocusNotifier,
 
         #: B{Application window only}. List of sub windows in this window.
         #  A sub window cannot have other sub windows.
-        self._subwindows = set()
+        self._subwindows = OrderedSet()
 
         #: B{Application window only}. Explicitly specified theme of this
         #  window or null if the application theme should be used.
