@@ -356,7 +356,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @return: newItemHandler
         """
         if self._newItemHandler is None:
-            self._newItemHandler = DefaultNewItemHandler()
+            self._newItemHandler = DefaultNewItemHandler(self)
         return self._newItemHandler
 
 
@@ -1356,31 +1356,34 @@ class DefaultNewItemHandler(INewItemHandler):
     addition like database inserts.
     """
 
+    def __init__(self, select):
+        self._select = select
+
     def addNewItem(self, newItemCaption):
         # Checks for readonly
-        if self.isReadOnly():
+        if self._select.isReadOnly():
             raise prop.ReadOnlyException()
 
         # Adds new option
-        if self.addItem(newItemCaption) is not None:
+        if self._select.addItem(newItemCaption) is not None:
 
             # Sets the caption property, if used
-            if self.getItemCaptionPropertyId() is not None:
+            if self._select.getItemCaptionPropertyId() is not None:
                 try:
-                    prop = self.getContainerProperty(newItemCaption,
-                            self.getItemCaptionPropertyId())
+                    prop = self._select.getContainerProperty(newItemCaption,
+                            self._select.getItemCaptionPropertyId())
                     prop.setValue(newItemCaption)
                 except prop.ConversionException:
                     # The conversion exception is safely ignored, the
                     # caption is just missing
                     pass
 
-            if self.isMultiSelect():
-                values = set(self.getValue())
+            if self._select.isMultiSelect():
+                values = set(self._select.getValue())
                 values.add(newItemCaption)
-                self.setValue(values)
+                self._select.setValue(values)
             else:
-                self.setValue(newItemCaption)
+                self._select.setValue(newItemCaption)
 
 
 class IItemSetChangeEvent(container.IItemSetChangeEvent):
