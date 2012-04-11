@@ -705,7 +705,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                 self.setHeader(response, 'Cache-Control',
                         'max-age=' + str(cacheTime / 1000))
                 self.setHeader(response, 'Expires',
-                        str(1000 * time.time() + cacheTime))
+                        str(1000 * time() + cacheTime))
                 # Required to apply caching in some Tomcats
                 self.setHeader(response, 'Pragma', 'cache')
 
