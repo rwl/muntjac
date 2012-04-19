@@ -1427,8 +1427,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 generatedRow =  None
             cells[self.CELL_GENERATED_ROW][i] = generatedRow
 
+            collapsed = 0
             for j in range(cols):
                 if self.isColumnCollapsed(colids[j]):
+                    collapsed += 1
                     continue
                 p = None
                 value = ''
@@ -1491,7 +1493,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 if isinstance(value, IComponent):
                     self.registerComponent(value)
 
-                cells[self.CELL_FIRSTCOL + j][i] = value
+                cells[self.CELL_FIRSTCOL + j - collapsed][i] = value
 
             # Gets the next item id
             if isinstance(self.items, container.IIndexed):
