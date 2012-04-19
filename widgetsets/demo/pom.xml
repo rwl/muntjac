@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.muntiacus</groupId>
+    <artifactId>widgetsets</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>DemoWidgetset</artifactId>
+  <packaging>jar</packaging>
+  <dependencies>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>ColorPickerWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>CanvasWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>CSSToolsWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>StepperWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>WeeLayoutWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>SVGComponentWidgetset</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>org.muntiacus</groupId>
+	  <artifactId>InvientChartsWidgetset</artifactId>
+	</dependency>
+  	<dependency>
+          <groupId>org.muntiacus</groupId>
+          <artifactId>GoogleMapsWidgetset</artifactId>
+  	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>CodeMirror2Widgetset</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>org.muntiacus</groupId>
+	   <artifactId>RefresherWidgetset</artifactId>
+	</dependency>
+  </dependencies>
+</project>

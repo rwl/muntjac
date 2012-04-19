@@ -14,3 +14,9 @@
 /paste/
 /gaesessions/
 /babel/
+
+/widgetsets/*/target/
+/widgetsets/*/.project
+/widgetsets/*/.classpath
+/widgetsets/*/.settings/
+
