@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.muntiacus</groupId>
+  <artifactId>widgetsets</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Muntjac widgetsets</name>
+  <description>Apache Maven projects for building widgetsets for Muntjac using Vaadin.</description>
+
+  <modules>
+    <module>MuntjacWidgetSet</module>
+    <module>GwtWidgetSet</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <vaadin.version>6.7.7</vaadin.version>
+    <gwt.version>2.3.0</gwt.version>
+    <gwt.plugin.version>2.2.0</gwt.plugin.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>vaadin-snapshots</id>
+      <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>vaadin-addons</id>
+      <url>http://maven.vaadin.com/vaadin-addons</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>codehaus-snapshots</id>
+      <url>http://nexus.codehaus.org/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>vaadin-snapshots</id>
+      <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerVersion>1.6</compilerVersion>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <!-- Compiles your custom GWT components with the GWT compiler -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${gwt.plugin.version}</version>
+        <configuration>
+          <!-- if you don't specify any modules, the plugin will find them -->
+          <!-- <modules> <module>org.muntiacus.MuntjacWidgetSet.gwt.xml</module> </modules> -->
+          <webappDirectory>${project.basedir}/../../muntjac/public/VAADIN/widgetsets</webappDirectory>
+          <!-- On Mac running Snow Leopard, add "-d32" -->
+          <!-- This causes error messages (but build works) in phase "package": two processes would use the same debug port -->
+          <!--extraJvmArgs>-Xmx512M -Xss1024k -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8998</extraJvmArgs -->
+          <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+          <runTarget>MuntjacWidgetSet</runTarget>
+          <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+          <noServer>true</noServer>
+          <port>8080</port>
+          <compileReport>false</compileReport>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>resources</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>com.vaadin</groupId>
+        <artifactId>vaadin-maven-plugin</artifactId>
+        <version>1.0.2</version>
+        <executions>
+          <execution>
+            <configuration>
+              <!-- if you don't specify any modules, the plugin will find them -->
+              <!-- <modules> <module>org.muntiacus.MuntjacWidgetSet.gwt.xml</module> </modules> -->
+            </configuration>
+            <goals>
+              <goal>update-widgetset</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.vaadin</groupId>
+      <artifactId>vaadin</artifactId>
+      <version>${vaadin.version}</version>
+    </dependency>
+    <!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwt.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.0.0.GA</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.0.0.GA</version>
+      <classifier>sources</classifier>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Muntjac widgetset dependencies -->
+    <dependency>
+      <groupId>org.muntiacus</groupId>
+        <artifactId>MuntjacWidgetSet</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.muntiacus</groupId>
+        <artifactId>GwtWidgetSet</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+
+    <!-- Vaadin add-ons -->
+	<dependency>
+	  <groupId>org.vaadin.addons</groupId>
+	  <artifactId>vaadin-colorpicker</artifactId>
+	  <version>1.1.0</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.vaadin.addons</groupId>
+	   <artifactId>canvaswidget</artifactId>
+	   <version>1.0.3</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.vaadin.addons</groupId>
+	   <artifactId>css-tools</artifactId>
+	   <version>0.3</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.vaadin.addons</groupId>
+	   <artifactId>stepper</artifactId>
+	   <version>1.1.0</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.vaadin.addons</groupId>
+	   <artifactId>weelayout</artifactId>
+	   <version>0.2.2</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.vaadin.addons</groupId>
+	   <artifactId>svgcomponent</artifactId>
+	   <version>0.3</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.vaadin.addons</groupId>
+	  <artifactId>invient-charts</artifactId>
+      <version>0.8.6</version>
+	</dependency>
+  	<dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-incubator</artifactId>
+      <version>2.0.1</version>
+  	</dependency>
+  	<dependency>
+      <groupId>org.vaadin.addons</groupId>
+      <artifactId>googlemapwidget</artifactId>
+      <version>0.9.13</version>
+  	</dependency>
+	<dependency>
+	  <groupId>org.vaadin.addons</groupId>
+	  <artifactId>codemirror2</artifactId>
+	  <version>2.2.1</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.vaadin.addons</groupId>
+	  <artifactId>refresher</artifactId>
+	  <version>1.1.1</version>
+	</dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
