@@ -4,6 +4,8 @@
 """Defines a class representing a selection of items the user has selected
 in a UI."""
 
+from muntjac.util import OrderedSet
+
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.key_mapper import KeyMapper
@@ -117,10 +119,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self._itemIconPropertyId = None
 
         #: List of property set change event listeners.
-        self._propertySetEventListeners = set()
+        self._propertySetEventListeners = OrderedSet()
 
         #: List of item set change event listeners.
-        self._itemSetEventListeners = set()
+        self._itemSetEventListeners = OrderedSet()
 
         self._propertySetEventCallbacks = dict()
 
@@ -1145,10 +1147,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def getListeners(self, eventType):
         if issubclass(eventType, container.IItemSetChangeEvent):
-            return set(self._itemSetEventListeners)
+            return OrderedSet(self._itemSetEventListeners)
 
         elif issubclass(eventType, container.IPropertySetChangeEvent):
-            return set(self._propertySetEventListeners)
+            return OrderedSet(self._propertySetEventListeners)
 
         return super(AbstractSelect, self).getListeners(eventType)
 

@@ -6,7 +6,7 @@ items."""
 
 from collections import deque
 
-from muntjac.util import clsname
+from muntjac.util import clsname, OrderedSet
 from muntjac.terminal.key_mapper import KeyMapper
 from muntjac.terminal.gwt.client.mouse_event_details import MouseEventDetails
 
@@ -415,7 +415,7 @@ class Tree(AbstractSelect, container.IHierarchical, action.IContainer,
                         TreeDragMode.ordinal(self._dragMode))
 
         # Initialize variables
-        actionSet = set()
+        actionSet = OrderedSet()
 
         # rendered selectedKeys
         selectedKeys = list()
