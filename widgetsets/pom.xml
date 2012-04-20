@@ -84,7 +84,7 @@
             <module>org.muntiacus.ColorPickerWidgetset</module>
             <module>org.muntiacus.CSSToolsWidgetset</module> -->
             <!-- <module>org.muntiacus.DefaultWidgetset</module>
-            <!-- <module>org.muntiacus.DemoWidgetset</module>
+            <module>org.muntiacus.DemoWidgetset</module>
             <module>org.muntiacus.GoogleMapsWidgetset</module>
             <module>org.muntiacus.HelloWorldWidgetset</module>
             <module>org.muntiacus.InvientChartsWidgetset</module>

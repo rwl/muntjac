@@ -1,7 +1,7 @@
 Muntjac Widgetsets
 ==================
 
-Compiles the default widgetset with eager loading by default.
+The default widgetset with eager loading is compiled by default.
 
     $ mvn gwt:compile
 
@@ -11,9 +11,11 @@ To compile one of the other widgetsets:
     $ mvn gwt:compile -Dwidgetset=LazyWidgetset
 
 
-The default output directory for generated widgetsets is:
+To compile multiple widgetsets uncomment the `modules` section of the
+gwt-maven-plugin configuration in the pom.xml file. The default output
+directory for generated widgetsets is:
 
-    ${project.basedir}/../muntjac/public/VAADIN/widgetsets.
+    ${project.basedir}/../muntjac/public/VAADIN/widgetsets
 
 
 Besides the DefaultWidgetset, there are widgetsets for each Muntjac add-on:
@@ -37,4 +39,5 @@ Others widgetsets include:
  * DeferredWidgetset, the default widgetset with deferred loading,
  * LiteWidgetset, the default widgetset without the Table, RichTextArea
  or Tree components,
- * HelloWorldWidgetset, a small widgetset for HelloWorld demo.
+ * HelloWorldWidgetset, a small widgetset for HelloWorld demo
+ * CalcWidgetMapGenerator, a small widgetset for Calc demo.

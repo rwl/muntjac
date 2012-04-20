@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import com.vaadin.terminal.Paintable;
 import com.vaadin.terminal.gwt.widgetsetutils.EagerWidgetMapGenerator;
-import com.vaadin.terminal.gwt.widgetsetutils.WidgetMapGenerator;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
