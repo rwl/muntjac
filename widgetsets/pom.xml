@@ -4,20 +4,16 @@
   <groupId>org.muntiacus</groupId>
   <artifactId>widgetsets</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>Muntjac widgetsets</name>
-  <description>Apache Maven projects for building widgetsets for Muntjac using Vaadin.</description>
-
-  <modules>
-    <module>MuntjacWidgetSet</module>
-    <module>GwtWidgetSet</module>
-  </modules>
+  <description>Builds widgetsets for Muntjac using Vaadin</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <vaadin.version>6.7.7</vaadin.version>
     <gwt.version>2.3.0</gwt.version>
-    <gwt.plugin.version>2.2.0</gwt.plugin.version>
+    <gwt.plugin.version>2.3.0</gwt.plugin.version>
+    <widgetset>DefaultWidgetset</widgetset>
   </properties>
 
   <repositories>
@@ -49,6 +45,7 @@
         <enabled>false</enabled>
       </releases>
     </pluginRepository>
+
     <pluginRepository>
       <id>vaadin-snapshots</id>
       <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
@@ -80,8 +77,23 @@
         <version>${gwt.plugin.version}</version>
         <configuration>
           <!-- if you don't specify any modules, the plugin will find them -->
-          <!-- <modules> <module>org.muntiacus.MuntjacWidgetSet.gwt.xml</module> </modules> -->
-          <webappDirectory>${project.basedir}/../../muntjac/public/VAADIN/widgetsets</webappDirectory>
+          <modules>
+            <!-- <module>org.muntiacus.CanvasWidgetset</module>
+            <module>org.muntiacus.CodeMirror2Widgetset</module>
+            <module>org.muntiacus.ColorPickerWidgetset</module>
+            <module>org.muntiacus.CSSToolsWidgetset</module> -->
+            <module>org.muntiacus.DefaultWidgetset</module>
+            <!-- <module>org.muntiacus.DemoWidgetset</module>
+            <module>org.muntiacus.GoogleMapsWidgetset</module>
+            <module>org.muntiacus.HelloWorldWidgetset</module>
+            <module>org.muntiacus.InvientChartsWidgetset</module>
+            <module>org.muntiacus.LazyWidgetset</module>
+            <module>org.muntiacus.RefresherWidgetset</module>
+            <module>org.muntiacus.StepperWidgetset</module>
+            <module>org.muntiacus.SVGComponentWidgetset</module>
+            <module>org.muntiacus.WeeLayoutWidgetset</module> -->
+          </modules>
+          <webappDirectory>${project.basedir}/../muntjac/public/VAADIN/widgetsets</webappDirectory>
           <!-- On Mac running Snow Leopard, add "-d32" -->
           <!-- This causes error messages (but build works) in phase "package": two processes would use the same debug port -->
           <!--extraJvmArgs>-Xmx512M -Xss1024k -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8998</extraJvmArgs -->
@@ -121,7 +133,9 @@
           <execution>
             <configuration>
               <!-- if you don't specify any modules, the plugin will find them -->
-              <!-- <modules> <module>org.muntiacus.MuntjacWidgetSet.gwt.xml</module> </modules> -->
+              <modules>
+                <module>org.muntiacus.DemoWidgetSet.gwt.xml</module>
+              </modules>
             </configuration>
             <goals>
               <goal>update-widgetset</goal>
@@ -132,7 +146,6 @@
     </plugins>
   </build>
 
-  <dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.vaadin</groupId>
@@ -140,6 +153,13 @@
       <version>${vaadin.version}</version>
     </dependency>
     <!-- This is also used by gwt-maven-plugin to deduce GWT version number. -->
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-dev</artifactId>
+      <version>${gwt.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
@@ -159,25 +179,6 @@
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-      <version>${gwt.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Muntjac widgetset dependencies -->
-    <dependency>
-      <groupId>org.muntiacus</groupId>
-        <artifactId>MuntjacWidgetSet</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.muntiacus</groupId>
-        <artifactId>GwtWidgetSet</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-
     <!-- Vaadin add-ons -->
 	<dependency>
 	  <groupId>org.vaadin.addons</groupId>
@@ -224,6 +225,14 @@
       <artifactId>googlemapwidget</artifactId>
       <version>0.9.13</version>
   	</dependency>
+  	<!-- FIXME: Remove system scoped dependency when gwt-maps is updated on Maven central -->
+  	<dependency>
+          <groupId>com.google.code.gwt-google-apis</groupId>
+          <artifactId>gwt-maps</artifactId>
+          <version>1.1.1</version>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/lib/gwt-maps.jar</systemPath>
+	</dependency>
 	<dependency>
 	  <groupId>org.vaadin.addons</groupId>
 	  <artifactId>codemirror2</artifactId>
@@ -234,6 +243,5 @@
 	  <artifactId>refresher</artifactId>
 	  <version>1.1.1</version>
 	</dependency>
-    </dependencies>
-  </dependencyManagement>
+  </dependencies>
 </project>
