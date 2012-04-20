@@ -13,7 +13,7 @@
     <vaadin.version>6.7.7</vaadin.version>
     <gwt.version>2.3.0</gwt.version>
     <gwt.plugin.version>2.3.0</gwt.plugin.version>
-    <widgetset>DefaultWidgetset</widgetset>
+    <widgetset>org.muntiacus.DefaultWidgetset</widgetset>
   </properties>
 
   <repositories>
@@ -77,12 +77,13 @@
         <version>${gwt.plugin.version}</version>
         <configuration>
           <!-- if you don't specify any modules, the plugin will find them -->
+          <module>org.muntiacus.${widgetset}</module>
           <modules>
             <!-- <module>org.muntiacus.CanvasWidgetset</module>
             <module>org.muntiacus.CodeMirror2Widgetset</module>
             <module>org.muntiacus.ColorPickerWidgetset</module>
             <module>org.muntiacus.CSSToolsWidgetset</module> -->
-            <module>org.muntiacus.DefaultWidgetset</module>
+            <!-- <module>org.muntiacus.DefaultWidgetset</module>
             <!-- <module>org.muntiacus.DemoWidgetset</module>
             <module>org.muntiacus.GoogleMapsWidgetset</module>
             <module>org.muntiacus.HelloWorldWidgetset</module>
@@ -91,7 +92,8 @@
             <module>org.muntiacus.RefresherWidgetset</module>
             <module>org.muntiacus.StepperWidgetset</module>
             <module>org.muntiacus.SVGComponentWidgetset</module>
-            <module>org.muntiacus.WeeLayoutWidgetset</module> -->
+            <module>org.muntiacus.WeeLayoutWidgetset</module>
+            <module>org.muntiacus.LiteWidgetset</module> -->
           </modules>
           <webappDirectory>${project.basedir}/../muntjac/public/VAADIN/widgetsets</webappDirectory>
           <!-- On Mac running Snow Leopard, add "-d32" -->
