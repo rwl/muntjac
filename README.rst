@@ -9,7 +9,10 @@ and PyGTK_. However, it can be used to create dynamic, browser independent,
 web applications. There is no need to write HTML, Javascript or RPC code,
 just server-side Python.
 
-[![Build Status](https://secure.travis-ci.org/rwl/muntjac.png?branch=master)](http://travis-ci.org/rwl/muntjac)
+Build Status
+------------
+
+Continuous integration testing is implemented using `Travis CI`_ 
 
 License and Copyright
 ---------------------
@@ -28,3 +31,4 @@ version 2.0.
 .. _wxPython: http://www.wxpython.org/
 .. _PyGTK: http://www.pygtk.org/
 .. _Apache Software License: http://www.apache.org/licenses/LICENSE-2.0
+.. _Travis CI: http://travis-ci.org/rwl/muntjac
