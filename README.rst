@@ -9,7 +9,7 @@ and PyGTK_. However, it can be used to create dynamic, browser independent,
 web applications. There is no need to write HTML, Javascript or RPC code,
 just server-side Python.
 
-`Build Status<http://travis-ci.org/rwl/muntjac>`_
+`Build Status <http://travis-ci.org/rwl/muntjac>`_
 
 License and Copyright
 ---------------------
