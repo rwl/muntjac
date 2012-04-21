@@ -614,8 +614,8 @@ class InnerStreamVariable(IStreamVariable):
 
 
     def listenProgress(self):
-        return (self._upload.progressListeners is not None
-                and len(self._upload.progressListeners) > 0)
+        return (self._upload._progressListeners is not None
+                and len(self._upload._progressListeners) > 0)
 
 
     def onProgress(self, event):
@@ -624,11 +624,11 @@ class InnerStreamVariable(IStreamVariable):
 
 
     def isInterrupted(self):
-        return self._upload.interrupted
+        return self._upload._interrupted
 
 
     def getOutputStream(self):
-        receiveUpload = self._upload.receiver.receiveUpload(
+        receiveUpload = self._upload._receiver.receiveUpload(
                 self._lastStartedEvent.getFileName(),
                 self._lastStartedEvent.getMimeType())
         self._lastStartedEvent = None
@@ -636,8 +636,8 @@ class InnerStreamVariable(IStreamVariable):
 
 
     def streamingStarted(self, event):
-        self.startUpload()
-        self._upload.contentLength = event.getContentLength()
+        self._upload.startUpload()
+        self._upload._contentLength = event.getContentLength()
         self._upload.fireStarted(event.getFileName(),
                 event.getMimeType())
         self._lastStartedEvent = event

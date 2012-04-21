@@ -186,7 +186,10 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         inputStream = request.getInputStream()
 
-        contentLength = request.getContentLength()
+        if inputStream is None:
+            inputStream = request._request.fieldStorage().list[0].file
+
+        contentLength = int(request.getContentLength())
 
         atStart = False
         firstFileFieldFound = False
@@ -196,20 +199,20 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
 
         # Read the stream until the actual file starts (empty line). Read
         # filename and content type from multipart headers.
-        while not atStart:
-            readLine = inputStream.readline()
-            contentLength -= len(readLine) + 2
-            if (readLine.startswith('Content-Disposition:')
-                    and readLine.find('filename=') > 0):
-                rawfilename = readLine.replace('.*filename=', '')
-                parenthesis = rawfilename[:1]
-                rawfilename = rawfilename[1:]
-                rawfilename = rawfilename[:rawfilename.find(parenthesis)]
-                firstFileFieldFound = True
-            elif firstFileFieldFound and readLine == '':
-                atStart = True
-            elif readLine.startswith('Content-Type'):
-                rawMimeType = readLine.split(': ')[1]
+#        while not atStart:
+#            readLine = inputStream.readline()
+#            contentLength -= len(readLine) + 2
+#            if (readLine.startswith('Content-Disposition:')
+#                    and readLine.find('filename=') > 0):
+#                rawfilename = readLine.replace('.*filename=', '')
+#                parenthesis = rawfilename[:1]
+#                rawfilename = rawfilename[1:]
+#                rawfilename = rawfilename[:rawfilename.find(parenthesis)]
+#                firstFileFieldFound = True
+#            elif firstFileFieldFound and readLine == '':
+#                atStart = True
+#            elif readLine.startswith('Content-Type'):
+#                rawMimeType = readLine.split(': ')[1]
 
         contentLength -= (len(boundary) + len(self._CRLF)
                 + (2 * len(self._DASHDASH)) + 2)  # 2 == CRLF
@@ -225,28 +228,30 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         #
         # Note, if this is someday needed elsewhere, don't shoot yourself to
         # foot and split to a top level helper class.
-        simpleMultiPartReader = \
-                SimpleMultiPartInputStream(inputStream, boundary, self)
+#        simpleMultiPartReader = \
+#                SimpleMultiPartInputStream(inputStream, boundary, self)
 
         # Should report only the filename even if the browser sends the path
         filename = self.removePath(rawfilename)
         mimeType = rawMimeType
 
-        try:
-            # safe cast as in GWT terminal all variable owners are expected
-            # to be components.
-            component = owner
-            if component.isReadOnly():
-                raise UploadException('Warning: file upload ignored '
-                        'because the component was read-only')
+#        try:
+        # safe cast as in GWT terminal all variable owners are expected
+        # to be components.
+        component = owner
+        if component.isReadOnly():
+            raise UploadException('Warning: file upload ignored '
+                    'because the component was read-only')
 
-            forgetVariable = self.streamToReceiver(simpleMultiPartReader,
-                    streamVariable, filename, mimeType, contentLength)
-            if forgetVariable:
-                self.cleanStreamVariable(owner, variableName)
-        except Exception, e:
-            self.handleChangeVariablesError(self._application,
-                    owner, e, dict())
+        forgetVariable = self.streamToReceiver(inputStream,
+                streamVariable, filename, mimeType, contentLength)
+#            forgetVariable = self.streamToReceiver(simpleMultiPartReader,
+#                    streamVariable, filename, mimeType, contentLength)
+        if forgetVariable:
+            self.cleanStreamVariable(owner, variableName)
+#        except Exception, e:
+#            self.handleChangeVariablesError(self._application,
+#                    owner, e, dict())
 
         self.sendUploadResponse(request, response)
 
@@ -295,58 +300,58 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
         totalBytes = 0
         startedEvent = StreamingStartEventImpl(filename, typ, contentLength)
 
-        try:
-            streamVariable.streamingStarted(startedEvent)
-            out = streamVariable.getOutputStream()
-            listenProgress = streamVariable.listenProgress()
+#        try:
+        streamVariable.streamingStarted(startedEvent)
+        out = streamVariable.getOutputStream()
+        listenProgress = streamVariable.listenProgress()
 
-            # Gets the output target stream
-            if out is None:
-                raise NoOutputStreamException()
+        # Gets the output target stream
+        if out is None:
+            raise NoOutputStreamException()
 
-            if inputStream is None:
-                # No file, for instance non-existent filename in html upload
-                raise NoInputStreamException()
+        if inputStream is None:
+            # No file, for instance non-existent filename in html upload
+            raise NoInputStreamException()
 
-            bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
-            bytesReadToBuffer = 0
-            while totalBytes < len(inputStream):
-                buff = inputStream.read(bufferSize)
-                bytesReadToBuffer = inputStream.pos - bytesReadToBuffer
+        bufferSize = self._MAX_UPLOAD_BUFFER_SIZE
+        bytesReadToBuffer = 0
+        while True:
+            buff = inputStream.read(bufferSize)
+            bytesReadToBuffer = len(buff)
 
-                out.write(buff)
-                totalBytes += bytesReadToBuffer
+            out.write(buff)
+            totalBytes += bytesReadToBuffer
 
-                if listenProgress:
-                    # update progress if listener set and contentLength
-                    # received
-                    progressEvent = StreamingProgressEventImpl(filename,
-                            typ, contentLength, totalBytes)
-                    streamVariable.onProgress(progressEvent)
+            if listenProgress:
+                # update progress if listener set and contentLength
+                # received
+                progressEvent = StreamingProgressEventImpl(filename,
+                        typ, contentLength, totalBytes)
+                streamVariable.onProgress(progressEvent)
 
-                if streamVariable.isInterrupted():
-                    raise UploadInterruptedException()
+            if streamVariable.isInterrupted():
+                raise UploadInterruptedException()
 
-            # upload successful
-            out.close()
-            event = StreamingEndEventImpl(filename, typ, totalBytes)
-            streamVariable.streamingFinished(event)
-        except UploadInterruptedException, e:
-            # Download interrupted by application code
-            self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename, typ, contentLength,
-                    totalBytes, e)
-            streamVariable.streamingFailed(event)
-            # Note, we are not throwing interrupted exception forward as
-            # it is not a terminal level error like all other exception.
-        except Exception, e:
-            self.tryToCloseStream(out)
-            event = StreamingErrorEventImpl(filename, typ, contentLength,
-                    totalBytes, e)
-            streamVariable.streamingFailed(event)
-            # throw exception for terminal to be handled (to be passed
-            # to terminalErrorHandler)
-            raise UploadException(e)
+        # upload successful
+        out.close()
+        event = StreamingEndEventImpl(filename, typ, totalBytes)
+        streamVariable.streamingFinished(event)
+#        except UploadInterruptedException, e:
+#            # Download interrupted by application code
+#            self.tryToCloseStream(out)
+#            event = StreamingErrorEventImpl(filename, typ, contentLength,
+#                    totalBytes, e)
+#            streamVariable.streamingFailed(event)
+#            # Note, we are not throwing interrupted exception forward as
+#            # it is not a terminal level error like all other exception.
+#        except Exception, e:
+#            self.tryToCloseStream(out)
+#            event = StreamingErrorEventImpl(filename, typ, contentLength,
+#                    totalBytes, e)
+#            streamVariable.streamingFailed(event)
+#            # throw exception for terminal to be handled (to be passed
+#            # to terminalErrorHandler)
+#            raise UploadException(e)
 
         return startedEvent.isDisposed()
 

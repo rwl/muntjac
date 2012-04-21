@@ -147,6 +147,7 @@ class PasteWsgiServlet(HTTPServlet):
 
 
     def getContentLength(self, request):
+#        return int(CONTENT_LENGTH(request.environ()))
         return CONTENT_LENGTH(request.environ())
 
 

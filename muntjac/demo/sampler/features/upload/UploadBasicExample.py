@@ -63,7 +63,7 @@ class LineBreakCounter(IReceiver):
 class OutputStream(StringIO):
 
     def __init__(self, lbc):
-        super(OutputStream, self).__init__()
+        StringIO.__init__(self)
         self._lbc = lbc
 
     def write(self, b):

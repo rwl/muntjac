@@ -4,15 +4,15 @@ from muntjac.main import muntjac
 from muntjac.application import Application
 from muntjac.ui.window import Window
 
-from muntjac.demo.sampler.features.dragndrop.DragDropServerValidationExample \
-    import DragDropServerValidationExample as Example
+from muntjac.demo.sampler.features.upload.UploadBasicExample \
+    import UploadBasicExample as Example
 
 
 class App(Application):
 
     def init(self):
         main = Window('Muntjac')
-        main.setTheme('sampler-reindeer')
+#        main.setTheme('sampler-reindeer')
         self.setMainWindow(main)
 
         main.addComponent(Example())
