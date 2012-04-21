@@ -5,7 +5,7 @@ from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
 cwd = abspath(dirname(__file__))
-readme = open(join(cwd, "README.md"))
+readme = open(join(cwd, "README.rst"))
 changelog = open(join(cwd, "CHANGELOG"))
 kwds = {"long_description": readme.read() + '\n\n' + changelog.read()}
 readme.close()
