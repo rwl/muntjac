@@ -3,6 +3,16 @@ Changelog
 
 @VERSION@
 
+  * Changed to Apache Software License, Version 2.0.
+  * Added ColorPicker, CodeMirror, Canvas and GoogleMaps add-ons.
+
+1.0.4
+
+  * Added InMemorySession and FileSession with faster pickle protocol.
+  * Implemented transient attributes and optimised JSON escaping.
+
+1.0.3
+
   * Catching 1Mb memcache limit errors in session middleware.
   * Fixed date formatting and currency parsing in sampler.
   * Fixed infinite loop in handleVariableBurst().

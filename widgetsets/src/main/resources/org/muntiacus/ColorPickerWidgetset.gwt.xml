@@ -1,0 +1,4 @@
+<module>
+  <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
+  <inherits name="com.vaadin.addon.colorpicker.gwt.ColorPickerWidgetSet" />
+</module>

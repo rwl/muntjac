@@ -1,0 +1,8 @@
+<module>
+  <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
+  <inherits name="com.invient.vaadin.charts.widgetset.InvientChartsWidgetset" />
+
+  <script src="jquery/jquery-1.4.4.min.js" />
+  <script src="js/highcharts.js" />
+  <script src="js/modules/exporting.js" />
+</module>

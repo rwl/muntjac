@@ -1,29 +1,16 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 """A wrapper class for adding external hierarchy to containers not
 implementing the IHierarchical interface."""
 
+from muntjac.util import OrderedSet
+
 from muntjac.data.container import \
-    (IContainer, IHierarchical, IItemSetChangeListener, IItemSetChangeNotifier,
-     IPropertySetChangeListener, IPropertySetChangeNotifier,
-     IItemSetChangeEvent, IPropertySetChangeEvent)
+    (IContainer, IHierarchical, IItemSetChangeListener,
+     IItemSetChangeNotifier, IPropertySetChangeListener,
+     IPropertySetChangeNotifier, IItemSetChangeEvent,
+     IPropertySetChangeEvent)
 
 from muntjac.data.util.hierarchical_container import HierarchicalContainer
 
@@ -80,7 +67,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
         # Create initial order if needed
         if not self._hierarchical:
-            self._noChildrenAllowed = set()
+            self._noChildrenAllowed = OrderedSet()
             self._parent = dict()
             self._children = dict()
             self._roots = set(self._container.getItemIds())
@@ -103,7 +90,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                 self._noChildrenAllowed = set()
                 self._parent = dict()
                 self._children = dict()
-                self._roots = set(self._container.getItemIds())
+                self._roots = OrderedSet(self._container.getItemIds())
 
             else:
 
@@ -133,7 +120,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
                 arry = list(self._roots)
                 arry.sort(cmp=basedOnOrderFromWrappedContainer)
-                self._roots = set()
+                self._roots = OrderedSet()
                 for a in arry:
                     self._roots.add(a)
 

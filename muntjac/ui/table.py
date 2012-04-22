@@ -1,21 +1,5 @@
-# Copyright (C) 2011 Vaadin Ltd.
-# Copyright (C) 2011 Richard Lincoln
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Note: This is a modified file from Vaadin. For further information on
-#       Vaadin please visit http://www.vaadin.com.
+# @MUNTJAC_COPYRIGHT@
+# @MUNTJAC_LICENSE@
 
 """Used for representing data or components in a pageable and selectable
 table."""
@@ -23,6 +7,11 @@ table."""
 import logging
 
 from warnings import warn
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
 
 from muntjac.ui.field import IField
 from muntjac.ui.field_factory import IFieldFactory
@@ -57,7 +46,7 @@ from muntjac.event.item_click_event import \
 from muntjac.data.util.indexed_container import \
     ItemSetChangeEvent, IndexedContainer
 
-from muntjac.util import clsname
+from muntjac.util import clsname, OrderedSet
 
 
 logger = logging.getLogger(__name__)
@@ -191,7 +180,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         self._columnWidths = dict()
 
         #: Holds column generators
-        self._columnGenerators = dict()
+        self._columnGenerators = OrderedDict()
 
         #: Holds value of property pageLength. 0 disables paging.
         self._pageLength = 15
@@ -563,7 +552,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
             propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
 
         if width < 0:
-            del self._columnWidths[propertyId]
+            if propertyId in self._columnWidths:
+                del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = int(width)
 
@@ -601,7 +591,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                    the expandRatio used to divide excess space for this column
         """
         if expandRatio < 0:
-            del self._columnWidths[propertyId]
+            if propertyId in self._columnWidths:
+                del self._columnWidths[propertyId]
         else:
             self._columnWidths[propertyId] = float(expandRatio)
 
@@ -1441,8 +1432,10 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 generatedRow =  None
             cells[self.CELL_GENERATED_ROW][i] = generatedRow
 
+            collapsed = 0
             for j in range(cols):
                 if self.isColumnCollapsed(colids[j]):
+                    collapsed += 1
                     continue
                 p = None
                 value = ''
@@ -1505,7 +1498,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
                 if isinstance(value, IComponent):
                     self.registerComponent(value)
 
-                cells[self.CELL_FIRSTCOL + j][i] = value
+                cells[self.CELL_FIRSTCOL + j - collapsed][i] = value
 
             # Gets the next item id
             if isinstance(self.items, container.IIndexed):
@@ -1535,8 +1528,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def registerComponent(self, component):
-        logger.debug('Registered %s: %s' % (component.__class__.__name__,
-                component.getCaption()))
+        #logger.debug('Registered %s: %s' % (component.__class__.__name__,
+        #        component.getCaption()))
         if component.getParent() is not self:
             component.setParent(self)
         self._visibleComponents.add(component)
@@ -1624,8 +1617,8 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         @param component:
                    a set of components that should be unregistered.
         """
-        logger.debug("Unregistered " + component.__class__.__name__
-                + ": " + component.getCaption())
+        #logger.debug("Unregistered %s: %s" % (component.__class__.__name__,
+        #        component.getCaption()))
         component.setParent(None)
         # Also remove property data sources to unregister listeners keeping
         # the fields in memory.
@@ -2571,7 +2564,7 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
 
 
     def findAndPaintBodyActions(self, target):
-        actionSet = set()
+        actionSet = OrderedSet()
         if self._actionHandlers is not None:
             keys = list()
             for ah in self._actionHandlers:

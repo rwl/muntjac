@@ -109,7 +109,7 @@ class TableActionHandler(action.IHandler):
             self._c._table.requestRepaint()
         elif ACTION_LOG == a:
             item = self._c._table.getItem(target)
-            self.addComponent(Label('Saved: ' + target + ', '
+            self._c.addComponent(Label('Saved: ' + target + ', '
                     + item.getItemProperty(
                         ExampleUtil.iso3166_PROPERTY_NAME).getValue()))
 

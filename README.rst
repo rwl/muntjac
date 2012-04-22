@@ -9,16 +9,15 @@ and PyGTK_. However, it can be used to create dynamic, browser independent,
 web applications. There is no need to write HTML, Javascript or RPC code,
 just server-side Python.
 
-
 License and Copyright
 ---------------------
 
-Copyright (C) 2011 Vaadin Ltd.
+Copyright (C) 2012 Vaadin Ltd.
 
-Copyright (C) 2011 Richard Lincoln
+Copyright (C) 2012 Richard Lincoln
 
-Muntjac is available under either the terms of the `GNU Affero General Public
-License`_ or a commercial license.
+Muntjac is available under the terms of the `Apache Software License`_,
+version 2.0.
 
 .. _Muntjac: http://www.muntiacus.org/
 .. _Vaadin: http://www.vaadin.com/
@@ -26,5 +25,4 @@ License`_ or a commercial license.
 .. _PyQt: http://www.riverbankcomputing.co.uk/software/pyqt/
 .. _wxPython: http://www.wxpython.org/
 .. _PyGTK: http://www.pygtk.org/
-.. _Application: http://doc.muntiacus.org/api/muntjac.application.Application-class.html
-.. _GNU Affero General Public License: http://www.gnu.org/licenses/agpl-3.0.txt
+.. _Apache Software License: http://www.apache.org/licenses/LICENSE-2.0
