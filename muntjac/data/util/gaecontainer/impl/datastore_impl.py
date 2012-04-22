@@ -19,7 +19,8 @@
 
 import logging
 
-from google.appengine.ext import db
+#from google.appengine.ext import db
+from django import db
 
 from muntjac.data.util.gaecontainer.datastore import IDatastore
 
@@ -36,7 +37,7 @@ class DatastoreImpl(IDatastore):
 
     _OFFSET_LIMIT = 1000
 
-    _ds = DatastoreServiceFactory.getDatastoreService()
+    _ds = db
 
     def get(self, key_or_query, start_index=None, amount=None):
         # @see: L{IDatastore.get}
@@ -57,7 +58,7 @@ class DatastoreImpl(IDatastore):
                 # we are under limit to not need cursor
                 if offset + amount >= self._OFFSET_LIMIT:
                     amount = amount - (offset + amount) - self._OFFSET_LIMIT
-                result = pq.asList(Builder.withLimit(
+                result = pq.asList(FetchOptions.Builder.withLimit(
                         amount).offset(offset).chunkSize(amount))
                 return result
             else:

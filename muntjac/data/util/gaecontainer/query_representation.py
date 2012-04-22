@@ -17,7 +17,7 @@
 # Note: This is a modified file from GAEContainer. For further information
 #       please visit http://vaadin.com/directory#addon/gaecontainer.
 
-from muntjac.data.util.gaecontainer.query.IncompatibleFilterException \
+from muntjac.data.util.gaecontainer.query.incompatible_filter_exception \
     import IncompatibleFilterException
 
 

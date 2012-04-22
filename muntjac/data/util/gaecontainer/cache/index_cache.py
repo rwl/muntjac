@@ -17,10 +17,10 @@
 # Note: This is a modified file from GAEContainer. For further information
 #       please visit http://vaadin.com/directory#addon/gaecontainer.
 
-from muntjac.data.util.gaecontainer.cache.cache import Cache
+from muntjac.data.util.gaecontainer.cache.cache import ICache
 
 
-class IIndexCache(Cache):
+class IIndexCache(ICache):
     """Cache that stores indexes for keys for different sort orders.
 
     Note that index_start and amount are tied to the line size of the cache

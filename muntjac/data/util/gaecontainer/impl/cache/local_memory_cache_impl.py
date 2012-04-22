@@ -29,7 +29,7 @@ from muntjac.data.util.gaecontainer.cache.size_cache import ISizeCache
 logger = logging.getLogger('MemoryCache')
 
 
-class LocalMemoryCacheImpl(ICache, IIndexCache, ISizeCache):
+class LocalMemoryCacheImpl(ISizeCache, IIndexCache):#ICache
     """This cache should be instantiated by I{CacheFactory} using
     L{LocalMemoryCacheConfig}.
 

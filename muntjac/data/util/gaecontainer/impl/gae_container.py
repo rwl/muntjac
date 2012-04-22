@@ -19,7 +19,16 @@
 
 import logging
 
-from muntjac.util import EventObject
+from muntjac.data.container import IItemSetChangeEvent
+
+from muntjac.util \
+    import EventObject
+
+from muntjac.data.util.indexed_container \
+    import ItemSetChangeEvent
+
+from muntjac.data.property \
+    import ValueChangeEvent as PropertyValueChangeEvent, IProperty
 
 from muntjac.data.container \
     import ISortable, IIndexed, IPropertySetChangeNotifier, \
@@ -515,7 +524,7 @@ class GAEContainer(ISortable, IIndexed, IPropertySetChangeNotifier,
                 l[i].containerItemSetChange(event)
 
 
-class PropertyValueChangeEvent(EventObject, property.ValueChangeEvent):
+class PropertyValueChangeEvent(EventObject, PropertyValueChangeEvent):
 
     def __init__(self, source):
         super(PropertyValueChangeEvent, self).__init__(source)
@@ -526,7 +535,7 @@ class PropertyValueChangeEvent(EventObject, property.ValueChangeEvent):
 
 
 
-class GAEProperty(Property):
+class GAEProperty(IProperty):
 
     def __init__(self, value, c, ownerItemid, Id, version, writeTrough=True):
         self._isReadOnly = False
@@ -602,7 +611,7 @@ class GAEItem(IVersionedGAEItem):
     def __init__(self, itemId, itemProperties, version):
         self._itemProperties = dict()
         for prop in itemProperties:
-            self._itemProperties.put(property.getId(), prop)
+            self._itemProperties.put(prop.getId(), prop)
         self._version = version
         self._itemId = itemId
 
@@ -638,7 +647,7 @@ class GAEItem(IVersionedGAEItem):
         return GAEContainer_this._propertyWriteTrough
 
 
-class ItemSetChangeEvent(EventObject, ItemSetChangeEvent):
+class ItemSetChangeEvent(EventObject, IItemSetChangeEvent):
 
     def __init__(self, source):
         self._source = None
