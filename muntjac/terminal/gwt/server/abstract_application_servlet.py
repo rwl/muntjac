@@ -1693,13 +1693,17 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                     data store represented by the given URL.
         """
         reqURL = 'https://' if self.isSecure(request) else 'http://'
-        reqURL += self.getServerName(request)
-        if (self.isSecure(request) and self.getServerPort(request) == 443
-                or (not self.isSecure(request)
-                        and self.getServerPort(request) == 80)):
-            reqURL += ''
+        reqHost = request.environ().get('HTTP_HOST')
+        if reqHost:
+            reqURL += reqHost
         else:
-            reqURL += ':%d' % self.getServerPort(request)
+            reqURL += self.getServerName(request)
+            if (self.isSecure(request) and self.getServerPort(request) == 443
+                    or (not self.isSecure(request)
+                            and self.getServerPort(request) == 80)):
+                pass
+            else:
+                reqURL += ':%d' % self.getServerPort(request)
         reqURL += self.getRequestUri(request)
 
         # FIXME: implement include requests
