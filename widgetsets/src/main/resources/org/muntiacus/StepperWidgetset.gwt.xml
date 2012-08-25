@@ -1,0 +1,4 @@
+<module>
+  <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
+  <inherits name="org.vaadin.risto.stepper.widgetset.StepperWidgetset" />
+</module>

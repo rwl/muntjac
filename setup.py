@@ -5,7 +5,7 @@ from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
 cwd = abspath(dirname(__file__))
-readme = open(join(cwd, "README"))
+readme = open(join(cwd, "README.rst"))
 changelog = open(join(cwd, "CHANGELOG"))
 kwds = {"long_description": readme.read() + '\n\n' + changelog.read()}
 readme.close()
@@ -17,7 +17,7 @@ setup(name="Muntjac",
       author="Richard Lincoln",
       author_email="r.w.lincoln@gmail.com",
       url="http://www.muntiacus.org/",
-      install_requires=["Paste", "PasteWebKit", "Babel"],
+      install_requires=["Paste", "PasteWebKit", "Babel", "OrderedDict", "Mox"],
       classifiers=['Development Status :: 5 - Production/Stable',
             'Intended Audience :: Developers',
             'License :: OSI Approved :: Apache Software License',

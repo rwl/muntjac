@@ -4,10 +4,13 @@
 """A wrapper class for adding external hierarchy to containers not
 implementing the IHierarchical interface."""
 
+from muntjac.util import OrderedSet
+
 from muntjac.data.container import \
-    (IContainer, IHierarchical, IItemSetChangeListener, IItemSetChangeNotifier,
-     IPropertySetChangeListener, IPropertySetChangeNotifier,
-     IItemSetChangeEvent, IPropertySetChangeEvent)
+    (IContainer, IHierarchical, IItemSetChangeListener,
+     IItemSetChangeNotifier, IPropertySetChangeListener,
+     IPropertySetChangeNotifier, IItemSetChangeEvent,
+     IPropertySetChangeEvent)
 
 from muntjac.data.util.hierarchical_container import HierarchicalContainer
 
@@ -64,7 +67,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
         # Create initial order if needed
         if not self._hierarchical:
-            self._noChildrenAllowed = set()
+            self._noChildrenAllowed = OrderedSet()
             self._parent = dict()
             self._children = dict()
             self._roots = set(self._container.getItemIds())
@@ -87,7 +90,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
                 self._noChildrenAllowed = set()
                 self._parent = dict()
                 self._children = dict()
-                self._roots = set(self._container.getItemIds())
+                self._roots = OrderedSet(self._container.getItemIds())
 
             else:
 
@@ -117,7 +120,7 @@ class ContainerHierarchicalWrapper(IHierarchical, IContainer,
 
                 arry = list(self._roots)
                 arry.sort(cmp=basedOnOrderFromWrappedContainer)
-                self._roots = set()
+                self._roots = OrderedSet()
                 for a in arry:
                     self._roots.add(a)
 

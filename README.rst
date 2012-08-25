@@ -9,7 +9,6 @@ and PyGTK_. However, it can be used to create dynamic, browser independent,
 web applications. There is no need to write HTML, Javascript or RPC code,
 just server-side Python.
 
-
 License and Copyright
 ---------------------
 

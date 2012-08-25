@@ -16,6 +16,9 @@ PUSH=0
 MUNTJAC_COPYRIGHT = Copyright (C) 2012 Vaadin Ltd.\
 \n\# Copyright (C) 2012 Richard Lincoln
 
+INVIENT_COPYRIGHT = Copyright (C) 2011 Invient (www.invient.com)\
+\n\# Copyright (C) 2012 Richard Lincoln
+
 MUNTJAC_LICENSE = \n\# Licensed under the Apache License, Version 2.0 (the "License");\
 \n\# you may not use this file except in compliance with the License.\
 \n\# You may obtain a copy of the License at\

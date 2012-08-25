@@ -64,7 +64,7 @@ class AbstractOrderedLayout(AbstractLayout, IAlignmentHandler,
 
         @param c: the component to be added.
         """
-        self.components.addFirst(c)
+        self.components.insert(0, c)
         try:
             super(AbstractOrderedLayout, self).addComponent(c)
             self.requestRepaint()

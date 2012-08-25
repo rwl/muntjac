@@ -1,0 +1,7 @@
+<module>
+  <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
+  <generate-with
+    class="org.muntiacus.HelloWorldWidgetMapGenerator">
+    <when-type-is class="com.vaadin.terminal.gwt.client.WidgetMap" />
+  </generate-with>
+</module>

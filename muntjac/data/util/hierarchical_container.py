@@ -4,9 +4,10 @@
 """A specialized container whose contents can be accessed like it was a
 tree-like structure."""
 
+from muntjac.util import OrderedSet
+
 from muntjac.data.container import IContainer, IHierarchical
 from muntjac.data.util.indexed_container import IndexedContainer
-from muntjac.data.util.abstract_container import AbstractContainer
 
 
 class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
@@ -539,7 +540,7 @@ class HierarchicalContainer(IndexedContainer, IHierarchical, IContainer):
             # match
             super(HierarchicalContainer, self).doFilterContainer(hasFilters)
 
-            filteredItemIds = set(self.getItemIds())
+            filteredItemIds = OrderedSet(self.getItemIds())
             for itemId in filteredItemIds:
                 itemParent = self._parent.get(itemId)
                 if (itemParent is None or itemParent not in filteredItemIds):

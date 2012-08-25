@@ -4,6 +4,8 @@
 """Defines a class representing a selection of items the user has selected
 in a UI."""
 
+from muntjac.util import OrderedSet
+
 from muntjac.ui.abstract_field import AbstractField
 from muntjac.terminal.resource import IResource
 from muntjac.terminal.key_mapper import KeyMapper
@@ -117,10 +119,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         self._itemIconPropertyId = None
 
         #: List of property set change event listeners.
-        self._propertySetEventListeners = set()
+        self._propertySetEventListeners = OrderedSet()
 
         #: List of item set change event listeners.
-        self._itemSetEventListeners = set()
+        self._itemSetEventListeners = OrderedSet()
 
         self._propertySetEventCallbacks = dict()
 
@@ -356,7 +358,7 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
         @return: newItemHandler
         """
         if self._newItemHandler is None:
-            self._newItemHandler = DefaultNewItemHandler()
+            self._newItemHandler = DefaultNewItemHandler(self)
         return self._newItemHandler
 
 
@@ -1145,10 +1147,10 @@ class AbstractSelect(AbstractField, container.IContainer, container.IViewer,
 
     def getListeners(self, eventType):
         if issubclass(eventType, container.IItemSetChangeEvent):
-            return set(self._itemSetEventListeners)
+            return OrderedSet(self._itemSetEventListeners)
 
         elif issubclass(eventType, container.IPropertySetChangeEvent):
-            return set(self._propertySetEventListeners)
+            return OrderedSet(self._propertySetEventListeners)
 
         return super(AbstractSelect, self).getListeners(eventType)
 
@@ -1356,31 +1358,34 @@ class DefaultNewItemHandler(INewItemHandler):
     addition like database inserts.
     """
 
+    def __init__(self, select):
+        self._select = select
+
     def addNewItem(self, newItemCaption):
         # Checks for readonly
-        if self.isReadOnly():
+        if self._select.isReadOnly():
             raise prop.ReadOnlyException()
 
         # Adds new option
-        if self.addItem(newItemCaption) is not None:
+        if self._select.addItem(newItemCaption) is not None:
 
             # Sets the caption property, if used
-            if self.getItemCaptionPropertyId() is not None:
+            if self._select.getItemCaptionPropertyId() is not None:
                 try:
-                    prop = self.getContainerProperty(newItemCaption,
-                            self.getItemCaptionPropertyId())
+                    prop = self._select.getContainerProperty(newItemCaption,
+                            self._select.getItemCaptionPropertyId())
                     prop.setValue(newItemCaption)
                 except prop.ConversionException:
                     # The conversion exception is safely ignored, the
                     # caption is just missing
                     pass
 
-            if self.isMultiSelect():
-                values = set(self.getValue())
+            if self._select.isMultiSelect():
+                values = set(self._select.getValue())
                 values.add(newItemCaption)
-                self.setValue(values)
+                self._select.setValue(values)
             else:
-                self.setValue(newItemCaption)
+                self._select.setValue(newItemCaption)
 
 
 class IItemSetChangeEvent(container.IItemSetChangeEvent):

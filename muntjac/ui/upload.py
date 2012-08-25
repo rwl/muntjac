@@ -16,6 +16,8 @@ from muntjac.terminal.stream_variable import \
 from muntjac.terminal.gwt.server.exceptions import \
     NoInputStreamException, NoOutputStreamException
 
+from muntjac.util import OrderedSet
+
 
 class IStartedListener(object):
     """Receives the events when the upload starts.
@@ -167,7 +169,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
         #: ProgressListeners to which information about progress
         #  is sent during upload
-        self._progressListeners = set()
+        self._progressListeners = OrderedSet()
 
         self._progressCallbacks = dict()
 

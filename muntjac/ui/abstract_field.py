@@ -234,12 +234,13 @@ class AbstractField(AbstractComponent, field.IField,
         if self._dataSource is not None:
 
             # Gets the correct value from datasource
+            newValue = None
             try:
                 # Discards buffer by overwriting from datasource
                 if self.getType() == str:
                     newValue = str(self._dataSource)
                 else:
-                    self._dataSource.getValue()
+                    newValue = self._dataSource.getValue()
 
                 # If successful, remove set the buffering state to be ok
                 if self._currentBufferedSourceException is not None:
