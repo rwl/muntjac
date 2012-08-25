@@ -1,0 +1,1781 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.invient.demo.invient_demo_win.InvientChartsDemoWin</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.invient-module.html">Package&nbsp;invient</a> ::
+        <a href="muntjac.addon.invient.demo-module.html">Package&nbsp;demo</a> ::
+        <a href="muntjac.addon.invient.demo.invient_demo_win-module.html">Module&nbsp;invient_demo_win</a> ::
+        Class&nbsp;InvientChartsDemoWin
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.invient.demo.invient_demo_win.InvientChartsDemoWin-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class InvientChartsDemoWin</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                                object --+                            
+                                         |                            
+                       <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+                        
+                                             |                        
+                 <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+                    
+                                                 |                    
+                                    object --+   |                    
+                                             |   |                    
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+                    
+                                                 |                    
+                                    object --+   |                    
+                                             |   |                    
+                   <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+                    
+                                                 |                    
+                           <a href="muntjac.ui.component.IComponent-class.html">ui.component.IComponent</a> --+                
+                                                     |                
+                                        object --+   |                
+                                                 |   |                
+      <a href="muntjac.event.method_event_source.IMethodEventSource-class.html">event.method_event_source.IMethodEventSource</a> --+                
+                                                     |                
+               <a href="muntjac.ui.abstract_component.AbstractComponent-class.html">ui.abstract_component.AbstractComponent</a> --+            
+                                                         |            
+                                object --+               |            
+                                         |               |            
+                       <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |            
+                                             |           |            
+                 <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |            
+                                                 |       |            
+                                    object --+   |       |            
+                                             |   |       |            
+        <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |            
+                                                 |       |            
+                                    object --+   |       |            
+                                             |   |       |            
+                   <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |            
+                                                 |       |            
+                           <a href="muntjac.ui.component.IComponent-class.html">ui.component.IComponent</a> --+   |            
+                                                     |   |            
+            <a href="muntjac.ui.component_container.IComponentContainer-class.html">ui.component_container.IComponentContainer</a> --+            
+                                                         |            
+<a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">ui.abstract_component_container.AbstractComponentContainer</a> --+        
+                                                             |        
+                                                object --+   |        
+                                                         |   |        
+                           <a href="muntjac.terminal.scrollable.IScrollable-class.html">terminal.scrollable.IScrollable</a> --+        
+                                                             |        
+                                                object --+   |        
+                                                         |   |        
+           <a href="muntjac.ui.component_container.IComponentAttachListener-class.html">ui.component_container.IComponentAttachListener</a> --+        
+                                                             |        
+                                                object --+   |        
+                                                         |   |        
+           <a href="muntjac.ui.component_container.IComponentDetachListener-class.html">ui.component_container.IComponentDetachListener</a> --+        
+                                                             |        
+                                            object --+       |        
+                                                     |       |        
+                               <a href="muntjac.event.action.IContainer-class.html">event.action.IContainer</a> --+   |        
+                                                         |   |        
+                                    <a href="muntjac.event.action.INotifier-class.html">event.action.INotifier</a> --+        
+                                                             |        
+                                    object --+               |        
+                                             |               |        
+                           <a href="muntjac.util.IEventListener-class.html">util.IEventListener</a> --+           |        
+                                                 |           |        
+                     <a href="muntjac.terminal.paintable.IPaintable-class.html">terminal.paintable.IPaintable</a> --+       |        
+                                                     |       |        
+                                        object --+   |       |        
+                                                 |   |       |        
+            <a href="muntjac.terminal.variable_owner.IVariableOwner-class.html">terminal.variable_owner.IVariableOwner</a> --+       |        
+                                                     |       |        
+                                        object --+   |       |        
+                                                 |   |       |        
+                       <a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a> --+       |        
+                                                     |       |        
+                               <a href="muntjac.ui.component.IComponent-class.html">ui.component.IComponent</a> --+   |        
+                                                         |   |        
+                                   <a href="muntjac.ui.component.IFocusable-class.html">ui.component.IFocusable</a> --+        
+                                                             |        
+                                                <a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a> --+    
+                                                                 |    
+                                                    object --+   |    
+                                                             |   |    
+                              <a href="muntjac.terminal.uri_handler.IUriHandler-class.html">terminal.uri_handler.IUriHandler</a> --+    
+                                                                 |    
+                                                    object --+   |    
+                                                             |   |    
+                  <a href="muntjac.terminal.parameter_handler.IParameterHandler-class.html">terminal.parameter_handler.IParameterHandler</a> --+    
+                                                                 |    
+                                                    object --+   |    
+                                                             |   |    
+                             <a href="muntjac.event.field_events.IFocusNotifier-class.html">event.field_events.IFocusNotifier</a> --+    
+                                                                 |    
+                                                    object --+   |    
+                                                             |   |    
+                              <a href="muntjac.event.field_events.IBlurNotifier-class.html">event.field_events.IBlurNotifier</a> --+    
+                                                                 |    
+                                                  <a href="muntjac.ui.window.Window-class.html">ui.window.Window</a> --+
+                                                                     |
+                                                                    <strong class="uidshort">InvientChartsDemoWin</strong>
+</pre>
+
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.demo.invient_demo_win.InvientChartsDemoWin-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Creates a new unnamed window with the given content and title.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.demo.invient_demo_win.InvientChartsDemoWin-class.html#attach" class="summary-sig-name">attach</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Notifies the component that it is connected to an application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.attach">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isAppRunningOnGAE"></a><span class="summary-sig-name">isAppRunningOnGAE</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.isAppRunningOnGAE">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getInvientChartsDemoApp"></a><span class="summary-sig-name">getInvientChartsDemoApp</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getInvientChartsDemoApp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showChart"></a><span class="summary-sig-name">showChart</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">demoSeriesTypeName</span>,
+        <span class="summary-sig-arg">chartNameString</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showChart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showMasterDetail"></a><span class="summary-sig-name">showMasterDetail</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showMasterDetail">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDetailChart"></a><span class="summary-sig-name">getDetailChart</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">masterChart</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDetailChart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getMasterChart"></a><span class="summary-sig-name">getMasterChart</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getMasterChart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showLine"></a><span class="summary-sig-name">showLine</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showLine">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showClickToAddPoint"></a><span class="summary-sig-name">showClickToAddPoint</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showClickToAddPoint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showLineWithDataLabels"></a><span class="summary-sig-name">showLineWithDataLabels</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showLineWithDataLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showBarStacked"></a><span class="summary-sig-name">showBarStacked</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showBarStacked">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showBarBasic"></a><span class="summary-sig-name">showBarBasic</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showBarBasic">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showBarWithNegStack"></a><span class="summary-sig-name">showBarWithNegStack</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showBarWithNegStack">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnBasic"></a><span class="summary-sig-name">showColumnBasic</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnBasic">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnWithNegValues"></a><span class="summary-sig-name">showColumnWithNegValues</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnWithNegValues">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnStacked"></a><span class="summary-sig-name">showColumnStacked</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnStacked">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnStackedAndGrouped"></a><span class="summary-sig-name">showColumnStackedAndGrouped</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnStackedAndGrouped">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnStackedPercent"></a><span class="summary-sig-name">showColumnStackedPercent</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnStackedPercent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showColumnWithRotatedLabels"></a><span class="summary-sig-name">showColumnWithRotatedLabels</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showColumnWithRotatedLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaWithNegValues"></a><span class="summary-sig-name">showAreaWithNegValues</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaWithNegValues">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaInvertedAxes"></a><span class="summary-sig-name">showAreaInvertedAxes</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaInvertedAxes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaWithMissingPoints"></a><span class="summary-sig-name">showAreaWithMissingPoints</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaWithMissingPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaStacked"></a><span class="summary-sig-name">showAreaStacked</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaStacked">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaPercent"></a><span class="summary-sig-name">showAreaPercent</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaPercent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaBasic"></a><span class="summary-sig-name">showAreaBasic</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaBasic">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="addNullPoints"></a><span class="summary-sig-name">addNullPoints</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">points</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">howManyNullPoints</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.addNullPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showAreaSpline"></a><span class="summary-sig-name">showAreaSpline</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showAreaSpline">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showPieWithLegend"></a><span class="summary-sig-name">showPieWithLegend</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showPieWithLegend">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showDonut"></a><span class="summary-sig-name">showDonut</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showDonut">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getPointWithColor"></a><span class="summary-sig-name">getPointWithColor</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">y</span>,
+        <span class="summary-sig-arg">color</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getPointWithColor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showPie"></a><span class="summary-sig-name">showPie</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showPie">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showScatter"></a><span class="summary-sig-name">showScatter</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showScatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showCombinationScatterWithRegressionLine"></a><span class="summary-sig-name">showCombinationScatterWithRegressionLine</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showCombinationScatterWithRegressionLine">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showSpline"></a><span class="summary-sig-name">showSpline</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showSpline">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showSplineWithSymbol"></a><span class="summary-sig-name">showSplineWithSymbol</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showSplineWithSymbol">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showSplineUpdatingEachSecond"></a><span class="summary-sig-name">showSplineUpdatingEachSecond</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showSplineUpdatingEachSecond">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="stopSplineSelfUpdateThread"></a><span class="summary-sig-name">stopSplineSelfUpdateThread</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.stopSplineSelfUpdateThread">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showSplineWithPlotBands"></a><span class="summary-sig-name">showSplineWithPlotBands</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showSplineWithPlotBands">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showCombination"></a><span class="summary-sig-name">showCombination</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showCombination">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showCombinationMultipleAxes"></a><span class="summary-sig-name">showCombinationMultipleAxes</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showCombinationMultipleAxes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showTimeSeriesZoomable"></a><span class="summary-sig-name">showTimeSeriesZoomable</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showTimeSeriesZoomable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="addChart"></a><span class="summary-sig-name">addChart</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">chart</span>,
+        <span class="summary-sig-arg">isPrepend</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">isRegisterEvents</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">isRegisterSVGEvent</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">isSetHeight</span>=<span class="summary-sig-default">True</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.addChart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="registerSVGAndPrintEvent"></a><span class="summary-sig-name">registerSVGAndPrintEvent</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">chart</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.registerSVGAndPrintEvent">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="registerEvents"></a><span class="summary-sig-name">registerEvents</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">chart</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.registerEvents">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDateTimePoints"></a><span class="summary-sig-name">getDateTimePoints</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">values</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDateTimePoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getChartName"></a><span class="summary-sig-name">getChartName</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">chartNameString</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getChartName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDemoSeriesType"></a><span class="summary-sig-name">getDemoSeriesType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">demoSeriesTypeName</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDemoSeriesType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="createChartsTree"></a><span class="summary-sig-name">createChartsTree</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.createChartsTree">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="showChartInstancesForSeriesType"></a><span class="summary-sig-name">showChartInstancesForSeriesType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">demoSeriesTypeName</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.showChartInstancesForSeriesType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getContainer"></a><span class="summary-sig-name">getContainer</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getContainer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="addChartNamesForSeriesType"></a><span class="summary-sig-name">addChartNamesForSeriesType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">container</span>,
+        <span class="summary-sig-arg">parentId</span>,
+        <span class="summary-sig-arg">demoSeriesType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.addChartNamesForSeriesType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDemoCharts"></a><span class="summary-sig-name">getDemoCharts</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">demoSeriesType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDemoCharts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="logEventInfo"></a><span class="summary-sig-name">logEventInfo</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.logEventInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="logStringEventInfo"></a><span class="summary-sig-name">logStringEventInfo</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">eventName</span>,
+        <span class="summary-sig-arg">seriesName</span>,
+        <span class="summary-sig-arg">category</span>,
+        <span class="summary-sig-arg">x</span>,
+        <span class="summary-sig-arg">y</span>,
+        <span class="summary-sig-arg">mouseX</span>,
+        <span class="summary-sig-arg">mouseY</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.logStringEventInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="emptyEventLog"></a><span class="summary-sig-name">emptyEventLog</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.emptyEventLog">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getScatterFemalePoints"></a><span class="summary-sig-name">getScatterFemalePoints</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getScatterFemalePoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getScatterMalePoints"></a><span class="summary-sig-name">getScatterMalePoints</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getScatterMalePoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDateTimeSeriesPoints"></a><span class="summary-sig-name">getDateTimeSeriesPoints</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDateTimeSeriesPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getMasterDetailData"></a><span class="summary-sig-name">getMasterDetailData</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getMasterDetailData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.window.Window-class.html">ui.window.Window</a></code></b>:
+      <code><a href="muntjac.ui.window.Window-class.html#addCallback">addCallback</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addComponent">addComponent</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addListener">addListener</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addNotification">addNotification</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addParameterHandler">addParameterHandler</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addURIHandler">addURIHandler</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#addWindow">addWindow</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#attachWindow">attachWindow</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#bringToFront">bringToFront</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#center">center</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#changeVariables">changeVariables</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#close">close</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#executeJavaScript">executeJavaScript</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#fireClose">fireClose</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#fireResize">fireResize</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#focus">focus</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getApplication">getApplication</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getBorder">getBorder</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getChildWindows">getChildWindows</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getName">getName</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getParent">getParent</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getPositionX">getPositionX</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getPositionY">getPositionY</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getTerminal">getTerminal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getTheme">getTheme</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getURL">getURL</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#getWindow">getWindow</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#handleParameters">handleParameters</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#handleURI">handleURI</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#isClosable">isClosable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#isDraggable">isDraggable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#isModal">isModal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#isResizable">isResizable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#isResizeLazy">isResizeLazy</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#open">open</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#paintContent">paintContent</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeCallback">removeCallback</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeCloseShortcut">removeCloseShortcut</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeListener">removeListener</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeParameterHandler">removeParameterHandler</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeURIHandler">removeURIHandler</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#removeWindow">removeWindow</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#scrollIntoView">scrollIntoView</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setApplication">setApplication</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setBorder">setBorder</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setClosable">setClosable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setCloseShortcut">setCloseShortcut</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setDraggable">setDraggable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setFocusedComponent">setFocusedComponent</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setModal">setModal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setName">setName</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setPositionX">setPositionX</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setPositionY">setPositionY</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setResizable">setResizable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setResizeLazy">setResizeLazy</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setTerminal">setTerminal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#setTheme">setTheme</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#showNotification">showNotification</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a></code></b>:
+      <code><a href="muntjac.ui.panel.Panel-class.html#addAction">addAction</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#addActionHandler">addActionHandler</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#componentAttachedToContainer">componentAttachedToContainer</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#componentDetachedFromContainer">componentDetachedFromContainer</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#createDefaultContent">createDefaultContent</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#detach">detach</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#fireClick">fireClick</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getActionManager">getActionManager</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getComponentIterator">getComponentIterator</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getContent">getContent</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getLayout">getLayout</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getScrollLeft">getScrollLeft</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetX">getScrollOffsetX</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getScrollOffsetY">getScrollOffsetY</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getScrollTop">getScrollTop</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#getTabIndex">getTabIndex</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#isScrollable">isScrollable</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#removeAction">removeAction</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#removeActionHandler">removeActionHandler</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#removeAllActionHandlers">removeAllActionHandlers</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#removeAllComponents">removeAllComponents</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#removeComponent">removeComponent</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#replaceComponent">replaceComponent</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#requestRepaintAll">requestRepaintAll</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setCaption">setCaption</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setContent">setContent</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setLayout">setLayout</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setScrollLeft">setScrollLeft</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetX">setScrollOffsetX</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setScrollOffsetY">setScrollOffsetY</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setScrollTop">setScrollTop</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setScrollable">setScrollable</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#setTabIndex">setTabIndex</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html">ui.abstract_component_container.AbstractComponentContainer</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentAttachEvent">fireComponentAttachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#fireComponentDetachEvent">fireComponentDetachEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#getInvalidSizedChildren">getInvalidSizedChildren</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#moveComponentsFrom">moveComponentsFrom</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChangedChildTrees">repaintChangedChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#repaintChildTrees">repaintChildTrees</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setEnabled">setEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setHeight">setHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component_container.AbstractComponentContainer-class.html#setWidth">setWidth</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">ui.abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__getstate__">__getstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#__setstate__">__setstate__</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#addStyleName">addStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#childRequestedRepaint">childRequestedRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentErrorEvent">fireComponentErrorEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireComponentEvent">fireComponentEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireEvent">fireEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#fireRequestRepaintEvent">fireRequestRepaintEvent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSHeight">getCSSHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCSSWidth">getCSSWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getCaption">getCaption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getComponentError">getComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getData">getData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDebugId">getDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getDescription">getDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorHandler">getErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getErrorMessage">getErrorMessage</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeight">getHeight</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getHeightUnits">getHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getIcon">getIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getListeners">getListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getLocale">getLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyle">getStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getStyleName">getStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidth">getWidth</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#getWidthUnits">getWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#handleError">handleError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#hasListeners">hasListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isEnabled">isEnabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isImmediate">isImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isReadOnly">isReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#isVisible">isVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#paint">paint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#parseStringSize">parseStringSize</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerCallback">registerCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#registerListener">registerListener</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#removeStyleName">removeStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaint">requestRepaint</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#requestRepaintRequests">requestRepaintRequests</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setComponentError">setComponentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setData">setData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDebugId">setDebugId</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setDescription">setDescription</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setErrorHandler">setErrorHandler</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setHeightUnits">setHeightUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setIcon">setIcon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setImmediate">setImmediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setLocale">setLocale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setParent">setParent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setReadOnly">setReadOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeFull">setSizeFull</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setSizeUndefined">setSizeUndefined</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyle">setStyle</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setStyleName">setStyleName</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setVisible">setVisible</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#setWidthUnits">setWidthUnits</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawCallback">withdrawCallback</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#withdrawListener">withdrawListener</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getUpdatedDate"></a><span class="summary-sig-name">getUpdatedDate</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">dt</span>,
+        <span class="summary-sig-arg">seconds</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getUpdatedDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getPointStartDate"></a><span class="summary-sig-name">getPointStartDate</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">year</span>,
+        <span class="summary-sig-arg">month</span>,
+        <span class="summary-sig-arg">day</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getPointStartDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDateZeroTime"></a><span class="summary-sig-name">getDateZeroTime</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">year</span>,
+        <span class="summary-sig-arg">month</span>,
+        <span class="summary-sig-arg">day</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getDateZeroTime">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getPoints"></a><span class="summary-sig-name">getPoints</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">values</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getFormattedTimestamp"></a><span class="summary-sig-name">getFormattedTimestamp</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">dt</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getFormattedTimestamp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCurrFormattedTimestamp"></a><span class="summary-sig-name">getCurrFormattedTimestamp</span>(<span class="summary-sig-arg">cls</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.getCurrFormattedTimestamp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_TREE_ITEM_CAPTION_PROP_ID"></a><span class="summary-name">_TREE_ITEM_CAPTION_PROP_ID</span> = <code title="'ChartType'"><code class="variable-quote">'</code><code class="variable-string">ChartType</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_SEPARATOR"></a><span class="summary-name">_SEPARATOR</span> = <code title="'|'"><code class="variable-quote">'</code><code class="variable-string">|</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.window.Window-class.html">ui.window.Window</a></code></b>:
+      <code><a href="muntjac.ui.window.Window-class.html#BORDER_DEFAULT">BORDER_DEFAULT</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#BORDER_MINIMAL">BORDER_MINIMAL</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#BORDER_NONE">BORDER_NONE</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#CLIENT_WIDGET">CLIENT_WIDGET</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a></code></b>:
+      <code><a href="muntjac.ui.panel.Panel-class.html#STYLE_LIGHT">STYLE_LIGHT</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a></code></b> (private):
+      <code><a href="muntjac.ui.panel.Panel-class.html#_CLICK_EVENT" onclick="show_private();">_CLICK_EVENT</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">ui.abstract_component.AbstractComponent</a></code></b>:
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#SIZE_PATTERN">SIZE_PATTERN</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.terminal.sizeable.ISizeable-class.html">terminal.sizeable.ISizeable</a></code></b>:
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#SIZE_UNDEFINED">SIZE_UNDEFINED</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_CM">UNITS_CM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EM">UNITS_EM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_EX">UNITS_EX</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_INCH">UNITS_INCH</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_MM">UNITS_MM</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PERCENTAGE">UNITS_PERCENTAGE</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PICAS">UNITS_PICAS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_PIXELS">UNITS_PIXELS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNITS_POINTS">UNITS_POINTS</a></code>,
+      <code><a href="muntjac.terminal.sizeable.ISizeable-class.html#UNIT_SYMBOLS">UNIT_SYMBOLS</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.window.Window-class.html">ui.window.Window</a></code></b> (private):
+      <code><a href="muntjac.ui.window.Window-class.html#_application" onclick="show_private();">_application</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_border" onclick="show_private();">_border</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_centerRequested" onclick="show_private();">_centerRequested</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_draggable" onclick="show_private();">_draggable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_jsExecQueue" onclick="show_private();">_jsExecQueue</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_modal" onclick="show_private();">_modal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_name" onclick="show_private();">_name</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_notifications" onclick="show_private();">_notifications</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_openList" onclick="show_private();">_openList</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_parameterHandlerList" onclick="show_private();">_parameterHandlerList</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_pendingFocus" onclick="show_private();">_pendingFocus</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_positionX" onclick="show_private();">_positionX</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_positionY" onclick="show_private();">_positionY</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_resizable" onclick="show_private();">_resizable</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_resizeLazy" onclick="show_private();">_resizeLazy</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_scrollIntoView" onclick="show_private();">_scrollIntoView</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_subwindows" onclick="show_private();">_subwindows</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_terminal" onclick="show_private();">_terminal</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_theme" onclick="show_private();">_theme</a></code>,
+      <code><a href="muntjac.ui.window.Window-class.html#_uriHandlerList" onclick="show_private();">_uriHandlerList</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a></code></b>:
+      <code><a href="muntjac.ui.panel.Panel-class.html#actionManager">actionManager</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.panel.Panel-class.html">ui.panel.Panel</a></code></b> (private):
+      <code><a href="muntjac.ui.panel.Panel-class.html#_content" onclick="show_private();">_content</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#_scrollOffsetX" onclick="show_private();">_scrollOffsetX</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#_scrollOffsetY" onclick="show_private();">_scrollOffsetY</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#_scrollable" onclick="show_private();">_scrollable</a></code>,
+      <code><a href="muntjac.ui.panel.Panel-class.html#_tabIndex" onclick="show_private();">_tabIndex</a></code>
+      </p></div>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html">ui.abstract_component.AbstractComponent</a></code></b> (private):
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_applicationData" onclick="show_private();">_applicationData</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_caption" onclick="show_private();">_caption</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_componentError" onclick="show_private();">_componentError</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_delayedFocus" onclick="show_private();">_delayedFocus</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_description" onclick="show_private();">_description</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_enabled" onclick="show_private();">_enabled</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventIdentifiers" onclick="show_private();">_eventIdentifiers</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_eventRouter" onclick="show_private();">_eventRouter</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_icon" onclick="show_private();">_icon</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_immediate" onclick="show_private();">_immediate</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_locale" onclick="show_private();">_locale</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_parent" onclick="show_private();">_parent</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_readOnly" onclick="show_private();">_readOnly</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListeners" onclick="show_private();">_repaintRequestListeners</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_repaintRequestListenersNotified" onclick="show_private();">_repaintRequestListenersNotified</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_styles" onclick="show_private();">_styles</a></code>,
+      <code><a href="muntjac.ui.abstract_component.AbstractComponent-class.html#_visible" onclick="show_private();">_visible</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new unnamed window with the given content and title.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>caption</code></strong> - the title of the window.</li>
+        <li><strong class="pname"><code>content</code></strong> - the contents of the window</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="attach"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">attach</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.demo.invient_demo_win-pysrc.html#InvientChartsDemoWin.attach">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Notifies the component that it is connected to an application.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.ui.component.IComponent-class.html#attach">ui.component.IComponent.attach</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Aug 25 20:07:05 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

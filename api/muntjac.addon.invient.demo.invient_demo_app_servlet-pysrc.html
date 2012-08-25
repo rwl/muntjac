@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.invient.demo.invient_demo_app_servlet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.invient-module.html">Package&nbsp;invient</a> ::
+        <a href="muntjac.addon.invient.demo-module.html">Package&nbsp;demo</a> ::
+        Module&nbsp;invient_demo_app_servlet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.invient.demo.invient_demo_app_servlet-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="muntjac.addon.invient.demo.invient_demo_app_servlet-module.html">Module muntjac.addon.invient.demo.invient_demo_app_servlet</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># @INVIENT_COPYRIGHT@</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License"); </tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License. </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at </tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment">#     http://www.apache.org/licenses/LICENSE-2.0 </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software </tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS, </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and </tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package muntjac=muntjac-module.html,Function muntjac.main.muntjac()=muntjac.main-module.html#muntjac"><a title="muntjac
+muntjac.main.muntjac" class="py-name" href="#" onclick="return doclink('link-0', 'muntjac', 'link-0');">muntjac</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package muntjac.terminal=muntjac.terminal-module.html,Module muntjac.terminal.terminal=muntjac.terminal.terminal-module.html"><a title="muntjac.terminal
+muntjac.terminal.terminal" class="py-name" href="#" onclick="return doclink('link-1', 'terminal', 'link-1');">terminal</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package muntjac.terminal.gwt=muntjac.terminal.gwt-module.html"><a title="muntjac.terminal.gwt" class="py-name" href="#" onclick="return doclink('link-2', 'gwt', 'link-2');">gwt</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package muntjac.terminal.gwt.server=muntjac.terminal.gwt.server-module.html"><a title="muntjac.terminal.gwt.server" class="py-name" href="#" onclick="return doclink('link-3', 'server', 'link-3');">server</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Module muntjac.terminal.gwt.server.application_servlet=muntjac.terminal.gwt.server.application_servlet-module.html"><a title="muntjac.terminal.gwt.server.application_servlet" class="py-name" href="#" onclick="return doclink('link-4', 'application_servlet', 'link-4');">application_servlet</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class muntjac.terminal.gwt.server.application_servlet.ApplicationServlet=muntjac.terminal.gwt.server.application_servlet.ApplicationServlet-class.html"><a title="muntjac.terminal.gwt.server.application_servlet.ApplicationServlet" class="py-name" href="#" onclick="return doclink('link-5', 'ApplicationServlet', 'link-5');">ApplicationServlet</a></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="InvientChartsDemoAppServlet"></a><div id="InvientChartsDemoAppServlet-def"><a name="L18"></a><tt class="py-lineno">18</tt> <a class="py-toggle" href="#" id="InvientChartsDemoAppServlet-toggle" onclick="return toggle('InvientChartsDemoAppServlet');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet-class.html">InvientChartsDemoAppServlet</a><tt class="py-op">(</tt><tt class="py-base-class">ApplicationServlet</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InvientChartsDemoAppServlet-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="InvientChartsDemoAppServlet-expanded"><a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts"></a><div id="InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts-toggle" onclick="return toggle('InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet-class.html#writeAjaxPageHtmlMuntjacScripts">writeAjaxPageHtmlMuntjacScripts</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">window</tt><tt class="py-op">,</tt> <tt class="py-param">themeName</tt><tt class="py-op">,</tt> <tt class="py-param">application</tt><tt class="py-op">,</tt> <tt class="py-param">page</tt><tt class="py-op">,</tt> <tt class="py-param">appUrl</tt><tt class="py-op">,</tt> <tt class="py-param">themeUri</tt><tt class="py-op">,</tt> <tt class="py-param">appId</tt><tt class="py-op">,</tt> <tt class="py-param">request</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Method muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write()=muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet-class.html#write"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-6', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'&lt;script type=\"text/javascript\"&gt;\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-7', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'//&lt;![CDATA[\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-8', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'document.write(\"&lt;script language=\'javascript\' src=\'./jquery/jquery-1.4.4.min.js\'&gt;&lt;\\/script&gt;\");\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-9', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'document.write(\"&lt;script language=\'javascript\' src=\'./js/highcharts.js\'&gt;&lt;\\/script&gt;\");\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-10', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'document.write(\"&lt;script language=\'javascript\' src=\'./js/modules/exporting.js\'&gt;&lt;\\/script&gt;\");\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-name">page</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="muntjac.terminal.gwt.server.paste_wsgi_servlet.PasteWsgiServlet.write" class="py-name" href="#" onclick="return doclink('link-11', 'write', 'link-6');">write</a></tt><tt class="py-op">(</tt><tt class="py-string">'//]]&gt;\n&lt;/script&gt;\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-12" class="py-name" targets="Class muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet=muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet-class.html"><a title="muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet" class="py-name" href="#" onclick="return doclink('link-12', 'InvientChartsDemoAppServlet', 'link-12');">InvientChartsDemoAppServlet</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts()=muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet-class.html#writeAjaxPageHtmlMuntjacScripts,Method muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.writeAjaxPageHtmlMuntjacScripts()=muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet-class.html#writeAjaxPageHtmlMuntjacScripts"><a title="muntjac.addon.invient.demo.invient_demo_app_servlet.InvientChartsDemoAppServlet.writeAjaxPageHtmlMuntjacScripts
+muntjac.terminal.gwt.server.abstract_application_servlet.AbstractApplicationServlet.writeAjaxPageHtmlMuntjacScripts" class="py-name" href="#" onclick="return doclink('link-13', 'writeAjaxPageHtmlMuntjacScripts', 'link-13');">writeAjaxPageHtmlMuntjacScripts</a></tt><tt class="py-op">(</tt><tt id="link-14" class="py-name" targets="Module muntjac.ui.window=muntjac.ui.window-module.html"><a title="muntjac.ui.window" class="py-name" href="#" onclick="return doclink('link-14', 'window', 'link-14');">window</a></tt><tt class="py-op">,</tt> <tt id="link-15" class="py-name" targets="Class Method muntjac.ui.themes.runo.Runo.themeName()=muntjac.ui.themes.runo.Runo-class.html#themeName"><a title="muntjac.ui.themes.runo.Runo.themeName" class="py-name" href="#" onclick="return doclink('link-15', 'themeName', 'link-15');">themeName</a></tt><tt class="py-op">,</tt> <tt id="link-16" class="py-name" targets="Module muntjac.application=muntjac.application-module.html"><a title="muntjac.application" class="py-name" href="#" onclick="return doclink('link-16', 'application', 'link-16');">application</a></tt><tt class="py-op">,</tt> <tt class="py-name">page</tt><tt class="py-op">,</tt> <tt class="py-name">appUrl</tt><tt class="py-op">,</tt> <tt class="py-name">themeUri</tt><tt class="py-op">,</tt> <tt class="py-name">appId</tt><tt class="py-op">,</tt> <tt class="py-name">request</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Aug 25 20:07:18 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

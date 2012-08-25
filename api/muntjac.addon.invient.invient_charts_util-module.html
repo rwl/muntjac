@@ -1,0 +1,2397 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.invient.invient_charts_util</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.invient-module.html">Package&nbsp;invient</a> ::
+        Module&nbsp;invient_charts_util
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.invient.invient_charts_util-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module invient_charts_util</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html">source&nbsp;code</a></span></p>
+<p>Utility functions used by <a 
+  href="muntjac.addon.invient.invient_charts.InvientCharts-class.html" 
+  class="link">InvientCharts</a> to write its state to the UIDL stream. The
+  state includes properties of <a 
+  href="muntjac.addon.invient.invient_charts.InvientCharts-class.html" 
+  class="link">InvientCharts</a> such as <a 
+  href="muntjac.addon.invient.invient_charts_config.InvientChartsConfig-class.html"
+  class="link">InvientChartsConfig</a>, <a 
+  href="muntjac.addon.invient.invient_charts.Series-class.html" 
+  class="link">Series</a>, <a 
+  href="muntjac.addon.invient.invient_charts.Point-class.html" 
+  class="link">Point</a> and various chart events.</p>
+  <p>In general, only non-null properties/attributes of a chart are written
+  to the UIDL stream.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Invient,
+          Richard Lincoln
+        </dd>
+      </dl>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeTitleBaseOptions" class="summary-sig-name">writeTitleBaseOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">titleBaseOptions</span>)</span><br />
+      Writes configuration attributes common to chart title and subtitle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTitleBaseOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeTitleConfig" class="summary-sig-name">writeTitleConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">titleOptions</span>)</span><br />
+      Writes configuration attributes of the chart title.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTitleConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSubtitleConfig" class="summary-sig-name">writeSubtitleConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">subtitleOptions</span>)</span><br />
+      Writes configuration attributes of the chart subtitle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSubtitleConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeCreditConfig" class="summary-sig-name">writeCreditConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">creditOptions</span>)</span><br />
+      Writes configuration attributes of the chart subtitle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeCreditConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeLegendConfig" class="summary-sig-name">writeLegendConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">legendOptions</span>)</span><br />
+      Writes configuration attributes of the chart legend.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeLegendConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeTooltipConfig" class="summary-sig-name">writeTooltipConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">tooltipOptions</span>)</span><br />
+      Writes configuration attributes of the chart tooltip.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTooltipConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeGeneralChartConfig" class="summary-sig-name">writeGeneralChartConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">chartOptions</span>)</span><br />
+      Writes configuration attributes of the chart itself.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeGeneralChartConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSeriesConfigPerSeriesType" class="summary-sig-name">writeSeriesConfigPerSeriesType</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">seriesOptions</span>)</span><br />
+      Writes configuration attributes of every series type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesConfigPerSeriesType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSeriesConfig" class="summary-sig-name">writeSeriesConfig</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">series</span>)</span><br />
+      Writes configuration attributes of a single series.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeCommonSeriesOptions" class="summary-sig-name">writeCommonSeriesOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">seriesOptions</span>)</span><br />
+      Writes configuration attributes common to all types of series.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeCommonSeriesOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSeriesState" class="summary-sig-name">writeSeriesState</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">seriesState</span>)</span><br />
+      Writes configuration attributes of a series hover state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesState">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSeriesDataLabel" class="summary-sig-name">writeSeriesDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes common to all types of series.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeDataLabel" class="summary-sig-name">writeDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes of a series data labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePieDataLabel" class="summary-sig-name">writePieDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes of a pie chart's data label.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePieDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeAxisDataLabel" class="summary-sig-name">writeAxisDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes of an axis data labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeXAxisDataLabel" class="summary-sig-name">writeXAxisDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes of an x-axis data labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeXAxisDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeYAxisDataLabel" class="summary-sig-name">writeYAxisDataLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dataLabel</span>)</span><br />
+      Writes configuration attributes of y-axis data labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeYAxisDataLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeMarkerOptions" class="summary-sig-name">writeMarkerOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">markerOptions</span>)</span><br />
+      Writes configuration attributes of a marker.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeMarkerStates" class="summary-sig-name">writeMarkerStates</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">marker</span>)</span><br />
+      Writes configuration attributes of a marker states hover and select</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerStates">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeImageMarkerOptions" class="summary-sig-name">writeImageMarkerOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">imgMarker</span>)</span><br />
+      Writes configuration attributes of an image marker</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeImageMarkerOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSymbolMarkerOptions" class="summary-sig-name">writeSymbolMarkerOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">symbolMarker</span>)</span><br />
+      Writes configuration attributes of a symbol marker</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSymbolMarkerOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeMarkerState" class="summary-sig-name">writeMarkerState</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">markerState</span>)</span><br />
+      Writes configuration attributes of a marker</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerState">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeBaseLineOptions" class="summary-sig-name">writeBaseLineOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">baseLineOptions</span>)</span><br />
+      Writes configuration attributes common to all lines series such as 
+      line, spline and area.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseLineOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSplineOptions" class="summary-sig-name">writeSplineOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">splineOptions</span>)</span><br />
+      Writes configuration attributes of a spline series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSplineOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeScatterOptions" class="summary-sig-name">writeScatterOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">scatterOptions</span>)</span><br />
+      Writes configuration attributes of s scatter series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeScatterOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeLineOptions" class="summary-sig-name">writeLineOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">lineOptions</span>)</span><br />
+      Writes configuration attributes of a line series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeLineOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeAreaOptions" class="summary-sig-name">writeAreaOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">areaOptions</span>)</span><br />
+      Writes configuration attributes of an area series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAreaOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeAreaSplineOptions" class="summary-sig-name">writeAreaSplineOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">areaSplineOptions</span>)</span><br />
+      Writes configuration attributes of an area-spline</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAreaSplineOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePieOptions" class="summary-sig-name">writePieOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">pieOptions</span>)</span><br />
+      Writes configuration attributes of a pie series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePieOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeBaseBarOptions" class="summary-sig-name">writeBaseBarOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">baseBarOptions</span>)</span><br />
+      Writes configuration attributes common to columnar series such as bar
+      and column</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseBarOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeBarOptions" class="summary-sig-name">writeBarOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">barOptions</span>)</span><br />
+      Writes configuration attributes of a bar series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBarOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeColumnOptions" class="summary-sig-name">writeColumnOptions</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">columnOptions</span>)</span><br />
+      Writes configuration attributes of a column series</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeColumnOptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeSeries" class="summary-sig-name">writeSeries</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">chartSeriesType</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">xAxes</span>,
+        <span class="summary-sig-arg">yAxes</span>)</span><br />
+      Writes data of each series of the chart.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePoints" class="summary-sig-name">writePoints</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">points</span>)</span><br />
+      Writes point data (x, y) and its configuration attributes, if any.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeBaseAxis" class="summary-sig-name">writeBaseAxis</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">axis</span>,
+        <span class="summary-sig-arg">axes</span>)</span><br />
+      Writes configuration attributes common to all types of axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseAxis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getXAxisIndex" class="summary-sig-name">getXAxisIndex</a>(<span class="summary-sig-arg">indexOfXAxis</span>,
+        <span class="summary-sig-arg">xAxes</span>)</span><br />
+      Returns an index of an x-axis in a list of x-axis only if the x-axis 
+      exists otherwise null</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getXAxisIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getYAxisIndex" class="summary-sig-name">getYAxisIndex</a>(<span class="summary-sig-arg">indexOfYAxis</span>,
+        <span class="summary-sig-arg">yAxes</span>)</span><br />
+      Returns an index of a y-axis in a list of y-axis only if the y-axis 
+      exists otherwise null</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getYAxisIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getAxisIndex" class="summary-sig-name">getAxisIndex</a>(<span class="summary-sig-arg">indexOfAxis</span>,
+        <span class="summary-sig-arg">axes</span>)</span><br />
+      Returns an index of an axis in a list of axis only if the axis exists
+      otherwise null</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getAxisIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePlotBands" class="summary-sig-name">writePlotBands</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">plotBands</span>)</span><br />
+      Writes configuration attributes of the plotbands associated with an 
+      axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotBands">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePlotLabel" class="summary-sig-name">writePlotLabel</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">plotLabel</span>)</span><br />
+      Writes configuration attributes of a plotlabel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePlotBandRange" class="summary-sig-name">writePlotBandRange</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">plotBandRange</span>)</span><br />
+      Writes from/to value for a plotband.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotBandRange">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePlotLines" class="summary-sig-name">writePlotLines</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">plotLines</span>)</span><br />
+      Writes configuration attributes of the plotlines</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLines">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writePlotLineValue" class="summary-sig-name">writePlotLineValue</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">plotLineValue</span>)</span><br />
+      Writes value of a plotline.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLineValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeAxisTick"></a><span class="summary-sig-name">writeAxisTick</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">tick</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisTick">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeAxisMinorTick" class="summary-sig-name">writeAxisMinorTick</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">tick</span>)</span><br />
+      Writes configuration attributes of an axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisMinorTick">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeAxisGrid"></a><span class="summary-sig-name">writeAxisGrid</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">grid</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisGrid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeAxisMinorGrid" class="summary-sig-name">writeAxisMinorGrid</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">grid</span>)</span><br />
+      Writes configuration attributes of an axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisMinorGrid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeAxisTitle"></a><span class="summary-sig-name">writeAxisTitle</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">title</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisTitle">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeXAxes" class="summary-sig-name">writeXAxes</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">axes</span>,
+        <span class="summary-sig-arg">config</span>)</span><br />
+      Iteratively processes each x-axis and writes configuration attributes
+      of each axis based on type of the axis e.g.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeXAxes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isIncludeTime"></a><span class="summary-sig-name">isIncludeTime</span>(<span class="summary-sig-arg">axis</span>,
+        <span class="summary-sig-arg">chartSeries</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#isIncludeTime">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeNumberAxis"></a><span class="summary-sig-name">writeNumberAxis</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">numberAxis</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeNumberAxis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getDate" class="summary-sig-name">getDate</a>(<span class="summary-sig-arg">dt</span>,
+        <span class="summary-sig-arg">isIncludeTime</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns milliseconds of the date argument dt.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeDateTimeAxis"></a><span class="summary-sig-name">writeDateTimeAxis</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">dateTimeAxis</span>,
+        <span class="summary-sig-arg">isIncludeTime</span>)</span><br />
+      @param target @param dateTimeAxis @raise PaintException</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeDateTimeAxis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeCategoryAxis"></a><span class="summary-sig-name">writeCategoryAxis</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">categoryAxis</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeCategoryAxis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeYAxes"></a><span class="summary-sig-name">writeYAxes</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">axes</span>,
+        <span class="summary-sig-arg">config</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeYAxes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writeChartLabelConfig"></a><span class="summary-sig-name">writeChartLabelConfig</span>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">chartLabel</span>)</span><br />
+      Writes configuration attributes of the chart labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeChartLabelConfig">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getYearFromDate" class="summary-sig-name">getYearFromDate</a>(<span class="summary-sig-arg">date</span>)</span><br />
+      Returns:
+      Returns year of the argument date.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getYearFromDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#getMonthFromDate" class="summary-sig-name">getMonthFromDate</a>(<span class="summary-sig-arg">date</span>)</span><br />
+      Returns:
+      Returns month of the argument date.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getMonthFromDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getDayFromDate"></a><span class="summary-sig-name">getDayFromDate</span>(<span class="summary-sig-arg">date</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getDayFromDate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.invient_charts_util-module.html#writeChartDataUpdates" class="summary-sig-name">writeChartDataUpdates</a>(<span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">seriesCURMap</span>)</span><br />
+      Writes information about which series were added, removed or updated.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeChartDataUpdates">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'muntjac.addon.invient'"><code class="variable-quote">'</code><code class="variable-string">muntjac.addon.invient</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="writeTitleBaseOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeTitleBaseOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">titleBaseOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTitleBaseOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to chart title and 
+  subtitle.</p>
+  <p>@param target @param titleBaseOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeTitleConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeTitleConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">titleOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTitleConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart title.</p>
+  <p>@param target @param titleOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSubtitleConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSubtitleConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">subtitleOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSubtitleConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart subtitle. Only those 
+  attributes are written who have got non-null values.</p>
+  <p>@param target @param subtitleOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeCreditConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeCreditConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">creditOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeCreditConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart subtitle.</p>
+  <p>@param target @param creditOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeLegendConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeLegendConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">legendOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeLegendConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart legend.</p>
+  <p>@param target @param legendOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeTooltipConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeTooltipConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">tooltipOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeTooltipConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart tooltip.</p>
+  <p>@param target @param tooltipOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeGeneralChartConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeGeneralChartConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">chartOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeGeneralChartConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the chart itself.</p>
+  <p>@param target @param chartOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSeriesConfigPerSeriesType"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSeriesConfigPerSeriesType</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">seriesOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesConfigPerSeriesType">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of every series type. The series type 
+  can be one of the line, spline, scatter, area, areaspline, bar, column 
+  and pie.</p>
+  <p>@param target @param seriesOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSeriesConfig"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSeriesConfig</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">series</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesConfig">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a single series.</p>
+  <p>@param target @param series</p>
+  <dl class="fields">
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="muntjac.terminal.paint_exception.PaintException-class.html">PaintException</a></strong></code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeCommonSeriesOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeCommonSeriesOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">seriesOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeCommonSeriesOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to all types of series.</p>
+  <p>@param target @param seriesOptions @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSeriesState"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSeriesState</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">seriesState</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesState">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a series hover state.</p>
+  <p>@param target @param seriesState @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSeriesDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSeriesDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeriesDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to all types of series. It 
+  takes care of specific data labels in case of pie.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a series data labels.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePieDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePieDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePieDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a pie chart's data label.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAxisDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAxisDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an axis data labels.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeXAxisDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeXAxisDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeXAxisDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an x-axis data labels.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeYAxisDataLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeYAxisDataLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">dataLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeYAxisDataLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of y-axis data labels.</p>
+  <p>@param target @param dataLabel @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeMarkerOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeMarkerOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">markerOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a marker. It takes care of handling
+  image or symbol marker.</p>
+  <p>@param target @param markerOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeMarkerStates"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeMarkerStates</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">marker</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerStates">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a marker states hover and 
+  select</p>
+  <p>@param target @param marker @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeImageMarkerOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeImageMarkerOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">imgMarker</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeImageMarkerOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an image marker</p>
+  <p>@param target @param imgMarker @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSymbolMarkerOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSymbolMarkerOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">symbolMarker</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSymbolMarkerOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a symbol marker</p>
+  <p>@param target @param symbolMarker @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeMarkerState"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeMarkerState</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">markerState</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeMarkerState">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a marker</p>
+  <p>@param target @param markerState @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeBaseLineOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeBaseLineOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">baseLineOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseLineOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to all lines series such as 
+  line, spline and area.</p>
+  <p>@param target @param baseLineOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSplineOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSplineOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">splineOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSplineOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a spline series</p>
+  <p>@param target @param splineOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeScatterOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeScatterOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">scatterOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeScatterOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of s scatter series</p>
+  <p>@param target @param scatterOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeLineOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeLineOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">lineOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeLineOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a line series</p>
+  <p>@param target @param lineOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAreaOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAreaOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">areaOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAreaOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an area series</p>
+  <p>@param target @param areaOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAreaSplineOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAreaSplineOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">areaSplineOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAreaSplineOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an area-spline</p>
+  <p>@param target @param areaSplineOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePieOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePieOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">pieOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePieOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a pie series</p>
+  <p>@param target @param pieOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeBaseBarOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeBaseBarOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">baseBarOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseBarOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to columnar series such as bar 
+  and column</p>
+  <p>@param target @param baseBarOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeBarOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeBarOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">barOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBarOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a bar series</p>
+  <p>@param target @param barOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeColumnOptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeColumnOptions</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">columnOptions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeColumnOptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a column series</p>
+  <p>@param target @param columnOptions @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeSeries</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">chartSeriesType</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">xAxes</span>,
+        <span class="sig-arg">yAxes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes data of each series of the chart. It transforms data into a 
+  form which is usable by the Muntjac terminal class. It also writes 
+  configuration attributes specific to each series, if any.</p>
+  <p>@param target @param chartSeriesType @param data @param xAxes @param 
+  yAxes @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePoints"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePoints</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">points</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePoints">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes point data (x, y) and its configuration attributes, if any. If 
+  a point does not have x and y values then the point is skipped. However, 
+  for such points empty tags is created without any attributes or 
+  children.</p>
+  <p>@param target @param points @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeBaseAxis"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeBaseAxis</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">axis</span>,
+        <span class="sig-arg">axes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeBaseAxis">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes common to all types of axis.</p>
+  <p>@param target @param axis @param axes @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getXAxisIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getXAxisIndex</span>(<span class="sig-arg">indexOfXAxis</span>,
+        <span class="sig-arg">xAxes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getXAxisIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an index of an x-axis in a list of x-axis only if the x-axis 
+  exists otherwise null</p>
+  <p>@param indexOfXAxis @param xAxes</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Retrieves Retrieves an index of an x-axis in a list of x-axis 
+          only if the x-axis exists otherwise null</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getYAxisIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getYAxisIndex</span>(<span class="sig-arg">indexOfYAxis</span>,
+        <span class="sig-arg">yAxes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getYAxisIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an index of a y-axis in a list of y-axis only if the y-axis 
+  exists otherwise null</p>
+  <p>@param indexOfYAxis @param yAxes</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns index of a y-axis in a list of y-axis only if the y-axis 
+          exists otherwise null</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getAxisIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getAxisIndex</span>(<span class="sig-arg">indexOfAxis</span>,
+        <span class="sig-arg">axes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getAxisIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an index of an axis in a list of axis only if the axis exists 
+  otherwise null</p>
+  <p>@param indexOfAxis @param axes</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns an index of an axis in a list of axis only if the axis 
+          exists otherwise null</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePlotBands"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePlotBands</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">plotBands</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotBands">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the plotbands associated with an 
+  axis.</p>
+  <p>@param target @param plotBands @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePlotLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePlotLabel</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">plotLabel</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of a plotlabel.</p>
+  <p>@param target @param plotLabel @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePlotBandRange"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePlotBandRange</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">plotBandRange</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotBandRange">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes from/to value for a plotband. It considers date and number 
+  values separately.</p>
+  <p>@param target @param plotBandRange @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePlotLines"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePlotLines</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">plotLines</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLines">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of the plotlines</p>
+  <p>@param target @param plotLines @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePlotLineValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePlotLineValue</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">plotLineValue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writePlotLineValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes value of a plotline. It considers date and number value 
+  separately.</p>
+  <p>@param target @param plotLineValue @throws PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAxisMinorTick"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAxisMinorTick</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">tick</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisMinorTick">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an axis. Depending on type of the 
+  argument tick, it either writes attributes for <a 
+  href="muntjac.addon.invient.invient_charts_config.MinorTick-class.html" 
+  class="link">MinorTick</a> or <a 
+  href="muntjac.addon.invient.invient_charts_config.Tick-class.html" 
+  class="link">Tick</a></p>
+  <p>@param target @param tick @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeAxisMinorGrid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeAxisMinorGrid</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">grid</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeAxisMinorGrid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes configuration attributes of an axis. Depending on type of the 
+  argument tick, it either writes attributes for <a 
+  href="muntjac.addon.invient.invient_charts_config.MinorGrid-class.html" 
+  class="link">MinorGrid</a> or <a 
+  href="muntjac.addon.invient.invient_charts_config.Grid-class.html" 
+  class="link">Grid</a></p>
+  <p>@param target @param grid @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeXAxes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeXAxes</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">axes</span>,
+        <span class="sig-arg">config</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeXAxes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Iteratively processes each x-axis and writes configuration attributes 
+  of each axis based on type of the axis e.g. <a 
+  href="muntjac.addon.invient.invient_charts_config.NumberAxis-class.html" 
+  class="link">NumberAxis</a>, <a 
+  href="muntjac.addon.invient.invient_charts_config.DateTimeAxis-class.html"
+  class="link">DateTimeAxis</a> and <a 
+  href="muntjac.addon.invient.invient_charts_config.CategoryAxis-class.html"
+  class="link">CategoryAxis</a></p>
+  <p>@param target @param axes @raise PaintException</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDate</span>(<span class="sig-arg">dt</span>,
+        <span class="sig-arg">isIncludeTime</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getDate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns milliseconds of the date argument dt. If the argument 
+  isIncludeTime is false then the returned milliseconds does not include 
+  time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getYearFromDate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getYearFromDate</span>(<span class="sig-arg">date</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getYearFromDate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns year of the argument date.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMonthFromDate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMonthFromDate</span>(<span class="sig-arg">date</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#getMonthFromDate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns month of the argument date. The returned values is based 
+          on zero-index i.e. for month January, the values returned is 
+          &quot;0&quot;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeChartDataUpdates"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeChartDataUpdates</span>(<span class="sig-arg">target</span>,
+        <span class="sig-arg">seriesCURMap</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.invient_charts_util-pysrc.html#writeChartDataUpdates">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes information about which series were added, removed or updated. 
+  This information is used by Muntjac terminal class to decide whether to 
+  add a new series or remove/delete an existing series. Basically, this 
+  information helps client to update only a portion of the chart instead of
+  full chart.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Aug 25 20:07:03 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

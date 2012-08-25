@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>muntjac.addon.invient.gradient.LinearGradient</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="muntjac-module.html">Package&nbsp;muntjac</a> ::
+        <a href="muntjac.addon-module.html">Package&nbsp;addon</a> ::
+        <a href="muntjac.addon.invient-module.html">Package&nbsp;invient</a> ::
+        <a href="muntjac.addon.invient.gradient-module.html">Module&nbsp;gradient</a> ::
+        Class&nbsp;LinearGradient
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="muntjac.addon.invient.gradient.LinearGradient-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class LinearGradient</h1><p class="nomargin-top"><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+  object --+        
+           |        
+<a href="muntjac.addon.invient.paint.IPaint-class.html">paint.IPaint</a> --+    
+               |    
+       <a href="muntjac.addon.invient.gradient.IGradient-class.html">IGradient</a> --+
+                   |
+                  <strong class="uidshort">LinearGradient</strong>
+</pre>
+
+<hr />
+<p>Represents linear gradient where points of a linear gradient specify a
+  line. For more details on gradient, refer to CSS 3 gradient 
+  documentation.</p>
+
+<hr />
+<div class="fields">      <dl><dt>Authors:</dt>
+        <dd>
+          Invient,
+          Richard Lincoln
+        </dd>
+      </dl>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xStart</span>,
+        <span class="summary-sig-arg">xStartUnit_or_yStart</span>,
+        <span class="summary-sig-arg">yStart_or_xEnd</span>,
+        <span class="summary-sig-arg">yStartUnit_or_yEnd</span>,
+        <span class="summary-sig-arg">xEnd_or_colorStops</span>,
+        <span class="summary-sig-arg">xEndUnit</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">yEnd</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">yEndUnit</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">colorStops</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates a LinearGradient with the specified xStart, xEnd, yStart
+and yEnd values with default {@link Unit} value number.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getxStart" class="summary-sig-name">getxStart</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the x-coordinate of a point at which linear gradient
+        starts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxStart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getxEnd" class="summary-sig-name">getxEnd</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the x-coordinate of a point at which linear gradient
+        ends.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxEnd">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getyStart" class="summary-sig-name">getyStart</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the y-coordinate of a point at which linear gradient starts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyStart">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getyEnd" class="summary-sig-name">getyEnd</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the x-coordinate of a point at which linear gradient ends.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyEnd">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getxStartUnit" class="summary-sig-name">getxStartUnit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the unit of x-coordinate of a point at which linear gradient 
+      starts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxStartUnit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getyStartUnit" class="summary-sig-name">getyStartUnit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the unit of y-coordinate of a point at which linear gradient 
+      starts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyStartUnit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getxEndUnit" class="summary-sig-name">getxEndUnit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the unit of x-coordinate of a point at which linear gradient 
+      ends.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxEndUnit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getyEndUnit" class="summary-sig-name">getyEndUnit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the unit of y-coordinate of a point at which linear gradient 
+      ends.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyEndUnit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getColorStops" class="summary-sig-name">getColorStops</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a list of colorstops associated with this gradient.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getColorStops">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="muntjac.addon.invient.gradient.LinearGradient-class.html#getString" class="summary-sig-name">getString</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      Returns string representation of this LinearGradient</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getString">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xStart</span>,
+        <span class="sig-arg">xStartUnit_or_yStart</span>,
+        <span class="sig-arg">yStart_or_xEnd</span>,
+        <span class="sig-arg">yStartUnit_or_yEnd</span>,
+        <span class="sig-arg">xEnd_or_colorStops</span>,
+        <span class="sig-arg">xEndUnit</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">yEnd</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">yEndUnit</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">colorStops</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Creates a LinearGradient with the specified xStart, xEnd, yStart
+and yEnd values with default {@link Unit} value number.
+
+@param xStart:
+           the x-coordinate of a point at which linear gradient
+           starts.
+@param xStartUnit_or_yStart:
+           the unit for the xStart value. It can have one of the two
+           values Unit.NUMBER or Unit.PERCENT. If it is null then the
+           default value is Unit.NUMBER. Or the y-coordinate of a point
+           at which linear gradient starts.
+@param yStart_or_xEnd:
+           the y-coordinate of a point at which linear gradient
+           starts or the x-coordinate of a point at which linear
+           gradient ends.
+@param yStartUnit_or_yEnd:
+           the unit for the yStart value. It can have one of the two
+           values Unit.NUMBER or Unit.PERCENT. If it is null then the
+           default value is Unit.NUMBER. Or the y-coordinate of a point
+           at which linear gradient ends.
+@param xEnd_or_colorStops:
+           the x-coordinate of a point at which linear gradient ends or
+           the list of colorstops for the linear gradient.
+@param xEndUnit:
+           the unit for the xEnd value. It can have one of the two
+           values Unit.NUMBER or Unit.PERCENT. If it is null then the
+           default value is Unit.NUMBER.
+@param yEnd:
+           the y-coordinate of a point at which linear gradient ends.
+@param yEndUnit
+           the unit for the yEnd value. It can have one of the two
+           values Unit.NUMBER or Unit.PERCENT. If it is null then the
+           default value is Unit.NUMBER.
+@param colorStops:
+           the list of colorstops for the linear gradient.
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getxStart"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getxStart</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxStart">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Returns the x-coordinate of a point at which linear gradient
+        starts.
+@return: the x-coordinate of a point at which linear gradient
+        starts.
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getxStart">IGradient.getxStart</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getxEnd"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getxEnd</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxEnd">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Returns the x-coordinate of a point at which linear gradient
+        ends.
+@return: the x-coordinate of a point at which linear gradient
+         ends.
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getxEnd">IGradient.getxEnd</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getyStart"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getyStart</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyStart">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the y-coordinate of a point at which linear gradient 
+  starts.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the y-coordinate of a point at which linear gradient starts.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getyStart">IGradient.getyStart</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getyEnd"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getyEnd</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyEnd">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the x-coordinate of a point at which linear gradient ends.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the x-coordinate of a point at which linear gradient ends.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getyEnd">IGradient.getyEnd</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getxStartUnit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getxStartUnit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxStartUnit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the unit of x-coordinate of a point at which linear gradient 
+  starts.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the unit of x-coordinate of a point at which linear gradient 
+          starts.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getxStartUnit">IGradient.getxStartUnit</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getyStartUnit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getyStartUnit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyStartUnit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the unit of y-coordinate of a point at which linear gradient 
+  starts.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the unit of y-coordinate of a point at which linear gradient 
+          starts.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getyStartUnit">IGradient.getyStartUnit</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getxEndUnit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getxEndUnit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getxEndUnit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the unit of x-coordinate of a point at which linear gradient 
+  ends.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the unit of x-coordinate of a point at which linear gradient 
+          ends.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getxEndUnit">IGradient.getxEndUnit</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getyEndUnit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getyEndUnit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getyEndUnit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the unit of y-coordinate of a point at which linear gradient 
+  ends.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>the unit of y-coordinate of a point at which linear gradient 
+          ends.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getyEndUnit">IGradient.getyEndUnit</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getColorStops"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getColorStops</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getColorStops">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a list of colorstops associated with this gradient.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>a list of colorstops associated with this gradient.</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.gradient.IGradient-class.html#getColorStops">IGradient.getColorStops</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getString"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getString</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="muntjac.addon.invient.gradient-pysrc.html#LinearGradient.getString">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns string representation of an object of type Paint.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Returns string representation of this LinearGradient</dd>
+    <dt>Overrides:
+        <a href="muntjac.addon.invient.paint.IPaint-class.html#getString">paint.IPaint.getString</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="muntjac-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.muntiacus.org/">Muntjac</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Aug 25 20:07:05 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
