@@ -27,12 +27,12 @@ class Constraint(object):
 class BorderLayout(VerticalLayout):
     """BorderLayout mimics {@link java.awt.BorderLayout} in Muntjac."""
 
-
-
     def __init__(self):
         """Create a layout structure that mimics the traditional
         {@link java.awt.BorderLayout}.
         """
+        super(VerticalLayout, self).__init__()
+
         self._mainLayout = VerticalLayout()
         self._centerLayout = HorizontalLayout()
 
