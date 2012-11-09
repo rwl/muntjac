@@ -726,7 +726,7 @@ class AbstractApplicationServlet(PasteWsgiServlet, Constants):
                 self.setHeader(response, 'Content-Disposition',
                         contentDispositionValue)
 
-            self.write(response, data.getvalue())
+            self.write(response, data.read())
             data.close()
 
 
