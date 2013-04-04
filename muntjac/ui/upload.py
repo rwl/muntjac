@@ -1,5 +1,17 @@
-# @MUNTJAC_COPYRIGHT@
-# @MUNTJAC_LICENSE@
+# Copyright (C) 2012 Vaadin Ltd. 
+# Copyright (C) 2012 Richard Lincoln
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
 
 """For uploading files from client to server."""
 
@@ -24,7 +36,7 @@ class IStartedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def uploadStarted(self, event):
@@ -41,7 +53,7 @@ class IFinishedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def uploadFinished(self, event):
@@ -58,7 +70,7 @@ class IFailedListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def uploadFailed(self, event):
@@ -75,7 +87,7 @@ class ISucceededListener(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def uploadSucceeded(self, event):
@@ -138,7 +150,7 @@ class Upload(AbstractComponent, IFocusable): #IComponent,
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     CLIENT_WIDGET = None #ClientWidget(VUpload, LoadStyle.LAZY)
@@ -672,7 +684,7 @@ class IReceiver(object):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def receiveUpload(self, filename, mimeType):
@@ -696,7 +708,7 @@ class FinishedEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def __init__(self, source, filename, MIMEType, length):
@@ -759,7 +771,7 @@ class FailedEvent(FinishedEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def __init__(self, source, filename, MIMEType, length, reason=None):
@@ -800,7 +812,7 @@ class SucceededEvent(FinishedEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def __init__(self, source, filename, MIMEType, length):
@@ -813,7 +825,7 @@ class StartedEvent(ComponentEvent):
 
     @author: Vaadin Ltd.
     @author: Richard Lincoln
-    @version: @VERSION@
+    @version: 1.1.2
     """
 
     def __init__(self, source, filename, MIMEType, contentLength):
