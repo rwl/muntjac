@@ -1,10 +1,10 @@
 include LICENSE
-include README
+include README.rst
 include CHANGELOG
 include Makefile
 include app.yaml
 include conf.ini
 include epydoc.config
 include muntjac/public/VAADIN/README
-include muntjac/public/VAADIN/favicon.ico
-recursive-include muntjac/public/ *
+include muntjac/public/favicon.ico
+recursive-include muntjac/public *

@@ -2111,13 +2111,14 @@ class Table(AbstractSelect, #container.IOrdered, action.IContainer,
         if 'columnWidthUpdates' in variables:
             events = variables.get('columnWidthUpdates')
             for string in events:
-                eventDetails = string.split(':')
-                propertyId = self._columnIdMap.get( eventDetails[0] )
-                if propertyId is None:
-                    propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
+                if string:
+                    eventDetails = string.split(':')
+                    propertyId = self._columnIdMap.get( eventDetails[0] )
+                    if propertyId is None:
+                        propertyId = self._ROW_HEADER_FAKE_PROPERTY_ID
 
-                width = int( eventDetails[1] )
-                self.setColumnWidth(propertyId, width)
+                    width = int( eventDetails[1] )
+                    self.setColumnWidth(propertyId, width)
 
 
     def disableContentRefreshing(self):

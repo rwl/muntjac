@@ -1268,27 +1268,26 @@ class AbstractCommunicationManager(IPaintable, IRepaintRequestListener):
             # Weekday names (both short and full)
             days = l.days['format']['wide'].values()
             short_days = l.days['format']['abbreviated'].values()
-
             outWriter.write(('\"sdn\":[\"'
+                    + short_days[6] + '\",\"'
                     + short_days[0] + '\",\"' + short_days[1] + '\",\"'
                     + short_days[2] + '\",\"' + short_days[3] + '\",\"'
-                    + short_days[4] + '\",\"' + short_days[5] + '\",\"'
-                    + short_days[6] + '\"'
+                    + short_days[4] + '\",\"' + short_days[5] + '\"'
                     + '],').encode('utf-8'))
             outWriter.write(('\"dn\":[\"'
+                    + days[6] + '\",\"'
                     + days[0] + '\",\"' + days[1] + '\",\"'
                     + days[2] + '\",\"' + days[3] + '\",\"'
-                    + days[4] + '\",\"' + days[5] + '\",\"'
-                    + days[6] + '\"'
+                    + days[4] + '\",\"' + days[5] + '\"'
                     + '],').encode('utf-8'))
 
             # First day of week
             # (Babel: 6 = sunday, 0 = monday, Vaadin: 0 = sunday, 1 = monday)
             fdow = l.first_week_day
-            if fdow == 6:
-                fdow = 0
+            if fdow == 0:
+                fdow = 1
             else:
-                fdow += 1
+                fdow = 0
             outWriter.write('\"fdow\":' + str(fdow) + ',')
 
             # Date formatting (MM/DD/YYYY etc.)
